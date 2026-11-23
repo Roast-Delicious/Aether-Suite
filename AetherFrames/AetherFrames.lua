@@ -1232,6 +1232,20 @@ local function Mover(key, f)
     return m
 end
 
+-- While moving, a frame with nobody in it (no pet, target or party member)
+-- shows empty bars and no name, instead of blank white bars or stale data.
+local function Placeholder(f)
+    if UnitExists(f.unit) then return end
+    f.nameFS:SetText(""); f.levelFS:SetText("")
+    if f.badge and f.badge.text then f.badge.text:SetText("") end
+    if f.classMedal then f.classMedal:Hide() end
+    f.face:SetTexture(nil)
+    for _, bar in ipairs(f.bars) do
+        bar.sb:SetMinMaxValues(0, 1); bar.sb:SetValue(0)
+        if bar.pctFS then bar.pctFS:SetText(""); bar.valFS:SetText("") end
+    end
+end
+
 SetLocked = function(locked)
     if not locked and InCombatLockdown() then return end
     db.locked = locked
@@ -1241,7 +1255,7 @@ SetLocked = function(locked)
         -- While moving, show frames even without a pet or target (out of combat only).
         if not InCombatLockdown() then
             if not locked then
-                UnregisterUnitWatch(f); f:Show()
+                UnregisterUnitWatch(f); f:Show(); Placeholder(f)
             else
                 RegisterUnitWatch(f)
             end
@@ -1250,7 +1264,7 @@ SetLocked = function(locked)
     for i = 2, 4 do                    -- the rest of the party moves with the first
         local f = frames["party" .. i]
         if f and not InCombatLockdown() then
-            if not locked then UnregisterUnitWatch(f); f:Show() else RegisterUnitWatch(f) end
+            if not locked then UnregisterUnitWatch(f); f:Show(); Placeholder(f) else RegisterUnitWatch(f) end
         end
     end
     if AetherFrames_OnLockChanged then AetherFrames_OnLockChanged(locked) end
@@ -1359,7 +1373,9 @@ ev:SetScript("OnEvent", function(_, event, arg1)
             "PARTY_MEMBER_ENABLE", "PARTY_MEMBER_DISABLE", "UNIT_TARGET" }) do Reg(e) end
         for _, f in pairs(frames) do UpdateAll(f) end
         UpdateBuffs(); UpdateHappiness()
-        if not db.locked then SetLocked(false) end
+        -- Always start locked: a reload in the middle of moving shouldn't
+        -- leave every frame (even empty party frames) on screen.
+        db.locked = true
         return
     end
     if not db or not db.enabled or not frames.player then return end

@@ -28,7 +28,7 @@ window, so you rarely need to type a command.
   AetherPack         1.1.8     Your bags sorted into sections
   AetherChat         1.0.5     Chat with the Aether look, fitted beside
                                your action bars
-  AetherFrames       1.6.0     Your, your pet's, your target's, its
+  AetherFrames       1.6.1     Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
 
@@ -658,20 +658,22 @@ AetherFrames - player, pet, target and party frames            /af
     Everything turns solid in combat or under your mouse.
   - Placement: the first time, the frames go where Blizzard's sat. Click
     Unlock to Move on AetherHub's Layout page and drag any frame: yours,
-    your pet's, your target's and the party's each move on their own (your
-    pet's follows yours until you move it). Click Done on any frame, or
-    right-click it, to finish. Reset Pet Frame Position puts your pet's
-    frame back below yours. Frames can't be moved during combat.
-  - Not shown yet: target-of-target, combo points (rogues, druids) and
-    the small leader, PvP and resting icons. If you need those, turn
-    AetherFrames off for now.
+    your pet's, your target's, target of target and the party's each
+    move on their own (your pet's follows yours until you move it).
+    While moving, every frame shows, even with no pet, target or party;
+    empty ones show empty bars. Click Done on any frame, or right-click
+    it, to finish. A /reload always comes back locked. Reset Pet Frame
+    Position puts your pet's frame back below yours. Frames can't be
+    moved during combat.
+  - Not shown yet: combo points (rogues, druids) and the small leader,
+    PvP and resting icons. If you need those, turn AetherFrames off for
+    now.
   - Turning it off brings Blizzard's frames back after a /reload.
-  - Commands: /af alpha 0-1, faces on|off, buffs on|off, threat
-    on|off, mybuffs on|off, party on|off, petpower on|off,
-    scale 0.6-1.6, unlock,
-    lock, petreset, reset, on|off, auras (a report of what the game
-    tells the addon about your auras and hawk timers, for tracking
-    down problems).
+  - Commands: /af alpha 0-1, faces on|off, buffs on|off, threat on|off,
+    mybuffs on|off, party on|off, tot on|off, petpower on|off, scale
+    0.6-1.6, unlock, lock, petreset, reset, on|off, auras (a report of
+    what the game tells the addon about your auras and hawk timers, for
+    tracking down problems).
 
 
 AUTOMATIC NPC DATA REFRESH (optional, Windows only)
