@@ -10,6 +10,56 @@
 -- combat, so the layout catches up when the fight ends.
 -- ==========================================
 
+-- ==========================================
+-- AETHER TEXT
+-- ==========================================
+-- The Aether text style, in Fira Sans (the unit frames' font; SIL Open Font
+-- License, see AetherHub\Media\Fonts\FiraSans-OFL.txt). In windows: Regular
+-- for text, SemiBold for the gold headings, with a soft shadow. Over the game
+-- world (AetherFontWorld...): Bold with a thin black outline and a shadow, so
+-- it reads on any background, faded or not. Each copies the Blizzard font it
+-- stands in for (size, color), so layouts stay the same. The files live in
+-- AetherHub\Media\Fonts; if one can't load, Blizzard's font stays.
+AETHER_FONT_DIR = AETHER_FONT_DIR or "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-"
+local function AetherFontFile(weight) return AETHER_FONT_DIR .. weight .. ".ttf" end
+
+-- Sets a Fira font on a font object or font string; false if it didn't load.
+local function AetherSetFont(obj, weight, size, outline)
+    local ok, set = pcall(obj.SetFont, obj, AetherFontFile(weight), size, outline and "OUTLINE" or "")
+    return ok and set ~= false
+end
+
+if CreateFont and not AetherFontHighlight then
+    -- Fira's capitals are a little shorter than Friz Quadrata's at the same size.
+    local SCALE = 1.05
+    local function Make(name, base, weight, world)
+        local f = CreateFont(name)
+        local src = _G[base]
+        if src then f:CopyFontObject(src) end
+        local file, size, flags = f:GetFont()
+        size = size or 12
+        if not AetherSetFont(f, weight, size * SCALE, world) and file then
+            f:SetFont(file, size, flags or "")
+        end
+        f:SetShadowColor(0, 0, 0, world and 1 or 0.8)
+        f:SetShadowOffset(1, -1)
+    end
+    for _, d in ipairs({
+        { "AetherFontNormal",           "GameFontNormal",         "SemiBold" },
+        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold" },
+        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold" },
+        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold" },
+        { "AetherFontHighlight",        "GameFontHighlight",      "Regular" },
+        { "AetherFontHighlightSmall",   "GameFontHighlightSmall", "Regular" },
+        { "AetherFontDisable",          "GameFontDisable",        "Regular" },
+        { "AetherFontDisableSmall",     "GameFontDisableSmall",   "Regular" },
+        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true },
+        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true },
+        { "AetherFontWorld",            "GameFontHighlight",      "Bold", true },
+        { "AetherFontWorldSmall",       "GameFontHighlightSmall", "Bold", true },
+    }) do Make(d[1], d[2], d[3], d[4]) end
+end
+
 local PREFIX = "|cff4da6ffAetherPack:|r "
 
 local DEFAULTS = {
@@ -19,6 +69,7 @@ local DEFAULTS = {
     scale = 1,
     collapsed = { empty = true },
     bagPos = {},        -- one-bag windows you've dragged: bag -> { left, top }
+    deposit = true,     -- the "No swaps. Just drops." slot
 }
 
 local db
@@ -49,9 +100,9 @@ local function AetherButton(parent, name, small)
     local hl = AetherFill(b, 0.3, 0.65, 1, 0.3)
     hl:SetBlendMode("ADD")
     b:SetHighlightTexture(hl)
-    b:SetNormalFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetHighlightFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetDisabledFontObject(small and "GameFontDisableSmall" or "GameFontDisable")
+    b:SetNormalFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
     return b
 end
@@ -494,7 +545,7 @@ local function Header(key, title)
     if not h then
         h = CreateFrame("Button", nil, win)
         h:SetHeight(18)
-        h.text = h:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+        h.text = h:CreateFontString(nil, "OVERLAY", "AetherFontNormal")
         h.text:SetPoint("LEFT", 2, 0)
         h.line = h:CreateTexture(nil, "ARTWORK")
         h.line:SetColorTexture(0.3, 0.65, 1, 0.35)
@@ -553,6 +604,7 @@ function AetherPack_Layout()
     local cols = db.columns
     local width = PAD * 2 + cols * BUTTON + (cols - 1) * GAP
     local y = -62     -- below the title and search box
+    local lastHeader, lastHeaderY
     for _, s in ipairs(SECTIONS) do
         local list = groups[s.key]
         local title = s.key == "ammo" and FirstSectionTitle() or s.title
@@ -582,6 +634,8 @@ function AetherPack_Layout()
             h:SetPoint("TOPLEFT", win, "TOPLEFT", PAD, y)
             h:SetPoint("RIGHT", win, "RIGHT", -PAD, 0)
             h:Show()
+            h.line:SetPoint("RIGHT", h, "RIGHT", 0, 0)
+            lastHeader, lastHeaderY = (db.collapsed[s.key] and h or nil), y
             y = y - 20
             if db.collapsed[s.key] then
                 for _, e in ipairs(list) do e.b:Hide() end
@@ -637,12 +691,36 @@ function AetherPack_Layout()
     end
     if #reagents > 0 then rows[#rows + 1] = { label = "Reagents", text = table.concat(reagents, "  ") } end
 
+    -- The deposit slot: bottom right, beside the bars. Its label sits on the
+    -- last section's row when that section is folded (usually Free slots),
+    -- otherwise on a row of its own.
+    local dep, depBottom = win.deposit, 0
+    if db.deposit then
+        local labelY
+        if lastHeader then
+            labelY = lastHeaderY - 9
+            lastHeader.line:SetPoint("RIGHT", lastHeader, "RIGHT", -((win.depositLabel:GetStringWidth() or 110) + 12), 0)
+        else
+            labelY = y - 7
+            y = y - 16
+        end
+        win.depositLabel:ClearAllPoints()
+        win.depositLabel:SetPoint("RIGHT", win, "TOPRIGHT", -PAD, labelY)
+        win.depositLabel:Show()
+        dep:ClearAllPoints()
+        dep:SetPoint("TOPRIGHT", win, "TOPRIGHT", -PAD, labelY - 12)
+        dep:Show()
+        depBottom = -(labelY - 12) + BUTTON
+    else
+        win.depositLabel:Hide()
+        dep:Hide()
+    end
     y = y - 4
     for i, row in ipairs(rows) do
         local bar = win.bars[i] or (function()
             local b = CreateFrame("Frame", nil, win)
             b:SetHeight(16)
-            b.label = b:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+            b.label = b:CreateFontString(nil, "OVERLAY", "AetherFontNormalSmall")
             b.label:SetPoint("LEFT", 0, 0)
             b.label:SetWidth(54)
             b.label:SetJustifyH("LEFT")
@@ -653,7 +731,7 @@ function AetherPack_Layout()
             b.fill = b:CreateTexture(nil, "ARTWORK")
             b.fill:SetPoint("LEFT", b.track, "LEFT", 0, 0)
             b.fill:SetHeight(6)
-            b.text = b:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+            b.text = b:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
             b.text:SetPoint("LEFT", b.track, "RIGHT", 8, 0)
             b.text:SetPoint("RIGHT", b, "RIGHT", 0, 0)
             b.text:SetJustifyH("LEFT")
@@ -662,7 +740,7 @@ function AetherPack_Layout()
         end)()
         bar:ClearAllPoints()
         bar:SetPoint("TOPLEFT", win, "TOPLEFT", PAD, y)
-        bar:SetPoint("RIGHT", win, "RIGHT", -PAD, 0)
+        bar:SetPoint("RIGHT", win, "RIGHT", -PAD - (db.deposit and (BUTTON + 10) or 0), 0)
         bar.label:SetText(row.label)
         bar.text:SetText(row.text)
         if row.total then
@@ -692,7 +770,8 @@ function AetherPack_Layout()
     win.junkValue = junkValue
     win.sell:SetShown(win.atMerchant and junkValue > 0)
     UpdateBackpackCount(st)
-    win:SetSize(width, -y + (win.sell:IsShown() and 34 or 10))
+    AetherPack_UpdateDeposit(st)
+    win:SetSize(width, math.max(-y, depBottom) + (win.sell:IsShown() and 34 or 10))
 end
 
 -- Quick refresh of icons, counts and locks without moving anything (safe in combat).
@@ -702,6 +781,168 @@ local function RefreshButtons()
             if b:IsShown() then UpdateButton(b, bag, slot) end
         end
     end
+end
+
+-- ==========================================
+-- DEPOSIT SLOT ("No swaps. Just drops.")
+-- ==========================================
+-- A drop target that never swaps: whatever you drop on it goes to a free
+-- slot, through the game's own "put in bag" calls. Crafting reagents try the
+-- reagent bag first; ammo, soul shards and the like try their special bag
+-- first; everything else goes to your first regular bag with room.
+local function FreeSlots(bag)
+    local get = C.GetContainerNumFreeSlots or GetContainerNumFreeSlots
+    if not get then return 0 end
+    local ok, free = pcall(get, bag)
+    if not ok or not free or IsSecret(free) then return 0 end
+    return free
+end
+
+-- Does a quiver, ammo pouch or soul bag take this item? (bag type flags)
+local function SpecialBagTakes(bag, itemID)
+    local t = BagType(bag)
+    if t == 0 or not itemID then return false end
+    local family = (C_Item and C_Item.GetItemFamily or GetItemFamily)
+    local ok, f = pcall(family, itemID)
+    if not ok or type(f) ~= "number" or IsSecret(f) then return false end
+    return bit and bit.band and bit.band(f, t) ~= 0 or false
+end
+
+local function IsCraftingReagent(itemID)
+    local get = (C_Item and C_Item.GetItemInfo) or GetItemInfo
+    if not get or not itemID then return false end
+    local ok, r = pcall(function() return select(17, get(itemID)) end)
+    if ok and r then return true end
+    return false
+end
+
+-- The bag a dropped item should go to, or nil if there's no room for it.
+local function DepositBag(itemID)
+    if REAGENT_BAG and NumSlots(REAGENT_BAG) > 0 and FreeSlots(REAGENT_BAG) > 0 then
+        if IsSoulBag(REAGENT_BAG) then
+            if SpecialBagTakes(REAGENT_BAG, itemID) then return REAGENT_BAG end
+        elseif IsCraftingReagent(itemID) then
+            return REAGENT_BAG
+        end
+    end
+    for bag = 1, 4 do      -- a quiver or soul bag that takes it
+        if NumSlots(bag) > 0 and FreeSlots(bag) > 0 and SpecialBagTakes(bag, itemID) then return bag end
+    end
+    for bag = 0, 4 do      -- then the first regular bag with room
+        if NumSlots(bag) > 0 and FreeSlots(bag) > 0 and BagType(bag) == 0 then return bag end
+    end
+end
+
+local function Deposit()
+    if not (CursorHasItem and CursorHasItem()) then return end
+    local kind, itemID = GetCursorInfo()
+    if kind ~= "item" then return end
+    local bag = DepositBag(itemID)
+    if not bag then
+        if UIErrorsFrame then UIErrorsFrame:AddMessage("No room in your bags for that.", 1, 0.3, 0.3) end
+        return
+    end
+    if bag == 0 then
+        pcall(PutItemInBackpack)
+    else
+        local inv = (C.ContainerIDToInventoryID or ContainerIDToInventoryID)
+        local ok, slot = pcall(inv, bag)
+        if ok and slot then pcall(PutItemInBag, slot) end
+    end
+end
+
+-- Free regular slots on the slot; its frame turns red when you're full.
+function AetherPack_UpdateDeposit(st)
+    if not win or not win.deposit then return end
+    st = st or Stats()
+    local free = st.bagTotal - st.bagUsed
+    local d = win.deposit
+    d.count:SetText(free)
+    local r, g, b = 1, 0.82, 0
+    if free <= 0 then r, g, b = 0.9, 0.35, 0.3 end
+    for _, t in ipairs(d.gold) do t:SetVertexColor(r, g, b, 1) end
+    d.free = free
+end
+
+local function BuildDeposit()
+    local MEDIA, WHITE = "Interface\\AddOns\\AetherPack\\Media\\", "Interface\\Buttons\\WHITE8X8"
+    local d = CreateFrame("Button", "AetherPackDeposit", win)
+    d:SetSize(BUTTON, BUTTON)
+    d:RegisterForClicks("LeftButtonUp")
+    d.gold = {}
+    local function Tex(layer, sub, file, r, g, b, a)
+        local t = d:CreateTexture(nil, layer, nil, sub)
+        t:SetTexture(file)
+        t:SetVertexColor(r, g, b, a or 1)
+        return t
+    end
+    local function Gold(layer, sub, file, a)
+        local t = Tex(layer, sub, file, 1, 0.82, 0, a)
+        d.gold[#d.gold + 1] = t
+        return t
+    end
+    -- the empty well
+    local well = Tex("BACKGROUND", 0, WHITE, 0.07, 0.07, 0.09, 0.95)
+    well:SetAllPoints()
+    -- soft gold glow, 6 units, outside the frame
+    local G = 6
+    local t = Gold("BACKGROUND", -1, MEDIA .. "win_glow_v", 0.35)    -- top
+    t:SetPoint("BOTTOMLEFT", d, "TOPLEFT", 0, 0); t:SetPoint("BOTTOMRIGHT", d, "TOPRIGHT", 0, 0); t:SetHeight(G)
+    t:SetTexCoord(0, 1, 1, 0)
+    t = Gold("BACKGROUND", -1, MEDIA .. "win_glow_v", 0.35)          -- bottom
+    t:SetPoint("TOPLEFT", d, "BOTTOMLEFT", 0, 0); t:SetPoint("TOPRIGHT", d, "BOTTOMRIGHT", 0, 0); t:SetHeight(G)
+    t = Gold("BACKGROUND", -1, MEDIA .. "win_glow_h", 0.35)          -- left
+    t:SetPoint("TOPRIGHT", d, "TOPLEFT", 0, 0); t:SetPoint("BOTTOMRIGHT", d, "BOTTOMLEFT", 0, 0); t:SetWidth(G)
+    t:SetTexCoord(1, 0, 0, 1)
+    t = Gold("BACKGROUND", -1, MEDIA .. "win_glow_h", 0.35)          -- right
+    t:SetPoint("TOPLEFT", d, "TOPRIGHT", 0, 0); t:SetPoint("BOTTOMLEFT", d, "BOTTOMRIGHT", 0, 0); t:SetWidth(G)
+    -- faint gold arrow pointing in (the window's chevron, turned down)
+    local arrow = Gold("ARTWORK", 0, MEDIA .. "win_chev_gold", 0.45)
+    arrow:SetSize(22, 22)
+    arrow:SetPoint("CENTER", d, "CENTER", 0, 3)
+    if arrow.SetRotation then arrow:SetRotation(math.pi) end
+    -- gold frame, 2 units
+    for _, e in ipairs({ { "TOPLEFT", "TOPRIGHT", nil, 2 }, { "BOTTOMLEFT", "BOTTOMRIGHT", nil, 2 },
+                         { "TOPLEFT", "BOTTOMLEFT", 2, nil }, { "TOPRIGHT", "BOTTOMRIGHT", 2, nil } }) do
+        t = Gold("BORDER", 2, WHITE)
+        t:SetPoint(e[1]); t:SetPoint(e[2])
+        if e[3] then t:SetWidth(e[3]) else t:SetHeight(e[4]) end
+    end
+    -- gold corner brackets, 3 units outside each corner, 7 long
+    local O, LEN = 3, 7
+    for _, c in ipairs({ { "TOPLEFT", -1, 1 }, { "TOPRIGHT", 1, 1 }, { "BOTTOMLEFT", -1, -1 }, { "BOTTOMRIGHT", 1, -1 } }) do
+        local h = Gold("OVERLAY", 1, WHITE)
+        h:SetSize(LEN, 2)
+        h:SetPoint(c[1], d, c[1], c[2] * O, c[3] * O)
+        local v = Gold("OVERLAY", 1, WHITE)
+        v:SetSize(2, LEN)
+        v:SetPoint(c[1], d, c[1], c[2] * O, c[3] * O)
+    end
+    -- free regular slots, like a stack count
+    d.count = d:CreateFontString(nil, "OVERLAY", "NumberFontNormal")
+    d.count:SetPoint("BOTTOMRIGHT", d, "BOTTOMRIGHT", -3, 3)
+    local hl = d:CreateTexture(nil, "HIGHLIGHT")
+    hl:SetTexture(WHITE)
+    hl:SetVertexColor(1, 0.82, 0, 0.15)
+    hl:SetPoint("TOPLEFT", 2, -2); hl:SetPoint("BOTTOMRIGHT", -2, 2)
+
+    d:SetScript("OnReceiveDrag", Deposit)
+    d:SetScript("OnClick", Deposit)
+    d:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_TOP")
+        GameTooltip:SetText("No swaps. Just drops.", 1, 0.82, 0)
+        GameTooltip:AddLine("Drop an item here and it goes into a free slot. Nothing already in your bags gets moved or swapped.", 1, 1, 1, true)
+        GameTooltip:AddLine("Crafting reagents go to your reagent bag first, ammo to your quiver.", 0.75, 0.75, 0.75, true)
+        GameTooltip:AddLine((self.free or 0) .. " free in your regular bags.", 0.75, 0.75, 0.75)
+        GameTooltip:Show()
+    end)
+    d:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    win.deposit = d
+
+    local label = win:CreateFontString(nil, "OVERLAY", "AetherFontNormalSmall")
+    label:SetText("No swaps. Just drops.")
+    label:SetJustifyH("RIGHT")
+    win.depositLabel = label
 end
 
 -- ==========================================
@@ -762,7 +1003,7 @@ local function BuildWindow()
     AetherDecorate(win, 26)
     tinsert(UISpecialFrames, "AetherPackFrame")   -- Esc closes it
 
-    local title = win:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    local title = win:CreateFontString(nil, "OVERLAY", "AetherFontNormal")
     title:SetPoint("TOPLEFT", PAD, -9)
     title:SetText("|cff4da6ffAETHER PACK|r")
 
@@ -778,14 +1019,14 @@ local function BuildWindow()
     search:SetPoint("TOPLEFT", PAD, -30)
     search:SetPoint("RIGHT", win, "RIGHT", -PAD, 0)
     search:SetAutoFocus(false)
-    search:SetFontObject("GameFontHighlightSmall")
+    search:SetFontObject("AetherFontHighlightSmall")
     search:SetTextInsets(6, 6, 0, 0)
     if search.SetBackdrop then
         search:SetBackdrop({ bgFile = "Interface\\Buttons\\WHITE8x8", edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1 })
         search:SetBackdropColor(0.07, 0.17, 0.32, 0.6)
         search:SetBackdropBorderColor(0.3, 0.65, 1, 0.6)
     end
-    local hint = search:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    local hint = search:CreateFontString(nil, "OVERLAY", "AetherFontDisableSmall")
     hint:SetPoint("LEFT", 6, 0)
     hint:SetText("Search")
     search:SetScript("OnTextChanged", function(self)
@@ -798,7 +1039,7 @@ local function BuildWindow()
 
     -- Gold next to the title; space bars and Sell junk at the bottom.
     win.bars = {}
-    win.money = win:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    win.money = win:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     win.money:SetPoint("RIGHT", close, "LEFT", -8, 0)
     win.sell = AetherButton(win, nil, true)
     win.sell:SetSize(76, 18)
@@ -812,6 +1053,7 @@ local function BuildWindow()
     end)
     win.sell:SetScript("OnLeave", function() GameTooltip:Hide() end)
     win.sell:Hide()
+    BuildDeposit()
 
     win:SetScript("OnShow", function() AetherPack_Layout() end)
     win:SetScale(db.scale or 1)
@@ -950,9 +1192,9 @@ local function BuildBagWindow(bag)
     close:SetText("x")
     close:SetPoint("TOPRIGHT", -6, -6)
     close:SetScript("OnClick", function() w:Hide() end)
-    w.count = w:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    w.count = w:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     w.count:SetPoint("RIGHT", close, "LEFT", -6, 0)
-    w.title = w:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    w.title = w:CreateFontString(nil, "OVERLAY", "AetherFontNormal")
     w.title:SetPoint("TOPLEFT", PAD, -9)
     w.title:SetPoint("RIGHT", w.count, "LEFT", -6, 0)
     w.title:SetJustifyH("LEFT")
@@ -1191,6 +1433,10 @@ SlashCmdList["AETHERPACK"] = function(msg)
         if win then win:SetScale(db.scale) end
         ForEachBagWindow(function(w) w:SetScale(db.scale) end)
         PlaceBagWindows()
+    elseif cmd == "deposit" then
+        db.deposit = (arg == "on") or (arg ~= "off" and not db.deposit)
+        AetherPack_Layout()
+        print(PREFIX .. "No swaps. Just drops. slot: " .. (db.deposit and "|cff33dd66on|r" or "|cffff5555off|r"))
     elseif cmd == "count" then
         db.backpackCount = (arg == "on") or (arg ~= "off" and not db.backpackCount)
         UpdateBackpackCount()
@@ -1208,6 +1454,7 @@ SlashCmdList["AETHERPACK"] = function(msg)
         print("  /pack replace on|off  open instead of Blizzard's bags")
         print("  /pack columns 6-16    icons per row")
         print("  /pack count on|off    free bag slots on the backpack button")
+        print("  /pack deposit on|off  the No swaps. Just drops. slot")
         print("  /pack scale 0.6-1.5   window size")
         print("  /pack reset           windows back to their starting spots")
     end

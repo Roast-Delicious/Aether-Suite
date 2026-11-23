@@ -2,7 +2,7 @@
 ## Title: AetherMeter
 ## Notes: Lightweight DPS / HPS meter for WoW Forever.
 ## Author: Aether
-## Version: 1.13.6
+## Version: 1.13.7
 ## OptionalDeps: AetherHub
 ## SavedVariables: AetherMeterDB
 ## SavedVariablesPerCharacter: AetherMeterCharDB

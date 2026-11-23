@@ -65,8 +65,32 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-Current build: Frames 1.14.1, Hub 1.13.2, Bars 1.14.0, Chat 1.0.6,
-Pack 1.2.1 (others unchanged).
+Current build: Hub 1.14.0, Meter 1.13.7, Bars 1.14.1, Coords 1.3.7,
+Pathfinder 1.9.3, Ledger 1.5.13, Pack 1.3.0, Frames 1.14.2, Chat 1.0.6
+(others unchanged).
+
+Aether text style (2026-11-23, built and sent; in-game check pending):
+tools/aether_text.lua is the shared AETHER TEXT snippet, pasted near the top
+of Hub, Pack, Ledger, Pathfinder, Frames, Coords, Meter and Bars (keep the
+copies identical). It makes AetherFont<Normal|NormalSmall|NormalLarge|
+NormalHuge|Highlight|HighlightSmall|Disable|DisableSmall> (Fira Regular,
+SemiBold for the gold Normal ones, soft shadow, size x1.05, copied from the
+GameFont of the same name) and AetherFontWorld[Normal][Small] (Fira Bold +
+OUTLINE). All "GameFont..." names in those addons were switched to
+"AetherFont..."; Meter rows/header/title use the World ones; Coords readout
+and action-button hotkeys/counts use AetherSetFont(..., "Bold", size, true).
+Fonts: AetherHub/Media/Fonts/FiraSans-{Regular,SemiBold,Bold}.ttf + OFL;
+missing file -> Blizzard's font. Not converted (on purpose): Chat (chat
+text), ItemID (tooltip font), Marks (nameplate text). Test:
+tools/text_style_test.py.
+
+AetherPack 1.3.0: "No swaps. Just drops." deposit slot (AetherPackDeposit),
+bottom right beside the bars, label on the last folded section row (else its
+own row). Drop/click -> PutItemInBackpack/PutItemInBag into a free slot:
+reagent bag first for crafting reagents (GetItemInfo 17th return), special
+bags by GetItemFamily & bag type, then first regular bag. Count = free
+regular slots; gold turns red at 0. /pack deposit on|off (db.deposit).
+Test: tools/pack_deposit_test.py. User chose label/place from mockups.
 
 AetherFrames 1.14.1 (2026-11-23): AURA_GAP 4 (was 11) between the
 capsule bottom and the player/target aura rows (custom rows and
@@ -148,7 +172,7 @@ Run from /home/claude/tools, e.g.:
     for t in hub_general_test frames_test frames_badge_test frames_party_test \
              frames_center_test frames_lineup_test frames_portrait_test \
              frames_aggro_test frames_threat_test frames_aura_test \
-             pack_test pack_bagwin_test \
+             pack_test pack_bagwin_test pack_deposit_test text_style_test \
              ledger_full_test bars_xp_test bars_xp_modern_test meter_dock_test \
              chat_test coords_test; do python3 $t.py >/dev/null 2>&1 || echo FAIL $t; done
 

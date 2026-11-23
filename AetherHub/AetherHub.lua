@@ -11,6 +11,56 @@
 -- They list AetherHub as an optional dependency, so it loads before them.
 -- ==========================================
 
+-- ==========================================
+-- AETHER TEXT
+-- ==========================================
+-- The Aether text style, in Fira Sans (the unit frames' font; SIL Open Font
+-- License, see AetherHub\Media\Fonts\FiraSans-OFL.txt). In windows: Regular
+-- for text, SemiBold for the gold headings, with a soft shadow. Over the game
+-- world (AetherFontWorld...): Bold with a thin black outline and a shadow, so
+-- it reads on any background, faded or not. Each copies the Blizzard font it
+-- stands in for (size, color), so layouts stay the same. The files live in
+-- AetherHub\Media\Fonts; if one can't load, Blizzard's font stays.
+AETHER_FONT_DIR = AETHER_FONT_DIR or "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-"
+local function AetherFontFile(weight) return AETHER_FONT_DIR .. weight .. ".ttf" end
+
+-- Sets a Fira font on a font object or font string; false if it didn't load.
+local function AetherSetFont(obj, weight, size, outline)
+    local ok, set = pcall(obj.SetFont, obj, AetherFontFile(weight), size, outline and "OUTLINE" or "")
+    return ok and set ~= false
+end
+
+if CreateFont and not AetherFontHighlight then
+    -- Fira's capitals are a little shorter than Friz Quadrata's at the same size.
+    local SCALE = 1.05
+    local function Make(name, base, weight, world)
+        local f = CreateFont(name)
+        local src = _G[base]
+        if src then f:CopyFontObject(src) end
+        local file, size, flags = f:GetFont()
+        size = size or 12
+        if not AetherSetFont(f, weight, size * SCALE, world) and file then
+            f:SetFont(file, size, flags or "")
+        end
+        f:SetShadowColor(0, 0, 0, world and 1 or 0.8)
+        f:SetShadowOffset(1, -1)
+    end
+    for _, d in ipairs({
+        { "AetherFontNormal",           "GameFontNormal",         "SemiBold" },
+        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold" },
+        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold" },
+        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold" },
+        { "AetherFontHighlight",        "GameFontHighlight",      "Regular" },
+        { "AetherFontHighlightSmall",   "GameFontHighlightSmall", "Regular" },
+        { "AetherFontDisable",          "GameFontDisable",        "Regular" },
+        { "AetherFontDisableSmall",     "GameFontDisableSmall",   "Regular" },
+        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true },
+        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true },
+        { "AetherFontWorld",            "GameFontHighlight",      "Bold", true },
+        { "AetherFontWorldSmall",       "GameFontHighlightSmall", "Bold", true },
+    }) do Make(d[1], d[2], d[3], d[4]) end
+end
+
 local ADDON_NAME = ...
 local PREFIX = "|cff4da6ffAetherHub:|r "
 
@@ -87,9 +137,9 @@ local function AetherButton(parent, name, small)
     local hl = AetherFill(b, 0.3, 0.65, 1, 0.3)
     hl:SetBlendMode("ADD")
     b:SetHighlightTexture(hl)
-    b:SetNormalFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetHighlightFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetDisabledFontObject(small and "GameFontDisableSmall" or "GameFontDisable")
+    b:SetNormalFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
     b.aetherSmall = small
     return b
@@ -100,7 +150,7 @@ end
 -- because LockHighlight and mouse-over switch to the highlight font and wipe
 -- a plain color change back to white.
 local function SetSelected(b, on)
-    local font = (on and "GameFontNormal" or "GameFontHighlight") .. (b.aetherSmall and "Small" or "")
+    local font = (on and "AetherFontNormal" or "AetherFontHighlight") .. (b.aetherSmall and "Small" or "")
     b:SetNormalFontObject(font)
     b:SetHighlightFontObject(font)
     if on then b:LockHighlight() else b:UnlockHighlight() end
@@ -265,7 +315,7 @@ local function Confirm(question, action)
             f:SetBackdropBorderColor(0.3, 0.7, 1, 0.8)
         end
         AetherDecorate(f, 0)
-        f.text = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+        f.text = f:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")
         f.text:SetPoint("TOPLEFT", 14, -14)
         f.text:SetPoint("TOPRIGHT", -14, -14)
         f.text:SetJustifyH("CENTER")
@@ -506,14 +556,14 @@ local function Tip(frame, text)
 end
 
 local function AddHeader(page, text)
-    local fs = page:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    local fs = page:CreateFontString(nil, "OVERLAY", "AetherFontNormal")
     fs:SetPoint("TOPLEFT", page, "TOPLEFT", 0, page.y)
     fs:SetText(text)
     page.y = page.y - 22
 end
 
 local function AddNote(page, text, getText, minLines)
-    local fs = page:CreateFontString(nil, "OVERLAY", "GameFontHighlight")   -- easy-to-read size
+    local fs = page:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")   -- easy-to-read size
     fs:SetPoint("TOPLEFT", page, "TOPLEFT", 2, page.y)
     fs:SetPoint("RIGHT", page, "RIGHT", -4, 0)
     fs:SetJustifyH("LEFT")
@@ -554,7 +604,7 @@ local function MakeCheck(parent, label)
         elseif self:GetChecked() then self:SetBackdropBorderColor(1, 0.82, 0, 1)
         else self:SetBackdropBorderColor(0.3, 0.65, 1, 0.9) end
     end
-    cb.label = cb:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    cb.label = cb:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")
     cb.label:SetPoint("LEFT", cb, "RIGHT", 6, 0)
     cb.label:SetText(label)
     cb:SetHitRectInsets(0, -(cb.label:GetStringWidth() + 6), 0, 0)   -- label is clickable too
@@ -599,7 +649,7 @@ end
 
 -- A slider; values are whole numbers between min and max.
 local function AddSlider(page, label, min, max, step, get, set, suffix, tip)
-    local title = page:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    local title = page:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")
     title:SetPoint("TOPLEFT", page, "TOPLEFT", 4, page.y)
     title:SetText(label)
     page.y = page.y - 20
@@ -626,10 +676,10 @@ local function AddSlider(page, label, min, max, step, get, set, suffix, tip)
     Tip(s, tip)
     -- The range at each end, under the track.
     local function Fmt(v) return (math.floor(v * 100 + 0.5) / 100) .. (suffix or "") end
-    local lo = s:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    local lo = s:CreateFontString(nil, "OVERLAY", "AetherFontDisableSmall")
     lo:SetPoint("TOPLEFT", s, "BOTTOMLEFT", 0, 1)
     lo:SetText(Fmt(min))
-    local hi = s:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    local hi = s:CreateFontString(nil, "OVERLAY", "AetherFontDisableSmall")
     hi:SetPoint("TOPRIGHT", s, "BOTTOMRIGHT", 0, 1)
     hi:SetText(Fmt(max))
 
@@ -638,7 +688,7 @@ local function AddSlider(page, label, min, max, step, get, set, suffix, tip)
     valueText:SetSize(54, 20)
     valueText:SetPoint("LEFT", s, "RIGHT", 12, 0)
     valueText:SetAutoFocus(false)
-    valueText:SetFontObject("GameFontHighlight")
+    valueText:SetFontObject("AetherFontHighlight")
     valueText:SetJustifyH("CENTER")
     if valueText.SetBackdrop then
         valueText:SetBackdrop({ bgFile = "Interface\\Buttons\\WHITE8x8", edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1 })
@@ -680,7 +730,7 @@ end
 
 -- A row of buttons where one is selected: options = { {value, label}, ... }
 local function AddChoice(page, label, options, get, set, tip)
-    local title = page:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    local title = page:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")
     title:SetPoint("TOPLEFT", page, "TOPLEFT", 4, page.y)
     title:SetText(label)
     page.y = page.y - 20
@@ -715,7 +765,7 @@ end
 -- options() returns { {value, label}, ... }; getText() is the button's text.
 -- After a choice, the whole page refreshes (other labels may depend on it).
 local function AddDropdown(page, label, options, get, set, getText, tip)
-    local title = page:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    local title = page:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")
     title:SetPoint("TOPLEFT", page, "TOPLEFT", 4, page.y - 3)
     title:SetText(label)
 
@@ -763,7 +813,7 @@ end
 -- "Also on: Fading, Layout": small buttons that open the shared pages where
 -- this addon's look, fading or placement now live.
 local function AddLinks(page, names, text)
-    local label = page:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    local label = page:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     label:SetPoint("TOPLEFT", page, "TOPLEFT", 4, page.y - 4)
     label:SetTextColor(0.7, 0.7, 0.7)
     label:SetText(text or "Its look, fading and placement:")
@@ -1648,10 +1698,10 @@ local function BuildPage(name)
     end)
     view:SetScript("OnHide", function(self) self.bar:Hide() end)
 
-    local title = page:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    local title = page:CreateFontString(nil, "OVERLAY", "AetherFontNormalLarge")
     title:SetPoint("TOPLEFT", page, "TOPLEFT", 0, 0)
     title:SetText(name)
-    local sub = page:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    local sub = page:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     sub:SetPoint("LEFT", title, "RIGHT", 8, -1)
     sub:SetTextColor(0.6, 0.6, 0.6)
     if IS_GENERAL[name] then
@@ -1704,7 +1754,7 @@ local function BuildWindow()
     AetherDecorate(hub, 30)
     tinsert(UISpecialFrames, "AetherHubFrame")   -- Esc closes it
 
-    local title = hub:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    local title = hub:CreateFontString(nil, "OVERLAY", "AetherFontNormal")
     title:SetPoint("TOPLEFT", hub, "TOPLEFT", 14, -12)
     title:SetText("|cff4da6ffAETHER HUB|r  |cff9d9d9dv" .. Version("AetherHub") .. "|r")
 
@@ -1721,7 +1771,7 @@ local function BuildWindow()
     -- One line per tab, with the version on the right.
     local prev
     local function Section(text)
-        local fs = side:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+        local fs = side:CreateFontString(nil, "OVERLAY", "AetherFontNormalSmall")
         if prev then fs:SetPoint("TOPLEFT", prev, "BOTTOMLEFT", 2, -8)
         else fs:SetPoint("TOPLEFT", side, "TOPLEFT", 10, -9) end
         fs:SetText(text)
@@ -1753,10 +1803,10 @@ local function BuildWindow()
         hl:SetAllPoints()
         hl:SetColorTexture(1, 1, 1, 0.08)
 
-        tab.text = tab:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+        tab.text = tab:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")
         tab.text:SetPoint("LEFT", tab, "LEFT", 8, 0)
         tab.text:SetText(PAGE_TITLE[name] or name)
-        local status = tab:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        local status = tab:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
         status:SetPoint("RIGHT", tab, "RIGHT", -6, 0)
         if name == "Character" then
             local me = GetProfile()
@@ -1801,7 +1851,7 @@ local function BuildWindow()
     mm:SetChecked(not (hubDB and hubDB.minimapHidden))
     mm:UpdateEdge()
 
-    local footer = hub:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    local footer = hub:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     footer:SetPoint("BOTTOMLEFT", hub, "BOTTOMLEFT", 14, 17)
     footer:SetTextColor(0.6, 0.6, 0.6)
     footer:SetText("Changes apply right away. Hover anything for help.")
@@ -1891,10 +1941,10 @@ end
 local function RegisterOptionsEntry()
     local panel = CreateFrame("Frame")
     panel.name = "AetherHub"
-    local t = panel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    local t = panel:CreateFontString(nil, "OVERLAY", "AetherFontNormalLarge")
     t:SetPoint("TOPLEFT", 16, -16)
     t:SetText("AetherHub")
-    local d = panel:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    local d = panel:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")
     d:SetPoint("TOPLEFT", t, "BOTTOMLEFT", 0, -8)
     d:SetText("All options for the Aether addons, with shared Appearance, Fading and Layout pages.")
     local b = AetherButton(panel)

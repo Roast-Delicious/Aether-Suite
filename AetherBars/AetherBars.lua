@@ -1,6 +1,56 @@
 -- AetherBars: minimal action bar styling for WoW Forever (works on Classic-style UIs)
 -- Only changes how things look (textures, alpha, fonts), so it never blocks your spells in combat.
 
+-- ==========================================
+-- AETHER TEXT
+-- ==========================================
+-- The Aether text style, in Fira Sans (the unit frames' font; SIL Open Font
+-- License, see AetherHub\Media\Fonts\FiraSans-OFL.txt). In windows: Regular
+-- for text, SemiBold for the gold headings, with a soft shadow. Over the game
+-- world (AetherFontWorld...): Bold with a thin black outline and a shadow, so
+-- it reads on any background, faded or not. Each copies the Blizzard font it
+-- stands in for (size, color), so layouts stay the same. The files live in
+-- AetherHub\Media\Fonts; if one can't load, Blizzard's font stays.
+AETHER_FONT_DIR = AETHER_FONT_DIR or "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-"
+local function AetherFontFile(weight) return AETHER_FONT_DIR .. weight .. ".ttf" end
+
+-- Sets a Fira font on a font object or font string; false if it didn't load.
+local function AetherSetFont(obj, weight, size, outline)
+    local ok, set = pcall(obj.SetFont, obj, AetherFontFile(weight), size, outline and "OUTLINE" or "")
+    return ok and set ~= false
+end
+
+if CreateFont and not AetherFontHighlight then
+    -- Fira's capitals are a little shorter than Friz Quadrata's at the same size.
+    local SCALE = 1.05
+    local function Make(name, base, weight, world)
+        local f = CreateFont(name)
+        local src = _G[base]
+        if src then f:CopyFontObject(src) end
+        local file, size, flags = f:GetFont()
+        size = size or 12
+        if not AetherSetFont(f, weight, size * SCALE, world) and file then
+            f:SetFont(file, size, flags or "")
+        end
+        f:SetShadowColor(0, 0, 0, world and 1 or 0.8)
+        f:SetShadowOffset(1, -1)
+    end
+    for _, d in ipairs({
+        { "AetherFontNormal",           "GameFontNormal",         "SemiBold" },
+        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold" },
+        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold" },
+        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold" },
+        { "AetherFontHighlight",        "GameFontHighlight",      "Regular" },
+        { "AetherFontHighlightSmall",   "GameFontHighlightSmall", "Regular" },
+        { "AetherFontDisable",          "GameFontDisable",        "Regular" },
+        { "AetherFontDisableSmall",     "GameFontDisableSmall",   "Regular" },
+        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true },
+        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true },
+        { "AetherFontWorld",            "GameFontHighlight",      "Bold", true },
+        { "AetherFontWorldSmall",       "GameFontHighlightSmall", "Bold", true },
+    }) do Make(d[1], d[2], d[3], d[4]) end
+end
+
 local ADDON = ...
 local Print
 local defaults = {
@@ -523,12 +573,12 @@ local function StyleButton(button)
     local font = STANDARD_TEXT_FONT or "Fonts\\FRIZQT__.TTF"
     local hotkey = button.HotKey or _G[name .. "HotKey"]
     if hotkey then
-        hotkey:SetFont(font, 10, "OUTLINE")
+        if not AetherSetFont(hotkey, "Bold", 10, true) then hotkey:SetFont(font, 10, "OUTLINE") end
         hotkey:ClearAllPoints()
         hotkey:SetPoint("TOPRIGHT", button, "TOPRIGHT", -2, -3)
     end
     local count = button.Count or _G[name .. "Count"]
-    if count then count:SetFont(font, 11, "OUTLINE") end
+    if count and not AetherSetFont(count, "Bold", 11, true) then count:SetFont(font, 11, "OUTLINE") end
     local macro = button.Name or _G[name .. "Name"]
     if macro then macro:SetAlpha(db.hideMacro and 0 or 1) end
 
@@ -1084,7 +1134,7 @@ SetXPUnlocked = function(on)
         local t = m:CreateTexture(nil, "OVERLAY")
         t:SetAllPoints()
         t:SetColorTexture(0.25, 0.6, 1, 0.35)
-        local label = m:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        local label = m:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
         label:SetPoint("BOTTOM", m, "TOP", 0, 4)
         label:SetText("XP bar - drag to move, drag the corner handle to resize, then click Done.")
         -- Done: the same look as the unit frames' Done buttons.
@@ -1097,7 +1147,7 @@ SetXPUnlocked = function(on)
         dEdge:SetColorTexture(1, 0.82, 0, 1)
         local dBg = done:CreateTexture(nil, "ARTWORK")
         dBg:SetAllPoints(); dBg:SetColorTexture(0.07, 0.17, 0.32, 0.95)
-        local dText = done:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        local dText = done:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
         dText:SetPoint("CENTER"); dText:SetText("Done")
         done:SetScript("OnClick", function() SetXPUnlocked(false) end)
         -- Moving and sizing are done by hand (following the cursor) rather than

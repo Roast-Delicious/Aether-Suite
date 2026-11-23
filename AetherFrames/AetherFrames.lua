@@ -4,6 +4,56 @@
 -- are notched to follow the ring. Frames fade out of combat (text and faces
 -- stay solid), and work like Blizzard's: click to target, right-click menu.
 
+-- ==========================================
+-- AETHER TEXT
+-- ==========================================
+-- The Aether text style, in Fira Sans (the unit frames' font; SIL Open Font
+-- License, see AetherHub\Media\Fonts\FiraSans-OFL.txt). In windows: Regular
+-- for text, SemiBold for the gold headings, with a soft shadow. Over the game
+-- world (AetherFontWorld...): Bold with a thin black outline and a shadow, so
+-- it reads on any background, faded or not. Each copies the Blizzard font it
+-- stands in for (size, color), so layouts stay the same. The files live in
+-- AetherHub\Media\Fonts; if one can't load, Blizzard's font stays.
+AETHER_FONT_DIR = AETHER_FONT_DIR or "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-"
+local function AetherFontFile(weight) return AETHER_FONT_DIR .. weight .. ".ttf" end
+
+-- Sets a Fira font on a font object or font string; false if it didn't load.
+local function AetherSetFont(obj, weight, size, outline)
+    local ok, set = pcall(obj.SetFont, obj, AetherFontFile(weight), size, outline and "OUTLINE" or "")
+    return ok and set ~= false
+end
+
+if CreateFont and not AetherFontHighlight then
+    -- Fira's capitals are a little shorter than Friz Quadrata's at the same size.
+    local SCALE = 1.05
+    local function Make(name, base, weight, world)
+        local f = CreateFont(name)
+        local src = _G[base]
+        if src then f:CopyFontObject(src) end
+        local file, size, flags = f:GetFont()
+        size = size or 12
+        if not AetherSetFont(f, weight, size * SCALE, world) and file then
+            f:SetFont(file, size, flags or "")
+        end
+        f:SetShadowColor(0, 0, 0, world and 1 or 0.8)
+        f:SetShadowOffset(1, -1)
+    end
+    for _, d in ipairs({
+        { "AetherFontNormal",           "GameFontNormal",         "SemiBold" },
+        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold" },
+        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold" },
+        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold" },
+        { "AetherFontHighlight",        "GameFontHighlight",      "Regular" },
+        { "AetherFontHighlightSmall",   "GameFontHighlightSmall", "Regular" },
+        { "AetherFontDisable",          "GameFontDisable",        "Regular" },
+        { "AetherFontDisableSmall",     "GameFontDisableSmall",   "Regular" },
+        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true },
+        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true },
+        { "AetherFontWorld",            "GameFontHighlight",      "Bold", true },
+        { "AetherFontWorldSmall",       "GameFontHighlightSmall", "Bold", true },
+    }) do Make(d[1], d[2], d[3], d[4]) end
+end
+
 local ADDON = ...
 local PREFIX = "|cff4da6ffAetherFrames:|r "
 local function Print(msg) print(PREFIX .. msg) end
@@ -1605,9 +1655,9 @@ local function AetherButton(parent, name, small)
     local hl = AetherFill(b, 0.3, 0.65, 1, 0.3)
     hl:SetBlendMode("ADD")
     b:SetHighlightTexture(hl)
-    b:SetNormalFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetHighlightFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetDisabledFontObject(small and "GameFontDisableSmall" or "GameFontDisable")
+    b:SetNormalFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
     return b
 end
@@ -1762,10 +1812,10 @@ local function AskLineUp()
             f:SetBackdropBorderColor(0.3, 0.7, 1, 0.8)
         end
         AetherDecorate(f, 0)
-        local q = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+        local q = f:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")
         q:SetPoint("TOP", f, "TOP", 0, -14)
         q:SetText("Line up your frames?")
-        local note = f:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        local note = f:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
         note:SetPoint("TOPLEFT", 14, -34); note:SetPoint("TOPRIGHT", -14, -34)
         note:SetJustifyH("CENTER")
         note:SetTextColor(0.75, 0.75, 0.75)
@@ -1881,7 +1931,7 @@ local function Mover(key, f)
     m:RegisterForDrag("LeftButton")
     local t = m:CreateTexture(nil, "OVERLAY")
     t:SetAllPoints(); t:SetColorTexture(0.3, 0.7, 1, 0.25)
-    local fs = m:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    local fs = m:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     fs:SetPoint("CENTER", m, "CENTER", 0, 8); fs:SetText(MOVE_LABEL[key] .. " - drag to move")
     -- A Done button on each frame, so you never need a command to finish.
     local done = CreateFrame("Button", nil, m)
@@ -1893,7 +1943,7 @@ local function Mover(key, f)
     edge:SetPoint("TOPLEFT", -1, 1); edge:SetPoint("BOTTOMRIGHT", 1, -1)
     edge:SetColorTexture(1, 0.82, 0, 1)
     bg:SetDrawLayer("ARTWORK")
-    local dt = done:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    local dt = done:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     dt:SetPoint("CENTER"); dt:SetText("Done")
     done:SetScript("OnClick", function() SetLocked(true); Print("Frames locked.") end)
     m:SetScript("OnDragStart", function()
