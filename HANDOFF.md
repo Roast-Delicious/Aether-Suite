@@ -57,13 +57,15 @@ Then read this file. The addons live at the repo root (one folder each);
 - Level badges: white number with black outline; "??" is a red ring
   around a black center. Class medallion at 3 o'clock; pet happiness
   face at 3 o'clock on the pet crest, pet level at 6.
-- Hub buttons: verb first, Title Case, "..." if it asks first, faint red
-  edge for reset/restore/clear, selected choices in Aether yellow.
+- Hub buttons: verb first, Title Case, "..." if it asks first, all with
+  the same blue edge (red edge on reset/clear was tried and REJECTED).
+  Selected choices: lettering in Aether yellow (SetSelected swaps font
+  objects; SetTextColor gets wiped by LockHighlight).
 
 ## Open items / waiting on the user
 
 - In-game check of the rounded windows, the XP bar, and button names
-  (build: Hub 1.13.0, Bars 1.14.0).
+  (build: Hub 1.13.1, Bars 1.14.0).
 - Target debuffs in combat via AuraContainer: confirm in game.
 - Level-number centering nudge (1 unit right): confirm.
 - Suggested next (not yet approved): shared Aether UI kit (one window

@@ -91,7 +91,19 @@ local function AetherButton(parent, name, small)
     b:SetHighlightFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
     b:SetDisabledFontObject(small and "GameFontDisableSmall" or "GameFontDisable")
     b:SetText(" ")
+    b.aetherSmall = small
     return b
+end
+
+-- Mark a choice button as selected: highlighted, lettering in Aether yellow.
+-- Swaps font objects (GameFontNormal is that yellow) instead of SetTextColor,
+-- because LockHighlight and mouse-over switch to the highlight font and wipe
+-- a plain color change back to white.
+local function SetSelected(b, on)
+    local font = (on and "GameFontNormal" or "GameFontHighlight") .. (b.aetherSmall and "Small" or "")
+    b:SetNormalFontObject(font)
+    b:SetHighlightFontObject(font)
+    if on then b:LockHighlight() else b:UnlockHighlight() end
 end
 
 -- A small square close button that hides its parent (set OnClick to change that).
@@ -689,15 +701,7 @@ local function AddChoice(page, label, options, get, set, tip)
     function control:Refresh()
         local current = get()
         for _, b in ipairs(buttons) do
-            -- the selected one: highlighted, with its text in Aether yellow
-            local fs = b:GetFontString()
-            if b.value == current then
-                b:LockHighlight()
-                if fs then fs:SetTextColor(1, 0.82, 0) end
-            else
-                b:UnlockHighlight()
-                if fs then fs:SetTextColor(1, 1, 1) end
-            end
+            SetSelected(b, b.value == current)
         end
     end
     for _, b in ipairs(buttons) do
@@ -747,11 +751,6 @@ local function AddButtons(page, list)
         if prev then b:SetPoint("LEFT", prev, "RIGHT", 6, 0)
         else b:SetPoint("TOPLEFT", page, "TOPLEFT", 4, page.y) end
         Tip(b, item[3])
-        -- Buttons that reset or clear something get a faint red edge.
-        local label = item[1]
-        if (label:find("^Reset") or label:find("^Restore") or label:find("^Clear")) and b.SetBackdropBorderColor then
-            b:SetBackdropBorderColor(0.95, 0.35, 0.35, 0.85)
-        end
         b:SetScript("OnClick", function()
             item[2]()
             if page:IsShown() then page:GetScript("OnShow")(page) end
@@ -1480,14 +1479,7 @@ BUILDERS.AetherLedger = function(p)
             row.go:SetShown(o ~= nil and not o.here)
             if o then
                 row.pick:SetText(i .. ". " .. o.label .. (o.here and "  (you're here)" or ""))
-                local fs = row.pick:GetFontString()
-                if i == selected then
-                    row.pick:LockHighlight()
-                    if fs then fs:SetTextColor(1, 0.82, 0) end
-                else
-                    row.pick:UnlockHighlight()
-                    if fs then fs:SetTextColor(1, 1, 1) end
-                end
+                SetSelected(row.pick, i == selected)
             end
         end
     end })

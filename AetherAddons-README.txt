@@ -14,7 +14,7 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.13.0    One window with every addon's settings
+  AetherHub          1.13.1    One window with every addon's settings
   AetherMeter        1.13.6    Damage and healing meter
   AetherBars         1.14.0    Clean action bars with a cooldown glow
   AetherCoords       1.3.6     Coordinates, plus your own map waypoints
@@ -132,9 +132,8 @@ that can't be undone asks first.
 
   Button names follow one pattern: what it does, then what it does it
   to ("Reset Meter Position", "Clear All Waypoints..."). A name ending
-  in "..." asks before it acts. Buttons that reset or clear something
-  have a faint red edge. In a row of choices, the selected one is
-  highlighted with its text in Aether yellow.
+  in "..." asks before it acts. In a row of choices, the selected one
+  is highlighted with its text in Aether yellow.
 
 Every setting is also a slash command (listed under each addon below)
 if you prefer typing.
