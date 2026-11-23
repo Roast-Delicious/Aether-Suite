@@ -2,7 +2,7 @@
 ## Title: AetherFrames
 ## Notes: Your, your pet's and your target's frames in the Aether look: round portrait crests with gold accents, notched bars, a buff row with timers, and fading out of combat.
 ## Author: Aether
-## Version: 1.6.2
+## Version: 1.14.0
 ## OptionalDeps: AetherHub
 ## SavedVariables: AetherFramesDB
 

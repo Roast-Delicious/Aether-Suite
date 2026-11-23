@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 22, 2026
+Last updated: November 23, 2026
 
 A set of eleven addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -14,7 +14,7 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.13.1    One window with every addon's settings
+  AetherHub          1.13.2    One window with every addon's settings
   AetherMeter        1.13.6    Damage and healing meter
   AetherBars         1.14.0    Clean action bars with a cooldown glow
   AetherCoords       1.3.6     Coordinates, plus your own map waypoints
@@ -28,7 +28,7 @@ window, so you rarely need to type a command.
   AetherPack         1.1.8     Your bags sorted into sections
   AetherChat         1.0.5     Chat with the Aether look, fitted beside
                                your action bars
-  AetherFrames       1.6.2     Your, your pet's, your target's, its
+  AetherFrames       1.14.0    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
 
@@ -89,7 +89,9 @@ that can't be undone asks first.
     solid under your mouse; unit frames out of combat, faces fade too.
   Layout: Unlock to Move (unlocks your unit frames, the meter and the
     XP bar together; drag them, then click Lock or Done on any of
-    them), Open Edit Mode (Blizzard's, for action bars), chat fitting
+    them), Open Edit Mode (Blizzard's, for action bars), Line Up Frames
+    and Line Up and Center Frames (the same as the question AetherFrames
+    asks after you move frames, any time), chat fitting
     to the left of your bars, the meter docking to the right,
     centering, Align Bars... and Undo Last Align, Fit Chat Now, and
     Reset All Positions... (unit frames, meter, bag window,
@@ -652,10 +654,53 @@ AetherFrames - player, pet, target and party frames            /af
     pet's frame: a dim steady glow while your pet holds aggro, and a
     fast pulse when it's losing it. If the game hides threat from
     addons in a fight, the glow simply stays off.
+  - Portraits: live 3D models on a soft glow in Aether blue, brightest
+    in the middle and fading to navy at the gold ring, so dark pets and
+    targets (a black wolf, say) stand out. Your pet's camera sits a bit
+    farther back so more of the glow shows. Where the game won't give a
+    model (a unit out of sight, some units in dungeons and raids, or an
+    offline party member, shown in gray), the frame uses the game's
+    flat portrait, with its black background, instead. /af portraits
+    2d switches to the flat portraits everywhere; /af portraits 3d
+    brings the models back. /af portraits test shows models on every
+    frame with no fallbacks (until /reload), and /af auras lists each
+    portrait and why it's flat, for tracking down problems.
+    To fit the 3D faces: /af portraits zoom 1.3 (bigger number = camera
+    farther back, smaller face) and /af portraits shift 0 -2 (moves the
+    model: right/left, then up/down). Put pet, player, target, tot or
+    party first to change just those frames (/af portraits zoom pet
+    1.5). /af portraits tune shows the settings; /af portraits tune
+    reset puts the starting ones back.
+  - Portrait colors: the glow behind a portrait is shaded, the color
+    itself in the middle and darker at the rim. An enemy mob as your
+    target gets the color of its level badge (gray, green, yellow, orange
+    or red; red for "??"). Player characters (friendly or not) and
+    friendly NPCs get their class color, the game's own, on your target,
+    the target of target and the party frames. You (even as your own
+    target) and your pet always keep the Aether blue. /af levelglow off
+    and /af classglow off turn either back to blue.
   - Fading: out of combat the rings, capsules and bars fade to the
     level you choose (50% to start); names, numbers and faces stay
     solid (tick "Faces fade too" to fade the portraits as well).
-    Everything turns solid in combat or under your mouse.
+    Everything turns solid under your mouse; in combat, see Aggro
+    fading below.
+  - Aggro fading: in combat, only your target, the target of target and
+    whoever has aggro on your target (you, your pet or a party member)
+    stay solid. Whoever your target is attacking lights up at once.
+    Everyone else fades further than out of combat: the frame to 30%, the
+    bars to 45% (they carry your health), and the portrait to 30% over a
+    dark disc, so the lit frame stands out. If your own frame lights up
+    while your pet tanks, you've pulled. Names and numbers never fade. /af
+    combatalpha 0-1 sets the in-combat level; /af aggro off makes every
+    frame solid in combat again. The bars never fade below 45%, in or out
+    of combat.
+  - Hit flash: when you, your pet or a party member takes a hit, that
+    crest's ring and the glow around it flash red: full red for a tenth of
+    a second, then gone within about a third of a second (misses, dodges
+    and parries don't flash; your target never does). Damage over time
+    flashes with each tick. /af hits off turns it off. /af hitnumbers on
+    also floats the damage up over the portrait for a moment, bigger for
+    crits (off to start).
   - Placement: the first time, the frames go where Blizzard's sat. Click
     Unlock to Move on AetherHub's Layout page and drag any frame: yours,
     your pet's, your target's, target of target and the party's each
@@ -665,15 +710,41 @@ AetherFrames - player, pet, target and party frames            /af
     it, to finish. A /reload always comes back locked. Reset Pet Frame
     Position puts your pet's frame back below yours. Frames can't be
     moved during combat.
+  - Line up after moving: when you finish (Done, right-click or Lock)
+    and you moved your frame, your pet's, the target's or the target
+    of target, a small box asks "Line up your frames?":
+      Line Up: your frame stays put; the target levels with it; your
+        pet's capsule end lines up under yours and the target of
+        target's under the target's, with those two level. Edges land
+        on whole screen pixels. A frame you parked somewhere else (more
+        than about 20 units out of line) is left where it is.
+      Line Up and Center: the same, then the lined-up group slides
+        sideways into the middle of the screen, keeping its shape and
+        its height.
+      Keep As Is (or Escape): every frame stays exactly where you
+        dropped it.
+    Moving only the party frames doesn't ask. The same two line-ups
+    are on AetherHub's Layout page any time, or /af lineup and
+    /af lineup center.
+  - Centered: your frame and your target's sit side by side in the
+    middle of the screen, mirrored, with your pet's under yours and the
+    target of target under the target's. Their inner ends line up, each
+    row is level, and the edges land on whole screen pixels for crisp
+    lines. This happens once, on your first login with 1.7.0; after
+    that the frames stay where you put them. To center them again,
+    type /af center (your frame keeps its height, so drag it up or
+    down first if you like).
   - Not shown yet: combo points (rogues, druids) and the small leader,
     PvP and resting icons. If you need those, turn AetherFrames off for
     now.
   - Turning it off brings Blizzard's frames back after a /reload.
   - Commands: /af alpha 0-1, faces on|off, buffs on|off, threat on|off,
-    mybuffs on|off, party on|off, tot on|off, petpower on|off, scale
-    0.6-1.6, unlock, lock, petreset, reset, on|off, auras (a report of
-    what the game tells the addon about your auras and hawk timers, for
-    tracking down problems).
+    mybuffs on|off, aggro on|off, combatalpha 0-1, hits on|off, hitnumbers
+    on|off, levelglow on|off, classglow on|off, party on|off, tot on|off,
+    petpower on|off, scale 0.6-1.6, portraits 3d|2d, unlock, lock, lineup
+    [center], center, petreset, reset, on|off, auras (a report of what the
+    game tells the addon about your auras and hawk timers, for tracking
+    down problems).
 
 
 AUTOMATIC NPC DATA REFRESH (optional, Windows only)

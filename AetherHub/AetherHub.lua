@@ -1108,6 +1108,19 @@ BUILDERS.Layout = function(p)
             if EditModeManagerFrame then pcall(ShowUIPanel, EditModeManagerFrame) end
         end, "Blizzard's Edit Mode, for action bars, the minimap and the rest of Blizzard's UI." },
     })
+    if IsLoaded("AetherFrames") then
+        AddButtons(p, {
+            { "Line Up Frames", function()
+                if InCombatLockdown() then print(PREFIX .. "can't move things in combat."); return end
+                Run("AETHERFRAMES", "lineup")
+            end, "Your frame stays put; the target levels with it, and your pet's and the target of target's "
+                .. "line up under them. Frames you parked far away stay there." },
+            { "Line Up and Center Frames", function()
+                if InCombatLockdown() then print(PREFIX .. "can't move things in combat."); return end
+                Run("AETHERFRAMES", "lineup center")
+            end, "Lines them up, then slides them into the middle of the screen at the same height." },
+        })
+    end
     if IsLoaded("AetherBars") or IsLoaded("AetherChat") or IsLoaded("AetherMeter") then
         AddHeader(p, "Around your action bars")
         if IsLoaded("AetherChat") then

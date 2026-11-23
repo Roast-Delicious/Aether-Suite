@@ -28,7 +28,7 @@ art = {
     "win_rglow_c":     raster(G + R, lambda X, Y: np.where(dist(X, Y, G + R, G + R) > R,
                                np.clip(1 - (dist(X, Y, G + R, G + R) - R) / G, 0, 1) ** 2, 0)),
 }
-for addon in ["AetherHub", "AetherMeter", "AetherCoords", "AetherItemID", "AetherLedger", "AetherPack"]:
+for addon in ["AetherHub", "AetherMeter", "AetherCoords", "AetherItemID", "AetherLedger", "AetherPack", "AetherFrames"]:
     for name, a in art.items():
         write_tga(f"/home/claude/brand/{addon}/Media/{name}.tga", a)
 print("ok", {k: round(float(v.max()), 2) for k, v in art.items()})

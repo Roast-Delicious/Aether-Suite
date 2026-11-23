@@ -11,6 +11,7 @@ local function Print(msg) print(PREFIX .. msg) end
 local defaults = {
     enabled     = true,   -- replace Blizzard's player, pet and target frames
     alpha       = 0.5,    -- frames and bars out of combat (text and faces stay solid)
+    combatAlpha = 0.3,    -- in combat, frames without aggro on your target (with aggro fading on)
     fadeFaces   = false,  -- fade the portraits too
     buffs       = true,   -- the target's buffs and debuffs under its frame
     myBuffs     = false,  -- your own buffs in your frame (Blizzard shows them top right)
@@ -20,6 +21,12 @@ local defaults = {
     threat      = true,   -- glow around the portrait when you (or your pet) have threat
     party       = true,   -- party frames in the Aether look (Blizzard's hidden; reload)
     tot         = true,   -- target of target, under the target frame (reload)
+    portrait3d  = true,   -- live 3D portraits on a soft Aether-blue glow (off: the game's flat ones)
+    aggroFade   = true,   -- in combat only the target, the target of target and whoever has aggro on it go solid
+    hitGlow     = true,   -- a quick red flash around a crest when that unit is hit (not the target)
+    hitNumbers  = false,  -- the damage, floating up over the portrait
+    levelGlow   = true,   -- an enemy mob as your target: its portrait glow in its level color
+    classGlow   = true,   -- players and friendly NPCs (target, target of target, party): class color
 }
 
 local db
@@ -31,6 +38,8 @@ local GOLD   = { 1.00, 0.82, 0.00 }
 local DARK   = { 0.043, 0.051, 0.071 }   -- inside the rings
 local PANEL  = { 0.051, 0.051, 0.051 }   -- capsule fill (AetherMeter's window color)
 local BARBG  = { 0.024, 0.039, 0.071 }
+local NAVY   = { 0.075, 0.157, 0.29 }
+local HIT    = { 1.00, 0.16, 0.10 }      -- the hit flash and damage numbers    -- the Aether title strips; the portrait glow's edge
 local CIRCLE = "Interface\\CHARACTERFRAME\\TempPortraitAlphaMask"
 
 local function IsSecret(v) return issecretvalue ~= nil and issecretvalue(v) end
@@ -70,6 +79,9 @@ local function BadgeFont(name, size)
 end
 local BADGE_FONT    = BadgeFont("AetherFramesBadgeFont", 11)
 local BADGE_FONT_SM = BadgeFont("AetherFramesBadgeSmallFont", 9)
+local HIT_FONT      = BadgeFont("AetherFramesHitFont", 14)       -- damage numbers (crits bigger)
+local HIT_FONT_SM   = BadgeFont("AetherFramesHitSmallFont", 12)
+local HIT_FONT_CRIT = BadgeFont("AetherFramesHitCritFont", 18)
 local NUM_FONT      = MakeFont("AetherFramesNumberFont", 11, true)
 local TIMER_FONT    = MakeFont("AetherFramesTimerFont", 10, true)
 
@@ -173,6 +185,30 @@ local function Circle(cx, R, dy)
     return cx + math.sqrt(R * R - dy * dy)
 end
 
+-- Point a 3D portrait's camera at the face (pulled back a little on the pet,
+-- so more of the glow shows around it).
+-- /af portraits zoom|shift tune these live (db.portraitTune, by group: all,
+-- player, pet, target, tot, party; a group's own value beats "all").
+local CAM = { pet = 1.25 }
+local function TuneGroup(unit)
+    if unit == "targettarget" then return "tot" end
+    if type(unit) == "string" and unit:match("^party%d$") then return "party" end
+    return unit
+end
+local function Tune(unit, k)
+    local t = AetherFramesDB and AetherFramesDB.portraitTune
+    if not t then return nil end
+    local g = t[TuneGroup(unit)]
+    if g and g[k] ~= nil then return g[k] end
+    return t.all and t.all[k]
+end
+local function FitCamera(m, unit)
+    pcall(m.SetPortraitZoom, m, 1)
+    if m.SetCamDistanceScale then pcall(m.SetCamDistanceScale, m, Tune(unit, "zoom") or CAM[unit] or 1) end
+    local x, y = Tune(unit, "x") or 0, Tune(unit, "y") or 0
+    if m.SetViewTranslation then pcall(m.SetViewTranslation, m, x, y) end
+end
+
 -- ==========================================
 -- BUILDING A FRAME
 -- ==========================================
@@ -181,6 +217,7 @@ end
 -- textInset (text start from the ring's center), padRight.
 local function Build(name, spec)
     local f = CreateFrame("Button", name, UIParent, "SecureUnitButtonTemplate")
+    f:SetFrameLevel(f:GetFrameLevel() + 3)   -- room below for the 3D portrait's layers
     f.unit, f.mirror, f.spec = spec.unit, spec.mirror, spec
     f.soft = {}
     local S, R = spec.S, spec.S / 2
@@ -226,8 +263,11 @@ local function Build(name, spec)
 
     -- The crest: dark disc, blue ring, gold ring, portrait, chevron accents.
     local inner = S - (S > 60 and 14 or 10)
-    Art(f, "ARTWORK", 0, "crest" .. S .. "_dark", DARK, 1, true, cx - R, cy - R, S, S)
-    Art(f, "ARTWORK", 2, "crest" .. S .. "_blue", BLUE, 1, true, cx - R, cy - R, S, S)
+    f.crestDark = Art(f, "ARTWORK", 0, "crest" .. S .. "_dark", DARK, 1, true, cx - R, cy - R, S, S)
+    -- With a 3D portrait: the same disc with a hole for the face, over the model.
+    f.crestRim = Art(f, "ARTWORK", 0, "crest" .. S .. "_rim", DARK, 1, true, cx - R, cy - R, S, S)
+    f.crestRim:Hide()
+    f.crestBlue = Art(f, "ARTWORK", 2, "crest" .. S .. "_blue", BLUE, 1, true, cx - R, cy - R, S, S)
     Art(f, "ARTWORK", 2, "crest" .. S .. "_gold", GOLD, 1, true, cx - inner / 2, cy - inner / 2, inner, inner)
     -- Threat halo: a soft glow just outside the blue ring, under everything
     -- else. Hidden until there's threat; it doesn't fade with the frame.
@@ -241,6 +281,16 @@ local function Build(name, spec)
         t:SetAlpha(0)
         f.glow[k] = t
     end
+    -- Hit flash: the same halo in red, over the threat glow, never faded.
+    if spec.unit ~= "target" and spec.unit ~= "targettarget" then
+        f.hitGlow = Art(f, "BACKGROUND", -7, "halo" .. S, HIT, 1, false, cx - HS / 2, cy - HS / 2, HS, HS)
+        f.hitGlow:SetAlpha(0)
+        local n = f:CreateFontString(nil, "OVERLAY", nil, 7)
+        n:SetFontObject(S > 60 and HIT_FONT or HIT_FONT_SM)
+        n:SetTextColor(HIT[1], HIT[2], HIT[3])
+        n:SetAlpha(0)
+        f.hitNumber, f.hitNumberY = n, cy
+    end
     local face = f:CreateTexture(nil, "ARTWORK", nil, 1)
     face:SetSize(inner - 2, inner - 2)
     PlaceCenter(f, face, cx, cy)
@@ -251,6 +301,47 @@ local function Build(name, spec)
         face:AddMaskTexture(mask)
     end
     f.face = face
+    -- 3D portrait (see SetFace): a glow and the unit's model on two frames just
+    -- below this one, so the rings, chevrons and badges draw over the model and
+    -- the rim hides its square corners. The model is the largest square that
+    -- fits inside the crest.
+    -- A solid dark disc behind the face that never fades, so a face faded in
+    -- combat sinks into dark instead of showing the ground through it.
+    local backing = CreateFrame("Frame", nil, f)
+    backing:SetFrameLevel(math.max(0, f:GetFrameLevel() - 3))
+    backing:SetSize(inner - 2, inner - 2)
+    PlaceCenter(f, backing, cx, cy)
+    backing:EnableMouse(false)
+    local bt = backing:CreateTexture(nil, "BACKGROUND")
+    bt:SetTexture(CIRCLE); bt:SetVertexColor(DARK[1], DARK[2], DARK[3], 1); bt:SetAllPoints(backing)
+    f.faceBacking = backing
+    local okM, m = pcall(CreateFrame, "PlayerModel", nil, f)
+    if okM and m then
+        local fd = inner - 2
+        local back = CreateFrame("Frame", nil, f)
+        back:SetFrameLevel(math.max(0, f:GetFrameLevel() - 2))
+        back:SetSize(fd, fd)
+        PlaceCenter(f, back, cx, cy)
+        back:EnableMouse(false)
+        for i, look in ipairs({ { CIRCLE, NAVY }, { ART .. "portrait_glow", BLUE } }) do
+            local t = back:CreateTexture(nil, "ARTWORK", nil, i)
+            t:SetTexture(look[1])
+            t:SetVertexColor(look[2][1], look[2][2], look[2][3], 1)
+            if t.SetSnapToPixelGrid then t:SetSnapToPixelGrid(false); t:SetTexelSnappingBias(0) end
+            t:SetAllPoints(back)
+            if i == 1 then f.portraitDisc = t else f.portraitGlow = t end   -- rim and middle colors
+        end
+        m:SetFrameLevel(math.max(0, f:GetFrameLevel() - 1))
+        local side = S / math.sqrt(2)
+        m:SetSize(side, side)
+        PlaceCenter(f, m, cx, cy)
+        m:EnableMouse(false)
+        if m.HasScript and m:HasScript("OnModelLoaded") then
+            m:SetScript("OnModelLoaded", function(self) f.modelLoaded = true; FitCamera(self, f.unit) end)
+        end
+        back:Hide(); m:Hide()
+        f.portraitBack, f.model = back, m
+    end
     Chevron(f, cx, cy - (R - 1), "up")
     f.sideChev = Chevron(f, cx + (R - 1), cy, "right")   -- capsule side; hidden while the class medallion shows
     if spec.badge ~= "level" then Chevron(f, cx, cy + (R - 1), "down") end
@@ -394,6 +485,7 @@ local function Build(name, spec)
             end
         end
         bar.sb = sb
+        sb.isBar = true                  -- fades with the frame, but never below BAR_MIN
         f.soft[#f.soft + 1] = sb
 
         if b.text then
@@ -496,6 +588,61 @@ local function Difficulty(lvl)
     return DIFF.gray
 end
 
+-- The portrait glow's color: shaded, the color itself in the middle, a
+-- darker shade (x0.35) at the rim.
+--   Enemy mob on the target frame: its level color (the badge's), so the
+--     danger shows out of the corner of your eye.
+--   Player characters (friendly or not) and friendly NPCs, on the target,
+--     the target of target and party frames: their class color (the game's
+--     own class colors).
+--   You (even as your own target) and your pet: always Aether blue, and so
+--     is anything the game won't tell us about.
+local function ClassColor(u)
+    local ok, _, token = pcall(UnitClass, u)
+    if not ok or token == nil or IsSecret(token) then return nil end
+    local c
+    if C_ClassColor and C_ClassColor.GetClassColor then
+        local okC, col = pcall(C_ClassColor.GetClassColor, token)
+        if okC and col and col.r then c = { col.r, col.g, col.b } end
+    end
+    if not c and RAID_CLASS_COLORS and RAID_CLASS_COLORS[token] then
+        local col = RAID_CLASS_COLORS[token]; c = { col.r, col.g, col.b }
+    end
+    return c
+end
+local function Ask(fn, ...)                -- a plain true/false answer, or nil if hidden or failed
+    if not fn then return nil end
+    local ok, v = pcall(fn, ...)
+    if not ok or IsSecret(v) then return nil end
+    return v
+end
+local function GlowColor(f, levelColor)
+    local u = f.unit
+    if u == "player" or u == "pet" then return nil end
+    if Ask(UnitIsUnit, u, "player") or Ask(UnitIsUnit, u, "pet") then return nil end
+    local isPlayer = Ask(UnitIsPlayer, u) == true
+    local enemy = Ask(UnitCanAttack, "player", u) == true
+    if enemy and not isPlayer then
+        if u == "target" and db.levelGlow ~= false then return levelColor end
+        return nil
+    end
+    if db.classGlow == false then return nil end
+    if isPlayer or not Ask(UnitPlayerControlled, u) then return ClassColor(u) end
+    return nil                               -- someone else's pet or guardian
+end
+local function TintGlow(f, c)
+    local t, g = f.portraitDisc, f.portraitGlow
+    if not t then return end
+    if c then
+        t:SetVertexColor(c[1] * 0.35, c[2] * 0.35, c[3] * 0.35, 1)
+        if g then g:SetVertexColor(c[1], c[2], c[3], 1) end
+    else
+        t:SetVertexColor(NAVY[1], NAVY[2], NAVY[3], 1)
+        if g then g:SetVertexColor(BLUE[1], BLUE[2], BLUE[3], 1) end
+    end
+    f.glowColor = c
+end
+
 local function NameColor(unit)
     if UnitIsPlayer(unit) and not UnitIsEnemy("player", unit) then return GOLD end
     local reaction = UnitReaction(unit, "player")
@@ -551,7 +698,87 @@ local function UpdatePower(f)
     SetBarColor(bar, r, g, b)
 end
 
-local function UpdateInfo(f)
+-- ==========================================
+-- PORTRAITS
+-- ==========================================
+-- 3D (db.portrait3d): the unit's live model on a soft Aether-blue glow, so
+-- dark pets and targets stand out. The game's flat 2D portrait (with the
+-- black background it bakes in) is the fallback: offline units (in gray),
+-- units out of sight, and units the game won't give a model for (some in
+-- instances).
+local portraitTest = false      -- /af portraits test: 3D everywhere, no fallbacks (to check models in game)
+local function Show2D(f, why)
+    f.faceWhy = why
+    if f.model then f.model:Hide(); f.portraitBack:Hide() end
+    f.crestRim:Hide(); f.crestDark:Show()
+    f.face:Show()
+    SetPortraitTexture(f.face, f.unit)
+    f.faceMode, f.modelCheck = "2d", nil
+end
+
+-- force: reload the model even if it's the same unit (its look changed, or
+-- the frame was hidden). poll: the twice-a-second target-of-target check,
+-- which only reloads when it can tell the unit changed.
+local function SetFace(f, force, poll)
+    local u, m = f.unit, f.model
+    local off = Offline(u)
+    if f.face.SetDesaturated then f.face:SetDesaturated(off) end
+    local okV, vis = pcall(UnitIsVisible, u)
+    if not m then Show2D(f, "no model frame (the game refused to make one)"); return end
+    if not db.portrait3d then Show2D(f, "flat portraits chosen"); return end
+    if not portraitTest then
+        if off then Show2D(f, "offline"); return end
+        if not okV then Show2D(f, "UnitIsVisible error: " .. tostring(vis)); return end
+        if not IsSecret(vis) and not vis then Show2D(f, "unit not visible"); return end
+    end
+    -- Reloading restarts the model, so only when the unit changes.
+    local okG, guid = pcall(UnitGUID, u)
+    local key = okG and not IsSecret(guid) and guid or nil
+    if not force and f.faceMode == "3d" then
+        if key and key == f.faceKey then return end
+        if not key and poll then return end
+    end
+    f.modelLoaded = false
+    local ok, done = pcall(m.SetUnit, m, u)
+    f.setUnitResult = ok and (IsSecret(done) and "hidden" or tostring(done)) or ("error: " .. tostring(done))
+    -- WoW Forever's SetUnit answers false even when the model loads (seen in
+    -- game, 1.60.1), so only an error counts here; the check below catches a
+    -- model that never shows up.
+    if not portraitTest and not ok then Show2D(f, "SetUnit " .. f.setUnitResult); return end
+    FitCamera(m, u)
+    f.faceKey, f.faceMode, f.faceWhy = key, "3d", nil
+    f.modelCheck = not portraitTest and (GetTime() + 0.75) or nil   -- still no model by then: back to 2D
+    f.face:Hide(); f.crestDark:Hide(); f.crestRim:Show()
+    f.portraitBack:Show(); m:Show()
+end
+
+-- Called from the frames' update tick.
+local function CheckModel(f)
+    if not f.modelCheck or GetTime() < f.modelCheck then return end
+    f.modelCheck = nil
+    if f.modelLoaded or not f.model or not f.model.GetModelFileID then return end
+    local ok, id = pcall(f.model.GetModelFileID, f.model)
+    if ok and not IsSecret(id) and (id == nil or id == 0) then Show2D(f, "no model file " .. tostring(id) .. " after 0.75 s") end
+end
+
+-- For /af auras: why each portrait is what it is.
+local function PortraitReport(f)
+    local m = f.model
+    local id = "-"
+    if m and m.GetModelFileID then
+        local ok, v = pcall(m.GetModelFileID, m)
+        id = ok and (IsSecret(v) and "hidden" or tostring(v)) or "error"
+    end
+    local okV, vis = pcall(UnitIsVisible, f.unit)
+    return string.format("%s %s%s | SetUnit %s, model file %s, loaded event %s%s, visible %s",
+        f.unit, f.faceMode or "-", f.faceWhy and (" (" .. f.faceWhy .. ")") or "",
+        tostring(f.setUnitResult or "-"), id,
+        (m and m.HasScript and m:HasScript("OnModelLoaded")) and "yes" or "no",
+        f.modelLoaded and " (fired)" or "",
+        okV and (IsSecret(vis) and "hidden" or tostring(vis)) or "error")
+end
+
+local function UpdateInfo(f, poll)
     local u = f.unit
     if not UnitExists(u) then return end
     f.nameFS:SetText(UnitName(u) or "")
@@ -584,10 +811,12 @@ local function UpdateInfo(f)
         f.badge.disc:SetVertexColor(c[1], c[2], c[3], 1)
         f.badge.warnRing:SetShown(not known)
         f.badge.warnHole:SetShown(not known)
+        f.levelColor = known and Difficulty(lvl) or DIFF.red
     else
         f.levelFS:SetText(u == "pet" and "" or text)
     end
-    SetPortraitTexture(f.face, u)
+    TintGlow(f, GlowColor(f, f.levelColor or DIFF.red))
+    SetFace(f, false, poll)
 end
 
 local function UpdateAll(f)
@@ -598,11 +827,45 @@ end
 -- ==========================================
 -- FADING
 -- ==========================================
-local function ApplyAlpha(f, a)
-    if f.curAlpha == a then return end
-    f.curAlpha = a
-    for _, t in ipairs(f.soft) do t:SetAlpha((t.baseAlpha or 1) * a) end
-    f.face:SetAlpha(db.fadeFaces and a or 1)
+local ApplyAlphaHidden
+local BAR_MIN = 0.45            -- the bars never fade below this (they carry your health)
+-- faceA: the portrait's alpha (in combat without aggro); nil = the usual
+-- (solid, or faded with the frame if "Faces fade too" is on).
+local function ApplyAlpha(f, a, faceA)
+    if f.curAlpha == a and f.curFace == faceA then return end
+    f.curAlpha, f.curFace = a, faceA
+    for _, t in ipairs(f.soft) do
+        t:SetAlpha((t.baseAlpha or 1) * (t.isBar and math.max(a, math.min(1, BAR_MIN)) or a))
+    end
+    local fa = faceA or (db.fadeFaces and a or 1)
+    f.face:SetAlpha(fa)
+    if f.model then f.model:SetAlpha(fa); f.portraitBack:SetAlpha(fa) end
+end
+
+-- Same as ApplyAlpha, but solid or faded decided by a hidden threat level
+-- (set below, once the curves exist). Where the game won't take it: solid.
+ApplyAlphaHidden = function(f, st, curveFor)
+    f.curAlpha = nil
+    if not f.softGroups then
+        f.softGroups = {}
+        for _, t in ipairs(f.soft) do
+            local b = (t.baseAlpha or 1) .. (t.isBar and "bar" or "")
+            f.softGroups[b] = f.softGroups[b] or {}
+            table.insert(f.softGroups[b], t)
+        end
+    end
+    local function Set(list, base)
+        local c = curveFor(base)
+        base = tonumber((tostring(base):gsub("bar", ""))) or 1
+        local ok = c and pcall(function()
+            local v = c:Evaluate(st)
+            for _, t in ipairs(list) do t:SetAlpha(v) end
+        end)
+        if not ok then for _, t in ipairs(list) do t:SetAlpha(base) end end
+    end
+    for base, list in pairs(f.softGroups) do Set(list, base) end
+    local faces = { f.face, f.model, f.portraitBack }
+    Set(faces, 1)                    -- in combat without aggro the face fades too
 end
 
 -- ==========================================
@@ -1015,6 +1278,103 @@ local function UpdateThreat(dt)
     end
 end
 
+-- ==========================================
+-- HITS
+-- ==========================================
+-- UNIT_COMBAT (still open to addons under the 12.0 restrictions) says when
+-- you, your pet or a party member takes a hit (WOUND; misses, dodges and
+-- the like don't count). The crest flashes red, the halo and the blue ring
+-- both: full red for 0.1 s, then fading out over 0.25 s. (The first try,
+-- 0.3 s easing out, showed real red for only about 0.1 s in game.) With db.hitNumbers the damage floats up over the portrait
+-- (the amount may be hidden from addons; the game still shows it).
+local HIT_HOLD, HIT_FADE, HIT_TEXT = 0.1, 0.25, 0.8
+local function HitRing(f, k)       -- the blue ring, k of the way to red
+    local r = f.crestBlue
+    -- no alpha argument: the color's alpha is the texture's alpha, which the fading owns
+    if r then r:SetVertexColor(BLUE[1] + (HIT[1] - BLUE[1]) * k, BLUE[2] + (HIT[2] - BLUE[2]) * k, BLUE[3] + (HIT[3] - BLUE[3]) * k) end
+end
+local function OnHit(f, action, flag, amount)
+    if not f or not f.hitGlow then return end
+    if not IsSecret(action) and action ~= "WOUND" then return end
+    local now = GetTime()
+    if db.hitGlow ~= false then f.hitAt = now end
+    if db.hitNumbers then
+        local n = f.hitNumber
+        local crit = not IsSecret(flag) and flag == "CRITICAL"
+        n:SetFontObject(crit and HIT_FONT_CRIT or (f.spec.S > 60 and HIT_FONT or HIT_FONT_SM))
+        if not (amount ~= nil and pcall(n.SetText, n, amount)) then n:SetText("") end
+        f.hitTextAt = now
+    end
+end
+local function UpdateHits()
+    local now = GetTime()
+    for _, f in pairs(frames) do
+        if f.hitAt then
+            local u = (now - f.hitAt - HIT_HOLD) / HIT_FADE
+            if u >= 1 then f.hitAt = nil; f.hitGlow:SetAlpha(0); HitRing(f, 0)
+            else
+                local k = u <= 0 and 1 or (1 - u * u)    -- hold, then fade (quicker at the end)
+                f.hitGlow:SetAlpha(k); HitRing(f, k)
+            end
+        end
+        if f.hitTextAt then
+            local t = (now - f.hitTextAt) / HIT_TEXT
+            local n = f.hitNumber
+            if t >= 1 then f.hitTextAt = nil; n:SetAlpha(0)
+            else
+                n:ClearAllPoints()
+                n:SetPoint("CENTER", f, "TOPLEFT", f.mirror and (f.w - f.cx) or f.cx, -(f.hitNumberY - 12 * t))
+                n:SetAlpha(t < 0.5 and 1 or (1 - t) * 2)
+            end
+        end
+    end
+end
+
+-- ==========================================
+-- AGGRO FADING
+-- ==========================================
+-- In combat (db.aggroFade): your target and the target of target go solid,
+-- and so does whoever has aggro on your target (the game's threat level 2
+-- or 3 against it): you, your pet or a party member. The rest stay faded, so the solid frame
+-- shows who is being hit and switches as aggro moves. Off: everything is
+-- solid in combat, as before.
+local function SolidInCombat(f)
+    return not db.aggroFade or f.unit == "target" or f.unit == "targettarget"
+end
+-- The game's threat level for this frame's unit against your target,
+-- possibly hidden. nil: no target, or not on its threat list. Can't ask at
+-- all: 3 (solid, the safe side). Whoever your target is attacking (its
+-- target) counts at once: the threat level lags a couple of seconds at the
+-- start of a fight (seen in game).
+local function AggroOf(f)
+    if not UnitThreatSituation then return 3 end
+    if not UnitExists("target") then return nil end
+    if UnitIsUnit and UnitExists("targettarget") then
+        local ok, same = pcall(UnitIsUnit, f.unit, "targettarget")
+        if ok and not IsSecret(same) and same == true then return 3 end
+    end
+    local ok, st = pcall(UnitThreatSituation, f.unit, "target")
+    if not ok then return 3 end
+    return st
+end
+
+-- Hidden levels: per texture brightness through a curve (no math on hidden
+-- values), one curve per base brightness, rebuilt when the fade level changes.
+local fadeCurves, fadeCurvesAlpha = {}, nil
+local function CombatFade() return db.combatAlpha or 0.3 end
+local function FadeCurve(key)
+    if fadeCurvesAlpha ~= CombatFade() then fadeCurves, fadeCurvesAlpha = {}, CombatFade() end
+    local c = fadeCurves[key]
+    if c == nil then
+        local isBar = tostring(key):find("bar") ~= nil
+        local base = tonumber((tostring(key):gsub("bar", ""))) or 1
+        local lo = (isBar and math.max(CombatFade(), BAR_MIN) or CombatFade()) * base
+        c = Step({ { 0, lo }, { 1.5, lo }, { 1.51, base }, { 3, base } }) or false
+        fadeCurves[key] = c
+    end
+    return c or nil
+end
+
 local function UpdateTimers()
     local now = GetTime()
     for _, list in ipairs({ buffIcons, targetIcons }) do
@@ -1119,6 +1479,321 @@ local function PlaceFrames()
     end
 end
 
+-- Center: your frame and your target's side by side in the middle of the
+-- screen, mirrored, with your pet under yours and the target of target under
+-- the target's. The inner capsule ends line up (your frame and your pet's on
+-- the right, the target's and its target's on the left), each row's tops
+-- match, and the lines land on whole screen pixels. The height of your frame
+-- stays where it is, so: drag your frame to the height you like, then Center.
+-- Rounding to whole screen pixels, in the frames' own units (no rounding if
+-- the game won't say the screen size), and the screen's width in those units.
+local function PixelGrid()
+    local e = frames.player:GetEffectiveScale()
+    local screenW = UIParent:GetWidth() * UIParent:GetEffectiveScale() / e
+    local px
+    if GetPhysicalScreenSize then
+        local ok, _, h = pcall(GetPhysicalScreenSize)
+        if ok and type(h) == "number" and h > 0 then px = 768 / (h * e) end
+    end
+    return function(v) return px and math.floor(v / px + 0.5) * px or v end, screenW
+end
+
+local CENTER_GAP  = 61    -- between your capsule and the target's (frame units)
+local CENTER_DROP = 120   -- from the top of your frame to the top of your pet's
+local function CenterFrames()
+    if InCombatLockdown() then return false, "Frames can't be moved in combat." end
+    local p, tgt, pet, tot = frames.player, frames.target, frames.pet, frames.targettarget
+    if not p then return false, "Frames aren't on." end
+    PlaceFrames()                                -- so the scale is current
+    local Snap, screenW = PixelGrid()
+    local top = p:GetTop() or (db.pos and db.pos.player and db.pos.player[2])
+    if not top then return false, "Couldn't find your frame." end
+    local gap = Snap(CENTER_GAP)
+    local inR = Snap(screenW / 2 - gap / 2)      -- right end of your capsule
+    local inL = inR + gap                        -- left end of the target's
+    local rowTop = Snap(top)
+    local subTop = Snap(rowTop - CENTER_DROP)
+    db.pos = db.pos or {}
+    db.pos.player = { inR - p.w, rowTop }
+    db.pos.target = { inL, rowTop }
+    db.pos.pet    = { inR - pet.w, subTop }
+    if tot then db.pos.tot = { inL, subTop } end
+    PlaceFrames()
+    return true
+end
+
+-- Line Up: after you move frames, tidy them without undoing your layout.
+-- Your frame stays put (rounded to the nearest screen pixel); the target
+-- levels with it; your pet's capsule end lines up under yours and the target
+-- of target's under the target's, with those two level. Only frames already
+-- close (within LINE_NEAR units) are pulled in, so a frame you parked
+-- somewhere else stays there. center: then slide the lined-up group sideways
+-- into the middle of the screen, keeping its shape.
+local LINE_NEAR = 20
+local function LineUp(center)
+    if InCombatLockdown() then return false, "Frames can't be moved in combat." end
+    local p, tgt, pet, tot = frames.player, frames.target, frames.pet, frames.targettarget
+    if not p then return false, "Frames aren't on." end
+    PlaceFrames()
+    local Snap, screenW = PixelGrid()
+    local function Spot(f)
+        if not f then return nil end
+        local l, t = f:GetLeft(), f:GetTop()
+        if l and t then return { l = l, t = t, w = f.w } end
+    end
+    local function Near(a, b) return math.abs(a - b) <= LINE_NEAR end
+    local P, T, Pe, To = Spot(p), Spot(tgt), Spot(pet), Spot(tot)
+    if not P then return false, "Couldn't find your frame." end
+    -- Inner ends: the right end for your frame and your pet's, the left end
+    -- for the target's and the target of target's (they're mirrored).
+    local pr = Snap(P.l + P.w); P.l, P.t = pr - P.w, Snap(P.t)
+    local group = { P }
+    if T then
+        T.l = Snap(T.l)
+        T.t = Near(T.t, P.t) and P.t or Snap(T.t)
+        group[#group + 1] = T
+    end
+    if Pe then
+        Pe.t = Snap(Pe.t)
+        if Near(Pe.l + Pe.w, pr) then Pe.l = pr - Pe.w; group[#group + 1] = Pe
+        else Pe.l = Snap(Pe.l + Pe.w) - Pe.w end
+    end
+    if To then
+        if T and Near(To.l, T.l) then To.l = T.l; group[#group + 1] = To else To.l = Snap(To.l) end
+        if Pe and Near(To.t, Pe.t) then To.t = Pe.t else To.t = Snap(To.t) end
+    end
+    if center then
+        -- your frame and the target's, centered as a pair
+        local l, r = P.l, P.l + P.w
+        if T then l, r = math.min(l, T.l), math.max(r, T.l + T.w) end
+        local shift = Snap(screenW / 2 - (l + r) / 2)
+        for _, s in ipairs(group) do s.l = s.l + shift end
+    end
+    db.pos = db.pos or {}
+    db.pos.player = { P.l, P.t }
+    if T then db.pos.target = { T.l, T.t } end
+    if Pe then db.pos.pet = { Pe.l, Pe.t } end
+    if To then db.pos.tot = { To.l, To.t } end
+    PlaceFrames()
+    return true
+end
+
+-- The Aether look for the question box: buttons and window trim, as in the
+-- other Aether addons.
+local function AetherFill(button, r, g, b, a)
+    local t = button:CreateTexture(nil, "BACKGROUND")
+    t:SetColorTexture(r, g, b, a)
+    t:SetPoint("TOPLEFT", 1, -1)
+    t:SetPoint("BOTTOMRIGHT", -1, 1)
+    return t
+end
+
+-- A button (use SetText/SetSize/SetScript as usual). small: smaller text.
+local function AetherButton(parent, name, small)
+    local b = CreateFrame("Button", name, parent, "BackdropTemplate")
+    b:SetSize(100, 22)
+    if b.SetBackdrop then
+        b:SetBackdrop({ edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1 })
+        b:SetBackdropBorderColor(0.3, 0.65, 1, 0.9)
+    end
+    b:SetNormalTexture(AetherFill(b, 0.07, 0.17, 0.32, 0.95))
+    b:SetPushedTexture(AetherFill(b, 0.03, 0.09, 0.19, 0.95))
+    b:SetDisabledTexture(AetherFill(b, 0.13, 0.13, 0.15, 0.9))
+    local hl = AetherFill(b, 0.3, 0.65, 1, 0.3)
+    hl:SetBlendMode("ADD")
+    b:SetHighlightTexture(hl)
+    b:SetNormalFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
+    b:SetHighlightFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
+    b:SetDisabledFontObject(small and "GameFontDisableSmall" or "GameFontDisable")
+    b:SetText(" ")
+    return b
+end
+
+-- Aether window trim: a double blue frame with a soft halo, gold corner
+-- brackets, a title strip with a gold underline, and a small gold gem at the
+-- top center. Plain colored textures only. titleHeight 0 = no title strip.
+local function AetherDecorate(frame, titleHeight)
+    if frame.aetherTrim then return end
+    frame.aetherTrim = true
+    -- The Aether window look: rounded corners, a blue edge with a fine inner
+    -- line, a soft blue glow, a navy title strip with a gold underline, and
+    -- gold chevrons at 12, 3, 6 and 9. Smooth images (Media\win_*), so it
+    -- stays crisp at any UI scale.
+    local MEDIA, WHITE = "Interface\\AddOns\\AetherFrames\\Media\\", "Interface\\Buttons\\WHITE8X8"
+    local R, IN, GLOW = 8, 3, 6.7          -- corner radius, inner line inset, glow width
+    local function Tex(layer, sub, file, c)
+        local t = frame:CreateTexture(nil, layer, nil, sub)
+        t:SetTexture(file)
+        t:SetVertexColor(c[1], c[2], c[3], c[4] or 1)
+        if t.SetSnapToPixelGrid then t:SetSnapToPixelGrid(false); t:SetTexelSnappingBias(0) end
+        return t
+    end
+    -- corner images are drawn as the top-left corner; flip them for the others
+    local FLIP = { TOPLEFT = { 0, 1, 0, 1 }, TOPRIGHT = { 1, 0, 0, 1 }, BOTTOMLEFT = { 0, 1, 1, 0 }, BOTTOMRIGHT = { 1, 0, 1, 0 } }
+    local CORNERS = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT" }
+    -- A rounded shape: a corner image at each corner, plus straight pieces.
+    -- line = thickness for an outline (nil: a solid fill); inset = distance in.
+    local function Shape(layer, sub, file, color, inset, line)
+        local parts = {}
+        local function Add(t) parts[#parts + 1] = t; return t end
+        for _, c in ipairs(CORNERS) do
+            local t = Add(Tex(layer, sub, MEDIA .. file, color))
+            local f = FLIP[c]
+            t:SetTexCoord(f[1], f[2], f[3], f[4])
+            t:SetSize(R, R)
+            t:SetPoint(c, frame, c, 0, 0)
+        end
+        if line then
+            local t = Add(Tex(layer, sub, WHITE, color))       -- top
+            t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, -inset); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -R, -inset); t:SetHeight(line)
+            t = Add(Tex(layer, sub, WHITE, color))             -- bottom
+            t:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", R, inset); t:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -R, inset); t:SetHeight(line)
+            t = Add(Tex(layer, sub, WHITE, color))             -- left
+            t:SetPoint("TOPLEFT", frame, "TOPLEFT", inset, -R); t:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", inset, R); t:SetWidth(line)
+            t = Add(Tex(layer, sub, WHITE, color))             -- right
+            t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -inset, -R); t:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -inset, R); t:SetWidth(line)
+        else
+            local t = Add(Tex(layer, sub, WHITE, color))       -- middle, full height
+            t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, 0); t:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -R, 0)
+            t = Add(Tex(layer, sub, WHITE, color))             -- left side, between the corners
+            t:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, -R); t:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, R); t:SetWidth(R)
+            t = Add(Tex(layer, sub, WHITE, color))             -- right side
+            t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 0, -R); t:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, R); t:SetWidth(R)
+        end
+        return parts
+    end
+
+    -- The window's own (square) backdrop becomes the rounded fill and edge, in
+    -- the same colors; later color changes go to the rounded pieces.
+    local bg, edge = { 0.05, 0.05, 0.05, 0.95 }, { 0.3, 0.7, 1, 1 }
+    if frame.GetBackdrop and frame:GetBackdrop() then
+        local r, g, b, a = frame:GetBackdropColor()
+        if r then bg = { r, g, b, a or 1 } end
+        r, g, b, a = frame:GetBackdropBorderColor()
+        if r then edge = { r, g, b, a or 1 } end
+        frame:SetBackdrop(nil)
+    end
+    local fill = Shape("BACKGROUND", -7, "win_round_fill", bg, 0, nil)
+    local outline = Shape("BORDER", 3, "win_round_line", edge, 0, 1)
+    Shape("BORDER", 1, "win_round_inner", { 0.3, 0.65, 1, 0.3 }, IN, 1)
+    local function Paint(parts, r, g, b, a) for _, t in ipairs(parts) do t:SetVertexColor(r, g, b, a or 1) end end
+    frame.SetBackdropColor = function(_, r, g, b, a) bg = { r, g, b, a or 1 }; Paint(fill, r, g, b, a) end
+    frame.SetBackdropBorderColor = function(_, r, g, b, a) edge = { r, g, b, a or 1 }; Paint(outline, r, g, b, a) end
+    frame.GetBackdropColor = function() return bg[1], bg[2], bg[3], bg[4] end
+    frame.GetBackdropBorderColor = function() return edge[1], edge[2], edge[3], edge[4] end
+
+    -- Soft blue glow just outside, brightest at the edge, following the corners.
+    local BLUE = { 0.3, 0.65, 1, 0.42 }
+    local function Glow(file, l, r, t, b)
+        local g = Tex("BACKGROUND", -8, MEDIA .. file, BLUE)
+        g:SetTexCoord(l, r, t, b)
+        return g
+    end
+    local t = Glow("win_glow_v", 0, 1, 1, 0)          -- top
+    t:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", R, 0); t:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -R, 0); t:SetHeight(GLOW)
+    t = Glow("win_glow_v", 0, 1, 0, 1)                -- bottom
+    t:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", R, 0); t:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", -R, 0); t:SetHeight(GLOW)
+    t = Glow("win_glow_h", 1, 0, 0, 1)                -- left
+    t:SetPoint("TOPRIGHT", frame, "TOPLEFT", 0, -R); t:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", 0, R); t:SetWidth(GLOW)
+    t = Glow("win_glow_h", 0, 1, 0, 1)                -- right
+    t:SetPoint("TOPLEFT", frame, "TOPRIGHT", 0, -R); t:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 0, R); t:SetWidth(GLOW)
+    for _, c in ipairs(CORNERS) do
+        local f = FLIP[c]
+        t = Glow("win_rglow_c", f[1], f[2], f[3], f[4])
+        t:SetSize(GLOW + R, GLOW + R)
+        t:SetPoint(c, frame, c, c:find("LEFT") and -GLOW or GLOW, c:find("TOP") and GLOW or -GLOW)
+    end
+
+    -- Title strip (navy, rounded at the top) with a gold underline.
+    if titleHeight and titleHeight > R then
+        local NAVY = { 0.075, 0.157, 0.29, 1 }
+        local S = IN + 1
+        for _, c in ipairs({ "TOPLEFT", "TOPRIGHT" }) do
+            local f = FLIP[c]
+            t = Tex("BORDER", 0, MEDIA .. "win_round_strip", NAVY)
+            t:SetTexCoord(f[1], f[2], f[3], f[4]); t:SetSize(R, R); t:SetPoint(c, frame, c, 0, 0)
+        end
+        t = Tex("BORDER", 0, WHITE, NAVY)                 -- top band between the rounded corners
+        t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, -S); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -R, -S); t:SetHeight(R - S)
+        t = Tex("BORDER", 0, WHITE, NAVY)                 -- the rest, full width
+        t:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -R); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -R); t:SetHeight(titleHeight - R)
+        local line = Tex("BORDER", 2, WHITE, { 1, 0.82, 0, 0.7 })
+        line:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -titleHeight); line:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -titleHeight)
+        line:SetHeight(1)
+    end
+
+    -- Gold chevrons at 12, 3, 6 and 9, pointing outward, 3 px off the edge;
+    -- the side ones a little larger. frame.aetherChevrons.left / .right let a
+    -- docked window hide the sides.
+    frame.aetherChevrons = {}
+    for _, c in ipairs({ { "top", "TOP", 0, 3, 0, 26 }, { "bottom", "BOTTOM", 0, -3, math.pi, 26 },
+                         { "left", "LEFT", -3, 0, math.pi / 2, 34 }, { "right", "RIGHT", 3, 0, -math.pi / 2, 34 } }) do
+        local set = {}
+        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.82, 0, 1 }, 7 } }) do
+            local ch = Tex("OVERLAY", g[3], MEDIA .. "win_chev_" .. g[1], g[2])
+            ch:SetSize(c[6], c[6])
+            ch:SetPoint("CENTER", frame, c[2], c[3], c[4])
+            if c[5] ~= 0 and ch.SetRotation then ch:SetRotation(c[5]) end   -- positive turns counter-clockwise
+            set[#set + 1] = ch
+        end
+        frame.aetherChevrons[c[1]] = set
+    end
+end
+
+
+-- "Line up your frames?" Asked when you finish moving, if a frame moved.
+-- Our own small box, not WoW's shared popups (an addon using those can get
+-- Blizzard's own protected popups blocked). Escape = Keep As Is.
+local lineBox
+local function AskLineUp()
+    if not lineBox then
+        local f = CreateFrame("Frame", "AetherFramesLineUp", UIParent, "BackdropTemplate")
+        f:SetSize(384, 104)
+        f:SetPoint("CENTER", UIParent, "CENTER", 0, 140)
+        f:SetFrameStrata("FULLSCREEN_DIALOG")
+        f:EnableMouse(true)
+        f:Hide()
+        if f.SetBackdrop then
+            f:SetBackdrop({ bgFile = "Interface\\Buttons\\WHITE8X8", edgeFile = "Interface\\Buttons\\WHITE8X8", edgeSize = 1 })
+            f:SetBackdropColor(0.05, 0.05, 0.08, 0.95)
+            f:SetBackdropBorderColor(0.3, 0.7, 1, 0.8)
+        end
+        AetherDecorate(f, 0)
+        local q = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+        q:SetPoint("TOP", f, "TOP", 0, -14)
+        q:SetText("Line up your frames?")
+        local note = f:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        note:SetPoint("TOPLEFT", 14, -34); note:SetPoint("TOPRIGHT", -14, -34)
+        note:SetJustifyH("CENTER")
+        note:SetTextColor(0.75, 0.75, 0.75)
+        note:SetText("Levels the rows and lines up the inner ends. Keep As Is leaves them exactly where you put them.")
+        local function Go(center)
+            local ok, why = LineUp(center)
+            if not ok then Print(why); return end         -- stays open (in combat: try again after)
+            f:Hide()
+            Print(center and "Frames lined up and centered." or "Frames lined up.")
+        end
+        local defs = { { "Line Up", 96, function() Go(false) end },
+                       { "Line Up and Center", 140, function() Go(true) end },
+                       { "Keep As Is", 96, function() f:Hide() end } }
+        local total = 0
+        for _, d in ipairs(defs) do total = total + d[2] end
+        total = total + 8 * (#defs - 1)
+        local x = -total / 2
+        for _, d in ipairs(defs) do
+            local b = AetherButton(f)
+            b:SetSize(d[2], 22)
+            b:SetPoint("BOTTOMLEFT", f, "BOTTOM", x, 12)
+            b:SetText(d[1])
+            b:SetScript("OnClick", d[3])
+            x = x + d[2] + 8
+        end
+        if UISpecialFrames then table.insert(UISpecialFrames, "AetherFramesLineUp") end
+        lineBox = f
+    end
+    lineBox:Show()
+end
+
 -- Blizzard's totem strip (it shows Summon Hawk's hawks, and totems and other
 -- temporary helpers, each with its time left) lives inside Blizzard's player
 -- frame, which is hidden. Move it under your crest instead. It stays
@@ -1191,6 +1866,7 @@ end
 -- MOVING (unlock)
 -- ==========================================
 local movers = {}
+local movedSinceUnlock = false   -- yours, pet, target or target of target dragged since unlocking
 local MOVE_LABEL = { player = "Your frame", pet = "Your pet's frame", target = "Target frame", tot = "Target of target", party = "Party frames" }
 local SetLocked
 local function Mover(key, f)
@@ -1225,6 +1901,7 @@ local function Mover(key, f)
         f:StopMovingOrSizing()
         SavePos(f, key)
         PlaceFrames()
+        if key ~= "party" then movedSinceUnlock = true end
     end)
     -- Right-click anywhere on the overlay also finishes.
     m:SetScript("OnMouseUp", function(_, button) if button == "RightButton" then SetLocked(true); Print("Frames locked.") end end)
@@ -1239,7 +1916,10 @@ local function Placeholder(f)
     f.nameFS:SetText(""); f.levelFS:SetText("")
     if f.badge and f.badge.text then f.badge.text:SetText("") end
     if f.classMedal then f.classMedal:Hide() end
-    f.face:SetTexture(nil)
+    f.face:SetTexture(nil); f.face:Show()
+    if f.model then f.model:Hide(); f.portraitBack:Hide() end
+    f.crestRim:Hide(); f.crestDark:Show()
+    f.faceMode = nil
     for _, bar in ipairs(f.bars) do
         bar.sb:SetMinMaxValues(0, 1); bar.sb:SetValue(0)
         if bar.pctFS then bar.pctFS:SetText(""); bar.valFS:SetText("") end
@@ -1248,7 +1928,15 @@ end
 
 SetLocked = function(locked)
     if not locked and InCombatLockdown() then return end
+    local wasUnlocked = db.locked == false
     db.locked = locked
+    if not locked then
+        movedSinceUnlock = false
+        if lineBox then lineBox:Hide() end
+    elseif wasUnlocked and movedSinceUnlock then
+        movedSinceUnlock = false
+        AskLineUp()
+    end
     for key, f in pairs({ player = frames.player, pet = frames.pet, target = frames.target, tot = frames.targettarget, party = frames.party1 }) do
         local m = Mover(key, f)
         m:SetShown(not locked)
@@ -1340,7 +2028,7 @@ local function CreateAll()
     if frames.targettarget then RegisterUnitWatch(frames.targettarget) end
     for i = 1, 4 do if frames["party" .. i] then RegisterUnitWatch(frames["party" .. i]) end end
     for _, f in pairs(frames) do
-        f:HookScript("OnShow", function(self) UpdateAll(self); if self.unit == "player" or self.unit == "target" then UpdateBuffs() end end)
+        f:HookScript("OnShow", function(self) self.faceMode = nil; UpdateAll(self); if self.unit == "player" or self.unit == "target" then UpdateBuffs() end end)
     end
 end
 
@@ -1353,7 +2041,7 @@ local function UnitFrameFor(unit)
     return unit and frames[unit]
 end
 
-ev:SetScript("OnEvent", function(_, event, arg1)
+ev:SetScript("OnEvent", function(_, event, arg1, arg2, arg3, arg4)
     if event == "ADDON_LOADED" then
         if arg1 ~= ADDON then return end
         AetherFramesDB = AetherFramesDB or {}
@@ -1367,12 +2055,18 @@ ev:SetScript("OnEvent", function(_, event, arg1)
         CreateAll()
         HideBlizzard(); AttachTotems()
         PlaceFrames()
+        -- Once: center the frames and line them up (1.7.0). After that they
+        -- stay wherever you put them; /af center does it again.
+        if not db.centered then
+            local function Once() local ok, done = pcall(CenterFrames); if ok and done then db.centered = true end end
+            if C_Timer and C_Timer.After then C_Timer.After(0, Once) else Once() end
+        end
         for _, e in ipairs({ "PLAYER_ENTERING_WORLD", "PLAYER_TARGET_CHANGED", "UNIT_PET", "UNIT_HEALTH",
             "UNIT_HEALTH_FREQUENT", "UNIT_MAXHEALTH", "UNIT_POWER_UPDATE", "UNIT_POWER_FREQUENT",
             "UNIT_MAXPOWER", "UNIT_DISPLAYPOWER", "UNIT_NAME_UPDATE", "UNIT_LEVEL", "UNIT_PORTRAIT_UPDATE",
             "UNIT_MODEL_CHANGED", "UNIT_AURA", "UNIT_HAPPINESS", "UNIT_FACTION", "UNIT_CLASSIFICATION_CHANGED",
             "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED", "GROUP_ROSTER_UPDATE", "UNIT_CONNECTION",
-            "PARTY_MEMBER_ENABLE", "PARTY_MEMBER_DISABLE", "UNIT_TARGET" }) do Reg(e) end
+            "PARTY_MEMBER_ENABLE", "PARTY_MEMBER_DISABLE", "UNIT_TARGET", "UNIT_COMBAT" }) do Reg(e) end
         for _, f in pairs(frames) do UpdateAll(f) end
         UpdateBuffs(); UpdateHappiness()
         -- Always start locked: a reload in the middle of moving shouldn't
@@ -1385,6 +2079,8 @@ ev:SetScript("OnEvent", function(_, event, arg1)
         HideBlizzard(); AttachTotems()
         for _, f in pairs(frames) do UpdateAll(f) end
         UpdateBuffs(); UpdateHappiness()
+    elseif event == "UNIT_COMBAT" then
+        if arg1 ~= "target" and arg1 ~= "targettarget" then OnHit(frames[arg1], arg2, arg3, arg4) end
     elseif event == "PLAYER_TARGET_CHANGED" then
         UpdateAll(frames.target)
         UpdateAll(frames.targettarget)
@@ -1418,7 +2114,7 @@ ev:SetScript("OnEvent", function(_, event, arg1)
         if event == "UNIT_CONNECTION" or event:find("^PARTY_MEMBER") then UpdateAll(f)
         elseif event:find("HEALTH") then UpdateHealth(f)
         elseif event:find("POWER") then UpdatePower(f)
-        elseif event == "UNIT_PORTRAIT_UPDATE" or event == "UNIT_MODEL_CHANGED" then SetPortraitTexture(f.face, f.unit)
+        elseif event == "UNIT_PORTRAIT_UPDATE" or event == "UNIT_MODEL_CHANGED" then SetFace(f, true)
         else UpdateInfo(f) end
         if arg1 == "pet" then UpdateHappiness() end
     end
@@ -1428,6 +2124,7 @@ local tick, happyTick, totTick = 0, 0, 0
 ev:SetScript("OnUpdate", function(_, dt)
     if not db or not frames.player then return end
     UpdateThreat(dt)                 -- every frame, so the pulse is smooth
+    UpdateHits()
     tick = tick + dt
     if tick < 0.1 then return end
     tick = 0
@@ -1446,7 +2143,18 @@ ev:SetScript("OnUpdate", function(_, dt)
             local over = Over(f) or (f == frames.player and (Over(buffRow) or Over(buffCont)))
                 or (f == frames.target and (Over(targetRow) or Over(targetCont)))
                 or (f.auras and Over(f.auras))
-            ApplyAlpha(f, (combat or over or not db.locked) and 1 or db.alpha)
+            if over or not db.locked or (combat and SolidInCombat(f)) then
+                ApplyAlpha(f, 1)
+            elseif combat then
+                local st = AggroOf(f)
+                f.aggro = st
+                if IsSecret(st) then ApplyAlphaHidden(f, st, FadeCurve)
+                elseif st ~= nil and st >= 2 then ApplyAlpha(f, 1)
+                else ApplyAlpha(f, CombatFade(), CombatFade()) end
+            else
+                ApplyAlpha(f, db.alpha)
+            end
+            CheckModel(f)
             -- Party members out of range (about 40 yards) fade to half.
             if IsParty(f.unit) then
                 local ok, inRange = pcall(UnitInRange, f.unit)
@@ -1464,7 +2172,7 @@ ev:SetScript("OnUpdate", function(_, dt)
     if tot and tot:IsShown() and UnitExists("targettarget") then
         UpdateHealth(tot); UpdatePower(tot)
         totTick = totTick + 1
-        if totTick >= 5 then totTick = 0; UpdateInfo(tot) end
+        if totTick >= 5 then totTick = 0; UpdateInfo(tot, true) end
     end
     happyTick = happyTick + 1
     if happyTick >= 10 then happyTick = 0; UpdateHappiness() end   -- once a second
@@ -1561,6 +2269,19 @@ SlashCmdList["AETHERFRAMES"] = function(input)
         print("  game-drawn aura rows: target " .. CS(targetCont) .. ", yours " .. CS(buffCont)
             .. ", party " .. CS(frames.party1 and frames.party1.auras)
             .. (lastContainerError and ("  problem: " .. lastContainerError) or ""))
+        local function AG(k)
+            local f = frames[k]
+            if not f then return nil end
+            local v = f.aggro
+            return k .. " " .. (IsSecret(v) and "hidden" or tostring(v))
+        end
+        local ag = {}
+        for _, k in ipairs({ "player", "pet", "party1", "party2", "party3", "party4" }) do ag[#ag + 1] = AG(k) end
+        print("  aggro fading " .. OnOff(db.aggroFade) .. ", last threat levels: " .. table.concat(ag, ", "))
+        print("  portraits (" .. (db.portrait3d and "3d" or "2d") .. (portraitTest and ", test" or "") .. "):")
+        for _, k in ipairs({ "player", "pet", "target", "targettarget" }) do
+            if frames[k] then print("    " .. PortraitReport(frames[k])) end
+        end
         print("  now " .. string.format("%.1f", GetTime()) .. "; last problem: " .. tostring(lastAuraError or "none"))
     elseif cmd == "buffs" then
         db.buffs = (val ~= "off")
@@ -1586,6 +2307,78 @@ SlashCmdList["AETHERFRAMES"] = function(input)
     elseif cmd == "lock" then
         if frames.player then SetLocked(true) end
         Print("Frames locked.")
+    elseif cmd == "combatalpha" and tonumber(val) then
+        db.combatAlpha = math.max(0, math.min(1, tonumber(val))); Refade()
+        Print("In combat, frames without aggro: " .. math.floor(db.combatAlpha * 100 + 0.5) .. "%")
+    elseif cmd == "levelglow" then
+        db.levelGlow = (val ~= "off")
+        if frames.target and UnitExists("target") then UpdateInfo(frames.target) end
+        Print("Enemy target's glow in its level color: " .. OnOff(db.levelGlow))
+    elseif cmd == "classglow" then
+        db.classGlow = (val ~= "off")
+        for _, f in pairs(frames) do if UnitExists(f.unit) then UpdateInfo(f) end end
+        Print("Players' and friendly NPCs' portrait glow in their class color: " .. OnOff(db.classGlow))
+    elseif cmd == "hits" then
+        db.hitGlow = (val ~= "off")
+        Print("Red flash when you, your pet or the party take a hit: " .. OnOff(db.hitGlow))
+    elseif cmd == "hitnumbers" then
+        db.hitNumbers = (val == "on")
+        Print("Damage numbers over the portraits: " .. OnOff(db.hitNumbers))
+    elseif cmd == "aggro" then
+        db.aggroFade = (val ~= "off")
+        Refade()
+        Print("In combat: " .. (db.aggroFade and "only your target, the target of target and whoever has aggro go solid"
+            or "every frame goes solid"))
+    elseif cmd == "portraits" and val and (val:match("^zoom") or val:match("^shift") or val:match("^tune")) then
+        -- Live tuning: /af portraits zoom [who] 1.3, shift [who] x y, tune, tune reset
+        local words = {}
+        for w in val:gmatch("%S+") do words[#words + 1] = w end
+        local what = table.remove(words, 1)
+        local GROUPS = { all = true, player = true, pet = true, target = true, tot = true, party = true }
+        local who = "all"
+        if words[1] and GROUPS[words[1]] then who = table.remove(words, 1) end
+        db.portraitTune = db.portraitTune or {}
+        local t = db.portraitTune
+        if what == "zoom" and tonumber(words[1]) then
+            t[who] = t[who] or {}
+            t[who].zoom = math.max(0.5, math.min(3, tonumber(words[1])))
+        elseif what == "shift" and tonumber(words[1]) and tonumber(words[2]) then
+            t[who] = t[who] or {}
+            t[who].x = math.max(-30, math.min(30, tonumber(words[1])))
+            t[who].y = math.max(-30, math.min(30, tonumber(words[2])))
+        elseif what == "tune" and words[1] == "reset" then
+            db.portraitTune = nil
+        elseif what ~= "tune" then
+            Print("Try: /af portraits zoom 1.3, /af portraits zoom pet 1.5, /af portraits shift 0 -2, "
+                .. "/af portraits shift pet 2 0, /af portraits tune (see them), /af portraits tune reset.")
+            return
+        end
+        for _, f in pairs(frames) do if f.model then FitCamera(f.model, f.unit) end end
+        local function Show(g)
+            local zoom = Tune(g == "tot" and "targettarget" or (g == "party" and "party1" or g), "zoom") or CAM[g] or 1
+            local x = Tune(g == "tot" and "targettarget" or (g == "party" and "party1" or g), "x") or 0
+            local y = Tune(g == "tot" and "targettarget" or (g == "party" and "party1" or g), "y") or 0
+            return string.format("%s zoom %.2f shift %g %g", g, zoom, x, y)
+        end
+        Print("Portraits: " .. Show("player") .. "; " .. Show("pet") .. "; " .. Show("target") .. "; "
+            .. Show("tot") .. "; " .. Show("party"))
+    elseif cmd == "portraits" then
+        portraitTest = (val == "test")
+        if portraitTest then Print("Portrait test: 3D on every frame with no fallbacks, until /reload or /af portraits 3d.") end
+        db.portrait3d = (val ~= "2d" and val ~= "off")
+        for _, f in pairs(frames) do
+            f.faceMode = nil
+            if UnitExists(f.unit) then SetFace(f, true) end
+        end
+        Print("Portraits: " .. (db.portrait3d and "3D, on an Aether glow" or "flat (the game's own)"))
+    elseif cmd == "lineup" then
+        local center = (val == "center" or val == "centre")
+        local ok, why = LineUp(center)
+        if ok and lineBox then lineBox:Hide() end
+        Print(ok and (center and "Frames lined up and centered." or "Frames lined up.") or why)
+    elseif cmd == "center" or cmd == "centre" then
+        local ok, why = CenterFrames()
+        Print(ok and "Frames centered and lined up." or why)
     elseif cmd == "reset" then
         db.pos = nil
         Print("Positions reset to where Blizzard's frames sit. Type /reload to apply.")
@@ -1598,6 +2391,12 @@ SlashCmdList["AETHERFRAMES"] = function(input)
         print("  /af faces on|off     faces fade too (now " .. OnOff(db.fadeFaces) .. ")")
         print("  /af buffs on|off     buff row (now " .. OnOff(db.buffs) .. ")")
         print("  /af mybuffs on|off   your own buffs in your frame too (now " .. OnOff(db.myBuffs) .. ")")
+        print("  /af combatalpha 0-1  in combat, frames without aggro on your target (now " .. (db.combatAlpha or 0.3) .. ")")
+        print("  /af aggro on|off     in combat, only the target and whoever has aggro on it go solid (now " .. OnOff(db.aggroFade) .. ")")
+        print("  /af levelglow on|off an enemy target's portrait glow takes its level color at the rim (now " .. OnOff(db.levelGlow ~= false) .. ")")
+        print("  /af classglow on|off players and friendly NPCs get their class color behind the portrait (now " .. OnOff(db.classGlow ~= false) .. ")")
+        print("  /af hits on|off      red flash around a crest when that unit is hit (now " .. OnOff(db.hitGlow ~= false) .. ")")
+        print("  /af hitnumbers on|off  the damage floating over the portrait (now " .. OnOff(db.hitNumbers) .. ")")
         print("  /af threat on|off    glow around the portrait when you have threat (now " .. OnOff(db.threat) .. ")")
         print("  /af auras            report what the game says about your auras")
         print("  /af petpower on|off  numbers on the pet's resource bar (now " .. OnOff(db.petPower) .. ")")
@@ -1605,6 +2404,10 @@ SlashCmdList["AETHERFRAMES"] = function(input)
         print("  /af tot on|off       target of target under the target frame (now " .. OnOff(db.tot) .. ")")
         print("  /af scale 0.6-1.6    frame size (now " .. db.scale .. ")")
         print("  /af unlock | lock    move the frames (or Unlock to Move on AetherHub's Layout page; Done to finish)")
+        print("  /af portraits 3d|2d  live 3D portraits on a soft blue glow, or the game's flat ones (now " .. (db.portrait3d and "3d" or "2d") .. ")")
+        print("  /af portraits zoom [who] 0.5-3 | shift [who] x y | tune [reset]   fit the 3D faces (who: all, player, pet, target, tot, party)")
+        print("  /af lineup [center]  line up your, your pet's and your target's frames where they are (and center them)")
+        print("  /af center           center your, your pet's and your target's frames, lined up")
         print("  /af petreset         put your pet's frame back under yours")
         print("  /af reset            back to Blizzard's spots")
         print("  /af on | off         use AetherFrames or Blizzard's frames")
