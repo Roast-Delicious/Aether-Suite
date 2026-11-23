@@ -66,7 +66,7 @@ Then read this file. The addons live at the repo root (one folder each);
 ## Open items / waiting on the user
 
 Current build: Frames 1.14.0, Hub 1.13.2, Bars 1.14.0, Chat 1.0.6,
-Pack 1.2.0 (others unchanged).
+Pack 1.2.1 (others unchanged).
 
 AetherPack 1.2.0 (2026-11-23, built and sent; in-game check pending):
 one-bag windows. A plain click on a bag-bar slot (CharacterBag0-3Slot,
@@ -78,6 +78,8 @@ to the combined window. Key toggle: combined shown -> close everything;
 else open combined. Undragged windows stack from the lower right;
 dragged ones save to db.bagPos. Test: tools/pack_bagwin_test.py (run
 with no argument and with allviatogglebag).
+1.2.1: Blizzard's reagent bag window (bag 5) is now hidden too (it slipped
+through IsCarriedBagFrame's 0-4 check); windows widen to fit the bag name.
 
 AetherFrames work of 2026-11-23 (all built and sent; user liked the
 result in game videos):

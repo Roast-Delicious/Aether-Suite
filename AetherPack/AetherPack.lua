@@ -883,6 +883,13 @@ local function LayoutBagWindow(w)
     BagCount(w)
     local rows = math.ceil(n / cols)
     w.w = PAD * 2 + cols * BUTTON + (cols - 1) * GAP
+    -- Wide enough for the whole bag name: title, count, then the x (24).
+    local function Width(fs)
+        local get = fs.GetUnboundedStringWidth or fs.GetStringWidth
+        local ok, v = pcall(get, fs)
+        return ok and type(v) == "number" and v or 0
+    end
+    w.w = math.max(w.w, math.ceil(PAD + Width(w.title) + 10 + Width(w.count) + 6 + 24))
     w.h = 32 + rows * (BUTTON + GAP) - GAP + PAD
     w:SetSize(w.w, w.h)
     w.laidOut = true
@@ -1032,7 +1039,7 @@ end
 local function IsCarriedBagFrame(f)
     if f == ContainerFrameCombinedBags then return true end
     local id = f.GetID and f:GetID()
-    return id and id >= 0 and id <= 4
+    return id and ((id >= 0 and id <= 4) or (REAGENT_BAG ~= nil and id == REAGENT_BAG))
 end
 
 HideBlizzardBags = function()

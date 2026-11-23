@@ -25,7 +25,7 @@ window, so you rarely need to type a command.
   AetherItemID       1.1.0     What an item is for, when you hover it
   AetherLedger       1.5.12    Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.2.0     Your bags sorted into sections
+  AetherPack         1.2.1     Your bags sorted into sections
   AetherChat         1.0.6     Chat with the Aether look, fitted beside
                                your action bars
   AetherFrames       1.14.0    Your, your pet's, your target's, its
@@ -513,7 +513,9 @@ AetherPack - your bags, sorted into sections                    /pack
     with any single-bag windows.
   - Click one bag on the bag bar (one of the four bag slots or the
     reagent bag) to open a small window with just that bag, in slot
-    order, with the bag's name and its used/total slots in the title.
+    order, with the bag's name and its used/total slots in the title
+    (the window widens to fit a long name). Blizzard's own window for
+    that bag stays closed, the reagent bag's included.
     Click the bag again, its x, or Esc to close it. Open as many as
     you like: they stack up from the lower right, a new column to the
     left when one gets too tall. Drag one and it stays put. A Toggle
