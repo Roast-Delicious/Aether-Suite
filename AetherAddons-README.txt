@@ -26,7 +26,7 @@ window, so you rarely need to type a command.
   AetherLedger       1.5.12    Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.1.8     Your bags sorted into sections
-  AetherChat         1.0.5     Chat with the Aether look, fitted beside
+  AetherChat         1.0.6     Chat with the Aether look, fitted beside
                                your action bars
   AetherFrames       1.14.0    Your, your pet's, your target's, its
                                target's, and your party's frames with

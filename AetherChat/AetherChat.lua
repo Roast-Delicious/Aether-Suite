@@ -349,7 +349,15 @@ local function HookBlizzard()
     if cf then
         hooksecurefunc(cf, "SetPoint", function()
             if not placing and db and db.fit and placed then
-                C_Timer.After(0, function() PlaceChat(placed[1], placed[2], placed[3], placed[4]) end)
+                -- placed can be cleared before the next frame (a loading
+                -- screen re-runs the layout), so re-check it when the timer
+                -- fires and skip if it's gone or changed.
+                local p = placed
+                C_Timer.After(0, function()
+                    if placed == p and db and db.fit and not placing then
+                        PlaceChat(p[1], p[2], p[3], p[4])
+                    end
+                end)
             end
         end)
     end
