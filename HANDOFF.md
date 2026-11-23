@@ -108,6 +108,8 @@ result in game videos):
   user's own numbers: player zoom 1.8 shift 6 2, others zoom 1.3 shift
   0 -2 (saved in their SavedVariables, not defaults yet).
   Known: the model's square shows as straight cuts at the face edge.
+  NOT a bug: a crest can look briefly empty (just the blue glow) when the
+  live model's idle animation bends out of view. The user likes it.
 - Portrait colors (1.14.0): GlowColor() - enemy mob on target: level
   color (badge's exact color mid, x0.35 rim); players + friendly NPCs on
   target/tot/party: class color, shaded the same way; you (even as your
