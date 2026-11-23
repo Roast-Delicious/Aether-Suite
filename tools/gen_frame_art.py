@@ -118,8 +118,8 @@ def capsule(key, sp, mirror_masks):
 
 crest(80); crest(58)
 capsule('player', SPECS['player'], True)
-capsule('pet4', SPECS['pet4'], False)
-capsule('pet12', SPECS['pet12'], True)    # mirrored masks: target of target
+capsule('pet4', SPECS['pet4'], True)     # mirrored masks: target of target
+capsule('pet12', SPECS['pet12'], False)
 # Badges (level and pet happiness): a disc, a dark rim just outside it, and
 # three faces drawn in the disc's 20-unit box.
 D = 20

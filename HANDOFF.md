@@ -66,8 +66,8 @@ Then read this file. The addons live at the repo root (one folder each);
 
 - In-game check of the rounded windows, the XP bar, and button names
   (build: Hub 1.13.1, Bars 1.14.0).
-- Target of target (Frames 1.6.1, unit "targettarget", small mirrored
-  crest under the target row, polled in OnUpdate since the game sends
+- Target of target (Frames 1.6.2, unit "targettarget", mirrored crest in
+  the pet frame's thin "pet4" shape, under the target row, polled in OnUpdate since the game sends
   no unit events for it): confirm in game, including in combat.
 - Frames always start locked after /reload (1.6.1); in move mode, empty
   frames show empty bars (Placeholder).

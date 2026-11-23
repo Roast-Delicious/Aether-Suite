@@ -1297,11 +1297,13 @@ local function CreateAll()
     -- Blizzard's target of target lives inside its (hidden) target frame, so
     -- it's gone too; this one takes its place.
     if db.tot then
+        -- the same size and shape as your pet's frame: health with numbers,
+        -- a thin resource bar without
         Build("AetherFramesTargetTarget", {
-            unit = "targettarget", art = "pet12", badge = "level", mirror = true, S = 58, capW = 29 + 151, padTop = 2,
+            unit = "targettarget", art = "pet4", badge = "level", mirror = true, S = 58, capW = 29 + 151, padTop = 2,
             nameH = 14, padBottom = 3, textInset = 45, padRight = 14, small = true,
             bars = { { kind = "health", h = 12, gap = 3, text = true },
-                     { kind = "power", h = 12, gap = 2, text = true } },
+                     { kind = "power", h = 4, gap = 2, text = false } },
         })
     end
 
