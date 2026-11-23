@@ -65,7 +65,19 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-Current build: Frames 1.14.0, Hub 1.13.2, Bars 1.14.0 (others unchanged).
+Current build: Frames 1.14.0, Hub 1.13.2, Bars 1.14.0, Chat 1.0.6,
+Pack 1.2.0 (others unchanged).
+
+AetherPack 1.2.0 (2026-11-23, built and sent; in-game check pending):
+one-bag windows. A plain click on a bag-bar slot (CharacterBag0-3Slot,
+CharacterReagentBag0Slot; PreClick/PostClick hooks) or a lone ToggleBag
+for bags 1-4 or the reagent bag opens that bag's own window (4 columns,
+slot order, name + used/total). Anything else in the same moment (the
+bag key, backpack, open/close all, or several ToggleBags at once) goes
+to the combined window. Key toggle: combined shown -> close everything;
+else open combined. Undragged windows stack from the lower right;
+dragged ones save to db.bagPos. Test: tools/pack_bagwin_test.py (run
+with no argument and with allviatogglebag).
 
 AetherFrames work of 2026-11-23 (all built and sent; user liked the
 result in game videos):
@@ -126,6 +138,7 @@ Run from /home/claude/tools, e.g.:
     for t in hub_general_test frames_test frames_badge_test frames_party_test \
              frames_center_test frames_lineup_test frames_portrait_test \
              frames_aggro_test frames_threat_test frames_aura_test \
+             pack_test pack_bagwin_test \
              ledger_full_test bars_xp_test bars_xp_modern_test meter_dock_test \
              chat_test coords_test; do python3 $t.py >/dev/null 2>&1 || echo FAIL $t; done
 

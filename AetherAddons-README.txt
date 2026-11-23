@@ -25,7 +25,7 @@ window, so you rarely need to type a command.
   AetherItemID       1.1.0     What an item is for, when you hover it
   AetherLedger       1.5.12    Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.1.8     Your bags sorted into sections
+  AetherPack         1.2.0     Your bags sorted into sections
   AetherChat         1.0.6     Chat with the Aether look, fitted beside
                                your action bars
   AetherFrames       1.14.0    Your, your pet's, your target's, its
@@ -507,10 +507,20 @@ AetherPack - your bags, sorted into sections                    /pack
                 warlock stones); red at 2 or less
   - Your free bag slots also show as a small number on the backpack
     button, so you can check without opening anything.
-  - B, the bag buttons and any key you've bound to your bags open
-    AetherPack instead of Blizzard's bags (including Blizzard's
-    combined backpack window).
-    Turn that off on its AetherHub tab, and /pack still opens it.
+  - B (or any key you've bound to your bags) and the backpack button
+    open AetherPack instead of Blizzard's bags (including Blizzard's
+    combined backpack window). Press the key again to close it, along
+    with any single-bag windows.
+  - Click one bag on the bag bar (one of the four bag slots or the
+    reagent bag) to open a small window with just that bag, in slot
+    order, with the bag's name and its used/total slots in the title.
+    Click the bag again, its x, or Esc to close it. Open as many as
+    you like: they stack up from the lower right, a new column to the
+    left when one gets too tall. Drag one and it stays put. A Toggle
+    Bag 1-4 key opens the same windows. In a fight, a bag window you
+    haven't opened yet this session opens when combat ends.
+    Turn all this off on AetherPack's AetherHub tab, and /pack still
+    opens the combined window.
   - Click a section's title to fold or open it; it stays that way.
     Empty sections hide themselves.
   - Type in the search box to dim everything that doesn't match.
@@ -525,7 +535,7 @@ AetherPack - your bags, sorted into sections                    /pack
     the sections catch up when combat ends. Items still work.
   - Commands: /pack (open or close), /pack replace on|off, /pack count
     on|off (backpack number), /pack columns 6-16, /pack scale 0.6-1.5,
-    /pack reset (window position).
+    /pack reset (all window positions).
 
 
 AetherChat - chat that fits beside your bars                   /achat
