@@ -1,0 +1,11 @@
+## Interface: 16001
+## Title: AetherMarks
+## Notes: Baby blue names for quest mobs, purple for named quest mobs, orange for rares (target, focus and tooltip), plus a rare alert and Rare Radar, which finds rares by their nameplates.
+## Author: Aether
+## Version: 1.6.12
+## OptionalDeps: AetherHub
+## SavedVariables: AetherMarksDB, QuarryMarksDB
+## SavedVariablesPerCharacter: AetherMarksCharDB, QuarryMarksCharDB
+
+AetherMarks_Unique.lua
+AetherMarks.lua

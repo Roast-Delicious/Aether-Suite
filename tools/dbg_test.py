@@ -1,0 +1,7 @@
+exec(open('questlog_test.py').read().split("def name(u)")[0])
+L.execute('geterrorhandler = function() return function(e) LOG[#LOG+1]="ERR "..tostring(e) end end')
+L.execute('LOG_Q = {{title="T", obj={{"Elder Stranglethorn Tiger slain: 3/10","monster",false}}},{title="Y", obj={{"Bloodscalp Tusk: 0/9","item",false}}}}; EV.scripts.OnEvent(EV, "QUEST_LOG_UPDATE")')
+L.execute('AddPlate("nameplate1", {guid="Creature-0-1-2-3-1085-a", name="Elder Stranglethorn Tiger", far=true})')
+L.execute('AddPlate("nameplate2", {guid="Creature-0-1-2-3-682-b", name="Stranglethorn Tiger", far=true})')
+L.execute('LOG = {}; SlashCmdList.AETHERMARKS("debug")')
+for x in L.eval('LOG').values(): print(x)

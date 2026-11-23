@@ -1,0 +1,984 @@
+-- ==========================================
+-- AetherPack - sectioned bags for WoW Forever
+-- Everything in your carried bags in one compact window, sorted into
+-- sections: Ammo, Quest items, Gear, Consumables, Trade goods, Other and
+-- Junk (with its vendor value). Click a section's title to fold it. Search
+-- dims what doesn't match. At a vendor, Sell junk sells every gray item.
+-- Item buttons are Blizzard's own bag buttons, so right-click to use, equip,
+-- drink or sell works as usual. WoW doesn't let addons move bag buttons in
+-- combat, so the layout catches up when the fight ends.
+-- ==========================================
+
+local PREFIX = "|cff4da6ffAetherPack:|r "
+
+local DEFAULTS = {
+    replace = true,     -- opens instead of Blizzard's bags
+    backpackCount = true,   -- free bag slots shown on the backpack button
+    columns = 10,
+    scale = 1,
+    collapsed = { empty = true },
+}
+
+local db
+
+local function IsSecret(v) return issecretvalue and issecretvalue(v) or false end
+
+-- ==========================================
+-- AETHER LOOK
+-- ==========================================
+local function AetherFill(button, r, g, b, a)
+    local t = button:CreateTexture(nil, "BACKGROUND")
+    t:SetColorTexture(r, g, b, a)
+    t:SetPoint("TOPLEFT", 1, -1)
+    t:SetPoint("BOTTOMRIGHT", -1, 1)
+    return t
+end
+
+local function AetherButton(parent, name, small)
+    local b = CreateFrame("Button", name, parent, "BackdropTemplate")
+    b:SetSize(100, 22)
+    if b.SetBackdrop then
+        b:SetBackdrop({ edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1 })
+        b:SetBackdropBorderColor(0.3, 0.65, 1, 0.9)
+    end
+    b:SetNormalTexture(AetherFill(b, 0.07, 0.17, 0.32, 0.95))
+    b:SetPushedTexture(AetherFill(b, 0.03, 0.09, 0.19, 0.95))
+    b:SetDisabledTexture(AetherFill(b, 0.13, 0.13, 0.15, 0.9))
+    local hl = AetherFill(b, 0.3, 0.65, 1, 0.3)
+    hl:SetBlendMode("ADD")
+    b:SetHighlightTexture(hl)
+    b:SetNormalFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
+    b:SetHighlightFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
+    b:SetDisabledFontObject(small and "GameFontDisableSmall" or "GameFontDisable")
+    b:SetText(" ")
+    return b
+end
+
+-- Aether window trim: a double blue frame with a soft halo, gold corner
+-- brackets, a title strip with a gold underline, and a small gold gem at the
+-- top center. Plain colored textures only. titleHeight 0 = no title strip.
+local function AetherDecorate(frame, titleHeight)
+    if frame.aetherTrim then return end
+    frame.aetherTrim = true
+    -- The Aether window look: rounded corners, a blue edge with a fine inner
+    -- line, a soft blue glow, a navy title strip with a gold underline, and
+    -- gold chevrons at 12, 3, 6 and 9. Smooth images (Media\win_*), so it
+    -- stays crisp at any UI scale.
+    local MEDIA, WHITE = "Interface\\AddOns\\AetherPack\\Media\\", "Interface\\Buttons\\WHITE8X8"
+    local R, IN, GLOW = 8, 3, 6.7          -- corner radius, inner line inset, glow width
+    local function Tex(layer, sub, file, c)
+        local t = frame:CreateTexture(nil, layer, nil, sub)
+        t:SetTexture(file)
+        t:SetVertexColor(c[1], c[2], c[3], c[4] or 1)
+        if t.SetSnapToPixelGrid then t:SetSnapToPixelGrid(false); t:SetTexelSnappingBias(0) end
+        return t
+    end
+    -- corner images are drawn as the top-left corner; flip them for the others
+    local FLIP = { TOPLEFT = { 0, 1, 0, 1 }, TOPRIGHT = { 1, 0, 0, 1 }, BOTTOMLEFT = { 0, 1, 1, 0 }, BOTTOMRIGHT = { 1, 0, 1, 0 } }
+    local CORNERS = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT" }
+    -- A rounded shape: a corner image at each corner, plus straight pieces.
+    -- line = thickness for an outline (nil: a solid fill); inset = distance in.
+    local function Shape(layer, sub, file, color, inset, line)
+        local parts = {}
+        local function Add(t) parts[#parts + 1] = t; return t end
+        for _, c in ipairs(CORNERS) do
+            local t = Add(Tex(layer, sub, MEDIA .. file, color))
+            local f = FLIP[c]
+            t:SetTexCoord(f[1], f[2], f[3], f[4])
+            t:SetSize(R, R)
+            t:SetPoint(c, frame, c, 0, 0)
+        end
+        if line then
+            local t = Add(Tex(layer, sub, WHITE, color))       -- top
+            t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, -inset); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -R, -inset); t:SetHeight(line)
+            t = Add(Tex(layer, sub, WHITE, color))             -- bottom
+            t:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", R, inset); t:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -R, inset); t:SetHeight(line)
+            t = Add(Tex(layer, sub, WHITE, color))             -- left
+            t:SetPoint("TOPLEFT", frame, "TOPLEFT", inset, -R); t:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", inset, R); t:SetWidth(line)
+            t = Add(Tex(layer, sub, WHITE, color))             -- right
+            t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -inset, -R); t:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -inset, R); t:SetWidth(line)
+        else
+            local t = Add(Tex(layer, sub, WHITE, color))       -- middle, full height
+            t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, 0); t:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -R, 0)
+            t = Add(Tex(layer, sub, WHITE, color))             -- left side, between the corners
+            t:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, -R); t:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, R); t:SetWidth(R)
+            t = Add(Tex(layer, sub, WHITE, color))             -- right side
+            t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 0, -R); t:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, R); t:SetWidth(R)
+        end
+        return parts
+    end
+
+    -- The window's own (square) backdrop becomes the rounded fill and edge, in
+    -- the same colors; later color changes go to the rounded pieces.
+    local bg, edge = { 0.05, 0.05, 0.05, 0.95 }, { 0.3, 0.7, 1, 1 }
+    if frame.GetBackdrop and frame:GetBackdrop() then
+        local r, g, b, a = frame:GetBackdropColor()
+        if r then bg = { r, g, b, a or 1 } end
+        r, g, b, a = frame:GetBackdropBorderColor()
+        if r then edge = { r, g, b, a or 1 } end
+        frame:SetBackdrop(nil)
+    end
+    local fill = Shape("BACKGROUND", -7, "win_round_fill", bg, 0, nil)
+    local outline = Shape("BORDER", 3, "win_round_line", edge, 0, 1)
+    Shape("BORDER", 1, "win_round_inner", { 0.3, 0.65, 1, 0.3 }, IN, 1)
+    local function Paint(parts, r, g, b, a) for _, t in ipairs(parts) do t:SetVertexColor(r, g, b, a or 1) end end
+    frame.SetBackdropColor = function(_, r, g, b, a) bg = { r, g, b, a or 1 }; Paint(fill, r, g, b, a) end
+    frame.SetBackdropBorderColor = function(_, r, g, b, a) edge = { r, g, b, a or 1 }; Paint(outline, r, g, b, a) end
+    frame.GetBackdropColor = function() return bg[1], bg[2], bg[3], bg[4] end
+    frame.GetBackdropBorderColor = function() return edge[1], edge[2], edge[3], edge[4] end
+
+    -- Soft blue glow just outside, brightest at the edge, following the corners.
+    local BLUE = { 0.3, 0.65, 1, 0.42 }
+    local function Glow(file, l, r, t, b)
+        local g = Tex("BACKGROUND", -8, MEDIA .. file, BLUE)
+        g:SetTexCoord(l, r, t, b)
+        return g
+    end
+    local t = Glow("win_glow_v", 0, 1, 1, 0)          -- top
+    t:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", R, 0); t:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -R, 0); t:SetHeight(GLOW)
+    t = Glow("win_glow_v", 0, 1, 0, 1)                -- bottom
+    t:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", R, 0); t:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", -R, 0); t:SetHeight(GLOW)
+    t = Glow("win_glow_h", 1, 0, 0, 1)                -- left
+    t:SetPoint("TOPRIGHT", frame, "TOPLEFT", 0, -R); t:SetPoint("BOTTOMRIGHT", frame, "BOTTOMLEFT", 0, R); t:SetWidth(GLOW)
+    t = Glow("win_glow_h", 0, 1, 0, 1)                -- right
+    t:SetPoint("TOPLEFT", frame, "TOPRIGHT", 0, -R); t:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 0, R); t:SetWidth(GLOW)
+    for _, c in ipairs(CORNERS) do
+        local f = FLIP[c]
+        t = Glow("win_rglow_c", f[1], f[2], f[3], f[4])
+        t:SetSize(GLOW + R, GLOW + R)
+        t:SetPoint(c, frame, c, c:find("LEFT") and -GLOW or GLOW, c:find("TOP") and GLOW or -GLOW)
+    end
+
+    -- Title strip (navy, rounded at the top) with a gold underline.
+    if titleHeight and titleHeight > R then
+        local NAVY = { 0.075, 0.157, 0.29, 1 }
+        local S = IN + 1
+        for _, c in ipairs({ "TOPLEFT", "TOPRIGHT" }) do
+            local f = FLIP[c]
+            t = Tex("BORDER", 0, MEDIA .. "win_round_strip", NAVY)
+            t:SetTexCoord(f[1], f[2], f[3], f[4]); t:SetSize(R, R); t:SetPoint(c, frame, c, 0, 0)
+        end
+        t = Tex("BORDER", 0, WHITE, NAVY)                 -- top band between the rounded corners
+        t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, -S); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -R, -S); t:SetHeight(R - S)
+        t = Tex("BORDER", 0, WHITE, NAVY)                 -- the rest, full width
+        t:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -R); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -R); t:SetHeight(titleHeight - R)
+        local line = Tex("BORDER", 2, WHITE, { 1, 0.82, 0, 0.7 })
+        line:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -titleHeight); line:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -titleHeight)
+        line:SetHeight(1)
+    end
+
+    -- Gold chevrons at 12, 3, 6 and 9, pointing outward, 3 px off the edge;
+    -- the side ones a little larger. frame.aetherChevrons.left / .right let a
+    -- docked window hide the sides.
+    frame.aetherChevrons = {}
+    for _, c in ipairs({ { "top", "TOP", 0, 3, 0, 26 }, { "bottom", "BOTTOM", 0, -3, math.pi, 26 },
+                         { "left", "LEFT", -3, 0, math.pi / 2, 34 }, { "right", "RIGHT", 3, 0, -math.pi / 2, 34 } }) do
+        local set = {}
+        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.82, 0, 1 }, 7 } }) do
+            local ch = Tex("OVERLAY", g[3], MEDIA .. "win_chev_" .. g[1], g[2])
+            ch:SetSize(c[6], c[6])
+            ch:SetPoint("CENTER", frame, c[2], c[3], c[4])
+            if c[5] ~= 0 and ch.SetRotation then ch:SetRotation(c[5]) end   -- positive turns counter-clockwise
+            set[#set + 1] = ch
+        end
+        frame.aetherChevrons[c[1]] = set
+    end
+end
+
+-- ==========================================
+-- BAGS AND ITEMS
+-- ==========================================
+local C = C_Container or {}
+-- Backpack, the four bag slots, and WoW Forever's fifth slot for a reagent bag
+-- (crafting materials and reagents only; warlocks can put a soul bag there).
+local REAGENT_BAG = Enum and Enum.BagIndex and Enum.BagIndex.ReagentBag
+local BAGS = { 0, 1, 2, 3, 4 }
+if REAGENT_BAG then BAGS[#BAGS + 1] = REAGENT_BAG end
+
+local function NumSlots(bag)
+    if C.GetContainerNumSlots then return C.GetContainerNumSlots(bag) or 0 end
+    return GetContainerNumSlots and GetContainerNumSlots(bag) or 0
+end
+
+-- Special bags: quivers and ammo pouches (only ammo), soul bags (only shards).
+local function BagType(bag)
+    if bag == 0 then return 0 end
+    local _, bagType
+    if C.GetContainerNumFreeSlots then _, bagType = C.GetContainerNumFreeSlots(bag)
+    elseif GetContainerNumFreeSlots then _, bagType = GetContainerNumFreeSlots(bag) end
+    if not bagType or IsSecret(bagType) then return 0 end
+    return bagType
+end
+
+local function IsAmmoBag(bag)
+    local t = BagType(bag)
+    return t ~= 0 and (t % 4) ~= 0          -- 1 quiver, 2 ammo pouch
+end
+
+local function IsSoulBag(bag)
+    local t = BagType(bag)
+    return t ~= 0 and math.floor(t / 4) % 2 == 1   -- 4 soul bag
+end
+
+-- The reagent bag slot (unless a soul bag sits there): its space is counted on its own.
+local function IsReagentBag(bag)
+    return REAGENT_BAG ~= nil and bag == REAGENT_BAG and not IsSoulBag(bag)
+end
+
+-- ==========================================
+-- CLASS SUPPLIES
+-- ==========================================
+-- Each class's "ammo": the reagents its spells use up. Hunters (and anyone
+-- with a bow, gun or crossbow equipped) get the ammo bar; warlocks get a soul
+-- shard bar. These items also go in the first section, named for your class.
+local SOUL_SHARD = 6265
+local CLASS_REAGENTS = {
+    WARLOCK = { 6265, 5565, 16583 },                         -- Soul Shard, Infernal Stone, Demonic Figurine
+    MAGE    = { 17031, 17032, 17020, 17056 },                -- runes of Teleportation/Portals, Arcane Powder, Light Feather
+    PRIEST  = { 17056, 17028, 17029 },                       -- Light Feather, Holy Candle, Sacred Candle
+    SHAMAN  = { 17030, 17058, 17057 },                       -- Ankh, Fish Oil, Shiny Fish Scales
+    PALADIN = { 17033, 21177 },                              -- Symbol of Divinity, Symbol of Kings
+    DRUID   = { 17034, 17035, 17036, 17037, 17038, 17021, 17026 },   -- Rebirth seeds, Wild Berries, Wild Thornroot
+    ROGUE   = { 5140, 5530 },                                -- Flash Powder, Blinding Powder
+}
+local REAGENT_NAMES = {
+    [6265] = "Soul Shard", [5565] = "Infernal Stone", [16583] = "Demonic Figurine",
+    [17031] = "Rune of Teleportation", [17032] = "Rune of Portals", [17020] = "Arcane Powder",
+    [17056] = "Light Feather", [17028] = "Holy Candle", [17029] = "Sacred Candle",
+    [17030] = "Ankh", [17058] = "Fish Oil", [17057] = "Shiny Fish Scales",
+    [17033] = "Symbol of Divinity", [21177] = "Symbol of Kings",
+    [17034] = "Maple Seed", [17035] = "Stranglethorn Seed", [17036] = "Ashwood Seed",
+    [17037] = "Hornbeam Seed", [17038] = "Ironwood Seed", [17021] = "Wild Berries", [17026] = "Wild Thornroot",
+    [5140] = "Flash Powder", [5530] = "Blinding Powder",
+}
+
+local function MyClass()
+    local _, token = UnitClass("player")
+    return token
+end
+
+local myReagents   -- set of item IDs for your class
+local function ClassReagent(itemID)
+    if not myReagents then
+        myReagents = {}
+        for _, id in ipairs(CLASS_REAGENTS[MyClass()] or {}) do myReagents[id] = true end
+    end
+    return itemID and myReagents[itemID] or false
+end
+
+-- Hunters, or anyone with a bow, gun or crossbow in the ranged slot.
+local function UsesAmmo()
+    if MyClass() == "HUNTER" then return true end
+    local id = GetInventoryItemID and GetInventoryItemID("player", 18)
+    if not id then return false end
+    local instant = (C_Item and C_Item.GetItemInfoInstant) or GetItemInfoInstant
+    local _, _, _, _, _, classID, subClassID = instant(id)
+    return classID == 2 and (subClassID == 2 or subClassID == 3 or subClassID == 18)
+end
+
+local function FirstSectionTitle()
+    if UsesAmmo() then return "Ammo" end
+    if MyClass() == "WARLOCK" then return "Soul shards" end
+    if CLASS_REAGENTS[MyClass()] then return "Class reagents" end
+    return "Ammo"
+end
+
+local function SlotInfo(bag, slot)
+    if C.GetContainerItemInfo then
+        local info = C.GetContainerItemInfo(bag, slot)
+        if not info then return nil end
+        return info.iconFileID, info.stackCount, info.isLocked, info.quality, info.hyperlink, info.itemID
+    end
+    local icon, count, locked, quality, _, _, link, _, _, itemID = GetContainerItemInfo(bag, slot)
+    if not icon then return nil end
+    return icon, count, locked, quality, link, itemID
+end
+
+local function IsQuestItem(bag, slot)
+    local get = C.GetContainerItemQuestInfo or GetContainerItemQuestInfo
+    if not get then return false end
+    local ok, a, b = pcall(get, bag, slot)
+    if not ok then return false end
+    if type(a) == "table" then return a.isQuestItem or a.questID ~= nil end
+    return a or b ~= nil
+end
+
+local function ItemClass(itemID)
+    local instant = (C_Item and C_Item.GetItemInfoInstant) or GetItemInfoInstant
+    if not instant or not itemID then return nil end
+    local _, _, _, _, _, classID, subClassID = instant(itemID)
+    return classID, subClassID
+end
+
+local function SellPrice(link)
+    if not link then return 0 end
+    local get = (C_Item and C_Item.GetItemInfo) or GetItemInfo
+    local price = select(11, get(link))
+    return price or 0
+end
+
+local function ItemName(link)
+    if not link then return "" end
+    return link:match("%[(.-)%]") or ""
+end
+
+-- ==========================================
+-- SECTIONS
+-- ==========================================
+local SECTIONS = {
+    { key = "ammo",       title = "Ammo" },
+    { key = "quest",      title = "Quest items" },
+    { key = "gear",       title = "Gear" },
+    { key = "consumable", title = "Consumables" },
+    { key = "trade",      title = "Trade goods" },
+    { key = "other",      title = "Other" },
+    { key = "junk",       title = "Junk" },
+    { key = "empty",      title = "Free slots" },
+}
+
+-- Item class IDs: 0 consumable, 2 weapon, 4 armor, 5 reagent, 6 projectile,
+-- 7 trade goods, 9 recipe, 11 quiver, 12 quest.
+local function SectionFor(bag, slot, quality, itemID)
+    if IsAmmoBag(bag) or IsSoulBag(bag) or ClassReagent(itemID) then return "ammo" end
+    local classID = ItemClass(itemID)
+    if classID == 6 then return "ammo" end
+    if classID == 12 or IsQuestItem(bag, slot) then return "quest" end
+    if quality == 0 then return "junk" end
+    if classID == 2 or classID == 4 then return "gear" end
+    if classID == 0 then return "consumable" end
+    if classID == 5 or classID == 7 or classID == 9 then return "trade" end
+    return "other"
+end
+
+-- ==========================================
+-- SPACE AND SUPPLY COUNTS
+-- ==========================================
+-- bags: regular slots; ammo: count and quiver capacity; shards: count and
+-- soul bag space; reagents: your class reagents you carry.
+local function Stats()
+    local st = { bagUsed = 0, bagTotal = 0, ammo = 0, quiverSlots = 0, quiverFree = 0, ammoStack = 200,
+                 shards = 0, soulSlots = 0, soulFree = 0, reagents = {}, rbSlots = 0, rbUsed = 0 }
+    for _, bag in ipairs(BAGS) do
+        local ammoBag, soulBag, reagentBag = IsAmmoBag(bag), IsSoulBag(bag), IsReagentBag(bag)
+        for slot = 1, NumSlots(bag) do
+            local icon, count, _, _, link, itemID = SlotInfo(bag, slot)
+            if reagentBag then
+                st.rbSlots = st.rbSlots + 1
+                if icon then st.rbUsed = st.rbUsed + 1 end
+            elseif ammoBag then
+                st.quiverSlots = st.quiverSlots + 1
+                if not icon then st.quiverFree = st.quiverFree + 1 end
+            elseif soulBag then
+                st.soulSlots = st.soulSlots + 1
+                if not icon then st.soulFree = st.soulFree + 1 end
+            else
+                st.bagTotal = st.bagTotal + 1
+                if icon then st.bagUsed = st.bagUsed + 1 end
+            end
+            if icon then
+                if ItemClass(itemID) == 6 then
+                    st.ammo = st.ammo + (count or 1)
+                    local get = (C_Item and C_Item.GetItemInfo) or GetItemInfo
+                    local maxStack = link and select(8, get(link))
+                    if maxStack and maxStack > 1 then st.ammoStack = maxStack end
+                end
+                if itemID == SOUL_SHARD then st.shards = st.shards + (count or 1) end
+                if ClassReagent(itemID) and itemID ~= SOUL_SHARD then
+                    st.reagents[itemID] = (st.reagents[itemID] or 0) + (count or 1)
+                end
+            end
+        end
+    end
+    return st
+end
+
+-- Soft green with room to spare, gold in the last 25%, soft red in the last 10%.
+local function FillColor(used, total)
+    local left = total > 0 and (total - used) / total or 1
+    if left <= 0.10 then return 0.9, 0.35, 0.3 end
+    if left <= 0.25 then return 1, 0.82, 0 end
+    return 0.45, 0.85, 0.45
+end
+
+-- Free bag slots on the backpack button, so you can check without opening.
+local backpackText
+local function UpdateBackpackCount(st)
+    local button = MainMenuBarBackpackButton
+    if not button then return end
+    if not backpackText then
+        backpackText = button:CreateFontString(nil, "OVERLAY", "NumberFontNormal")
+        backpackText:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -3, 3)
+    end
+    if not db.backpackCount then backpackText:Hide(); return end
+    st = st or Stats()
+    local free = st.bagTotal - st.bagUsed
+    backpackText:SetText(free)
+    backpackText:SetTextColor(FillColor(st.bagUsed, st.bagTotal))
+    backpackText:Show()
+end
+
+-- ==========================================
+-- WINDOW
+-- ==========================================
+local BUTTON = 37      -- Blizzard's bag button size
+local GAP = 2
+local PAD = 10
+
+local win, holders, buttons, headers = nil, {}, {}, {}
+local layoutPending, searchText = false, ""
+
+local function ButtonFor(bag, slot)
+    buttons[bag] = buttons[bag] or {}
+    local b = buttons[bag][slot]
+    if b then return b end
+    local holder = holders[bag]
+    if not holder then
+        holder = CreateFrame("Frame", nil, win)
+        holder:SetID(bag)
+        holder:SetSize(1, 1)
+        holder:SetPoint("TOPLEFT")
+        holders[bag] = holder
+    end
+    b = CreateFrame("ItemButton", "AetherPackItem" .. (bag + 1) .. "_" .. slot, holder, "ContainerFrameItemButtonTemplate")
+    b:SetID(slot)
+    if b.SetBagID then b:SetBagID(bag) end
+    b:SetSize(BUTTON, BUTTON)
+    buttons[bag][slot] = b
+    return b
+end
+
+local function UpdateButton(b, bag, slot)
+    local icon, count, locked, quality, link, itemID = SlotInfo(bag, slot)
+    b.aetherLink = link
+    pcall(SetItemButtonTexture, b, icon)
+    pcall(SetItemButtonCount, b, count or 0)
+    pcall(SetItemButtonDesaturated, b, locked and true or false)
+    if SetItemButtonQuality then pcall(SetItemButtonQuality, b, quality, itemID) end
+    if b.UpdateCooldown then pcall(b.UpdateCooldown, b, icon)
+    elseif ContainerFrame_UpdateCooldown then pcall(ContainerFrame_UpdateCooldown, bag, b) end
+    -- "New item" glow: only for items the game says are new (it clears
+    -- when you hover them), never for everything after a reload.
+    local isNew = false
+    if icon and C_NewItems and C_NewItems.IsNewItem then
+        local ok, v = pcall(C_NewItems.IsNewItem, bag, slot)
+        isNew = ok and v and not IsSecret(v) or false
+    end
+    if type(b.NewItemTexture) == "table" then
+        if isNew then
+            local atlas = NEW_ITEM_ATLAS_BY_QUALITY and quality and NEW_ITEM_ATLAS_BY_QUALITY[quality]
+            if atlas then b.NewItemTexture:SetAtlas(atlas) else b.NewItemTexture:SetAtlas("bags-glow-white") end
+            b.NewItemTexture:Show()
+        else
+            b.NewItemTexture:Hide()
+        end
+    end
+    if type(b.BattlepayItemTexture) == "table" then b.BattlepayItemTexture:Hide() end
+    for _, anim in ipairs({ b.flashAnim, b.newitemglowAnim }) do
+        if type(anim) == "table" then
+            if isNew then
+                if not anim:IsPlaying() then anim:Play() end
+            elseif anim:IsPlaying() then
+                anim:Stop()
+            end
+        end
+    end
+    -- Search: dim what doesn't match.
+    local match = searchText == "" or (link and ItemName(link):lower():find(searchText, 1, true))
+    b:SetAlpha(match and 1 or 0.25)
+end
+
+local function Header(key, title)
+    local h = headers[key]
+    if not h then
+        h = CreateFrame("Button", nil, win)
+        h:SetHeight(18)
+        h.text = h:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+        h.text:SetPoint("LEFT", 2, 0)
+        h.line = h:CreateTexture(nil, "ARTWORK")
+        h.line:SetColorTexture(0.3, 0.65, 1, 0.35)
+        h.line:SetHeight(1)
+        h.line:SetPoint("LEFT", h.text, "RIGHT", 8, 0)
+        h.line:SetPoint("RIGHT", h, "RIGHT", 0, 0)
+        h:SetScript("OnClick", function()
+            db.collapsed[key] = not db.collapsed[key]
+            AetherPack_Layout()
+        end)
+        h:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_TOP")
+            GameTooltip:SetText("Click to " .. (db.collapsed[key] and "open" or "fold") .. " this section", 1, 1, 1)
+            GameTooltip:Show()
+        end)
+        h:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        headers[key] = h
+    end
+    return h
+end
+
+-- Sorts the bags into sections and lays the window out.
+function AetherPack_Layout()
+    if not win then return end
+    if InCombatLockdown() then layoutPending = true; return end
+    layoutPending = false
+    local groups = {}
+    for _, s in ipairs(SECTIONS) do groups[s.key] = {} end
+    local free, ammoFree, soulFree, junkValue = 0, 0, 0, 0
+    for _, bag in ipairs(BAGS) do
+        local ammoBag, soulBag, reagentBag = IsAmmoBag(bag), IsSoulBag(bag), IsReagentBag(bag)
+        for slot = 1, NumSlots(bag) do
+            local b = ButtonFor(bag, slot)
+            local icon, count, _, quality, link, itemID = SlotInfo(bag, slot)
+            local entry = { b = b, bag = bag, slot = slot, quality = quality or -1, name = ItemName(link) }
+            if icon then
+                local key = SectionFor(bag, slot, quality, itemID)
+                if key == "junk" then junkValue = junkValue + SellPrice(link) * (count or 1) end
+                table.insert(groups[key], entry)
+            else
+                if reagentBag then -- reagent-only space: not counted as free bag space
+                elseif ammoBag then ammoFree = ammoFree + 1
+                elseif soulBag then soulFree = soulFree + 1
+                else free = free + 1 end
+                table.insert(groups.empty, entry)
+            end
+        end
+    end
+    -- Hide buttons for bags that got smaller or removed.
+    for bag, list in pairs(buttons) do
+        for slot, b in pairs(list) do
+            if slot > NumSlots(bag) then b:Hide() end
+        end
+    end
+
+    local cols = db.columns
+    local width = PAD * 2 + cols * BUTTON + (cols - 1) * GAP
+    local y = -62     -- below the title and search box
+    for _, s in ipairs(SECTIONS) do
+        local list = groups[s.key]
+        local title = s.key == "ammo" and FirstSectionTitle() or s.title
+        local h = Header(s.key, title)
+        if #list == 0 then
+            h:Hide()
+            for _, e in ipairs(list) do e.b:Hide() end
+        else
+            table.sort(list, function(a, b)
+                if a.quality ~= b.quality then return a.quality > b.quality end
+                if a.name ~= b.name then return a.name < b.name end
+                if a.bag ~= b.bag then return a.bag < b.bag end
+                return a.slot < b.slot
+            end)
+            local label = title .. "  |cff9d9d9d" .. #list .. "|r"
+            if s.key == "junk" and junkValue > 0 and GetCoinTextureString then
+                label = label .. "  " .. GetCoinTextureString(junkValue)
+            end
+            if s.key == "empty" and (ammoFree > 0 or soulFree > 0) then
+                label = s.title .. "  |cff9d9d9d" .. free
+                    .. (ammoFree > 0 and (" (+" .. ammoFree .. " ammo)") or "")
+                    .. (soulFree > 0 and (" (+" .. soulFree .. " soul bag)") or "") .. "|r"
+            end
+            if db.collapsed[s.key] then label = label .. "  |cff4da6ff(show)|r" end
+            h.text:SetText(label)
+            h:ClearAllPoints()
+            h:SetPoint("TOPLEFT", win, "TOPLEFT", PAD, y)
+            h:SetPoint("RIGHT", win, "RIGHT", -PAD, 0)
+            h:Show()
+            y = y - 20
+            if db.collapsed[s.key] then
+                for _, e in ipairs(list) do e.b:Hide() end
+            else
+                for i, e in ipairs(list) do
+                    local col = (i - 1) % cols
+                    local row = math.floor((i - 1) / cols)
+                    e.b:ClearAllPoints()
+                    e.b:SetPoint("TOPLEFT", win, "TOPLEFT", PAD + col * (BUTTON + GAP), y - row * (BUTTON + GAP))
+                    UpdateButton(e.b, e.bag, e.slot)
+                    e.b:Show()
+                end
+                y = y - math.ceil(#list / cols) * (BUTTON + GAP) - 6
+            end
+        end
+    end
+    -- Space and supply bars at the bottom.
+    local st = Stats()
+    local rows = {}
+    rows[#rows + 1] = { label = "Bags", used = st.bagUsed, total = st.bagTotal,
+        text = st.bagUsed .. " / " .. st.bagTotal .. " used  -  " .. (st.bagTotal - st.bagUsed) .. " free" }
+    if st.rbSlots > 0 then
+        rows[#rows + 1] = { label = "Reagent", used = st.rbUsed, total = st.rbSlots,
+            text = st.rbUsed .. " / " .. st.rbSlots .. " used  -  " .. (st.rbSlots - st.rbUsed) .. " free (reagent bag)" }
+    end
+    if UsesAmmo() then
+        local cap = st.quiverSlots * st.ammoStack
+        local low = st.ammo < 200
+        local text = FormatLargeNumber and FormatLargeNumber(st.ammo) or tostring(st.ammo)
+        if cap > 0 then
+            text = text .. " / " .. (FormatLargeNumber and FormatLargeNumber(cap) or cap) .. "  -  "
+                .. st.quiverFree .. " quiver slot" .. (st.quiverFree == 1 and "" or "s") .. " free"
+        else
+            text = text .. " (no quiver)"
+        end
+        if low then text = text .. "  |cffe65a4drunning low|r" end
+        rows[#rows + 1] = { label = "Ammo", used = cap > 0 and math.min(st.ammo, cap) or st.ammo,
+            total = cap > 0 and cap or math.max(st.ammo, 1), text = text, fillColor = low and { 0.9, 0.35, 0.3 } or nil,
+            fillUp = true }
+    end
+    if MyClass() == "WARLOCK" then
+        local text = st.shards .. (st.soulSlots > 0 and (" / " .. st.soulSlots .. " (soul bag)") or " shards")
+        if st.shards < 3 then text = text .. "  |cffe65a4drunning low|r" end
+        rows[#rows + 1] = { label = "Shards", used = st.shards, total = math.max(st.soulSlots, st.shards, 1), text = text,
+            fillColor = st.shards < 3 and { 0.9, 0.35, 0.3 } or nil, fillUp = true }
+    end
+    local reagents = {}
+    for _, id in ipairs(CLASS_REAGENTS[MyClass()] or {}) do
+        local n = st.reagents[id]
+        if n then
+            reagents[#reagents + 1] = (n <= 2 and "|cffe65a4d" or "|cffffffff") .. (REAGENT_NAMES[id] or id) .. " " .. n .. "|r"
+        end
+    end
+    if #reagents > 0 then rows[#rows + 1] = { label = "Reagents", text = table.concat(reagents, "  ") } end
+
+    y = y - 4
+    for i, row in ipairs(rows) do
+        local bar = win.bars[i] or (function()
+            local b = CreateFrame("Frame", nil, win)
+            b:SetHeight(16)
+            b.label = b:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+            b.label:SetPoint("LEFT", 0, 0)
+            b.label:SetWidth(54)
+            b.label:SetJustifyH("LEFT")
+            b.track = b:CreateTexture(nil, "BACKGROUND")
+            b.track:SetColorTexture(0.12, 0.28, 0.5, 0.5)
+            b.track:SetPoint("LEFT", 56, 0)
+            b.track:SetSize(90, 6)
+            b.fill = b:CreateTexture(nil, "ARTWORK")
+            b.fill:SetPoint("LEFT", b.track, "LEFT", 0, 0)
+            b.fill:SetHeight(6)
+            b.text = b:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+            b.text:SetPoint("LEFT", b.track, "RIGHT", 8, 0)
+            b.text:SetPoint("RIGHT", b, "RIGHT", 0, 0)
+            b.text:SetJustifyH("LEFT")
+            win.bars[i] = b
+            return b
+        end)()
+        bar:ClearAllPoints()
+        bar:SetPoint("TOPLEFT", win, "TOPLEFT", PAD, y)
+        bar:SetPoint("RIGHT", win, "RIGHT", -PAD, 0)
+        bar.label:SetText(row.label)
+        bar.text:SetText(row.text)
+        if row.total then
+            local share = row.total > 0 and math.min(1, row.used / row.total) or 0
+            bar.fill:SetWidth(math.max(1, 90 * share))
+            local r, g, b
+            if row.fillColor then r, g, b = row.fillColor[1], row.fillColor[2], row.fillColor[3]
+            elseif row.fillUp then r, g, b = 0.45, 0.85, 0.45            -- more ammo or shards is good
+            else r, g, b = FillColor(row.used, row.total) end
+            bar.fill:SetColorTexture(r, g, b, 1)
+            bar.track:Show(); bar.fill:Show()
+            bar.text:ClearAllPoints()
+            bar.text:SetPoint("LEFT", bar.track, "RIGHT", 8, 0)
+            bar.text:SetPoint("RIGHT", bar, "RIGHT", 0, 0)
+        else
+            bar.track:Hide(); bar.fill:Hide()
+            bar.text:ClearAllPoints()
+            bar.text:SetPoint("LEFT", bar, "LEFT", 56, 0)
+            bar.text:SetPoint("RIGHT", bar, "RIGHT", 0, 0)
+        end
+        bar:Show()
+        y = y - 18
+    end
+    for i = #rows + 1, #win.bars do win.bars[i]:Hide() end
+
+    win.money:SetText(GetCoinTextureString and GetCoinTextureString(GetMoney()) or "")
+    win.junkValue = junkValue
+    win.sell:SetShown(win.atMerchant and junkValue > 0)
+    UpdateBackpackCount(st)
+    win:SetSize(width, -y + (win.sell:IsShown() and 34 or 10))
+end
+
+-- Quick refresh of icons, counts and locks without moving anything (safe in combat).
+local function RefreshButtons()
+    for bag, list in pairs(buttons) do
+        for slot, b in pairs(list) do
+            if b:IsShown() then UpdateButton(b, bag, slot) end
+        end
+    end
+end
+
+-- ==========================================
+-- SELL JUNK
+-- ==========================================
+local selling = false
+local function SellJunk()
+    if selling then return end
+    local queue = {}
+    for _, bag in ipairs(BAGS) do
+        for slot = 1, NumSlots(bag) do
+            local icon, _, locked, quality, link = SlotInfo(bag, slot)
+            if icon and quality == 0 and not locked and SellPrice(link) > 0 then
+                queue[#queue + 1] = { bag, slot }
+            end
+        end
+    end
+    if #queue == 0 then return end
+    selling = true
+    local total = win.junkValue or 0
+    local i = 0
+    local function Next()
+        i = i + 1
+        local item = queue[i]
+        if not item or not win.atMerchant then
+            selling = false
+            if total > 0 and GetCoinTextureString then print(PREFIX .. "sold junk for " .. GetCoinTextureString(total) .. ".") end
+            return
+        end
+        local use = C.UseContainerItem or UseContainerItem
+        pcall(use, item[1], item[2])
+        C_Timer.After(0.2, Next)      -- one at a time, so the vendor keeps up
+    end
+    Next()
+end
+
+local function BuildWindow()
+    win = CreateFrame("Frame", "AetherPackFrame", UIParent, "BackdropTemplate")
+    win:SetSize(400, 200)
+    win:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -80, 120)
+    win:SetFrameStrata("HIGH")
+    win:SetToplevel(true)
+    win:SetClampedToScreen(true)
+    win:SetMovable(true)
+    win:EnableMouse(true)
+    win:RegisterForDrag("LeftButton")
+    win:SetScript("OnDragStart", win.StartMoving)
+    win:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+        local left, top = self:GetLeft(), self:GetTop()
+        if left and top then db.pos = { left, top } end
+    end)
+    if win.SetBackdrop then
+        win:SetBackdrop({ bgFile = "Interface\\Buttons\\WHITE8x8", edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1 })
+        win:SetBackdropColor(0.05, 0.06, 0.09, 0.94)
+        win:SetBackdropBorderColor(0.3, 0.65, 1, 0.9)
+    end
+    AetherDecorate(win, 26)
+    tinsert(UISpecialFrames, "AetherPackFrame")   -- Esc closes it
+
+    local title = win:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    title:SetPoint("TOPLEFT", PAD, -9)
+    title:SetText("|cff4da6ffAETHER PACK|r")
+
+    local close = AetherButton(win, nil, true)
+    close:SetSize(18, 18)
+    close:SetText("x")
+    close:SetPoint("TOPRIGHT", -6, -6)
+    close:SetScript("OnClick", function() win:Hide() end)
+
+    -- Search box
+    local search = CreateFrame("EditBox", "AetherPackSearch", win, "BackdropTemplate")
+    search:SetHeight(20)
+    search:SetPoint("TOPLEFT", PAD, -30)
+    search:SetPoint("RIGHT", win, "RIGHT", -PAD, 0)
+    search:SetAutoFocus(false)
+    search:SetFontObject("GameFontHighlightSmall")
+    search:SetTextInsets(6, 6, 0, 0)
+    if search.SetBackdrop then
+        search:SetBackdrop({ bgFile = "Interface\\Buttons\\WHITE8x8", edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1 })
+        search:SetBackdropColor(0.07, 0.17, 0.32, 0.6)
+        search:SetBackdropBorderColor(0.3, 0.65, 1, 0.6)
+    end
+    local hint = search:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    hint:SetPoint("LEFT", 6, 0)
+    hint:SetText("Search")
+    search:SetScript("OnTextChanged", function(self)
+        searchText = (self:GetText() or ""):lower()
+        hint:SetShown(searchText == "")
+        RefreshButtons()
+    end)
+    search:SetScript("OnEscapePressed", function(self) self:SetText(""); self:ClearFocus() end)
+    search:SetScript("OnEnterPressed", function(self) self:ClearFocus() end)
+
+    -- Gold next to the title; space bars and Sell junk at the bottom.
+    win.bars = {}
+    win.money = win:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    win.money:SetPoint("RIGHT", close, "LEFT", -8, 0)
+    win.sell = AetherButton(win, nil, true)
+    win.sell:SetSize(76, 18)
+    win.sell:SetPoint("BOTTOM", win, "BOTTOM", 0, 7)
+    win.sell:SetText("Sell junk")
+    win.sell:SetScript("OnClick", SellJunk)
+    win.sell:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_TOP")
+        GameTooltip:SetText("Sells every gray item to this vendor (nothing else).", 1, 1, 1, 1, true)
+        GameTooltip:Show()
+    end)
+    win.sell:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    win.sell:Hide()
+
+    win:SetScript("OnShow", function() AetherPack_Layout() end)
+    win:SetScale(db.scale or 1)
+    if db.pos then
+        win:ClearAllPoints()
+        win:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db.pos[1], db.pos[2])
+    end
+    win:Hide()
+end
+
+-- ==========================================
+-- OPENING AND CLOSING (instead of Blizzard's bags)
+-- ==========================================
+local function Show() if not win then return end; win:Show() end
+local function Hide() if win then win:Hide() end end
+local function Toggle() if not win then return end; if win:IsShown() then win:Hide() else win:Show() end end
+
+-- Several bag calls can arrive at once (B opens five bags): act once per moment.
+local HideBlizzardBags   -- below
+local pendingAction
+local function Act(action)
+    if not db or not db.replace then return end
+    if action == "toggle" and pendingAction == "toggle" then return end
+    local first = pendingAction == nil
+    pendingAction = action
+    if first then
+        C_Timer.After(0, function()
+            local a = pendingAction
+            pendingAction = nil
+            HideBlizzardBags()        -- in case one opened after our hook ran
+            if a == "toggle" then Toggle() elseif a == "open" then Show() else Hide() end
+        end)
+    end
+end
+
+-- Blizzard's bag windows stay closed while AetherPack is in charge: the
+-- one-per-bag windows for your carried bags, and the newer combined backpack.
+local function IsCarriedBagFrame(f)
+    if f == ContainerFrameCombinedBags then return true end
+    local id = f.GetID and f:GetID()
+    return id and id >= 0 and id <= 4
+end
+
+HideBlizzardBags = function()
+    if not db.replace then return end
+    for i = 1, (NUM_CONTAINER_FRAMES or 13) do
+        local f = _G["ContainerFrame" .. i]
+        if f and f:IsShown() and IsCarriedBagFrame(f) then f:Hide() end
+    end
+    if ContainerFrameCombinedBags and ContainerFrameCombinedBags:IsShown() then ContainerFrameCombinedBags:Hide() end
+end
+
+local function HookBags()
+    for name, action in pairs({ ToggleAllBags = "toggle", ToggleBackpack = "toggle", ToggleBag = "toggle",
+                                OpenAllBags = "open", OpenBackpack = "open",
+                                CloseAllBags = "close", CloseBackpack = "close" }) do
+        if _G[name] then
+            hooksecurefunc(name, function(id)
+                -- Your bags only (0-4 and the reagent bag); the bank and keyring stay Blizzard's.
+                if name == "ToggleBag" and id and (id < 0 or id > 4) and id ~= REAGENT_BAG then return end
+                HideBlizzardBags()
+                Act(action)
+            end)
+        end
+    end
+    local frames = {}
+    for i = 1, (NUM_CONTAINER_FRAMES or 13) do frames[#frames + 1] = _G["ContainerFrame" .. i] end
+    frames[#frames + 1] = ContainerFrameCombinedBags
+    for _, f in ipairs(frames) do
+        f:HookScript("OnShow", function(self)
+            if db.replace and IsCarriedBagFrame(self) then
+                self:Hide()
+                Act("toggle")     -- whatever opened it (a key, a bag button): AetherPack opens or closes instead
+            end
+        end)
+    end
+end
+
+-- ==========================================
+-- EVENTS
+-- ==========================================
+local events = CreateFrame("Frame")
+for _, event in ipairs({ "ADDON_LOADED", "PLAYER_LOGIN", "BAG_UPDATE_DELAYED", "ITEM_LOCK_CHANGED",
+    "BAG_UPDATE_COOLDOWN", "PLAYER_MONEY", "MERCHANT_SHOW", "MERCHANT_CLOSED", "PLAYER_REGEN_ENABLED",
+    "QUEST_LOG_UPDATE", "GET_ITEM_INFO_RECEIVED", "PLAYER_EQUIPMENT_CHANGED" }) do
+    pcall(events.RegisterEvent, events, event)
+end
+
+local refreshSoon = false
+local function LayoutSoon()
+    if refreshSoon then return end
+    refreshSoon = true
+    C_Timer.After(0.1, function()
+        refreshSoon = false
+        if win and win:IsShown() then AetherPack_Layout() end
+    end)
+end
+
+events:SetScript("OnEvent", function(_, event, arg1)
+    if event == "ADDON_LOADED" and arg1 == "AetherPack" then
+        AetherPackDB = AetherPackDB or {}
+        db = AetherPackDB
+        for k, v in pairs(DEFAULTS) do
+            if db[k] == nil then db[k] = type(v) == "table" and CopyTable and CopyTable(v) or v end
+        end
+        if type(db.collapsed) ~= "table" then db.collapsed = { empty = true } end
+    elseif event == "PLAYER_LOGIN" then
+        BuildWindow()
+        HookBags()
+        C_Timer.After(2, function() UpdateBackpackCount() end)
+    elseif not win then
+        return
+    elseif event == "MERCHANT_SHOW" then
+        win.atMerchant = true
+        if db.replace then win:Show() end
+        LayoutSoon()
+    elseif event == "MERCHANT_CLOSED" then
+        win.atMerchant = false
+        if win.sell then win.sell:Hide() end
+    elseif event == "PLAYER_REGEN_ENABLED" then
+        if layoutPending and win:IsShown() then AetherPack_Layout() end
+    elseif event == "ITEM_LOCK_CHANGED" or event == "BAG_UPDATE_COOLDOWN" then
+        if win:IsShown() then RefreshButtons() end
+    elseif event == "PLAYER_MONEY" then
+        if win:IsShown() then win.money:SetText(GetCoinTextureString and GetCoinTextureString(GetMoney()) or "") end
+    else
+        if event == "BAG_UPDATE_DELAYED" then UpdateBackpackCount() end   -- even with the window closed
+        LayoutSoon()
+    end
+end)
+
+-- ==========================================
+-- SLASH COMMANDS AND API
+-- ==========================================
+SLASH_AETHERPACK1 = "/pack"
+SLASH_AETHERPACK2 = "/aetherpack"
+SlashCmdList["AETHERPACK"] = function(msg)
+    local cmd, arg = strlower(strtrim(msg or "")):match("^(%S*)%s*(.-)$")
+    if cmd == "" then
+        Toggle()
+    elseif cmd == "replace" then
+        db.replace = (arg == "on") or (arg ~= "off" and not db.replace)
+        print(PREFIX .. "opens instead of Blizzard's bags: " .. (db.replace and "|cff33dd66on|r" or "|cffff5555off|r"))
+    elseif cmd == "columns" and tonumber(arg) then
+        db.columns = math.max(6, math.min(16, math.floor(tonumber(arg))))
+        AetherPack_Layout()
+    elseif cmd == "scale" and tonumber(arg) then
+        db.scale = math.max(0.6, math.min(1.5, tonumber(arg)))
+        if win then win:SetScale(db.scale) end
+    elseif cmd == "count" then
+        db.backpackCount = (arg == "on") or (arg ~= "off" and not db.backpackCount)
+        UpdateBackpackCount()
+        print(PREFIX .. "free slots on the backpack button: " .. (db.backpackCount and "|cff33dd66on|r" or "|cffff5555off|r"))
+    elseif cmd == "reset" then
+        db.pos = nil
+        if win then win:ClearAllPoints(); win:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -80, 120) end
+        print(PREFIX .. "window back in its starting spot.")
+    else
+        print(PREFIX .. "your bags, sorted into sections.")
+        print("  /pack                 open or close (B opens it too)")
+        print("  /pack replace on|off  open instead of Blizzard's bags")
+        print("  /pack columns 6-16    icons per row")
+        print("  /pack count on|off    free bag slots on the backpack button")
+        print("  /pack scale 0.6-1.5   window size")
+        print("  /pack reset           window back to its starting spot")
+    end
+end
+
+AetherPack_API = {
+    Toggle = Toggle,
+    Layout = function() AetherPack_Layout() end,
+}

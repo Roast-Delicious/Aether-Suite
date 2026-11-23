@@ -1,0 +1,10 @@
+## Interface: 16001
+## Title: AetherBars
+## Notes: Minimal, clean action buttons with thin borders and fade-out transparency. (Formerly CleanBars.)
+## Author: Aether
+## Version: 1.14.0
+## OptionalDeps: AetherHub
+## SavedVariables: AetherBarsDB, CleanBarsDB
+## SavedVariablesPerCharacter: AetherBarsCharDB
+
+AetherBars.lua

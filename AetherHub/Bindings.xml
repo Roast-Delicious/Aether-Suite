@@ -1,0 +1,5 @@
+<Bindings>
+	<Binding name="AETHERHUB_TOGGLE" header="AETHERHUB" category="ADDONS">
+		AetherHub_Toggle()
+	</Binding>
+</Bindings>

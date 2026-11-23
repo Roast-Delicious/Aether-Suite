@@ -1,0 +1,9 @@
+## Interface: 16001
+## Title: AetherPack
+## Notes: Your bags in one compact window, sorted into sections: ammo, quest items, gear, consumables, trade goods, other and junk. Search, collapsible sections and one-click junk selling.
+## Author: Aether
+## Version: 1.1.8
+## OptionalDeps: AetherHub, AetherItemID
+## SavedVariables: AetherPackDB
+
+AetherPack.lua

@@ -1,0 +1,10 @@
+AetherMarks_Unique.lua is derived from QuestieDB's WoW Forever data,
+https://github.com/Questie/QuestieDB
+(data/Forever/foreverQuestDB.lua, foreverItemDB.lua and foreverNpcDB.lua): the
+named NPCs that are the only source of a quest item.
+The Questie team allows copying QuestieDB content under the GPLv3 license, but notes
+that some historic contributors have not formally agreed to it (see QuestieDB's
+LICENSE.md).
+
+This copy is for personal use. If you share AetherMarks publicly, keep this notice,
+release it under the GPL, and read QuestieDB's license first.

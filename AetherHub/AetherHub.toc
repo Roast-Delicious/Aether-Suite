@@ -1,0 +1,11 @@
+## Interface: 16001
+## Title: AetherHub
+## Notes: One window for the options of AetherMeter, AetherBars, AetherCoords, AetherPathfinder, AetherMarks, AetherItemID, AetherLedger, AetherPack, AetherChat and AetherFrames.
+## Author: Aether
+## IconTexture: Interface\Icons\Spell_Arcane_Arcane02
+## AddonCompartmentFunc: AetherHub_OnCompartmentClick
+## Version: 1.13.0
+## SavedVariables: AetherHubDB
+## SavedVariablesPerCharacter: AetherHubCharDB
+
+AetherHub.lua

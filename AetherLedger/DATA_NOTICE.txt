@@ -1,0 +1,10 @@
+AetherLedger_Data.lua contains data derived from QuestieDB's WoW Forever data,
+https://github.com/Questie/QuestieDB
+(data/Forever/foreverQuestDB.lua, foreverNpcDB.lua and foreverObjectDB.lua, plus
+support/Forever/Zones; quests on Questie's quest blacklist are left out).
+The Questie team allows copying QuestieDB content under the GPLv3 license, but notes
+that some historic contributors have not formally agreed to it (see QuestieDB's
+LICENSE.md).
+
+This copy is for personal use. If you share AetherLedger publicly, keep this notice,
+release it under the GPL, and read QuestieDB's license first.

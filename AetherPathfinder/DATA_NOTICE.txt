@@ -1,0 +1,10 @@
+AetherPathfinder_Data.lua contains NPC names, titles, service flags, factions and
+map coordinates derived from QuestieDB's WoW Forever data:
+  https://github.com/Questie/QuestieDB
+  (data/Forever/foreverNpcDB.lua and support/Forever/Zones/areaIdToUiMapId.lua)
+
+The Questie team allows copying QuestieDB content under the GPLv3 license, but notes
+that some historic contributors have not formally agreed to it (see QuestieDB's
+LICENSE.md). This copy is for personal use. If you share AetherPathfinder publicly,
+keep this notice, release it under GPLv3, and read QuestieDB's LICENSE.md first.
+"Questie" is the Questie team's name and is not used to name this addon.

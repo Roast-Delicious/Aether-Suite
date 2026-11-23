@@ -1,0 +1,14 @@
+## Interface: 16001
+## Title: AetherPathfinder
+## Notes: Filters on the world map and minimap that highlight trainers, merchants, mailboxes and other service NPCs. Built-in locations from QuestieDB, refreshed automatically. (Formerly PathfinderMap.)
+## Author: Aether
+## Version: 1.9.2
+## OptionalDeps: AetherHub
+## SavedVariables: AetherPathfinderDB, PathfinderMapDB
+## SavedVariablesPerCharacter: AetherPathfinderCharDB, PathfinderMapCharDB
+
+AetherPathfinder_Data.lua
+AetherPathfinder_Raw.lua
+AetherPathfinder_Build.lua
+AetherPathfinder_Mail.lua
+AetherPathfinder.lua
