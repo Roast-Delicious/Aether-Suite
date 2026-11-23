@@ -871,6 +871,9 @@ end
 -- ==========================================
 -- BUFF ROW AND PET HAPPINESS
 -- ==========================================
+-- Gap (frame units) between a capsule's bottom and the icon row under it
+-- (buffs/debuffs, and the hawk/totem strip 3 higher). Was 11 before 1.14.1.
+local AURA_GAP = 4
 local buffRow, buffIcons = nil, {}      -- your row (buffs, then debuffs)
 local targetRow, targetIcons = nil, {}  -- the target's row (debuffs, then buffs)
 local buffCont, targetCont              -- the same rows drawn by the game (see AURA CONTAINERS)
@@ -1443,17 +1446,17 @@ local function PlaceFrames()
     if pos then pet:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", pos[1], pos[2])
     else pet:SetPoint("TOPLEFT", p, "TOPLEFT", 40, -(p.capBottom + 11 + buffH - pet.capTop)) end
     buffRow:ClearAllPoints()
-    buffRow:SetPoint("TOPLEFT", p, "TOPLEFT", p.cx + 66, -(p.capBottom + 11))
+    buffRow:SetPoint("TOPLEFT", p, "TOPLEFT", p.cx + 66, -(p.capBottom + AURA_GAP))
     -- The target's row mirrors yours: under its capsule, ending at its ring.
     targetRow:ClearAllPoints()
-    targetRow:SetPoint("TOPRIGHT", tgt, "TOPLEFT", tgt.w - (tgt.cx + 66), -(tgt.capBottom + 11))
+    targetRow:SetPoint("TOPRIGHT", tgt, "TOPLEFT", tgt.w - (tgt.cx + 66), -(tgt.capBottom + AURA_GAP))
     if buffCont then
         buffCont:ClearAllPoints()
-        buffCont:SetPoint("TOPLEFT", p, "TOPLEFT", p.cx + 66, -(p.capBottom + 11))
+        buffCont:SetPoint("TOPLEFT", p, "TOPLEFT", p.cx + 66, -(p.capBottom + AURA_GAP))
     end
     if targetCont then
         targetCont:ClearAllPoints()
-        targetCont:SetPoint("TOPRIGHT", tgt, "TOPLEFT", tgt.w - (tgt.cx + 66), -(tgt.capBottom + 11))
+        targetCont:SetPoint("TOPRIGHT", tgt, "TOPLEFT", tgt.w - (tgt.cx + 66), -(tgt.capBottom + AURA_GAP))
     end
     -- Target of target: small, mirrored, below the target's aura row (on the
     -- ring side), unless you've moved it yourself.
@@ -1808,7 +1811,7 @@ local function AttachTotems()
     pcall(function()
         if tf:GetParent() ~= p then tf:SetParent(p) end
         tf:ClearAllPoints()
-        tf:SetPoint("TOPLEFT", p, "TOPLEFT", p.cx + 56, -(p.capBottom + 8))
+        tf:SetPoint("TOPLEFT", p, "TOPLEFT", p.cx + 56, -(p.capBottom + AURA_GAP - 3))
     end)
     placingTotems = false
     if not totemHooked then

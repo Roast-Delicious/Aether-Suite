@@ -65,8 +65,14 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-Current build: Frames 1.14.0, Hub 1.13.2, Bars 1.14.0, Chat 1.0.6,
+Current build: Frames 1.14.1, Hub 1.13.2, Bars 1.14.0, Chat 1.0.6,
 Pack 1.2.1 (others unchanged).
+
+AetherFrames 1.14.1 (2026-11-23): AURA_GAP 4 (was 11) between the
+capsule bottom and the player/target aura rows (custom rows and
+AuraContainers); totem/hawk strip at AURA_GAP - 3 (was 8). User picked
+9 px from mockups (mock-work script: aura row shifted in their
+screenshot). Pet/tot default spots unchanged.
 
 AetherPack 1.2.0 (2026-11-23, built and sent; in-game check pending):
 one-bag windows. A plain click on a bag-bar slot (CharacterBag0-3Slot,

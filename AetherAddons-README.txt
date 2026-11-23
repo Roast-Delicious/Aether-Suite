@@ -28,7 +28,7 @@ window, so you rarely need to type a command.
   AetherPack         1.2.1     Your bags sorted into sections
   AetherChat         1.0.6     Chat with the Aether look, fitted beside
                                your action bars
-  AetherFrames       1.14.0    Your, your pet's, your target's, its
+  AetherFrames       1.14.1    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
 
@@ -652,6 +652,8 @@ AetherFrames - player, pet, target and party frames            /af
     Blizzard's own aura display (AuraContainer), which the game fills
     in itself: icon, stack count and time left. The look is still
     Aether's. Auras with no end (like Aspect of the Hawk) show no timer.
+  - The aura rows and the hawk/totem strip sit snug under the capsule
+    (about 6 px below it on a typical screen).
   - The target frame is the mirror image on the other side: its name
     is red for enemies and yellow for neutral, and its health and
     power drain toward the crest (a mob with no mana or rage shows an
