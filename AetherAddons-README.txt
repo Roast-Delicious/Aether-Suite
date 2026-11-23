@@ -28,8 +28,9 @@ window, so you rarely need to type a command.
   AetherPack         1.1.8     Your bags sorted into sections
   AetherChat         1.0.5     Chat with the Aether look, fitted beside
                                your action bars
-  AetherFrames       1.5.4     Your, your pet's, your target's and your
-                               party's frames with round portrait crests
+  AetherFrames       1.6.0     Your, your pet's, your target's, its
+                               target's, and your party's frames with
+                               round portrait crests
 
 
 GETTING STARTED
@@ -619,6 +620,13 @@ AetherFrames - player, pet, target and party frames            /af
     Unlock to Move on AetherHub's Layout page (they move as one). Untick
     "Party frames in the Aether look" (or /af party off, then /reload) to
     get Blizzard's party frames back.
+  - Target of target: who your target is targeting, in a small crest
+    (the size of your pet's), mirrored like the target frame, under
+    the target's buff and debuff row. Health and mana (or rage, energy)
+    with numbers, the level badge and the class medallion. No threat
+    glow (that's for your own threat). Click it to target that unit.
+    Drag it with Unlock to Move. To turn it off: /af tot off, then
+    /reload.
   - Your buffs and debuffs stay top right, where Blizzard shows them.
     The target gets a row under its frame: its debuffs (yours
     included, red edge) first, then its buffs (blue edge), each with

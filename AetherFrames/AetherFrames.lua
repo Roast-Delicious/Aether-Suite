@@ -19,6 +19,7 @@ local defaults = {
     locked      = true,
     threat      = true,   -- glow around the portrait when you (or your pet) have threat
     party       = true,   -- party frames in the Aether look (Blizzard's hidden; reload)
+    tot         = true,   -- target of target, under the target frame (reload)
 }
 
 local db
@@ -921,6 +922,7 @@ local function SetLayer(t, value, curve, plain)
 end
 
 local function Threat(f)
+    if f.unit == "targettarget" then return nil end   -- no glow: it's your threat, not theirs
     if not UnitThreatSituation or not UnitExists(f.unit) then return nil end
     local ok, st
     if f.unit == "target" then ok, st = pcall(UnitThreatSituation, "player", "target")
@@ -1093,6 +1095,15 @@ local function PlaceFrames()
         targetCont:ClearAllPoints()
         targetCont:SetPoint("TOPRIGHT", tgt, "TOPLEFT", tgt.w - (tgt.cx + 66), -(tgt.capBottom + 11))
     end
+    -- Target of target: small, mirrored, below the target's aura row (on the
+    -- ring side), unless you've moved it yourself.
+    local tot = frames.targettarget
+    if tot then
+        tot:ClearAllPoints()
+        pos = db.pos and db.pos.tot
+        if pos then tot:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", pos[1], pos[2])
+        else tot:SetPoint("TOPRIGHT", tgt, "TOPRIGHT", -40, -(tgt.capBottom + 11 + buffH - tot.capTop)) end
+    end
     -- Party: four frames stacked, moved together by the first one.
     local p1 = frames.party1
     if p1 then
@@ -1180,7 +1191,7 @@ end
 -- MOVING (unlock)
 -- ==========================================
 local movers = {}
-local MOVE_LABEL = { player = "Your frame", pet = "Your pet's frame", target = "Target frame", party = "Party frames" }
+local MOVE_LABEL = { player = "Your frame", pet = "Your pet's frame", target = "Target frame", tot = "Target of target", party = "Party frames" }
 local SetLocked
 local function Mover(key, f)
     if movers[key] then return movers[key] end
@@ -1224,7 +1235,7 @@ end
 SetLocked = function(locked)
     if not locked and InCombatLockdown() then return end
     db.locked = locked
-    for key, f in pairs({ player = frames.player, pet = frames.pet, target = frames.target, party = frames.party1 }) do
+    for key, f in pairs({ player = frames.player, pet = frames.pet, target = frames.target, tot = frames.targettarget, party = frames.party1 }) do
         local m = Mover(key, f)
         m:SetShown(not locked)
         -- While moving, show frames even without a pet or target (out of combat only).
@@ -1269,6 +1280,17 @@ local function CreateAll()
                  { kind = "power", h = 13, gap = 3, text = true } },
     })
 
+    -- Blizzard's target of target lives inside its (hidden) target frame, so
+    -- it's gone too; this one takes its place.
+    if db.tot then
+        Build("AetherFramesTargetTarget", {
+            unit = "targettarget", art = "pet12", badge = "level", mirror = true, S = 58, capW = 29 + 151, padTop = 2,
+            nameH = 14, padBottom = 3, textInset = 45, padRight = 14, small = true,
+            bars = { { kind = "health", h = 12, gap = 3, text = true },
+                     { kind = "power", h = 12, gap = 2, text = true } },
+        })
+    end
+
     if db.party then
         for i = 1, 4 do
             local f = Build("AetherFramesParty" .. i, {
@@ -1299,6 +1321,7 @@ local function CreateAll()
     RegisterUnitWatch(frames.player)
     RegisterUnitWatch(frames.pet)
     RegisterUnitWatch(frames.target)
+    if frames.targettarget then RegisterUnitWatch(frames.targettarget) end
     for i = 1, 4 do if frames["party" .. i] then RegisterUnitWatch(frames["party" .. i]) end end
     for _, f in pairs(frames) do
         f:HookScript("OnShow", function(self) UpdateAll(self); if self.unit == "player" or self.unit == "target" then UpdateBuffs() end end)
@@ -1333,7 +1356,7 @@ ev:SetScript("OnEvent", function(_, event, arg1)
             "UNIT_MAXPOWER", "UNIT_DISPLAYPOWER", "UNIT_NAME_UPDATE", "UNIT_LEVEL", "UNIT_PORTRAIT_UPDATE",
             "UNIT_MODEL_CHANGED", "UNIT_AURA", "UNIT_HAPPINESS", "UNIT_FACTION", "UNIT_CLASSIFICATION_CHANGED",
             "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED", "GROUP_ROSTER_UPDATE", "UNIT_CONNECTION",
-            "PARTY_MEMBER_ENABLE", "PARTY_MEMBER_DISABLE" }) do Reg(e) end
+            "PARTY_MEMBER_ENABLE", "PARTY_MEMBER_DISABLE", "UNIT_TARGET" }) do Reg(e) end
         for _, f in pairs(frames) do UpdateAll(f) end
         UpdateBuffs(); UpdateHappiness()
         if not db.locked then SetLocked(false) end
@@ -1346,6 +1369,7 @@ ev:SetScript("OnEvent", function(_, event, arg1)
         UpdateBuffs(); UpdateHappiness()
     elseif event == "PLAYER_TARGET_CHANGED" then
         UpdateAll(frames.target)
+        UpdateAll(frames.targettarget)
         RefreshContainer(targetCont)
         UpdateTargetAuras()
     elseif event == "GROUP_ROSTER_UPDATE" then
@@ -1353,6 +1377,8 @@ ev:SetScript("OnEvent", function(_, event, arg1)
             local f = frames["party" .. i]
             if f then UpdateAll(f); RefreshContainer(f.auras) end
         end
+    elseif event == "UNIT_TARGET" then
+        if arg1 == "target" then UpdateAll(frames.targettarget) end
     elseif event == "UNIT_PET" then
         if arg1 == "player" then UpdateAll(frames.pet); UpdateHappiness() end
     elseif event == "PLAYER_REGEN_DISABLED" then
@@ -1380,7 +1406,7 @@ ev:SetScript("OnEvent", function(_, event, arg1)
     end
 end)
 
-local tick, happyTick = 0, 0
+local tick, happyTick, totTick = 0, 0, 0
 ev:SetScript("OnUpdate", function(_, dt)
     if not db or not frames.player then return end
     UpdateThreat(dt)                 -- every frame, so the pulse is smooth
@@ -1414,6 +1440,14 @@ ev:SetScript("OnUpdate", function(_, dt)
         end
     end
     UpdateTimers()
+    -- The game sends no health or power events for the target of target, so
+    -- check it here: bars every tick, name, level and portrait twice a second.
+    local tot = frames.targettarget
+    if tot and tot:IsShown() and UnitExists("targettarget") then
+        UpdateHealth(tot); UpdatePower(tot)
+        totTick = totTick + 1
+        if totTick >= 5 then totTick = 0; UpdateInfo(tot) end
+    end
     happyTick = happyTick + 1
     if happyTick >= 10 then happyTick = 0; UpdateHappiness() end   -- once a second
 end)
@@ -1517,6 +1551,9 @@ SlashCmdList["AETHERFRAMES"] = function(input)
     elseif cmd == "party" then
         db.party = (val ~= "off")
         Print("Party frames: " .. OnOff(db.party) .. " (type /reload to apply)")
+    elseif cmd == "tot" then
+        db.tot = (val ~= "off")
+        Print("Target of target: " .. OnOff(db.tot) .. " (type /reload to apply)")
     elseif cmd == "petpower" then
         db.petPower = (val == "on")
         Print("Numbers on the pet's resource bar: " .. OnOff(db.petPower) .. " (type /reload to apply)")
@@ -1547,6 +1584,7 @@ SlashCmdList["AETHERFRAMES"] = function(input)
         print("  /af auras            report what the game says about your auras")
         print("  /af petpower on|off  numbers on the pet's resource bar (now " .. OnOff(db.petPower) .. ")")
         print("  /af party on|off     party frames in the Aether look (now " .. OnOff(db.party) .. ")")
+        print("  /af tot on|off       target of target under the target frame (now " .. OnOff(db.tot) .. ")")
         print("  /af scale 0.6-1.6    frame size (now " .. db.scale .. ")")
         print("  /af unlock | lock    move the frames (or Unlock to Move on AetherHub's Layout page; Done to finish)")
         print("  /af petreset         put your pet's frame back under yours")

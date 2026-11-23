@@ -66,6 +66,9 @@ Then read this file. The addons live at the repo root (one folder each);
 
 - In-game check of the rounded windows, the XP bar, and button names
   (build: Hub 1.13.1, Bars 1.14.0).
+- Target of target (Frames 1.6.0, unit "targettarget", small mirrored
+  crest under the target row, polled in OnUpdate since the game sends
+  no unit events for it): confirm in game, including in combat.
 - Target debuffs in combat via AuraContainer: confirm in game.
 - Level-number centering nudge (1 unit right): confirm.
 - Suggested next (not yet approved): shared Aether UI kit (one window
