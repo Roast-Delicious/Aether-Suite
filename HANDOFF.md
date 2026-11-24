@@ -88,6 +88,15 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
+- READY, NOT SHIPPED (branch fix-debug-forbidden): AetherSkins 1.1.1.
+  /skins debug errored (user, 15:52): CoordTextAnywhere walked UIParent
+  into a forbidden frame (CommunitiesAddDialog). All region/child scans
+  now go through Regions()/Children() (pcall + IsForbidden). Test added
+  to skins_minimap_test. README table says 1.1.1. Ship on the next go.
+- CONFIRMED in game (15:50-15:53): 1.1.0 minimap layout (magnifier menu
+  + hover work, Forever coords gone, pills placed, quest list clears by a
+  few px), 3D chevrons on AetherHub's window.
+
 - LAST BUILD (Nov 24, 15:44; go-ahead 15:36): Ledger 1.7.1, Skins 1.1.0,
   Coords 1.3.14, Hub 1.14.4, Bars 1.14.3, Frames 1.14.7, ItemID 1.1.4,
   Meter 1.13.9, Pack 1.6.1 (Pathfinder 1.9.5, Marks 1.6.13, Chat 1.0.8
@@ -319,6 +328,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 24, 2026 (16:00): session closed; AetherDev.zip made. GITHUB IS
+  BEHIND: this session couldn't push (no repo access granted). origin/main
+  is at 18dcc02. Push main AND branch fix-debug-forbidden first thing
+  (git -c push.negotiate=true push origin main fix-debug-forbidden).
 - Nov 24, 2026 (15:44): built Ledger 1.7.1 (Aether Blue turn-in), 3D
   chevrons suite-wide, AetherSkins 1.1.0 (minimap layout 3), Coords 1.3.14.
   Lesson: a parallel Aether chat (14:07-14:24) made decisions the dev zip
