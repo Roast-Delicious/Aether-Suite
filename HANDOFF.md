@@ -144,8 +144,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   * Quest list (screenshot 14:56): header starts ~30 px below the current
     coordinates pill; layout 3 stacks both pills in about the same space,
     so it clears (re-check after build).
+  * The "1" badge under the calendar = Blizzard's ADDON COMPARTMENT
+    (tooltip "AddOns"; menu lists AetherHub only). User asked (15:01)
+    what to do with it in layout 3: options given, waiting on the pick.
   STILL OPEN:
-  what the "1" badge under the calendar is; a screenshot of the quest list
+  a screenshot of the quest list
   top to check it clears the new zone pill.
   NOTE: that chat's code (branch fix/forever-coords) and mockup scripts were
   never pushed and are NOT in this repo; recreate from its transcript.
