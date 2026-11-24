@@ -461,7 +461,7 @@ end
 local function FillColor(used, total)
     local left = total > 0 and (total - used) / total or 1
     if left <= 0.10 then return 0.9, 0.35, 0.3 end
-    if left <= 0.25 then return 1, 0.82, 0 end   -- a warning color, not the Aether gold
+    if left <= 0.25 then return 1, 0.69, 0 end   -- Aether gold: the suite's only yellow
     return 0.45, 0.85, 0.45
 end
 
@@ -513,6 +513,7 @@ local GAP = 2
 local PAD = 10
 
 local win, holders, buttons, headers = nil, {}, {}, {}
+local SpaceColor, SpaceRow
 
 -- The gold capsule in the title strip: bigger numbers, each in its coin's
 -- color, in a dark navy pill with a thin gold edge. Hovering it shows what
@@ -665,6 +666,60 @@ local function UpdateButton(b, bag, slot, noSearch)
     b:SetAlpha(match and 1 or 0.25)
 end
 
+-- Space colors: one green (SPACE_GREEN, easy to swap), the Aether gold and a
+-- soft red. Gold is the suite's only yellow.
+local SPACE_GREEN = { 0.43, 0.86, 0.47 }
+local SPACE_GOLD  = { 1, 0.69, 0 }
+local SPACE_RED   = { 0.94, 0.37, 0.33 }
+local SPACE_WHITE = { 1, 1, 1 }
+local AMMO_WARN = 0.5      -- Warning at half a full quiver or ammo pouch, or less
+local AMMO_LOW  = 300      -- Low (pulsing) at this much ammo or less
+local SHARDS_LOW = 3
+local DEP_INK_W = 227      -- where the "No swaps. Just drops." ink ends in the deposit row
+local SIDE_MIN_W = 135     -- room the space rows need beside the ink
+local ROW_H = 15
+
+-- Green with room to spare, gold in the last 25%, red in the last 10% (and full).
+SpaceColor = function(used, total)
+    local left = total > 0 and (total - used) / total or 1
+    if left <= 0.10 then return SPACE_RED end
+    if left <= 0.25 then return SPACE_GOLD end
+    return SPACE_GREEN
+end
+
+-- One space row: a label on the left; on the right the value, with an
+-- optional word in front of it ("Warning", or "Low", which pulses).
+SpaceRow = function(i)
+    local r = win.bars[i]
+    if r then return r end
+    r = CreateFrame("Frame", nil, win)
+    r:SetHeight(ROW_H)
+    r:EnableMouse(true)
+    r.label = r:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
+    r.label:SetPoint("LEFT", 0, 0)
+    r.label:SetTextColor(0.78, 0.8, 0.84)
+    r.value = r:CreateFontString(nil, "OVERLAY", "AetherFontNormalSmall")
+    r.value:SetPoint("RIGHT", 0, 0)
+    r.word = r:CreateFontString(nil, "OVERLAY", "AetherFontNormalSmall")
+    r.word:SetPoint("RIGHT", r.value, "LEFT", -4, 0)
+    -- The Low pulse: fades to 35% and back, about once a second.
+    r.pulse = r.word:CreateAnimationGroup()
+    r.pulse:SetLooping("BOUNCE")
+    local fade = r.pulse:CreateAnimation("Alpha")
+    fade:SetFromAlpha(1); fade:SetToAlpha(0.35); fade:SetDuration(0.5)
+    if fade.SetSmoothing then fade:SetSmoothing("IN_OUT") end
+    r:SetScript("OnEnter", function(self)
+        if not self.tip then return end
+        GameTooltip:SetOwner(self, "ANCHOR_TOP")
+        GameTooltip:SetText(self.label:GetText() or "", 1, 0.69, 0)
+        for _, line in ipairs(self.tip) do GameTooltip:AddLine(line, 1, 1, 1, true) end
+        GameTooltip:Show()
+    end)
+    r:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    win.bars[i] = r
+    return r
+end
+
 local function Header(key, title)
     local h = headers[key]
     if not h then
@@ -677,6 +732,9 @@ local function Header(key, title)
         h.line:SetHeight(1)
         h.line:SetPoint("LEFT", h.text, "RIGHT", 8, 0)
         h.line:SetPoint("RIGHT", h, "RIGHT", 0, 0)
+        h.show = h:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")   -- "Show" when folded
+        h.show:SetPoint("RIGHT", h, "RIGHT", 0, 0)
+        h.show:SetTextColor(0.43, 0.67, 1)
         h:SetScript("OnClick", function()
             db.collapsed[key] = not db.collapsed[key]
             AetherPack_Layout()
@@ -752,13 +810,21 @@ function AetherPack_Layout()
                     .. (ammoFree > 0 and (" (+" .. ammoFree .. " ammo)") or "")
                     .. (soulFree > 0 and (" (+" .. soulFree .. " soul bag)") or "") .. "|r"
             end
-            if db.collapsed[s.key] then label = label .. "  |cff4da6ff(show)|r" end
             h.text:SetText(label)
+            h.line:ClearAllPoints()
+            h.line:SetPoint("LEFT", h.text, "RIGHT", 8, 0)
+            if db.collapsed[s.key] then
+                h.show:SetText(s.key == "empty" and "Show empty" or "Show")
+                h.show:Show()
+                h.line:SetPoint("RIGHT", h.show, "LEFT", -8, 0)
+            else
+                h.show:Hide()
+                h.line:SetPoint("RIGHT", h, "RIGHT", 0, 0)
+            end
             h:ClearAllPoints()
             h:SetPoint("TOPLEFT", win, "TOPLEFT", PAD, y)
             h:SetPoint("RIGHT", win, "RIGHT", -PAD, 0)
             h:Show()
-            h.line:SetPoint("RIGHT", h, "RIGHT", 0, 0)
             y = y - 20
             if db.collapsed[s.key] then
                 for _, e in ipairs(list) do e.b:Hide() end
@@ -775,35 +841,43 @@ function AetherPack_Layout()
             end
         end
     end
-    -- Space and supply bars at the bottom.
+    -- Space and supply at the bottom: short colored values instead of bars
+    -- (see SpaceColor), full numbers in each row's tooltip.
     local st = Stats()
     local rows = {}
-    rows[#rows + 1] = { label = "Bags", used = st.bagUsed, total = st.bagTotal,
-        text = st.bagUsed .. " / " .. st.bagTotal .. " used  -  " .. (st.bagTotal - st.bagUsed) .. " free" }
+    local function Num(n) return FormatLargeNumber and FormatLargeNumber(n) or tostring(n) end
+    local bagFree = st.bagTotal - st.bagUsed
+    rows[#rows + 1] = { label = "Bags", value = bagFree <= 0 and "Full" or (bagFree .. " free"),
+        color = SpaceColor(st.bagUsed, st.bagTotal),
+        tip = { st.bagUsed .. " of " .. st.bagTotal .. " slots used", bagFree .. " free" } }
     if st.rbSlots > 0 then
-        rows[#rows + 1] = { label = "Reagent", used = st.rbUsed, total = st.rbSlots,
-            text = st.rbUsed .. " / " .. st.rbSlots .. " used  -  " .. (st.rbSlots - st.rbUsed) .. " free (reagent bag)" }
+        local rbFree = st.rbSlots - st.rbUsed
+        rows[#rows + 1] = { label = "Reagent", value = rbFree <= 0 and "Full" or (rbFree .. " free"),
+            color = SpaceColor(st.rbUsed, st.rbSlots),
+            tip = { "Reagent bag: " .. st.rbUsed .. " of " .. st.rbSlots .. " slots used", rbFree .. " free" } }
     end
     if UsesAmmo() then
         local cap = st.quiverSlots * st.ammoStack
-        local low = st.ammo < 200
-        local text = FormatLargeNumber and FormatLargeNumber(st.ammo) or tostring(st.ammo)
+        local word, wordColor, pulse
+        if st.ammo <= AMMO_LOW then word, wordColor, pulse = "Low", SPACE_RED, true
+        elseif cap > 0 and st.ammo <= cap * AMMO_WARN then word, wordColor = "Warning", SPACE_GOLD end
+        local tip = { Num(st.ammo) .. " ammo" }
         if cap > 0 then
-            text = text .. " / " .. (FormatLargeNumber and FormatLargeNumber(cap) or cap) .. "  -  "
-                .. st.quiverFree .. " quiver slot" .. (st.quiverFree == 1 and "" or "s") .. " free"
+            tip[1] = Num(st.ammo) .. " of " .. Num(cap) .. " ammo"
+            tip[2] = st.quiverFree .. " quiver slot" .. (st.quiverFree == 1 and "" or "s") .. " free"
         else
-            text = text .. " (no quiver)"
+            tip[2] = "No quiver or ammo pouch"
         end
-        if low then text = text .. "  |cffe65a4drunning low|r" end
-        rows[#rows + 1] = { label = "Ammo", used = cap > 0 and math.min(st.ammo, cap) or st.ammo,
-            total = cap > 0 and cap or math.max(st.ammo, 1), text = text, fillColor = low and { 0.9, 0.35, 0.3 } or nil,
-            fillUp = true }
+        tip[#tip + 1] = "|cff999999Warning at half a full quiver, Low at " .. AMMO_LOW .. " or less.|r"
+        rows[#rows + 1] = { label = "Ammo", value = Num(st.ammo), color = SPACE_WHITE,
+            word = word, wordColor = wordColor, pulse = pulse, tip = tip }
     end
     if MyClass() == "WARLOCK" then
-        local text = st.shards .. (st.soulSlots > 0 and (" / " .. st.soulSlots .. " (soul bag)") or " shards")
-        if st.shards < 3 then text = text .. "  |cffe65a4drunning low|r" end
-        rows[#rows + 1] = { label = "Shards", used = st.shards, total = math.max(st.soulSlots, st.shards, 1), text = text,
-            fillColor = st.shards < 3 and { 0.9, 0.35, 0.3 } or nil, fillUp = true }
+        local low = st.shards < SHARDS_LOW
+        rows[#rows + 1] = { label = "Shards", value = tostring(st.shards), color = SPACE_WHITE,
+            word = low and "Low" or nil, wordColor = SPACE_RED, pulse = low,
+            tip = { st.shards .. " soul shard" .. (st.shards == 1 and "" or "s")
+                .. (st.soulSlots > 0 and (" (soul bag: " .. st.soulSlots .. " slots)") or "") } }
     end
     local reagents = {}
     for _, id in ipairs(CLASS_REAGENTS[MyClass()] or {}) do
@@ -812,70 +886,71 @@ function AetherPack_Layout()
             reagents[#reagents + 1] = (n <= 2 and "|cffe65a4d" or "|cffffffff") .. (REAGENT_NAMES[id] or id) .. " " .. n .. "|r"
         end
     end
-    if #reagents > 0 then rows[#rows + 1] = { label = "Reagents", text = table.concat(reagents, "  ") } end
 
     -- The deposit slot gets a row of its own under the last section (right
     -- under Free slots when that's folded), lined up with the item grid's
-    -- first column; the space bars follow at full width.
+    -- first column. The space rows sit to the right of its hint when there's
+    -- room; in a narrow window, under it. Class reagents go full width below.
     local depBox = win.depositBox
+    local sideX = PAD + DEP_INK_W + 8
+    local side = db.deposit and (width - PAD - sideX) >= SIDE_MIN_W
+    local top = y
     if db.deposit then
         depBox:ClearAllPoints()
         depBox:SetPoint("TOPLEFT", win, "TOPLEFT", PAD, y + 2)
         depBox:Show()
-        y = y - DEP_H
     else
         depBox:Hide()
     end
-    y = y - 4
-    for i, row in ipairs(rows) do
-        local bar = win.bars[i] or (function()
-            local b = CreateFrame("Frame", nil, win)
-            b:SetHeight(16)
-            b.label = b:CreateFontString(nil, "OVERLAY", "AetherFontNormalSmall")
-            b.label:SetPoint("LEFT", 0, 0)
-            b.label:SetWidth(54)
-            b.label:SetJustifyH("LEFT")
-            b.track = b:CreateTexture(nil, "BACKGROUND")
-            b.track:SetColorTexture(0.12, 0.28, 0.5, 0.5)
-            b.track:SetPoint("LEFT", 56, 0)
-            b.track:SetSize(90, 6)
-            b.fill = b:CreateTexture(nil, "ARTWORK")
-            b.fill:SetPoint("LEFT", b.track, "LEFT", 0, 0)
-            b.fill:SetHeight(6)
-            b.text = b:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
-            b.text:SetPoint("LEFT", b.track, "RIGHT", 8, 0)
-            b.text:SetPoint("RIGHT", b, "RIGHT", 0, 0)
-            b.text:SetJustifyH("LEFT")
-            win.bars[i] = b
-            return b
-        end)()
-        bar:ClearAllPoints()
-        bar:SetPoint("TOPLEFT", win, "TOPLEFT", PAD, y)
-        bar:SetPoint("RIGHT", win, "RIGHT", -PAD, 0)
-        bar.label:SetText(row.label)
-        bar.text:SetText(row.text)
-        if row.total then
-            local share = row.total > 0 and math.min(1, row.used / row.total) or 0
-            bar.fill:SetWidth(math.max(1, 90 * share))
-            local r, g, b
-            if row.fillColor then r, g, b = row.fillColor[1], row.fillColor[2], row.fillColor[3]
-            elseif row.fillUp then r, g, b = 0.45, 0.85, 0.45            -- more ammo or shards is good
-            else r, g, b = FillColor(row.used, row.total) end
-            bar.fill:SetColorTexture(r, g, b, 1)
-            bar.track:Show(); bar.fill:Show()
-            bar.text:ClearAllPoints()
-            bar.text:SetPoint("LEFT", bar.track, "RIGHT", 8, 0)
-            bar.text:SetPoint("RIGHT", bar, "RIGHT", 0, 0)
-        else
-            bar.track:Hide(); bar.fill:Hide()
-            bar.text:ClearAllPoints()
-            bar.text:SetPoint("LEFT", bar, "LEFT", 56, 0)
-            bar.text:SetPoint("RIGHT", bar, "RIGHT", 0, 0)
-        end
-        bar:Show()
-        y = y - 18
+    local x0, x1, ry
+    if side then
+        x0, x1 = sideX, width - PAD
+        ry = top - math.max(0, math.floor((DEP_H - #rows * ROW_H) / 2))   -- centered beside the slot
+    else
+        if db.deposit then y = y - DEP_H end
+        y = y - 4
+        x0, x1 = PAD, math.min(width - PAD, PAD + 200)
+        ry = y
     end
-    for i = #rows + 1, #win.bars do win.bars[i]:Hide() end
+    for i, row in ipairs(rows) do
+        local r = SpaceRow(i)
+        r:ClearAllPoints()
+        r:SetPoint("TOPLEFT", win, "TOPLEFT", x0, ry)
+        r:SetWidth(x1 - x0)
+        r.label:SetText(row.label)
+        r.value:SetText(row.value)
+        r.value:SetTextColor(row.color[1], row.color[2], row.color[3])
+        r.word:SetText(row.word or "")
+        if row.word then r.word:SetTextColor(row.wordColor[1], row.wordColor[2], row.wordColor[3]) end
+        r.word:SetShown(row.word ~= nil)
+        if row.pulse then
+            if not r.pulse:IsPlaying() then r.pulse:Play() end
+        else
+            r.pulse:Stop(); r.word:SetAlpha(1)
+        end
+        r.tip = row.tip
+        r:Show()
+        ry = ry - ROW_H
+    end
+    for i = #rows + 1, #win.bars do
+        local r = win.bars[i]; r.pulse:Stop(); r:Hide()
+    end
+    if side then
+        y = math.min(top - DEP_H, ry) - 4
+    else
+        y = ry - 2
+    end
+    win.reagentLine:ClearAllPoints()
+    if #reagents > 0 then
+        win.reagentLine:SetPoint("TOPLEFT", win, "TOPLEFT", PAD, y)
+        win.reagentLine:SetPoint("RIGHT", win, "RIGHT", -PAD, 0)
+        win.reagentLine:SetText("|cffc8cdd7Reagents|r  " .. table.concat(reagents, "  "))
+        win.reagentLine:Show()
+        y = y - (win.reagentLine:GetStringHeight() or 12) - 4
+    else
+        win.reagentLine:Hide()
+    end
+
 
     UpdateMoney()
     win.junkValue = junkValue
@@ -1030,7 +1105,7 @@ local function BuildDeposit()
     d.count = d.num:CreateFontString(nil, "OVERLAY")
     if not AetherSetFont(d.count, "Black", 11) then d.count:SetFontObject("NumberFontNormal") end
     d.count:SetPoint("CENTER", 0, 0)
-    d.count:SetTextColor(1, 0.78, 0.30)
+    d.count:SetTextColor(1, 0.69, 0)
     d.count:SetShadowColor(0, 0, 0, 0.65)
     d.count:SetShadowOffset(1, -1)
     if d.num.CreateAnimationGroup then
@@ -1163,6 +1238,9 @@ local function BuildWindow()
 
     -- Gold next to the title; space bars and Sell junk at the bottom.
     win.bars = {}
+    win.reagentLine = win:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
+    win.reagentLine:SetJustifyH("LEFT")
+    win.reagentLine:Hide()
     win.coins = BuildCoinCapsule(win, close)
     win.sell = AetherButton(win, nil, true)
     win.sell:SetSize(76, 18)

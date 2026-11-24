@@ -342,7 +342,7 @@ local function MakeWaypointPin(parent, size)
     local glow = pin:CreateTexture(nil, "BACKGROUND")
     glow:SetTexture(GLOW_TEXTURE)
     glow:SetBlendMode("ADD")
-    glow:SetVertexColor(1, 0.8, 0.2)
+    glow:SetVertexColor(1, 0.69, 0)   -- Aether gold
     glow:SetPoint("CENTER")
     glow:SetSize(size * 2.4, size * 2.4)   -- the glow art has empty padding around it
 
