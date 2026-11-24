@@ -132,7 +132,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     Blizzard's click kept); calendar button hidden (our sun opens it).
     (mock/skin_mmlayout.py, mock/skin_magnifier.py)
   * Zone pill stops 3 units short of the bar's buttons (moot with layout 3).
-  * Magnifier icon (user, 14:57): flat, in AETHER BLUE (not A/B/C).
+  * Magnifier icon (user, 14:57): flat, in AETHER BLUE #4DA6FF (0.3, 0.65, 1), the blue
+    picked over Aether Sky in the 14:31 comparison (not A/B/C).
   * Quest list (screenshot 14:56): header starts ~30 px below the current
     coordinates pill; layout 3 stacks both pills in about the same space,
     so it clears (re-check after build).
