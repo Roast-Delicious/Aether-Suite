@@ -79,46 +79,29 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-- Branch coords-round-glow (queued, NOT built): round waypoint glow
-  (Media/wp_glow.tga, tools/gen_wp_glow.py) replaces the square
-  action-button art. User liked the dim end of the pulse; asked: steady
-  at that level, or a softer pulse? Coords 1.3.11 when built.
-- Branch aether-gold-sweep (queued, NOT built): Pathfinder General Goods
-  pins (1, 0.85, 0.2) -> Aether gold; Ledger tracker +/- hover pale
-  yellow -> white. Code audit found no other off yellows; chevrons and
-  gold fonts already use Aether gold. User to send a current screenshot
-  (refs/f_057.png is old: diamonds, olive accents).
-- Branch frames-fade-10 (queued, NOT built): in-combat no-aggro fade
-  30% -> 20%, bar floor 45% -> 35%; one-time migration of a saved 0.3
-  (db.fade20). Frames 1.14.6 when built.
-- Branch chat-fixes (queued, NOT built): tab names were Blizzard yellow
-  (measured 154,125,6) -> Aether gold (others dimmed); typing line
-  re-shown by Blizzard (likely chatStyle classic) hidden again via
-  OnShow (tools/chat_reshow_test.py). Chosen, NOT coded yet: compact tab
-  strip (option A, mock/chat_tabs.py), waiting for go.
-- Idea under discussion: AetherSkins (reskin Blizzard windows/popups
-  in the Aether look). Waiting on which windows; mockups first.
-- Last delivered build (Nov 24): AetherAddons.zip with Hub 1.14.2,
-  Bars 1.14.2, Frames 1.14.5, Meter 1.13.8, Pathfinder 1.9.4, Marks
-  1.6.13, Ledger 1.6.0, Pack 1.6.0, Coords 1.3.10, ItemID 1.1.3, Chat
-  1.0.7. Not yet confirmed in game:
-  * Ledger quest tracker: lowest level on top (Apply adds highest
-    first; if the order is still wrong, the game appends instead of
-    prepends: flip the loop in Apply), the Aether look
-    (AetherLedger_TrackerLook.lua: H1 headers, option A icons/colors,
-    "All Objectives" hidden, its 38-unit space left; Edit Mode can move
-    the tracker). Built against mainline Blizzard_ObjectiveTracker
-    (github.com/Gethe/wow-ui-source, sparse checkout), since WoW
-    Forever's tracker matched it in screenshots; Forever adds levels and
-    difficulty colors to titles.
-  * Coords waypoint star (option C: navy disc, gold ring, gold star;
-    18 world / 14 minimap).
-  * Frames: mobs tagged by someone else gray out (name, health bar,
-    flat portrait 0.5).
-  * Pack 1.6.0: gold capsule + session tooltip; Free slots text rows
-    (Bags/Reagent colored, Ammo Warning at half a quiver and pulsing
-    Low at 300, Shards pulsing Low under 3; the user didn't weigh in on
-    shards); "Show"/"Show empty" on folded headers.
+- Last delivered build (Nov 24, afternoon): Coords 1.3.11 (round
+  waypoint glow, still the old 1 <-> 0.35 pulse), Pathfinder 1.9.5
+  (General Goods pins Aether gold), Ledger 1.6.1 (tracker +/- hover
+  white), Frames 1.14.6 (no-aggro fade 20%, bars 35%, one-time
+  migration db.fade20), Chat 1.0.8 (compact tab strip measured from
+  the tab names' top + 5; tab names Aether gold, others dimmed; typing
+  line hidden again via OnShow). Others unchanged: Hub 1.14.2, Bars
+  1.14.2, Meter 1.13.8, Marks 1.6.13, Pack 1.6.0, ItemID 1.1.3.
+  Tests: chat_compact_test, chat_reshow_test (new).
+- Waiting on the user: fresh screenshots (unit frames for chevron color;
+  a waypoint close-up, the old glow looked blue/purple). Glow: steady at
+  the dim level, or a softer pulse? (user liked the dim end).
+- Designs in progress, NOT coded: tooltip moved to the left of the
+  quest list (options A/B in mock/tooltip_place.py; B recommended, not
+  yet picked); key stats in item tooltips: two tight chevrons pointing
+  back at the stat (mock/stat_gold.py), stat text Aether gold; still
+  open: A all marked lines gold vs B Equip lines stay green; tooltips
+  only or character sheet too; per-character stat list in the Hub.
+- Idea: AetherSkins (reskin Blizzard windows/popups). Waiting on which
+  windows; mockups first.
+- Stale tests (fail on the Nov 24 morning code too): bars_glow_test,
+  bars_sidefix_test, ledger_suggest_test, lens_test, meter_login_test,
+  meter_test, meter_test2, names_test*, radar_test, tracker_test.
 - AetherMarks far names (decided, leave as is): beyond 41 yards (WoW
   Forever's nameplate cap, Rare Radar sets it) there's no nameplate; the
   tiny names are the game's, in reaction colors, and addons can't color,
@@ -138,6 +121,9 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Session log
 
+- Nov 24, 2026 (afternoon): round waypoint glow, gold sweep, frames
+  fade 10% more, chat compact strip/gold tabs/typing line. Rule: WoW
+  Forever only.
 - Nov 24, 2026: gold capsule and Free slots redesign (Pack), Aether gold
   as the only yellow, Ledger directions window fit + mouseover, Aether
   waypoint star, quest tracker restyle and order, tagged mobs gray out.

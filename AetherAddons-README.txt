@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 24, 2026
+Last updated: November 24, 2026 (afternoon)
 
 A set of eleven addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -17,18 +17,18 @@ window, so you rarely need to type a command.
   AetherHub          1.14.2    One window with every addon's settings
   AetherMeter        1.13.8    Damage and healing meter
   AetherBars         1.14.2    Clean action bars with a cooldown glow
-  AetherCoords       1.3.10    Coordinates, plus your own map waypoints
-  AetherPathfinder   1.9.4     Trainers, vendors, flight masters and
+  AetherCoords       1.3.11    Coordinates, plus your own map waypoints
+  AetherPathfinder   1.9.5     Trainers, vendors, flight masters and
                                mailboxes on the world map and minimap
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.3     What an item is for, when you hover it
-  AetherLedger       1.6.0     Where to quest, train and skin next,
+  AetherLedger       1.6.1     Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.0     Your bags sorted into sections
-  AetherChat         1.0.7     Chat with the Aether look, fitted beside
+  AetherChat         1.0.8     Chat with the Aether look, fitted beside
                                your action bars
-  AetherFrames       1.14.5    Your, your pet's, your target's, its
+  AetherFrames       1.14.6    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
 
@@ -304,10 +304,10 @@ AetherCoords - coordinates and waypoints                  /mc and /way
   - On the world map: the coordinates under your cursor, and your own
     position in the top-right corner.
   - Waypoints: the Aether star (a gold star in a thin gold ring on a navy
-    disc, with a soft pulsing glow) and your own note, on the world map
-    and the minimap. Ones beyond the minimap's edge sit on its rim,
-    pointing the way. Hover a star for its note and how many yards away it
-    is.
+    disc, with a soft, round pulsing glow) and your own note, on the
+    world map and the minimap. Ones beyond the minimap's edge sit on its
+    rim, pointing the way. Hover a star for its note and how many yards
+    away it is.
     To add one:
       - double-click a spot on a zone map and type a note, or
       - type /way 26 42 Rok'Alim (uses the map you have open, or your
@@ -615,17 +615,22 @@ AetherChat - chat that fits beside your bars                   /achat
     Blizzard puts it.)
   - Aether panel: the same frame as the bars (AetherMeter's colors and
     see-through level, blue frame, gold corners), with a thin line
-    under the tabs. It turns solid while your mouse is over the chat or
-    you're typing, and fades back when you stop. The text itself always
-    stays fully readable.
+    under the tabs. The tab strip is compact: no empty band above the
+    tab names, so there's room for more chat. It turns solid while your
+    mouse is over the chat or you're typing, and fades back when you
+    stop. The text itself always stays fully readable.
   - Smaller text: starts one size smaller than Blizzard's; set it with
     "Chat text" on AetherHub's Appearance page.
   - Less clutter: Blizzard's chat background, the voice, channel and
-    emote buttons, and the tab art are gone. Tabs are flat, and the tab
-    you're on gets a gold underline. Channels and emotes still work by
+    emote buttons, and the tab art are gone. Tabs are flat, the tab
+    you're on has its name in Aether gold with a gold underline, and the
+    others are a dimmer gold. Channels and emotes still work by
     typing (/join, /dance).
   - Slim typing line: press Enter and a thin line appears over the
-    bottom of the chat; it disappears when you send or press Escape.
+    bottom of the chat; it disappears when you send or press Escape. It
+    stays hidden the rest of the time, even if Blizzard tries to show it
+    (the "Classic" chat style keeps it up), so it never covers the
+    newest line.
   - Tip: chat no longer fits? Make sure there's at least about 220 wide
     by 90 tall beside your bars, then click Fit Chat Now (Layout page).
   - The text and tabs start just inside the panel's left edge (Blizzard

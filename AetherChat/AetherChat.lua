@@ -17,7 +17,8 @@ local defaults = {
 local db
 local GAP = 4        -- space between the chat panel and the bar panels (same as between bars)
 local MARGIN = 6     -- space from the screen's left edge
-local TAB_H = 26     -- room above the chat text for the tabs
+local TAB_H = 26     -- room above the chat text for the tabs (if it can't be measured)
+local TAB_MIN = 16   -- never less than this
 local INSET = 8      -- room inside the panel around the text
 
 -- ==========================================
@@ -133,16 +134,31 @@ local function FitRect()
     return math.floor(left + 0.5), math.floor(right + 0.5), math.floor(bottom + 0.5), math.floor(top + 0.5)
 end
 
--- How much room the tabs need above the chat text (measured from Blizzard's
--- own layout, so tall or short tabs both fit inside the panel).
+-- A chat tab's name (a FontString), or nil.
+local function TabText(tab)
+    if not tab then return end
+    local fs = tab.Text
+    if type(fs) ~= "table" and tab.GetFontString then fs = tab:GetFontString() end
+    if type(fs) == "table" and fs.GetTop then return fs end
+end
+
+-- How much room the tabs need above the chat text, measured from Blizzard's
+-- own layout. Compact: up to the top of the tab names (plus a little), not
+-- the top of Blizzard's tall tabs, so there's no empty band above the names.
+local TAB_PAD = 5    -- room above the tab names
 local tabRoom
 local function TabRoom()
     if tabRoom then return tabRoom end
     local cf, tab = Chat(), _G.ChatFrame1Tab
-    if cf and tab and cf:GetTop() and tab:GetTop() then
+    if cf and tab and cf:GetTop() then
         local s = cf:GetEffectiveScale() / UIParent:GetEffectiveScale()
-        local need = (tab:GetTop() * tab:GetEffectiveScale() / UIParent:GetEffectiveScale()) - cf:GetTop() * s
-        if need > 0 and need < 60 then tabRoom = math.max(TAB_H, math.ceil(need) + 2) end
+        local fs = TabText(tab)
+        local ref = (fs and fs:GetTop()) and fs or (tab:GetTop() and tab)
+        if ref then
+            local need = (ref:GetTop() * ref:GetEffectiveScale() / UIParent:GetEffectiveScale()) - cf:GetTop() * s
+            if ref == fs then need = need + TAB_PAD else need = need + 2 end
+            if need > 0 and need < 60 then tabRoom = math.max(TAB_MIN, math.ceil(need)) end
+        end
     end
     return tabRoom or TAB_H
 end
@@ -243,7 +259,13 @@ local function StyleTab(cf)
         if r:IsObjectType("Texture") and r ~= tab.glow and r ~= _G[tab:GetName() .. "Glow"] then Bury(r) end
     end
     local bg = tab:CreateTexture(nil, "BACKGROUND", nil, -8)
-    bg:SetPoint("TOPLEFT", 2, -6); bg:SetPoint("BOTTOMRIGHT", -2, 2)
+    local fs = TabText(tab)
+    if fs then      -- just behind the name: the tab's empty top is outside the panel now
+        bg:SetPoint("BOTTOMLEFT", 2, 2); bg:SetPoint("BOTTOMRIGHT", -2, 2)
+        bg:SetPoint("TOP", fs, "TOP", 0, 3)
+    else
+        bg:SetPoint("TOPLEFT", 2, -6); bg:SetPoint("BOTTOMRIGHT", -2, 2)
+    end
     bg:SetColorTexture(0.05, 0.05, 0.05, 0.6)
     tab.aetherBg = bg
     local under = tab:CreateTexture(nil, "OVERLAY")
@@ -263,10 +285,8 @@ end
 -- Tab names in Aether gold (Blizzard colors them its own yellow): the tab
 -- you're on full strength, the others dimmed.
 local function ColorTab(tab, selected)
-    if not tab then return end
-    local fs = tab.Text
-    if type(fs) ~= "table" and tab.GetFontString then fs = tab:GetFontString() end
-    if type(fs) ~= "table" or not fs.SetTextColor then return end
+    local fs = TabText(tab)
+    if not fs or not fs.SetTextColor then return end
     if selected then fs:SetTextColor(1, 0.69, 0) else fs:SetTextColor(0.6, 0.41, 0) end
 end
 

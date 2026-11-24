@@ -2,7 +2,7 @@
 ## Title: AetherCoords
 ## Notes: Always-on player coordinates, a cursor coordinate popup on the world map, and waypoints with notes on the world map and minimap. (Formerly MapCoords.)
 ## Author: Aether
-## Version: 1.3.10
+## Version: 1.3.11
 ## OptionalDeps: AetherHub
 ## SavedVariables: AetherCoordsDB, MapCoordsDB
 ## SavedVariablesPerCharacter: AetherCoordsCharDB

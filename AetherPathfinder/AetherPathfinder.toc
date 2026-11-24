@@ -2,7 +2,7 @@
 ## Title: AetherPathfinder
 ## Notes: Filters on the world map and minimap that highlight trainers, merchants, mailboxes and other service NPCs. Built-in locations from QuestieDB, refreshed automatically. (Formerly PathfinderMap.)
 ## Author: Aether
-## Version: 1.9.4
+## Version: 1.9.5
 ## OptionalDeps: AetherHub
 ## SavedVariables: AetherPathfinderDB, PathfinderMapDB
 ## SavedVariablesPerCharacter: AetherPathfinderCharDB, PathfinderMapCharDB

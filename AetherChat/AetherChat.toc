@@ -2,7 +2,7 @@
 ## Title: AetherChat
 ## Notes: Blizzard's chat with the Aether look: fitted into the space beside your action bars, smaller text, flat tabs, a slim typing line, and no clutter buttons.
 ## Author: Aether
-## Version: 1.0.7
+## Version: 1.0.8
 ## OptionalDeps: AetherBars, AetherMeter, AetherHub
 ## SavedVariables: AetherChatDB
 
