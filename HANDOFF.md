@@ -32,6 +32,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   branch, tested), then tell the user it's ready for the next build.
   Don't ship it until they say go.
 - After an approved build: test, update the README, send the zip.
+- Before any recommendation or diagnosis, check it against everything
+  QUEUED FOR THE NEXT BUILD (and any unshipped branch), and say how the
+  queue affects it. (User, Nov 24 14:42.)
 - AetherDev.zip (this repo, the handoff kit) is made ONLY at the end of a
   session, when the user says they're opening the next one. Don't send it
   with builds.
