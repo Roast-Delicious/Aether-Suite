@@ -88,6 +88,9 @@ Then read this file. The addons live at the repo root (one folder each);
   yellow -> white. Code audit found no other off yellows; chevrons and
   gold fonts already use Aether gold. User to send a current screenshot
   (refs/f_057.png is old: diamonds, olive accents).
+- Branch frames-fade-10 (queued, NOT built): in-combat no-aggro fade
+  30% -> 20%, bar floor 45% -> 35%; one-time migration of a saved 0.3
+  (db.fade20). Frames 1.14.6 when built.
 - Idea under discussion: AetherSkins (reskin Blizzard windows/popups
   in the Aether look). Waiting on which windows; mockups first.
 - Last delivered build (Nov 24): AetherAddons.zip with Hub 1.14.2,
