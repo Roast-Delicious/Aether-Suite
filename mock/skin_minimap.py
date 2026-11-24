@@ -21,6 +21,11 @@ disk = np.zeros(A.shape[:2], np.uint8); cv2.circle(disk, (CX, CY), RM - 2, 255, 
 sq = np.zeros(A.shape[:2], np.uint8); cv2.rectangle(sq, (CX - 132, CY - 132), (CX + 132, CY + 132), 255, -1)
 MAPSQ = cv2.inpaint(A[..., ::-1], cv2.bitwise_and(sq, cv2.bitwise_not(disk)), 15, cv2.INPAINT_TELEA)[..., ::-1]
 SUN = FULL.crop((2181, 73, 2225, 117)); GEM = FULL.crop((1993, 271, 2035, 313))
+def _moon():   # a simple pale crescent for the mockup (the game shows its own moon icon)
+    im = Image.new('RGBA', (176, 176), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+    d.ellipse([28, 28, 148, 148], fill=(225, 232, 245, 255)); d.ellipse([60, 14, 176, 130], fill=(0, 0, 0, 0))
+    return im.resize((44, 44), Image.LANCZOS)
+MOON = _moon()
 
 def base(square, half=126):
     im = CLEAN.copy()
@@ -160,7 +165,7 @@ def opt_3d(style, width=11, **kw):
     button(c, (cx + 84, cy - 86), SUN); button(c, (cx - 86, cy + 84), GEM)
     return c.done()
 
-def ring_cone(c, cx, cy, r_in, width, gold=0.3, src=(84, -86), height=90, cone=(25, 120), reach=170):
+def ring_cone(c, cx, cy, r_in, width, gold=0.3, hl=GOLD, night=False, src=(84, -86), height=90, cone=(25, 120), reach=170):
     """Bevel (ridge) ring lit by a wide cone of light shining down from the
     sun/moon button. src = the light's spot over the screen (px from the
     ring's center), height = how far in front of the screen it is, cone =
@@ -190,16 +195,17 @@ def ring_cone(c, cx, cy, r_in, width, gold=0.3, src=(84, -86), height=90, cone=(
     hx, hy, hz = lx, ly, lz + 1; hn = np.sqrt(hx * hx + hy * hy + hz * hz)
     spec = (np.clip((nx * hx + ny * hy + nz * hz) / hn, 0, 1) ** 18) * spot
     base = np.array(BLUE, np.float32)
-    lit = (0.42 + 0.75 * diff ** 1.2)[..., None]
+    lit = ((0.34 if night else 0.42) + 0.75 * diff ** 1.2)[..., None]
     blue = base[None, None, :] * np.minimum(lit, 1.0)
-    g = np.array(GOLD, np.float32)[None, None, :]
+    g = np.array(hl, np.float32)[None, None, :]
     # how gold: only the most strongly lit part; 'gold' lowers the threshold
     dn = diff / max(float(diff.max()), 1e-3)
     thr = 0.97 - gold
     a = np.clip((np.maximum(dn, spec * 1.2) - thr) / 0.08, 0, 1); a = a * a * (3 - 2 * a)
     goldc = g * np.clip(0.55 + 0.6 * diff, 0, 1)[..., None]                # gold dims with the light, stays gold
     col = blue * (1 - a[..., None]) + goldc * a[..., None]
-    col *= (1 - 0.45 * np.sin(np.pi * a))[..., None]                       # keep the in-between dark, never pale
+    if not night: col *= (1 - 0.45 * np.sin(np.pi * a))[..., None]        # gold: keep the in-between dark, never pale
+    else: col *= (1 - 0.12 * np.sin(np.pi * a))[..., None]                 # white: blue->white is a clean ramp
     edge = np.clip(1 - np.minimum(t, 1 - t) * width / 0.8, 0, 1) * 0.55
     col = col * (1 - edge[..., None])
     out = np.zeros((H, W, 4), np.float32); out[..., :3] = np.clip(col, 0, 255); out[..., 3] = cover * 255
@@ -211,22 +217,20 @@ def ring_cone(c, cx, cy, r_in, width, gold=0.3, src=(84, -86), height=90, cone=(
     c.over(Image.fromarray(so.astype(np.uint8)))
     c.over(Image.fromarray(out.astype(np.uint8)))
 
-def opt_cone(gold, width=11):
+def opt_cone(gold, width=11, night=False):
     c = base(False); cx, cy = CX - X0, CY - Y0
     W, H = c.im.size; X, Y = c.P(cx, cy); R = (RM + 1) * SS
     c.over(glow(W, H, (X, Y, X, Y), R + width * SS, u(10), BLUE, 0.4))
-    ring_cone(c, cx, cy, RM - 2, width, gold)
+    ring_cone(c, cx, cy, RM - 2, width, gold, hl=(WHITE if night else GOLD), night=night)
     chevs(c, cx, cy, RM + 6 + width // 2, RM + 6 + width // 2)
     pill(c, (cx - 118, 6, cx + 118, 34), "Dustwallow Marsh", 15, GOLD, right="05:52")
     pill(c, (cx - 52, cy + RM + 16, cx + 52, cy + RM + 42), "62.5, 44.4", 15, WHITE)
-    button(c, (cx + 84, cy - 86), SUN); button(c, (cx - 86, cy + 84), GEM)
+    button(c, (cx + 84, cy - 86), MOON if night else SUN); button(c, (cx - 86, cy + 84), GEM)
     return c.done()
 
 if __name__ == '__main__':
-    opts = [("Last: 2 Gold shine", opt_3d('bevel', light=(0.55, -0.65), hl=GOLD)),
-            ("1  Sun cone, a little gold", opt_cone(0.1)),
-            ("2  Sun cone, middle gold", opt_cone(0.22)),
-            ("3  Sun cone, more gold", opt_cone(0.36))]
+    opts = [("Day: gold (middle)", opt_cone(0.22)),
+            ("Night: white", opt_cone(0.22, night=True))]
     tiles = [label(im, name, 20) for name, im in opts]
     for (name, im), k in zip(opts, "0123"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0

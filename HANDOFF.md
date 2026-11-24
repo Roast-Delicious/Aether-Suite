@@ -123,8 +123,15 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   11:16). Gold amount "between 2 and 3" of the earlier set; shown as
   mock/skin_minimap.py ring_cone gold=0.10 / 0.22 (recommended) / 0.36.
   The blue->gold change is a short dark step, never a 50/50 blend
-  (blue+gold mix to a pale gray-white: the user spotted it). Waiting on
-  the pick.
+  (blue+gold mix to a pale gray-white: the user spotted it). Day/night
+  (user, 11:20): shine is Aether gold by day (sun), white by night
+  (moon); mock ring_cone(hl=WHITE, night=True). Plan: bake the blue
+  bevel as one texture and the shine as a second white-with-alpha
+  texture, SetVertexColor gold or white from the realm clock
+  (GetGameTime) at the same moment the sun/moon icon flips (check how
+  Forever's icon decides). Change over by fading the shine out to
+  plain blue and back in: never gold+white mixed (pale yellow = a second
+  yellow). Waiting on the gold-step pick (0.22 recommended).
   Other rules
   used: Neutral bars Aether gold, Friendly+ #22e650, Blizzard's yellow UI
   glyphs recolored (white, gold when selected), Fira Sans. Still need a
