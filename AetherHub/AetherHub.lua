@@ -149,7 +149,7 @@ local function AetherButton(parent, name, small)
 end
 
 -- Mark a choice button as selected: highlighted, lettering in Aether yellow.
--- Swaps font objects (GameFontNormal is that yellow) instead of SetTextColor,
+-- Swaps font objects (AetherFontNormal is that gold) instead of SetTextColor,
 -- because LockHighlight and mouse-over switch to the highlight font and wipe
 -- a plain color change back to white.
 local function SetSelected(b, on)

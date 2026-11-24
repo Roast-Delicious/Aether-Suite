@@ -42,7 +42,7 @@ local GRAY    = { 0.6, 0.6, 0.6 }
 local GREEN   = { 0.35, 1, 0.35 }
 local RED     = { 1, 0.25, 0.25 }
 local ORANGE  = { 1, 0.55, 0.1 }
-local YELLOW  = { 1, 1, 0.35 }
+local YELLOW  = { 1, 0.69, 0 }   -- Aether gold: the suite's only yellow
 
 local PROFESSIONS = {
     [1] = "First Aid", [2] = "Blacksmithing", [3] = "Leatherworking", [4] = "Alchemy",

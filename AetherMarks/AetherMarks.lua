@@ -439,7 +439,7 @@ end
 -- when the game won't say how a mob feels about you.
 local REACTION = {
     hostile  = { 1, 0.2, 0.2 },
-    neutral  = { 1, 1, 0 },
+    neutral  = { 1, 0.69, 0 },   -- Aether gold: the suite's only yellow
     friendly = { 0.2, 1, 0.2 },
 }
 local function ReactionColor(unit)
@@ -632,7 +632,7 @@ local function UpdateTargetCast(o)
     end
     if not name then StopCast(o); return end
     o.cast.text:SetText(name)
-    if channel then o.cast:SetStatusBarColor(0.3, 1, 0.3) else o.cast:SetStatusBarColor(1, 0.7, 0) end
+    if channel then o.cast:SetStatusBarColor(0.3, 1, 0.3) else o.cast:SetStatusBarColor(1, 0.69, 0) end
     o.cast:SetScript("OnUpdate", nil)
     o.cast:Show()
     o.castMethod = (DriveBySealedTimer(o, channel) and "timer")

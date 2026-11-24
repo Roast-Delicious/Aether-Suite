@@ -159,8 +159,9 @@ set reads as one family:
     addon quietly keeps WoW's own font.
   - The Aether gold: every gold heading, label and accent (lines,
     chevrons, ticks, checkmarks) is one warm amber, the same as the
-    AetherPack deposit slot. Colors that mean something keep the game's
-    own: a mob's yellow level, and the space bars' "getting full" gold.
+    AetherPack deposit slot. It's the only yellow in the suite: a
+    mob's yellow level, neutral mob names, item tips and "getting
+    full" warnings all use it too.
 
 
 THE ADDONS

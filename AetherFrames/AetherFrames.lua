@@ -616,7 +616,7 @@ end
 -- orange (3-4 above), yellow (within 2), green (lower but still worth
 -- experience), gray (too low to give any).
 local DIFF = {
-    red = { 1, 0.13, 0.13 }, orange = { 1, 0.5, 0.13 }, yellow = { 1, 0.82, 0 },   -- level colors keep the game's yellow
+    red = { 1, 0.13, 0.13 }, orange = { 1, 0.5, 0.13 }, yellow = { 1, 0.69, 0 },   -- Aether gold: the suite's only yellow
     green = { 0.25, 0.75, 0.25 }, gray = { 0.55, 0.55, 0.55 },
 }
 local function GrayLevel(my)
@@ -700,7 +700,7 @@ local function NameColor(unit)
     if UnitIsPlayer(unit) and not UnitIsEnemy("player", unit) then return GOLD end
     local reaction = UnitReaction(unit, "player")
     if UnitIsEnemy("player", unit) or (reaction and reaction <= 3) then return { 1, 0.42, 0.42 } end
-    if reaction == 4 then return { 1, 0.85, 0.3 } end
+    if reaction == 4 then return { 1, 0.69, 0 } end   -- neutral: Aether gold
     return GOLD
 end
 
