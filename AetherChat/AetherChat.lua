@@ -91,13 +91,13 @@ local function MakePanel()
     for _, corner in ipairs({ "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT" }) do
         local ix = corner:find("LEFT") and 1 or -1
         local iy = corner:find("TOP") and -1 or 1
-        local across = Rect("OVERLAY", 6, 1, 0.82, 0, 1)
+        local across = Rect("OVERLAY", 6, 1, 0.69, 0, 1)
         across:SetSize(10, 2); across:SetPoint(corner, p, corner, 0, 0)
-        local down = Rect("OVERLAY", 6, 1, 0.82, 0, 1)
+        local down = Rect("OVERLAY", 6, 1, 0.69, 0, 1)
         down:SetSize(2, 10); down:SetPoint(corner, p, corner, 0, 0)
-        local fineA = Rect("OVERLAY", 6, 1, 0.82, 0, 0.9)
+        local fineA = Rect("OVERLAY", 6, 1, 0.69, 0, 0.9)
         fineA:SetSize(6, 1); fineA:SetPoint(corner, p, corner, ix * 3, iy * 3)
-        local fineD = Rect("OVERLAY", 6, 1, 0.82, 0, 0.9)
+        local fineD = Rect("OVERLAY", 6, 1, 0.69, 0, 0.9)
         fineD:SetSize(1, 6); fineD:SetPoint(corner, p, corner, ix * 3, iy * 3)
     end
     -- a thin blue line under the tabs
@@ -249,7 +249,7 @@ local function StyleTab(cf)
     local under = tab:CreateTexture(nil, "OVERLAY")
     under:SetPoint("BOTTOMLEFT", 6, 2); under:SetPoint("BOTTOMRIGHT", -6, 2)
     under:SetHeight(2)
-    under:SetColorTexture(1, 0.82, 0, 1)
+    under:SetColorTexture(1, 0.69, 0, 1)
     under:Hide()
     tab.aetherUnder = under
     return tab
@@ -349,7 +349,15 @@ local function HookBlizzard()
     if cf then
         hooksecurefunc(cf, "SetPoint", function()
             if not placing and db and db.fit and placed then
-                C_Timer.After(0, function() PlaceChat(placed[1], placed[2], placed[3], placed[4]) end)
+                -- placed can be cleared before the next frame (a loading
+                -- screen re-runs the layout), so re-check it when the timer
+                -- fires and skip if it's gone or changed.
+                local p = placed
+                C_Timer.After(0, function()
+                    if placed == p and db and db.fit and not placing then
+                        PlaceChat(p[1], p[2], p[3], p[4])
+                    end
+                end)
             end
         end)
     end

@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 22, 2026
+Last updated: November 23, 2026
 
 A set of eleven addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -14,22 +14,23 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.13.0    One window with every addon's settings
-  AetherMeter        1.13.6    Damage and healing meter
-  AetherBars         1.14.0    Clean action bars with a cooldown glow
-  AetherCoords       1.3.6     Coordinates, plus your own map waypoints
-  AetherPathfinder   1.9.2     Trainers, vendors, flight masters and
+  AetherHub          1.14.1    One window with every addon's settings
+  AetherMeter        1.13.8    Damage and healing meter
+  AetherBars         1.14.2    Clean action bars with a cooldown glow
+  AetherCoords       1.3.8     Coordinates, plus your own map waypoints
+  AetherPathfinder   1.9.4     Trainers, vendors, flight masters and
                                mailboxes on the world map and minimap
   AetherMarks        1.6.12    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
-  AetherItemID       1.1.0     What an item is for, when you hover it
-  AetherLedger       1.5.12    Where to quest, train and skin next,
+  AetherItemID       1.1.2     What an item is for, when you hover it
+  AetherLedger       1.5.14    Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.1.8     Your bags sorted into sections
-  AetherChat         1.0.5     Chat with the Aether look, fitted beside
+  AetherPack         1.4.2     Your bags sorted into sections
+  AetherChat         1.0.7     Chat with the Aether look, fitted beside
                                your action bars
-  AetherFrames       1.5.4     Your, your pet's, your target's and your
-                               party's frames with round portrait crests
+  AetherFrames       1.14.3    Your, your pet's, your target's, its
+                               target's, and your party's frames with
+                               round portrait crests
 
 
 GETTING STARTED
@@ -88,7 +89,9 @@ that can't be undone asks first.
     solid under your mouse; unit frames out of combat, faces fade too.
   Layout: Unlock to Move (unlocks your unit frames, the meter and the
     XP bar together; drag them, then click Lock or Done on any of
-    them), Open Edit Mode (Blizzard's, for action bars), chat fitting
+    them), Open Edit Mode (Blizzard's, for action bars), Line Up Frames
+    and Line Up and Center Frames (the same as the question AetherFrames
+    asks after you move frames, any time), chat fitting
     to the left of your bars, the meter docking to the right,
     centering, Align Bars... and Undo Last Align, Fit Chat Now, and
     Reset All Positions... (unit frames, meter, bag window,
@@ -132,12 +135,32 @@ that can't be undone asks first.
 
   Button names follow one pattern: what it does, then what it does it
   to ("Reset Meter Position", "Clear All Waypoints..."). A name ending
-  in "..." asks before it acts. Buttons that reset or clear something
-  have a faint red edge. In a row of choices, the selected one is
-  highlighted with its text in Aether yellow.
+  in "..." asks before it acts. In a row of choices, the selected one
+  is highlighted with its text in the Aether gold.
 
 Every setting is also a slash command (listed under each addon below)
 if you prefer typing.
+
+
+THE AETHER TEXT STYLE
+---------------------
+The addons share one font, Fira Sans (the unit frames' font; included
+in AetherHub\Media\Fonts under the SIL Open Font License), so the whole
+set reads as one family:
+  - In windows (AetherHub, AetherPack, AetherLedger, AetherPathfinder,
+    and the small windows of the other addons): Fira Sans with a soft
+    shadow, the gold headings a little bolder. Same sizes and colors as
+    before.
+  - Over the game world (AetherMeter's rows, the AetherCoords readout,
+    the keybinds and counts on your action buttons): Fira Sans Bold
+    with a thin black outline and a shadow, so it stays readable on
+    bright scenery and when the meter fades out of combat.
+  - If the font files are missing (say AetherHub was left out), each
+    addon quietly keeps WoW's own font.
+  - The Aether gold: every gold heading, label and accent (lines,
+    chevrons, ticks, checkmarks) is one warm amber, the same as the
+    AetherPack deposit slot. Colors that mean something keep the game's
+    own: a mob's yellow level, and the space bars' "getting full" gold.
 
 
 THE ADDONS
@@ -487,7 +510,7 @@ AetherPack - your bags, sorted into sections                    /pack
                  materials
     Other        hearthstone, keys, bags and the rest
     Junk         gray items, with their total vendor value
-    Free slots   your empty slots (folded; open it to drop items in)
+    Free slots   your empty slots (folded; or use the deposit slot)
   - Bars at the bottom show what's left:
       Bags      used and free slots; the bar turns gold in the last
                 quarter and red when nearly full
@@ -503,12 +526,39 @@ AetherPack - your bags, sorted into sections                    /pack
                 powder, priest candles and feathers, shaman ankhs,
                 paladin symbols, druid seeds and herbs, rogue powders,
                 warlock stones); red at 2 or less
+  - No swaps. Just drops.: a row of its own under the last section
+    (right under Free slots when that's folded), lined up with the
+    first column of items: a slot like your item slots with an amber
+    rim and a soft glow that falls into a dark middle, and "NO SWAPS.
+    JUST DROPS." chalked beside it with an arrow curving into it. Drop an
+    item on it (or click it while holding one) and it goes into a free
+    slot. Nothing already in your bags gets moved or swapped, so a drop
+    can't land on another item by accident. Crafting reagents go to
+    your reagent bag first, ammo to your quiver (and shards to a soul
+    bag); everything else to your first regular bag with room. The
+    number in it is your free regular slots; it pulses gently while
+    you hold an item (/pack pulse item|always|off). The rim and glow
+    turn red when you're full, and a drop then just tells you there's
+    no room. /pack deposit off hides it. (The lettering is drawn with
+    the Amatic SC font, SIL Open Font License.)
   - Your free bag slots also show as a small number on the backpack
     button, so you can check without opening anything.
-  - B, the bag buttons and any key you've bound to your bags open
-    AetherPack instead of Blizzard's bags (including Blizzard's
-    combined backpack window).
-    Turn that off on its AetherHub tab, and /pack still opens it.
+  - B (or any key you've bound to your bags) and the backpack button
+    open AetherPack instead of Blizzard's bags (including Blizzard's
+    combined backpack window). Press the key again to close it, along
+    with any single-bag windows.
+  - Click one bag on the bag bar (one of the four bag slots or the
+    reagent bag) to open a small window with just that bag, in slot
+    order, with the bag's name and its used/total slots in the title
+    (the window widens to fit a long name). Blizzard's own window for
+    that bag stays closed, the reagent bag's included.
+    Click the bag again, its x, or Esc to close it. Open as many as
+    you like: they stack up from the lower right, a new column to the
+    left when one gets too tall. Drag one and it stays put. A Toggle
+    Bag 1-4 key opens the same windows. In a fight, a bag window you
+    haven't opened yet this session opens when combat ends.
+    Turn all this off on AetherPack's AetherHub tab, and /pack still
+    opens the combined window.
   - Click a section's title to fold or open it; it stays that way.
     Empty sections hide themselves.
   - Type in the search box to dim everything that doesn't match.
@@ -522,8 +572,9 @@ AetherPack - your bags, sorted into sections                    /pack
   - WoW doesn't let addons rearrange bag buttons during a fight, so
     the sections catch up when combat ends. Items still work.
   - Commands: /pack (open or close), /pack replace on|off, /pack count
-    on|off (backpack number), /pack columns 6-16, /pack scale 0.6-1.5,
-    /pack reset (window position).
+    on|off (backpack number), /pack deposit on|off, /pack pulse
+    item|always|off, /pack columns 6-16,
+    /pack scale 0.6-1.5, /pack reset (all window positions).
 
 
 AetherChat - chat that fits beside your bars                   /achat
@@ -620,6 +671,13 @@ AetherFrames - player, pet, target and party frames            /af
     Unlock to Move on AetherHub's Layout page (they move as one). Untick
     "Party frames in the Aether look" (or /af party off, then /reload) to
     get Blizzard's party frames back.
+  - Target of target: who your target is targeting, in a small crest
+    the same size and shape as your pet's frame, mirrored like the
+    target frame, under the target's buff and debuff row. Health with
+    numbers, a thin resource bar (no numbers), the level badge and the
+    class medallion. No threat glow (that's for your own threat).
+    Click it to target that unit. Drag it with Unlock to Move. To turn
+    it off: /af tot off, then /reload.
   - Your buffs and debuffs stay top right, where Blizzard shows them.
     The target gets a row under its frame: its debuffs (yours
     included, red edge) first, then its buffs (blue edge), each with
@@ -631,6 +689,8 @@ AetherFrames - player, pet, target and party frames            /af
     Blizzard's own aura display (AuraContainer), which the game fills
     in itself: icon, stack count and time left. The look is still
     Aether's. Auras with no end (like Aspect of the Hawk) show no timer.
+  - The aura rows and the hawk/totem strip sit snug under the capsule
+    (about 6 px below it on a typical screen).
   - The target frame is the mirror image on the other side: its name
     is red for enemies and yellow for neutral, and its health and
     power drain toward the crest (a mob with no mana or rage shows an
@@ -645,25 +705,96 @@ AetherFrames - player, pet, target and party frames            /af
     pet's frame: a dim steady glow while your pet holds aggro, and a
     fast pulse when it's losing it. If the game hides threat from
     addons in a fight, the glow simply stays off.
+  - Portraits: live 3D models on a soft glow in Aether blue, brightest
+    in the middle and fading to navy at the gold ring, so dark pets and
+    targets (a black wolf, say) stand out. Your pet's camera sits a bit
+    farther back so more of the glow shows. Where the game won't give a
+    model (a unit out of sight, some units in dungeons and raids, or an
+    offline party member, shown in gray), the frame uses the game's
+    flat portrait, with its black background, instead. /af portraits
+    2d switches to the flat portraits everywhere; /af portraits 3d
+    brings the models back. /af portraits test shows models on every
+    frame with no fallbacks (until /reload), and /af auras lists each
+    portrait and why it's flat, for tracking down problems.
+    To fit the 3D faces: /af portraits zoom 1.3 (bigger number = camera
+    farther back, smaller face) and /af portraits shift 0 -2 (moves the
+    model: right/left, then up/down). Put pet, player, target, tot or
+    party first to change just those frames (/af portraits zoom pet
+    1.5). /af portraits tune shows the settings; /af portraits tune
+    reset puts the starting ones back.
+  - Portrait colors: the glow behind a portrait is shaded, the color
+    itself in the middle and darker at the rim. An enemy mob as your
+    target gets the color of its level badge (gray, green, yellow, orange
+    or red; red for "??"). Player characters (friendly or not) and
+    friendly NPCs get their class color, the game's own, on your target,
+    the target of target and the party frames. You (even as your own
+    target) and your pet always keep the Aether blue. /af levelglow off
+    and /af classglow off turn either back to blue.
   - Fading: out of combat the rings, capsules and bars fade to the
     level you choose (50% to start); names, numbers and faces stay
     solid (tick "Faces fade too" to fade the portraits as well).
-    Everything turns solid in combat or under your mouse.
+    Everything turns solid under your mouse; in combat, see Aggro
+    fading below.
+  - Aggro fading: in combat, only your target, the target of target and
+    whoever has aggro on your target (you, your pet or a party member)
+    stay solid. Whoever your target is attacking lights up at once.
+    Everyone else fades further than out of combat: the frame to 30%, the
+    bars to 45% (they carry your health), and the portrait to 30% over a
+    dark disc, so the lit frame stands out. If your own frame lights up
+    while your pet tanks, you've pulled. Names and numbers never fade. /af
+    combatalpha 0-1 sets the in-combat level; /af aggro off makes every
+    frame solid in combat again. The bars never fade below 45%, in or out
+    of combat.
+  - Hit flash: when you, your pet or a party member takes a hit, that
+    crest's ring and the glow around it flash red: full red for a tenth of
+    a second, then gone within about a third of a second (misses, dodges
+    and parries don't flash; your target never does). Damage over time
+    flashes with each tick. /af hits off turns it off. /af hitnumbers on
+    also floats the damage up over the portrait for a moment, bigger for
+    crits (off to start).
   - Placement: the first time, the frames go where Blizzard's sat. Click
     Unlock to Move on AetherHub's Layout page and drag any frame: yours,
-    your pet's, your target's and the party's each move on their own (your
-    pet's follows yours until you move it). Click Done on any frame, or
-    right-click it, to finish. Reset Pet Frame Position puts your pet's
-    frame back below yours. Frames can't be moved during combat.
-  - Not shown yet: target-of-target, combo points (rogues, druids) and
-    the small leader, PvP and resting icons. If you need those, turn
-    AetherFrames off for now.
+    your pet's, your target's, target of target and the party's each
+    move on their own (your pet's follows yours until you move it).
+    While moving, every frame shows, even with no pet, target or party;
+    empty ones show empty bars. Click Done on any frame, or right-click
+    it, to finish. A /reload always comes back locked. Reset Pet Frame
+    Position puts your pet's frame back below yours. Frames can't be
+    moved during combat.
+  - Line up after moving: when you finish (Done, right-click or Lock)
+    and you moved your frame, your pet's, the target's or the target
+    of target, a small box asks "Line up your frames?":
+      Line Up: your frame stays put; the target levels with it; your
+        pet's capsule end lines up under yours and the target of
+        target's under the target's, with those two level. Edges land
+        on whole screen pixels. A frame you parked somewhere else (more
+        than about 20 units out of line) is left where it is.
+      Line Up and Center: the same, then the lined-up group slides
+        sideways into the middle of the screen, keeping its shape and
+        its height.
+      Keep As Is (or Escape): every frame stays exactly where you
+        dropped it.
+    Moving only the party frames doesn't ask. The same two line-ups
+    are on AetherHub's Layout page any time, or /af lineup and
+    /af lineup center.
+  - Centered: your frame and your target's sit side by side in the
+    middle of the screen, mirrored, with your pet's under yours and the
+    target of target under the target's. Their inner ends line up, each
+    row is level, and the edges land on whole screen pixels for crisp
+    lines. This happens once, on your first login with 1.7.0; after
+    that the frames stay where you put them. To center them again,
+    type /af center (your frame keeps its height, so drag it up or
+    down first if you like).
+  - Not shown yet: combo points (rogues, druids) and the small leader,
+    PvP and resting icons. If you need those, turn AetherFrames off for
+    now.
   - Turning it off brings Blizzard's frames back after a /reload.
-  - Commands: /af alpha 0-1, faces on|off, buffs on|off, threat
-    on|off, mybuffs on|off, party on|off, petpower on|off,
-    scale 0.6-1.6, unlock,
-    lock, petreset, reset, on|off, auras (a report of what the game
-    tells the addon about your auras and hawk timers, for tracking
+  - Commands: /af alpha 0-1, faces on|off, buffs on|off, threat on|off,
+    mybuffs on|off, aggro on|off, combatalpha 0-1, hits on|off, hitnumbers
+    on|off, levelglow on|off, classglow on|off, party on|off, tot on|off,
+    petpower on|off, scale 0.6-1.6, portraits 3d|2d, unlock, lock, lineup
+    [center], center, petreset, reset, on|off, auras (a report of what the
+    game tells the addon about your auras and hawk timers, for tracking
     down problems).
 
 

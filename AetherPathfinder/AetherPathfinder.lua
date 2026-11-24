@@ -4,6 +4,59 @@
 -- meet them, then shows them as colored pins you can filter on the world map.
 -- ==========================================
 
+-- ==========================================
+-- AETHER TEXT
+-- ==========================================
+-- The Aether text style, in Fira Sans (the unit frames' font; SIL Open Font
+-- License, see AetherHub\Media\Fonts\FiraSans-OFL.txt). In windows: Regular
+-- for text, SemiBold for the gold headings, with a soft shadow. Over the game
+-- world (AetherFontWorld...): Bold with a thin black outline and a shadow, so
+-- it reads on any background, faded or not. Each copies the Blizzard font it
+-- stands in for (size, color), so layouts stay the same, except that the gold
+-- ones use the Aether gold (a warm amber, 1, 0.69, 0) instead of Blizzard's
+-- yellow. The files live in AetherHub\Media\Fonts; if one can't load,
+-- Blizzard's font stays.
+AETHER_FONT_DIR = AETHER_FONT_DIR or "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-"
+local function AetherFontFile(weight) return AETHER_FONT_DIR .. weight .. ".ttf" end
+
+-- Sets a Fira font on a font object or font string; false if it didn't load.
+local function AetherSetFont(obj, weight, size, outline)
+    local ok, set = pcall(obj.SetFont, obj, AetherFontFile(weight), size, outline and "OUTLINE" or "")
+    return ok and set ~= false
+end
+
+if CreateFont and not AetherFontHighlight then
+    -- Fira's capitals are a little shorter than Friz Quadrata's at the same size.
+    local SCALE = 1.05
+    local function Make(name, base, weight, world, gold)
+        local f = CreateFont(name)
+        local src = _G[base]
+        if src then f:CopyFontObject(src) end
+        local file, size, flags = f:GetFont()
+        size = size or 12
+        if not AetherSetFont(f, weight, size * SCALE, world) and file then
+            f:SetFont(file, size, flags or "")
+        end
+        f:SetShadowColor(0, 0, 0, world and 1 or 0.8)
+        f:SetShadowOffset(1, -1)
+        if gold then f:SetTextColor(1, 0.69, 0) end
+    end
+    for _, d in ipairs({
+        { "AetherFontNormal",           "GameFontNormal",         "SemiBold", false, true },
+        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold", false, true },
+        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold", false, true },
+        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold", false, true },
+        { "AetherFontHighlight",        "GameFontHighlight",      "Regular" },
+        { "AetherFontHighlightSmall",   "GameFontHighlightSmall", "Regular" },
+        { "AetherFontDisable",          "GameFontDisable",        "Regular" },
+        { "AetherFontDisableSmall",     "GameFontDisableSmall",   "Regular" },
+        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true, true },
+        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true, true },
+        { "AetherFontWorld",            "GameFontHighlight",      "Bold", true },
+        { "AetherFontWorldSmall",       "GameFontHighlightSmall", "Bold", true },
+    }) do Make(d[1], d[2], d[3], d[4], d[5]) end
+end
+
 local ADDON_NAME = ...
 
 -- ==========================================
@@ -333,9 +386,9 @@ local function AetherButton(parent, name, small)
     local hl = AetherFill(b, 0.3, 0.65, 1, 0.3)
     hl:SetBlendMode("ADD")
     b:SetHighlightTexture(hl)
-    b:SetNormalFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetHighlightFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetDisabledFontObject(small and "GameFontDisableSmall" or "GameFontDisable")
+    b:SetNormalFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
     return b
 end

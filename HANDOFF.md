@@ -62,15 +62,13 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-- In-game check of the rounded windows, the XP bar, and button names
-  (build: Hub 1.13.0, Bars 1.14.0).
-- Target debuffs in combat via AuraContainer: confirm in game.
-- Level-number centering nudge (1 unit right): confirm.
-- Suggested next (not yet approved): shared Aether UI kit (one window
-  trim instead of 8 copies), cheaper per-frame updates (Coords,
-  Pathfinder minimap pins, Frames threat loop, Meter dock polling),
-  Hub pages for Alerts & suggestions, Map & minimap, Features,
-  Maintenance; smaller AetherFrames art.
+- None. As of Nov 24 the user confirmed in game: rounded windows, XP bar,
+  button names, target debuffs in combat, level-number nudge. The shared
+  UI kit, lighter per-frame updates, extra Hub pages and smaller
+  AetherFrames art are done (Hub 1.14.1, Frames 1.14.3).
+- hub_general_test and ledger_full_test need the user's AetherLedger
+  SavedVariables file (path is hard-coded under /mnt/user-data/uploads);
+  ask for it before working on Ledger or the Hub.
 
 ## Tests
 

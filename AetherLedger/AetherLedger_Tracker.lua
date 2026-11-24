@@ -35,9 +35,9 @@ local function AetherButton(parent, name, small)
     local hl = AetherFill(b, 0.3, 0.65, 1, 0.3)
     hl:SetBlendMode("ADD")
     b:SetHighlightTexture(hl)
-    b:SetNormalFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetHighlightFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetDisabledFontObject(small and "GameFontDisableSmall" or "GameFontDisable")
+    b:SetNormalFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
     return b
 end
@@ -150,7 +150,7 @@ local function AetherDecorate(frame, titleHeight)
         t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, -S); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -R, -S); t:SetHeight(R - S)
         t = Tex("BORDER", 0, WHITE, NAVY)                 -- the rest, full width
         t:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -R); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -R); t:SetHeight(titleHeight - R)
-        local line = Tex("BORDER", 2, WHITE, { 1, 0.82, 0, 0.7 })
+        local line = Tex("BORDER", 2, WHITE, { 1, 0.69, 0, 0.7 })
         line:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -titleHeight); line:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -titleHeight)
         line:SetHeight(1)
     end
@@ -162,7 +162,7 @@ local function AetherDecorate(frame, titleHeight)
     for _, c in ipairs({ { "top", "TOP", 0, 3, 0, 26 }, { "bottom", "BOTTOM", 0, -3, math.pi, 26 },
                          { "left", "LEFT", -3, 0, math.pi / 2, 34 }, { "right", "RIGHT", 3, 0, -math.pi / 2, 34 } }) do
         local set = {}
-        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.82, 0, 1 }, 7 } }) do
+        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.69, 0, 1 }, 7 } }) do
             local ch = Tex("OVERLAY", g[3], MEDIA .. "win_chev_" .. g[1], g[2])
             ch:SetSize(c[6], c[6])
             ch:SetPoint("CENTER", frame, c[2], c[3], c[4])
@@ -529,7 +529,7 @@ local function BuildWindow()
     end
     AetherDecorate(win, 28)
     tinsert(UISpecialFrames, "AetherLedgerCleanup")   -- Esc closes it
-    local title = win:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    local title = win:CreateFontString(nil, "OVERLAY", "AetherFontNormal")
     title:SetPoint("TOPLEFT", 12, -10)
     title:SetText("|cff4da6ffAetherLedger|r  quest log cleanup")
     local close = AetherButton(win, nil, true)
@@ -537,7 +537,7 @@ local function BuildWindow()
     close:SetText("x")
     close:SetPoint("TOPRIGHT", -6, -6)
     close:SetScript("OnClick", function() win:Hide() end)
-    win.intro = win:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    win.intro = win:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     win.intro:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
     win.intro:SetPoint("RIGHT", win, "RIGHT", -12, 0)
     win.intro:SetJustifyH("LEFT")
@@ -548,7 +548,7 @@ local function BuildWindow()
         row.drop = AetherButton(row, nil, true)
         row.drop:SetSize(70, 20)
         row.drop:SetPoint("RIGHT", row, "RIGHT", 0, 0)
-        row.text = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        row.text = row:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
         row.text:SetPoint("LEFT", row, "LEFT", 0, 0)
         row.text:SetPoint("RIGHT", row.drop, "LEFT", -6, 0)
         row.text:SetJustifyH("LEFT")
@@ -561,7 +561,7 @@ local function BuildWindow()
                 C_Timer.After(0.5, function() if win:IsShown() then AetherLedger_Tracker.ShowCleanup() end end)
             else
                 self.armed = true
-                self:SetText("|cffffd100Sure?|r")
+                self:SetText("|cffffb000Sure?|r")
                 C_Timer.After(3, function()
                     if self.armed then self.armed = false; self:SetText("Abandon") end
                 end)
@@ -569,7 +569,7 @@ local function BuildWindow()
         end)
         win.rows[i] = row
     end
-    win.footer = win:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    win.footer = win:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     win.footer:SetJustifyH("LEFT")
     win:Hide()
 end

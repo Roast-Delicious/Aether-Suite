@@ -15,6 +15,59 @@
 -- changes: you level up, accept or turn in a quest, or change zones.
 -- ==========================================
 
+-- ==========================================
+-- AETHER TEXT
+-- ==========================================
+-- The Aether text style, in Fira Sans (the unit frames' font; SIL Open Font
+-- License, see AetherHub\Media\Fonts\FiraSans-OFL.txt). In windows: Regular
+-- for text, SemiBold for the gold headings, with a soft shadow. Over the game
+-- world (AetherFontWorld...): Bold with a thin black outline and a shadow, so
+-- it reads on any background, faded or not. Each copies the Blizzard font it
+-- stands in for (size, color), so layouts stay the same, except that the gold
+-- ones use the Aether gold (a warm amber, 1, 0.69, 0) instead of Blizzard's
+-- yellow. The files live in AetherHub\Media\Fonts; if one can't load,
+-- Blizzard's font stays.
+AETHER_FONT_DIR = AETHER_FONT_DIR or "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-"
+local function AetherFontFile(weight) return AETHER_FONT_DIR .. weight .. ".ttf" end
+
+-- Sets a Fira font on a font object or font string; false if it didn't load.
+local function AetherSetFont(obj, weight, size, outline)
+    local ok, set = pcall(obj.SetFont, obj, AetherFontFile(weight), size, outline and "OUTLINE" or "")
+    return ok and set ~= false
+end
+
+if CreateFont and not AetherFontHighlight then
+    -- Fira's capitals are a little shorter than Friz Quadrata's at the same size.
+    local SCALE = 1.05
+    local function Make(name, base, weight, world, gold)
+        local f = CreateFont(name)
+        local src = _G[base]
+        if src then f:CopyFontObject(src) end
+        local file, size, flags = f:GetFont()
+        size = size or 12
+        if not AetherSetFont(f, weight, size * SCALE, world) and file then
+            f:SetFont(file, size, flags or "")
+        end
+        f:SetShadowColor(0, 0, 0, world and 1 or 0.8)
+        f:SetShadowOffset(1, -1)
+        if gold then f:SetTextColor(1, 0.69, 0) end
+    end
+    for _, d in ipairs({
+        { "AetherFontNormal",           "GameFontNormal",         "SemiBold", false, true },
+        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold", false, true },
+        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold", false, true },
+        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold", false, true },
+        { "AetherFontHighlight",        "GameFontHighlight",      "Regular" },
+        { "AetherFontHighlightSmall",   "GameFontHighlightSmall", "Regular" },
+        { "AetherFontDisable",          "GameFontDisable",        "Regular" },
+        { "AetherFontDisableSmall",     "GameFontDisableSmall",   "Regular" },
+        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true, true },
+        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true, true },
+        { "AetherFontWorld",            "GameFontHighlight",      "Bold", true },
+        { "AetherFontWorldSmall",       "GameFontHighlightSmall", "Bold", true },
+    }) do Make(d[1], d[2], d[3], d[4], d[5]) end
+end
+
 local PREFIX = "|cff4da6ffAetherLedger:|r "
 
 local function CharKey()
@@ -576,9 +629,9 @@ local function AetherButton(parent, name, small)
     local hl = AetherFill(b, 0.3, 0.65, 1, 0.3)
     hl:SetBlendMode("ADD")
     b:SetHighlightTexture(hl)
-    b:SetNormalFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetHighlightFontObject(small and "GameFontHighlightSmall" or "GameFontHighlight")
-    b:SetDisabledFontObject(small and "GameFontDisableSmall" or "GameFontDisable")
+    b:SetNormalFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
+    b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
     return b
 end
@@ -701,7 +754,7 @@ local function AetherDecorate(frame, titleHeight)
         t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, -S); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -R, -S); t:SetHeight(R - S)
         t = Tex("BORDER", 0, WHITE, NAVY)                 -- the rest, full width
         t:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -R); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -R); t:SetHeight(titleHeight - R)
-        local line = Tex("BORDER", 2, WHITE, { 1, 0.82, 0, 0.7 })
+        local line = Tex("BORDER", 2, WHITE, { 1, 0.69, 0, 0.7 })
         line:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -titleHeight); line:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -titleHeight)
         line:SetHeight(1)
     end
@@ -713,7 +766,7 @@ local function AetherDecorate(frame, titleHeight)
     for _, c in ipairs({ { "top", "TOP", 0, 3, 0, 26 }, { "bottom", "BOTTOM", 0, -3, math.pi, 26 },
                          { "left", "LEFT", -3, 0, math.pi / 2, 34 }, { "right", "RIGHT", 3, 0, -math.pi / 2, 34 } }) do
         local set = {}
-        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.82, 0, 1 }, 7 } }) do
+        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.69, 0, 1 }, 7 } }) do
             local ch = Tex("OVERLAY", g[3], MEDIA .. "win_chev_" .. g[1], g[2])
             ch:SetSize(c[6], c[6])
             ch:SetPoint("CENTER", frame, c[2], c[3], c[4])
@@ -759,10 +812,10 @@ local function BuildNotice()
         notice:SetBackdropBorderColor(0.3, 0.65, 1, 0.9)
     end
     AetherDecorate(notice, 28)
-    local title = notice:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    local title = notice:CreateFontString(nil, "OVERLAY", "AetherFontNormal")
     title:SetPoint("TOPLEFT", 12, -10)
     title:SetText("|cff4da6ffAetherLedger|r")
-    notice.text = notice:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    notice.text = notice:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")
     notice.text:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
     notice.text:SetPoint("RIGHT", notice, "RIGHT", -12, 0)
     notice.text:SetJustifyH("LEFT")
@@ -795,7 +848,7 @@ local function BuildNotice()
             notice:Hide()
             if row.action then row.action() end
         end)
-        row.text = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        row.text = row:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
         row.text:SetPoint("LEFT", row, "LEFT", 0, 0)
         row.text:SetPoint("RIGHT", row.go, "LEFT", -6, 0)
         row.text:SetJustifyH("LEFT")

@@ -1,6 +1,59 @@
 -- AetherBars: minimal action bar styling for WoW Forever (works on Classic-style UIs)
 -- Only changes how things look (textures, alpha, fonts), so it never blocks your spells in combat.
 
+-- ==========================================
+-- AETHER TEXT
+-- ==========================================
+-- The Aether text style, in Fira Sans (the unit frames' font; SIL Open Font
+-- License, see AetherHub\Media\Fonts\FiraSans-OFL.txt). In windows: Regular
+-- for text, SemiBold for the gold headings, with a soft shadow. Over the game
+-- world (AetherFontWorld...): Bold with a thin black outline and a shadow, so
+-- it reads on any background, faded or not. Each copies the Blizzard font it
+-- stands in for (size, color), so layouts stay the same, except that the gold
+-- ones use the Aether gold (a warm amber, 1, 0.69, 0) instead of Blizzard's
+-- yellow. The files live in AetherHub\Media\Fonts; if one can't load,
+-- Blizzard's font stays.
+AETHER_FONT_DIR = AETHER_FONT_DIR or "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-"
+local function AetherFontFile(weight) return AETHER_FONT_DIR .. weight .. ".ttf" end
+
+-- Sets a Fira font on a font object or font string; false if it didn't load.
+local function AetherSetFont(obj, weight, size, outline)
+    local ok, set = pcall(obj.SetFont, obj, AetherFontFile(weight), size, outline and "OUTLINE" or "")
+    return ok and set ~= false
+end
+
+if CreateFont and not AetherFontHighlight then
+    -- Fira's capitals are a little shorter than Friz Quadrata's at the same size.
+    local SCALE = 1.05
+    local function Make(name, base, weight, world, gold)
+        local f = CreateFont(name)
+        local src = _G[base]
+        if src then f:CopyFontObject(src) end
+        local file, size, flags = f:GetFont()
+        size = size or 12
+        if not AetherSetFont(f, weight, size * SCALE, world) and file then
+            f:SetFont(file, size, flags or "")
+        end
+        f:SetShadowColor(0, 0, 0, world and 1 or 0.8)
+        f:SetShadowOffset(1, -1)
+        if gold then f:SetTextColor(1, 0.69, 0) end
+    end
+    for _, d in ipairs({
+        { "AetherFontNormal",           "GameFontNormal",         "SemiBold", false, true },
+        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold", false, true },
+        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold", false, true },
+        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold", false, true },
+        { "AetherFontHighlight",        "GameFontHighlight",      "Regular" },
+        { "AetherFontHighlightSmall",   "GameFontHighlightSmall", "Regular" },
+        { "AetherFontDisable",          "GameFontDisable",        "Regular" },
+        { "AetherFontDisableSmall",     "GameFontDisableSmall",   "Regular" },
+        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true, true },
+        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true, true },
+        { "AetherFontWorld",            "GameFontHighlight",      "Bold", true },
+        { "AetherFontWorldSmall",       "GameFontHighlightSmall", "Bold", true },
+    }) do Make(d[1], d[2], d[3], d[4], d[5]) end
+end
+
 local ADDON = ...
 local Print
 local defaults = {
@@ -508,7 +561,7 @@ local function StyleButton(button)
     if not InCombatLockdown() then
         FlatTexture(button, "SetHighlightTexture", 1, 1, 1, 0.15)
         FlatTexture(button, "SetPushedTexture", 1, 1, 1, 0.30)
-        FlatTexture(button, "SetCheckedTexture", 1, 0.82, 0, 0.30)
+        FlatTexture(button, "SetCheckedTexture", 1, 0.69, 0, 0.30)
     end
 
     -- 4) Cooldown swirl fits the cropped icon
@@ -523,12 +576,12 @@ local function StyleButton(button)
     local font = STANDARD_TEXT_FONT or "Fonts\\FRIZQT__.TTF"
     local hotkey = button.HotKey or _G[name .. "HotKey"]
     if hotkey then
-        hotkey:SetFont(font, 10, "OUTLINE")
+        if not AetherSetFont(hotkey, "Bold", 10, true) then hotkey:SetFont(font, 10, "OUTLINE") end
         hotkey:ClearAllPoints()
         hotkey:SetPoint("TOPRIGHT", button, "TOPRIGHT", -2, -3)
     end
     local count = button.Count or _G[name .. "Count"]
-    if count then count:SetFont(font, 11, "OUTLINE") end
+    if count and not AetherSetFont(count, "Bold", 11, true) then count:SetFont(font, 11, "OUTLINE") end
     local macro = button.Name or _G[name .. "Name"]
     if macro then macro:SetAlpha(db.hideMacro and 0 or 1) end
 
@@ -1084,7 +1137,7 @@ SetXPUnlocked = function(on)
         local t = m:CreateTexture(nil, "OVERLAY")
         t:SetAllPoints()
         t:SetColorTexture(0.25, 0.6, 1, 0.35)
-        local label = m:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        local label = m:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
         label:SetPoint("BOTTOM", m, "TOP", 0, 4)
         label:SetText("XP bar - drag to move, drag the corner handle to resize, then click Done.")
         -- Done: the same look as the unit frames' Done buttons.
@@ -1094,10 +1147,10 @@ SetXPUnlocked = function(on)
         done:SetFrameLevel(m:GetFrameLevel() + 5)
         local dEdge = done:CreateTexture(nil, "BACKGROUND")
         dEdge:SetPoint("TOPLEFT", -1, 1); dEdge:SetPoint("BOTTOMRIGHT", 1, -1)
-        dEdge:SetColorTexture(1, 0.82, 0, 1)
+        dEdge:SetColorTexture(1, 0.69, 0, 1)
         local dBg = done:CreateTexture(nil, "ARTWORK")
         dBg:SetAllPoints(); dBg:SetColorTexture(0.07, 0.17, 0.32, 0.95)
-        local dText = done:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        local dText = done:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
         dText:SetPoint("CENTER"); dText:SetText("Done")
         done:SetScript("OnClick", function() SetXPUnlocked(false) end)
         -- Moving and sizing are done by hand (following the cursor) rather than
@@ -1242,20 +1295,20 @@ local function MakeTrim(m)
     for _, corner in ipairs({ "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT" }) do
         local ix = corner:find("LEFT") and 1 or -1         -- toward the inside
         local iy = corner:find("TOP") and -1 or 1
-        local across = SoftRect("OVERLAY", 6, 1, 0.82, 0, 1)
+        local across = SoftRect("OVERLAY", 6, 1, 0.69, 0, 1)
         across:SetSize(10 * m, 2 * m); across:SetPoint(corner, p, corner, 0, 0)
-        local down = SoftRect("OVERLAY", 6, 1, 0.82, 0, 1)
+        local down = SoftRect("OVERLAY", 6, 1, 0.69, 0, 1)
         down:SetSize(2 * m, 10 * m); down:SetPoint(corner, p, corner, 0, 0)
-        local fineA = SoftRect("OVERLAY", 6, 1, 0.82, 0, 0.9)
+        local fineA = SoftRect("OVERLAY", 6, 1, 0.69, 0, 0.9)
         fineA:SetSize(6 * m, 1 * m); fineA:SetPoint(corner, p, corner, ix * 3 * m, iy * 3 * m)
-        local fineD = SoftRect("OVERLAY", 6, 1, 0.82, 0, 0.9)
+        local fineD = SoftRect("OVERLAY", 6, 1, 0.69, 0, 0.9)
         fineD:SetSize(1 * m, 6 * m); fineD:SetPoint(corner, p, corner, ix * 3 * m, iy * 3 * m)
         p.corners[corner] = { across, down, fineA, fineD }
     end
     -- the chevron (shown on the block holding Action Bar 1), pointing up: a
     -- smooth image on a dark backing, fading with the panel
     p.gem = {}
-    for _, g in ipairs({ { "dark", 0.04, 0.05, 0.07, 6 }, { "gold", 1, 0.82, 0, 7 } }) do
+    for _, g in ipairs({ { "dark", 0.04, 0.05, 0.07, 6 }, { "gold", 1, 0.69, 0, 7 } }) do
         local t = p:CreateTexture(nil, "OVERLAY", nil, g[5])
         t:SetTexture("Interface\\AddOns\\AetherBars\\Media\\win_chev_" .. g[1])
         t:SetVertexColor(g[2], g[3], g[4], 1)
@@ -1879,7 +1932,7 @@ end
 local XP_MEDIA = "Interface\\AddOns\\AetherBars\\Media\\"
 local XPC = {
     edge = { 0.3, 0.65, 1, 1 }, gap = { 0.04, 0.05, 0.07, 1 }, back = { 0.04, 0.05, 0.07, 1 },
-    earned = { 0.11, 0.29, 0.59, 1 }, rested = { 0.3, 0.65, 1, 0.85 }, gold = { 1, 0.82, 0, 1 },
+    earned = { 0.11, 0.29, 0.59, 1 }, rested = { 0.3, 0.65, 1, 0.85 }, gold = { 1, 0.69, 0, 1 },
 }
 local xpArt                       -- everything we draw, built once
 local function XPExpBar()
@@ -2021,7 +2074,7 @@ local function BuildXPArt()
     a.earned = NewPill(ov, 3, XPC.earned)
     a.ticks = {}
     for i = 1, 19 do
-        a.ticks[i] = XPTex(ov, "ARTWORK", 4, "Interface\\Buttons\\WHITE8X8", { 1, 0.82, 0, 0.35 })
+        a.ticks[i] = XPTex(ov, "ARTWORK", 4, "Interface\\Buttons\\WHITE8X8", { 1, 0.69, 0, 0.35 })
     end
     a.tip = XPTex(ov, "ARTWORK", 5, "Interface\\Buttons\\WHITE8X8", XPC.gold)
     a.chev = {}
