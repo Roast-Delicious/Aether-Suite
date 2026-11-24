@@ -66,7 +66,7 @@ Then read this file. The addons live at the repo root (one folder each);
 ## Open items / waiting on the user
 
 Current build: Hub 1.14.1, Meter 1.13.8, Bars 1.14.2, Coords 1.3.8,
-Pathfinder 1.9.4, ItemID 1.1.1, Ledger 1.5.14, Pack 1.4.1, Frames 1.14.3,
+Pathfinder 1.9.4, ItemID 1.1.2, Ledger 1.5.14, Pack 1.4.2, Frames 1.14.3,
 Chat 1.0.7 (Marks unchanged).
 
 THE AETHER GOLD (2026-11-23, user's choice): one warm amber, 1, 0.69, 0
@@ -77,6 +77,13 @@ chevrons, ticks, checkmarks, Meter's "you" strip). On purpose still
 1, 0.82, 0: AetherFrames level colors (yellow = same level) and AetherPack's
 FillColor "getting full" bar. It's 37% of the way from gold (255,209,0) to
 orange (255,120,0). Hub's "Aether yellow" selected text is now this gold.
+
+Money text (Pack 1.4.2, ItemID 1.1.2, 2026-11-24): the gold by AetherPack's
+title, the junk value, the sold-junk message and ItemID's vendor price were
+blank in WoW Forever: GetCoinTextureString (deprecated 10.2.6) isn't there.
+Now AetherCoins() tries C_CurrencyInfo.GetCoinTextureString, then the old
+global, then GetMoneyString, then builds it with the coin icons. Use it for
+any new money text. Test: tools/money_test.py.
 
 AetherPack 1.4.1 (after the user saw 1.4.0 in game: the block beside the
 bars looked misaligned): the deposit slot now has its OWN ROW under the last
@@ -215,7 +222,7 @@ Run from /home/claude/tools, e.g.:
     for t in hub_general_test frames_test frames_badge_test frames_party_test \
              frames_center_test frames_lineup_test frames_portrait_test \
              frames_aggro_test frames_threat_test frames_aura_test \
-             pack_test pack_bagwin_test pack_deposit_test text_style_test \
+             pack_test pack_bagwin_test pack_deposit_test text_style_test money_test \
              ledger_full_test bars_xp_test bars_xp_modern_test meter_dock_test \
              chat_test coords_test; do python3 $t.py >/dev/null 2>&1 || echo FAIL $t; done
 

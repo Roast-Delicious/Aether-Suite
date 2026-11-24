@@ -5,6 +5,27 @@
 -- many you have and what a vendor pays for it.
 -- ==========================================
 
+-- Money as text with coin icons. The game's function for this moved
+-- (C_CurrencyInfo.GetCoinTextureString since 10.2.6; the old global may be gone),
+-- so try the new one, then the old ones, then build it ourselves.
+local function AetherCoins(amount)
+    amount = math.floor(tonumber(amount) or 0)
+    local fns = { C_CurrencyInfo and C_CurrencyInfo.GetCoinTextureString, GetCoinTextureString, GetMoneyString }
+    for i = 1, 3 do                       -- (not ipairs: it would stop at the first missing one)
+        local f = fns[i]
+        if f then
+            local ok, s = pcall(f, amount)
+            if ok and type(s) == "string" and s ~= "" then return s end
+        end
+    end
+    local g, s, c = math.floor(amount / 10000), math.floor(amount / 100) % 100, amount % 100
+    local parts = {}
+    if g > 0 then parts[#parts + 1] = g .. "|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t" end
+    if s > 0 then parts[#parts + 1] = s .. "|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t" end
+    if c > 0 or #parts == 0 then parts[#parts + 1] = c .. "|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t" end
+    return table.concat(parts, " ")
+end
+
 local ADDON = ...
 local PREFIX = "|cff4da6ffAetherItemID:|r "
 
@@ -251,10 +272,10 @@ local function Describe(itemID, count, link, bound)
     Add(string.format("You have %d  (bags %d, bank %d)", total, inBags, inBank))
 
     -- Vendor price
-    if sellPrice and sellPrice > 0 and GetCoinTextureString then
-        local each = GetCoinTextureString(sellPrice)
+    if sellPrice and sellPrice > 0 then
+        local each = AetherCoins(sellPrice)
         if count and count > 1 then
-            Add("Vendor price: " .. each .. " each, " .. GetCoinTextureString(sellPrice * count) .. " for this stack")
+            Add("Vendor price: " .. each .. " each, " .. AetherCoins(sellPrice * count) .. " for this stack")
         else
             Add("Vendor price: " .. each)
         end

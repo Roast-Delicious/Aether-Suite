@@ -22,10 +22,10 @@ window, so you rarely need to type a command.
                                mailboxes on the world map and minimap
   AetherMarks        1.6.12    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
-  AetherItemID       1.1.1     What an item is for, when you hover it
+  AetherItemID       1.1.2     What an item is for, when you hover it
   AetherLedger       1.5.14    Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.4.1     Your bags sorted into sections
+  AetherPack         1.4.2     Your bags sorted into sections
   AetherChat         1.0.7     Chat with the Aether look, fitted beside
                                your action bars
   AetherFrames       1.14.3    Your, your pet's, your target's, its

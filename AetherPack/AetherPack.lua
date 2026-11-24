@@ -478,6 +478,28 @@ end
 -- WINDOW
 -- ==========================================
 local BUTTON = 37      -- Blizzard's bag button size
+
+-- Money as text with coin icons. The game's function for this moved
+-- (C_CurrencyInfo.GetCoinTextureString since 10.2.6; the old global may be gone),
+-- so try the new one, then the old ones, then build it ourselves.
+local function AetherCoins(amount)
+    amount = math.floor(tonumber(amount) or 0)
+    local fns = { C_CurrencyInfo and C_CurrencyInfo.GetCoinTextureString, GetCoinTextureString, GetMoneyString }
+    for i = 1, 3 do                       -- (not ipairs: it would stop at the first missing one)
+        local f = fns[i]
+        if f then
+            local ok, s = pcall(f, amount)
+            if ok and type(s) == "string" and s ~= "" then return s end
+        end
+    end
+    local g, s, c = math.floor(amount / 10000), math.floor(amount / 100) % 100, amount % 100
+    local parts = {}
+    if g > 0 then parts[#parts + 1] = g .. "|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t" end
+    if s > 0 then parts[#parts + 1] = s .. "|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t" end
+    if c > 0 or #parts == 0 then parts[#parts + 1] = c .. "|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t" end
+    return table.concat(parts, " ")
+end
+
 local DEP_W, DEP_H = 256, 46  -- the deposit row (see DEPOSIT SLOT)
 local GAP = 2
 local PAD = 10
@@ -624,8 +646,8 @@ function AetherPack_Layout()
                 return a.slot < b.slot
             end)
             local label = title .. "  |cff9d9d9d" .. #list .. "|r"
-            if s.key == "junk" and junkValue > 0 and GetCoinTextureString then
-                label = label .. "  " .. GetCoinTextureString(junkValue)
+            if s.key == "junk" and junkValue > 0 then
+                label = label .. "  " .. AetherCoins(junkValue)
             end
             if s.key == "empty" and (ammoFree > 0 or soulFree > 0) then
                 label = s.title .. "  |cff9d9d9d" .. free
@@ -757,7 +779,7 @@ function AetherPack_Layout()
     end
     for i = #rows + 1, #win.bars do win.bars[i]:Hide() end
 
-    win.money:SetText(GetCoinTextureString and GetCoinTextureString(GetMoney()) or "")
+    win.money:SetText(AetherCoins(GetMoney()))
     win.junkValue = junkValue
     win.sell:SetShown(win.atMerchant and junkValue > 0)
     UpdateBackpackCount(st)
@@ -973,7 +995,7 @@ local function SellJunk()
         local item = queue[i]
         if not item or not win.atMerchant then
             selling = false
-            if total > 0 and GetCoinTextureString then print(PREFIX .. "sold junk for " .. GetCoinTextureString(total) .. ".") end
+            if total > 0 then print(PREFIX .. "sold junk for " .. AetherCoins(total) .. ".") end
             return
         end
         local use = C.UseContainerItem or UseContainerItem
@@ -1417,7 +1439,7 @@ events:SetScript("OnEvent", function(_, event, arg1)
         if win:IsShown() then RefreshButtons() end
         ForEachBagWindow(function(w) if w:IsShown() then RefreshBagWindow(w) end end)
     elseif event == "PLAYER_MONEY" then
-        if win:IsShown() then win.money:SetText(GetCoinTextureString and GetCoinTextureString(GetMoney()) or "") end
+        if win:IsShown() then win.money:SetText(AetherCoins(GetMoney())) end
     else
         if event == "BAG_UPDATE_DELAYED" then UpdateBackpackCount() end   -- even with the window closed
         LayoutSoon()
