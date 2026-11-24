@@ -91,6 +91,11 @@ Then read this file. The addons live at the repo root (one folder each);
 - Branch frames-fade-10 (queued, NOT built): in-combat no-aggro fade
   30% -> 20%, bar floor 45% -> 35%; one-time migration of a saved 0.3
   (db.fade20). Frames 1.14.6 when built.
+- Branch chat-fixes (queued, NOT built): tab names were Blizzard yellow
+  (measured 154,125,6) -> Aether gold (others dimmed); typing line
+  re-shown by Blizzard (likely chatStyle classic) hidden again via
+  OnShow (tools/chat_reshow_test.py). Chosen, NOT coded yet: compact tab
+  strip (option A, mock/chat_tabs.py), waiting for go.
 - Idea under discussion: AetherSkins (reskin Blizzard windows/popups
   in the Aether look). Waiting on which windows; mockups first.
 - Last delivered build (Nov 24): AetherAddons.zip with Hub 1.14.2,
