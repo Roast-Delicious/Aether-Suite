@@ -1,23 +1,24 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 24, 2026 (afternoon)
+Last updated: November 24, 2026 (12:40)
 
-A set of eleven addons for World of Warcraft: Forever that make everyday
+A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
 up with one click, coordinates and waypoints, service NPCs on your maps,
 quest and rare mob highlights, item details at a glance, a quest guide
 that points you to the best zones, trainers and skinning spots for your
 level, tidy bags sorted into sections, a cleaner chat that fits beside
-your bars, and Aether-styled player, pet and target frames. Each addon
+your bars, Aether-styled player, pet and target frames, and the Aether
+look for Blizzard's own windows, starting with the minimap. Each addon
 works on its own, and AetherHub gathers all their settings in one
 window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.14.2    One window with every addon's settings
+  AetherHub          1.14.3    One window with every addon's settings
   AetherMeter        1.13.8    Damage and healing meter
   AetherBars         1.14.2    Clean action bars with a cooldown glow
-  AetherCoords       1.3.11    Coordinates, plus your own map waypoints
+  AetherCoords       1.3.12    Coordinates, plus your own map waypoints
   AetherPathfinder   1.9.5     Trainers, vendors, flight masters and
                                mailboxes on the world map and minimap
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
@@ -31,6 +32,8 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.6    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
+  AetherSkins        1.0.0     The Aether look for Blizzard's windows,
+                               starting with the minimap
 
 
 GETTING STARTED
@@ -39,7 +42,7 @@ GETTING STARTED
 2. Extract everything in AetherAddons.zip straight into your WoW Forever
    AddOns folder, usually:
        C:\Program Files (x86)\World of Warcraft\_forever_\Interface\AddOns
-   The eleven Aether folders must sit directly in AddOns (not inside an
+   The twelve Aether folders must sit directly in AddOns (not inside an
    extra folder), or WoW won't find them.
 3. Start WoW. If the addons don't show up, click AddOns on the character
    select screen and turn them on.
@@ -52,7 +55,8 @@ start WoW. Your settings are kept.
 ADJUSTING EVERYTHING WITH AETHERHUB
 -----------------------------------
 Three ways to open it:
-  - The Aether button on the edge of your minimap (blue ring). Left-click
+  - The Aether button on the edge of your minimap (a navy button with a
+    fine blue rim). Left-click
     opens AetherHub, right-click gives shortcuts (check zones, directions
     to the best zone, clean up quests, show or hide the meter, reset the
     window size), and dragging slides it around the minimap. Untick
@@ -300,7 +304,8 @@ AetherBars - cleaner action bars                               /cb
 
 AetherCoords - coordinates and waypoints                  /mc and /way
   Shows where you are, and lets you mark spots on the map with notes.
-  - Your coordinates under the minimap (Shift-drag to move them).
+  - Your coordinates under the minimap, in a navy pill with a fine blue
+    edge (Shift-drag to move them).
   - On the world map: the coordinates under your cursor, and your own
     position in the top-right corner.
   - Waypoints: the Aether star (a gold star in a thin gold ring on a navy
@@ -835,6 +840,33 @@ AetherFrames - player, pet, target and party frames            /af
     [center], center, petreset, reset, on|off, auras (a report of what the
     game tells the addon about your auras and hawk timers, for tracking
     down problems).
+
+
+AetherSkins - the Aether look for Blizzard's windows           /skins
+  Gives Blizzard's own windows the Aether look, a few at a time. First:
+  the minimap.
+  - Blizzard's ring around the minimap is replaced by a navy ring with a
+    bevel (a ridge along its middle), the four gold chevrons at 12, 3, 6
+    and 9 o'clock, and a soft blue glow around it.
+  - Light comes from the sun or moon button at the top-right of the
+    ring. By day a gold glow lights the ring's inner wall across from it
+    and fades softly back into the navy; by night the glow is white. It
+    follows the game's own day and night (realm time) and changes over
+    with a short fade. The map itself isn't tinted.
+  - The sun or moon button is the Aether one: a navy button with a gold
+    sun by day and a pale moon at night. Hover it for the game time;
+    click it for the calendar.
+  - The bar with the zone name and clock sits on a navy pill. A yellow
+    zone name turns Aether gold; other zone colors (friendly, hostile,
+    contested) stay as they are. Its buttons work as before.
+  - The map, its pins, AetherCoords' waypoints, AetherPathfinder's NPCs
+    and other addons' minimap buttons all work as before.
+  - More of Blizzard's windows (world map, reputation, friends and so
+    on) get the same look in coming updates.
+  - Commands: /skins minimap (on or off, then /reload), /skins day and
+    /skins night to preview the light (/skins auto follows the game
+    again), /skins debug (what it found and changed: send this if
+    something on the minimap looks off).
 
 
 AUTOMATIC NPC DATA REFRESH (optional, Windows only)

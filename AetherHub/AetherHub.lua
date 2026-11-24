@@ -858,7 +858,9 @@ local minimapButton
 local function PlaceMinimapButton()
     local angle = math.rad(hubDB.minimapAngle or 215)
     local x, y = math.cos(angle), math.sin(angle)
-    local radius = (Minimap:GetWidth() or 140) / 2 + 6
+    -- on AetherSkins' ring, sit on the ring itself; otherwise just outside Blizzard's
+    local radius = _G.AetherSkins_RingActive and (Minimap:GetWidth() or 140) / 2 * 1.03
+        or (Minimap:GetWidth() or 140) / 2 + 6
     local square = GetMinimapShape and GetMinimapShape() == "SQUARE"
     if square then   -- run along the square's edge instead of a circle
         local m = math.max(math.abs(x), math.abs(y))
@@ -894,6 +896,11 @@ local function ShortcutMenu(owner)
     end)
 end
 
+-- AetherSkins calls this once its ring is up, so the button moves onto it.
+function AetherHub_RefreshMinimapButton()
+    if minimapButton and minimapButton:IsShown() then PlaceMinimapButton() end
+end
+
 UpdateMinimapButton = function()
     if not hubDB or not Minimap then return end
     if hubDB.minimapHidden then
@@ -922,12 +929,15 @@ UpdateMinimapButton = function()
                 tex:AddMaskTexture(mask)
             end
         end
-        local ring = b:CreateTexture(nil, "OVERLAY")
-        ring:SetSize(53, 53)
-        ring:SetPoint("TOPLEFT")
-        ring:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
-        ring:SetVertexColor(0.45, 0.75, 1)          -- Aether blue instead of Blizzard gold
-        b:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
+        -- a navy button with a fine Aether-blue rim (as on AetherSkins' minimap)
+        local disc = b:CreateTexture(nil, "BACKGROUND", nil, -1)
+        disc:SetSize(27, 27)
+        disc:SetPoint("CENTER")
+        disc:SetTexture("Interface\\AddOns\\AetherHub\\Media\\btn_disc")
+        local hl = b:CreateTexture(nil, "HIGHLIGHT")
+        hl:SetAllPoints(disc)
+        hl:SetTexture("Interface\\AddOns\\AetherHub\\Media\\btn_disc")
+        hl:SetBlendMode("ADD"); hl:SetAlpha(0.3)
         b:RegisterForClicks("LeftButtonUp", "RightButtonUp")
         b:RegisterForDrag("LeftButton")
         b:SetScript("OnClick", function(self, button)

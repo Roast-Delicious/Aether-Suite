@@ -1,0 +1,9 @@
+## Interface: 16001
+## Title: AetherSkins
+## Notes: The Aether look for Blizzard's windows. First: the minimap, with a navy ring lit by day (gold) and night (white), and our own sun and moon.
+## Author: Aether
+## Version: 1.0.0
+## OptionalDeps: AetherHub
+## SavedVariables: AetherSkinsDB
+
+AetherSkins.lua

@@ -105,23 +105,32 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   "Ready for turn-in" in Aether sky blue (115,191,255). Tests:
   tooltip_spot_test (new), tracker_look_test (updated). NOT yet
   confirmed in game.
-- QUEUED FOR THE NEXT BUILD (user, Nov 24 12:23: "add it to the next
-  build"): the minimap restyle, as approved in the mockups
-  (mock/skin_minimap.py ring_ref navy=True, night; _sun('B'), _moon()):
-  * Round minimap, Blizzard's ring and art hidden; plain NAVY (#13284A)
-    bevel ring, 11 px, ridge + crest line; four gold chevrons at
-    12/3/6/9; soft blue glow outside.
-  * Light from the sun/moon button (top-right): gold (day) / white
-    (night) glow on the INNER slope across from it, long soft fade
-    through cream, stopping at the crest; nothing on the map. Bake: navy
-    bevel texture + shine texture (white with alpha) tinted by
-    SetVertexColor; switch by realm time (GetGameTime) when the icon
-    flips (check Forever's rule); change over through plain navy.
-  * Day/night button: navy disc, blue rim, our own icons: sun B (12
-    pointed rays, Aether gold), moon (pale crescent). Never Blizzard's.
-  * Zone + clock in a navy pill above; coordinates pill below.
-  Still to settle when building: which addon holds it (new AetherSkins,
-  or AetherCoords, which already does the coordinates). Ask first.
+- BUILT Nov 24, 12:40 (go-ahead 12:33): AetherSkins 1.0.0 (NEW addon;
+  user didn't pick AetherSkins vs AetherCoords, so the recommendation,
+  AetherSkins, was used), AetherCoords 1.3.12 (minimap readout = navy
+  pill, PillLook), AetherHub 1.14.3 (minimap button = navy disc
+  btn_disc, sits on the ring at r*1.03 when AetherSkins_RingActive;
+  AetherHub_RefreshMinimapButton). NOT yet confirmed in game.
+  AetherSkins minimap: art baked from the approved mockup by
+  tools/gen_skins_art.py (ring_plain/day/night 512px spanning +-K=1.2821
+  map radii, btn_disc, ico_sun (B), ico_moon, pill_cap, pill_capline;
+  chevrons copied from Hub). Hides Blizzard's ring (all texture regions
+  of Minimap and MinimapBackdrop + MinimapBorder, MinimapCompassTexture,
+  MinimapNorthTag); finds Forever's day/night icon BY POSITION (button-
+  sized frame within 0.3R of (0.718R, 0.735R), not protected, not
+  LibDBIcon/Aether) and hides it (retries at 2 s and 6 s); top bar
+  (MinimapCluster.BorderTop or MinimapBorderTop) art hidden, navy pill
+  behind it, zone text yellow->gold (hook on SetTextColor), Fira
+  SemiBold. Day = C_DateAndTime.IsDayTime() (Forever-only API,
+  warcraft.wiki.gg) else realm clock 5:30-21:00 (GAMETIME_DAWN/DUSK).
+  Checked every 15 s; change = lit ring + icon fade out 0.8 s, swap, fade
+  in 0.8 s. /skins minimap|day|night|auto|debug. Tests:
+  skins_minimap_test, coords_pill_test, hub_mmbutton_test (new);
+  tools/skins_render.py renders the in-game result. If something is off
+  in game, ask for /skins debug output and a screenshot.
+- Next for AetherSkins (approved looks, not built): world map + quest
+  log, Reputation, Friends, Progress Track, then more windows in batches.
+  Hub tab/toggle for AetherSkins not made yet (slash only).
 - Designs in progress, NOT queued: key stats in item tooltips: two tight
   chevrons (chev58_left art) after the stat, pointing back at it, stat
   text Aether gold (mock/stat_gold.py). Still open: A all marked lines
@@ -198,6 +207,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 24, 2026 (12:40): built AetherSkins 1.0.0 (minimap), Coords
+  1.3.12, Hub 1.14.3. Window, world map and minimap looks approved.
 - Nov 24, 2026 (10:37): built Ledger 1.7.0 (tooltip spot B, sky-blue
   turn-in text).
 - Nov 24, 2026 (late morning): build confirmed in game; tooltip spot B

@@ -95,6 +95,7 @@ local function MakePanel(parent, size)
     local bg = f:CreateTexture(nil, "BACKGROUND", nil, -7)
     bg:SetAllPoints()
     bg:SetColorTexture(0.05, 0.05, 0.05, 0.6)
+    f.edge, f.bg = edge, bg
     local text = f:CreateFontString(nil, "OVERLAY")
     if not AetherSetFont(text, "Bold", size, true) then text:SetFont(FONT, size, "OUTLINE") end
     text:SetPoint("CENTER")
@@ -104,6 +105,37 @@ local function MakePanel(parent, size)
         self:SetSize(self.text:GetStringWidth() + 12, size + 8)
     end
     return f
+end
+
+-- The readout under the minimap: a navy pill with rounded ends and a fine
+-- Aether-blue edge (matches AetherSkins' minimap). Plain textures only.
+local function PillLook(f)
+    local MEDIA_P = "Interface\\AddOns\\AetherCoords\\Media\\"
+    f.edge:SetAlpha(0); f.bg:SetAlpha(0)
+    local NAVY, BLUE = { 0.075, 0.157, 0.29 }, { 0.3, 0.65, 1 }
+    local function T(file, sub, c, a)
+        local t = f:CreateTexture(nil, "BACKGROUND", nil, sub)
+        if file then t:SetTexture(MEDIA_P .. file) else t:SetColorTexture(1, 1, 1, 1) end
+        t:SetVertexColor(c[1], c[2], c[3], a or 1)
+        return t
+    end
+    local l, r, m = T("pill_cap", -6, NAVY, 0.94), T("pill_cap", -6, NAVY, 0.94), T(nil, -6, NAVY, 0.94)
+    local ll, rl = T("pill_capline", -5, BLUE), T("pill_capline", -5, BLUE)
+    local top, bot = T(nil, -5, BLUE), T(nil, -5, BLUE)
+    r:SetTexCoord(1, 0, 0, 1); rl:SetTexCoord(1, 0, 0, 1)
+    local function Place()
+        local h = f:GetHeight(); if not h or h <= 0 then return end
+        l:ClearAllPoints(); l:SetPoint("TOPLEFT"); l:SetPoint("BOTTOMLEFT"); l:SetWidth(h / 2)
+        r:ClearAllPoints(); r:SetPoint("TOPRIGHT"); r:SetPoint("BOTTOMRIGHT"); r:SetWidth(h / 2)
+        ll:SetAllPoints(l); rl:SetAllPoints(r)
+        m:ClearAllPoints(); m:SetPoint("TOPLEFT", l, "TOPRIGHT"); m:SetPoint("BOTTOMRIGHT", r, "BOTTOMLEFT")
+        top:ClearAllPoints(); top:SetPoint("TOPLEFT", m); top:SetPoint("TOPRIGHT", m); top:SetHeight(1)
+        bot:ClearAllPoints(); bot:SetPoint("BOTTOMLEFT", m); bot:SetPoint("BOTTOMRIGHT", m); bot:SetHeight(1)
+    end
+    f:HookScript("OnSizeChanged", Place)
+    Place()
+    local set = f.SetValue   -- a little more room at the ends for the round caps
+    f.SetValue = function(self, s) set(self, s); self:SetWidth(self.text:GetStringWidth() + 12 + self:GetHeight() / 2) end
 end
 
 ------------------------------------------------------------
@@ -124,6 +156,7 @@ end
 
 local function CreateMini()
     mini = MakePanel(UIParent, 12)
+    PillLook(mini)
     mini:SetFrameStrata("MEDIUM")
     mini:SetClampedToScreen(true)
     mini:SetMovable(true)
