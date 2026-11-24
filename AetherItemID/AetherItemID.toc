@@ -2,7 +2,7 @@
 ## Title: AetherItemID
 ## Notes: (Formerly AetherLens.) Hover an item in your bags or bank to see the quests that need it, the professions that craft with it, whether it's soulbound, how many you have and its vendor price.
 ## Author: Aether
-## Version: 1.1.2
+## Version: 1.1.3
 ## OptionalDeps: AetherHub
 ## SavedVariables: AetherItemIDDB, AetherLensDB
 ## SavedVariablesPerCharacter: AetherItemIDCharDB, AetherLensCharDB

@@ -462,7 +462,7 @@ local function FillColor(used, total)
     local left = total > 0 and (total - used) / total or 1
     if left <= 0.10 then return 0.9, 0.35, 0.3 end
     if left <= 0.25 then return 1, 0.69, 0 end   -- Aether gold: the suite's only yellow
-    return 0.45, 0.85, 0.45
+    return 0.133, 0.902, 0.314   -- the vivid green (#22e650)
 end
 
 -- Free bag slots on the backpack button, so you can check without opening.
@@ -551,7 +551,7 @@ local function ShowMoneyTooltip(self)
     GameTooltip:AddDoubleLine("On hand", AetherCoins(money), 0.6, 0.62, 0.67, 1, 1, 1)
     local diff = money - (session.money or money)
     local r, g, b = 1, 1, 1
-    if diff > 0 then r, g, b = 0.43, 0.86, 0.47 elseif diff < 0 then r, g, b = 1, 0.38, 0.35 end
+    if diff > 0 then r, g, b = 0.133, 0.902, 0.314 elseif diff < 0 then r, g, b = 1, 0.38, 0.35 end
     local sign = diff > 0 and "+" or (diff < 0 and "-" or "")
     GameTooltip:AddDoubleLine("This session", sign .. AetherCoins(math.abs(diff)), 0.6, 0.62, 0.67, r, g, b)
     local mins = (GetTime() - (session.start or GetTime())) / 60
@@ -668,7 +668,7 @@ end
 
 -- Space colors: one green (SPACE_GREEN, easy to swap), the Aether gold and a
 -- soft red. Gold is the suite's only yellow.
-local SPACE_GREEN = { 0.43, 0.86, 0.47 }
+local SPACE_GREEN = { 0.133, 0.902, 0.314 }   -- #22e650, "vivid green"
 local SPACE_GOLD  = { 1, 0.69, 0 }
 local SPACE_RED   = { 0.94, 0.37, 0.33 }
 local SPACE_WHITE = { 1, 1, 1 }

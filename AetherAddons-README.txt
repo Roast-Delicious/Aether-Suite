@@ -17,18 +17,18 @@ window, so you rarely need to type a command.
   AetherHub          1.14.1    One window with every addon's settings
   AetherMeter        1.13.8    Damage and healing meter
   AetherBars         1.14.2    Clean action bars with a cooldown glow
-  AetherCoords       1.3.8     Coordinates, plus your own map waypoints
+  AetherCoords       1.3.9     Coordinates, plus your own map waypoints
   AetherPathfinder   1.9.4     Trainers, vendors, flight masters and
                                mailboxes on the world map and minimap
-  AetherMarks        1.6.12    Quest and rare mob colors, plus Rare
+  AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
-  AetherItemID       1.1.2     What an item is for, when you hover it
+  AetherItemID       1.1.3     What an item is for, when you hover it
   AetherLedger       1.5.15    Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.5.0     Your bags sorted into sections
+  AetherPack         1.6.0     Your bags sorted into sections
   AetherChat         1.0.7     Chat with the Aether look, fitted beside
                                your action bars
-  AetherFrames       1.14.3    Your, your pet's, your target's, its
+  AetherFrames       1.14.4    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
 
@@ -515,21 +515,25 @@ AetherPack - your bags, sorted into sections                    /pack
     Other        hearthstone, keys, bags and the rest
     Junk         gray items, with their total vendor value
     Free slots   your empty slots (folded; or use the deposit slot)
-  - Bars at the bottom show what's left:
-      Bags      used and free slots; the bar turns gold in the last
-                quarter and red when nearly full
-      Reagent   your reagent bag's used and free slots, counted on
-                their own since only crafting materials and reagents
-                fit there (shown when you have one equipped)
-      Ammo      arrows or bullets carried out of what your quiver
-                holds, and its free slots (hunters, and anyone with a
-                bow, gun or crossbow); red under 200
-      Shards    soul shards out of your soul bag's space (warlocks);
-                red under 3
-      Reagents  your class reagents and how many (mage runes and
-                powder, priest candles and feathers, shaman ankhs,
-                paladin symbols, druid seeds and herbs, rogue powders,
-                warlock stones); red at 2 or less
+  - What's left, as short colored words beside the deposit slot's
+    lettering (under it in a narrow window). Hover a line for the full
+    numbers.
+      Bags      free slots: green with room to spare, Aether gold in
+                the last quarter, red when nearly full ("Full" at 0)
+      Reagent   your reagent bag's free slots, colored the same way
+                (shown when you have one equipped)
+      Ammo      a white count. At half a full quiver or ammo pouch
+                (or less), "Warning" in Aether gold comes before it;
+                at 300 or less, a red "Low" that pulses until you
+                restock. With no quiver: the count, then Low at 300.
+      Shards    your soul shard count (warlocks); a pulsing red "Low"
+                under 3
+    Under them, Reagents lists your class reagents and how many (mage
+    runes and powder, priest candles and feathers, shaman ankhs,
+    paladin symbols, druid seeds and herbs, rogue powders, warlock
+    stones); red at 2 or less.
+  - A folded section shows "Show" at the end of its line (Free slots:
+    "Show empty").
   - No swaps. Just drops.: a row of its own under the last section
     (right under Free slots when that's folded), lined up with the
     first column of items: a slot like your item slots with an amber
@@ -638,7 +642,7 @@ AetherFrames - player, pet, target and party frames            /af
     members get one too, a little smaller.
   - Level badge at 6 o'clock: a round badge with the level in it. Yours
     is gold. The target's takes its difficulty color, like Blizzard's:
-    red (5 or more levels above you), orange (3-4 above), yellow
+    red (5 or more levels above you), orange (3-4 above), Aether gold
     (within 2), green (lower, still worth experience), gray (too low).
     A + means elite. ?? (far too high to tell, or a boss) gets its own
     look: a thick red ring around a black center. Every badge shows
@@ -700,7 +704,7 @@ AetherFrames - player, pet, target and party frames            /af
   - The aura rows and the hawk/totem strip sit snug under the capsule
     (about 6 px below it on a typical screen).
   - The target frame is the mirror image on the other side: its name
-    is red for enemies and yellow for neutral, and its health and
+    is red for enemies and Aether gold for neutral, and its health and
     power drain toward the crest (a mob with no mana or rage shows an
     empty bar). Its capsule is the same height as yours. Elite targets
     get a + after their level.
@@ -732,7 +736,7 @@ AetherFrames - player, pet, target and party frames            /af
     reset puts the starting ones back.
   - Portrait colors: the glow behind a portrait is shaded, the color
     itself in the middle and darker at the rim. An enemy mob as your
-    target gets the color of its level badge (gray, green, yellow, orange
+    target gets the color of its level badge (gray, green, gold, orange
     or red; red for "??"). Player characters (friendly or not) and
     friendly NPCs get their class color, the game's own, on your target,
     the target of target and the party frames. You (even as your own

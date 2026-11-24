@@ -17,6 +17,8 @@ local function Obj() return setmetatable({shown=false}, {__index=function(t,k)
   if k=="SetSize" then return function(s,w,h) s.w=w; s.h=h end end
   if k=="SetWidth" then return function(s,w) s.w=w end end
   if k=="CreateFontString" or k=="CreateTexture" then return function() return Obj() end end
+  if k=="SetTextColor" then return function(s,r,g,b) s.color={r,g,b} end end
+  if k=="CreateAnimationGroup" or k=="CreateAnimation" then return function() local g=Obj(); g.Play=function(s) s.playing=true end; g.Stop=function(s) s.playing=false end; g.IsPlaying=function(s) return s.playing end; return g end end
   if k=="SetScript" then return function(s,n,f) s[n]=f end end
   if k=="HookScript" then return function(s,n,f) local o=rawget(s,n); s[n]=function(...) if o then o(...) end f(...) end end end
   if type(k)=="string" and k:match("^%u") then return function() end end
@@ -69,7 +71,7 @@ for t in sections(): print("  ", t)
 L.execute('''NAMES={} for b=0,2 do for s=1,(SLOTS[b]) do local btn=_G["AetherPackItem"..(b+1).."_"..s]; if btn and btn.shown and btn.icon then NAMES[#NAMES+1]=string.format("%s@%d,%d", btn.aetherLink:match("%[(.-)%]"), btn.pos[1], -btn.pos[2]) end end end''')
 print("  item positions:", sorted(L.eval('NAMES').values(), key=lambda s:(int(s.split(",")[1]), int(s.split("@")[1].split(",")[0]))))
 def bars():
-    L.execute("""BARS={} for _,b in ipairs(AetherPackFrame.bars) do if b.shown then BARS[#BARS+1]=b.label.text.." | "..b.text.text..(b.fill.shown and (" | fill "..math.floor(b.fill.w)) or "") end end""")
+    L.execute("""BARS={} local function hx(c) return c and string.format("#%02x%02x%02x",math.floor(c[1]*255+0.5),math.floor(c[2]*255+0.5),math.floor(c[3]*255+0.5)) or "?" end for _,b in ipairs(AetherPackFrame.bars) do if b.shown then BARS[#BARS+1]=b.label.text.." | "..(b.word.shown and (b.word.text.." "..hx(b.word.color)..(b.pulse.playing and " PULSING" or "").." + ") or "")..b.value.text.." "..hx(b.value.color) end end""")
     for x in L.eval('BARS').values(): print("   bar:", x)
 bars()
 print("money:", L.eval('AetherPackFrame.coins.text.text'))

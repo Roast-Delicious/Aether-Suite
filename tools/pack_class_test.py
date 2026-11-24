@@ -17,6 +17,8 @@ local function Obj() return setmetatable({shown=false}, {__index=function(t,k)
   if k=="SetSize" then return function(s,w,h) s.w=w; s.h=h end end
   if k=="SetWidth" then return function(s,w) s.w=w end end
   if k=="CreateFontString" or k=="CreateTexture" then return function() return Obj() end end
+  if k=="SetTextColor" then return function(s,r,g,b) s.color={r,g,b} end end
+  if k=="CreateAnimationGroup" or k=="CreateAnimation" then return function() local g=Obj(); g.Play=function(s) s.playing=true end; g.Stop=function(s) s.playing=false end; g.IsPlaying=function(s) return s.playing end; return g end end
   if k=="SetScript" then return function(s,n,f) s[n]=f end end
   if k=="HookScript" then return function(s,n,f) local o=rawget(s,n); s[n]=function(...) if o then o(...) end f(...) end end end
   if type(k)=="string" and k:match("^%u") then return function() end end
@@ -84,6 +86,10 @@ def sections():
     return [t.replace("|cff9d9d9d","").replace("|r","").replace("|cff4da6ff","") for t in L.eval('RES').values()]
 print("==", CLASS)
 for t in sections(): print("  ", t)
-L.execute("""BARS={} for _,b in ipairs(AetherPackFrame.bars) do if b.shown then BARS[#BARS+1]=b.label.text.." | "..b.text.text..(b.fill.shown and (" | fill "..math.floor(b.fill.w)) or "") end end""")
+L.execute("""BARS={} local function hx(c) return c and string.format("#%02x%02x%02x",math.floor(c[1]*255+0.5),math.floor(c[2]*255+0.5),math.floor(c[3]*255+0.5)) or "?" end for _,b in ipairs(AetherPackFrame.bars) do if b.shown then BARS[#BARS+1]=b.label.text.." | "..(b.word.shown and (b.word.text.." "..hx(b.word.color)..(b.pulse.playing and " PULSING" or "").." + ") or "")..b.value.text.." "..hx(b.value.color) end end""")
 for x in L.eval('BARS').values(): print("   bar:", x)
 L.execute('for _,f in ipairs(FR) do end')
+# Free slots layout: where the rows sit, and the class reagent line
+print("rows at (x,y):", L.eval('(function() local t={} for _,b in ipairs(AetherPackFrame.bars) do if b.shown then t[#t+1]=tostring(b.pos[1])..","..tostring(b.pos[2]).." w"..tostring(b.w) end end return table.concat(t,"  ") end)()'), "| window", L.eval('AetherPackFrame.w'), "x", L.eval('AetherPackFrame.h'), "| deposit at", L.eval('AetherPackFrame.depositBox.pos[1]'), L.eval('AetherPackFrame.depositBox.pos[2]'))
+print("reagent line:", L.eval('AetherPackFrame.reagentLine.shown'), L.eval('AetherPackFrame.reagentLine.text'))
+print("deposit shown:", L.eval('AetherPackFrame.depositBox.shown'))
