@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 24, 2026 (12:40)
+Last updated: November 24, 2026 (13:40)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -32,7 +32,7 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.6    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.0.0     The Aether look for Blizzard's windows,
+  AetherSkins        1.0.1     The Aether look for Blizzard's windows,
                                starting with the minimap
 
 

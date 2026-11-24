@@ -128,8 +128,16 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   skins_minimap_test, coords_pill_test, hub_mmbutton_test (new);
   tools/skins_render.py renders the in-game result. If something is off
   in game, ask for /skins debug output and a screenshot.
-- FIX READY on branch fix-daynight-icon (AetherSkins 1.0.1): Forever's own
-  sun still showed; see the branch's HANDOFF. Not shipped yet.
+- SHIPPED Nov 24, 13:40 (go 13:37): AetherSkins 1.0.1, the day/night
+  icon fix (user, 12:46: Forever's own sun still showed beside ours). Forever's
+  icon sits at ~57 deg, ~1.04-1.13 map radii (fixed; same spot at 5:52
+  and 12:46), not at our 45 deg, so 1.0.0's 0.3R search missed it. New
+  search: GameTimeFrame if on the ring, else frames AND textures up to 3
+  levels under Minimap/MinimapCluster/MinimapBackdrop, center 20-85 deg
+  and 0.8-1.35R, button-sized, closest to (57 deg, 1.08R); zone bar's
+  calendar (~1.6R) and the small button under it (~1.5R) excluded.
+  /skins debug now lists everything near the ring's top-right. NOT yet
+  confirmed in game; if Forever's sun still shows, ask for /skins debug.
 - Next for AetherSkins (approved looks, not built): world map + quest
   log, Reputation, Friends, Progress Track, then more windows in batches.
   Hub tab/toggle for AetherSkins not made yet (slash only).
@@ -209,6 +217,7 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 24, 2026 (13:40): AetherSkins 1.0.1 (Forever's own sun hidden).
 - Nov 24, 2026 (12:40): built AetherSkins 1.0.0 (minimap), Coords
   1.3.12, Hub 1.14.3. Window, world map and minimap looks approved.
 - Nov 24, 2026 (10:37): built Ledger 1.7.0 (tooltip spot B, sky-blue
