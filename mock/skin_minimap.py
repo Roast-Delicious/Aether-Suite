@@ -160,11 +160,73 @@ def opt_3d(style, width=11, **kw):
     button(c, (cx + 84, cy - 86), SUN); button(c, (cx - 86, cy + 84), GEM)
     return c.done()
 
+def ring_cone(c, cx, cy, r_in, width, gold=0.3, src=(84, -86), height=90, cone=(25, 120), reach=170):
+    """Bevel (ridge) ring lit by a wide cone of light shining down from the
+    sun/moon button. src = the light's spot over the screen (px from the
+    ring's center), height = how far in front of the screen it is, cone =
+    full-strength and fade-out angles (degrees) around the cone's axis, which
+    points from the light at the ring's center. gold = how far the lit
+    faces go toward Aether gold. Blue and gold are never mixed half and half
+    (that makes a pale gray-white): the change happens over a short step and
+    the in-between is kept dark."""
+    W, H = c.im.size; X, Y = c.P(cx, cy)
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    dx, dy = (xx - X) / SS, (yy - Y) / SS; r = np.hypot(dx, dy)
+    t = (r - r_in) / width
+    cover = np.clip(np.minimum(t * width + 0.5, (1 - t) * width + 0.5), 0, 1)
+    ux, uy = dx / np.maximum(r, 1e-3), dy / np.maximum(r, 1e-3)
+    tc = np.clip(t, 0, 1)
+    nr = np.where(tc < 0.5, -0.7, 0.7); nz = 0.72
+    nx, ny = nr * ux, nr * uy
+    # light: from the sun's side and from in front ("coming down"), in a wide cone
+    # centered on the sun: full strength within cone[0] degrees around the ring
+    # from the sun, fading to nothing at cone[1] degrees.
+    sx, sy = src[0] / np.hypot(*src), src[1] / np.hypot(*src)
+    lx, ly, lz = sx * 0.8, sy * 0.8, 0.6
+    ang = np.degrees(np.arccos(np.clip(ux * sx + uy * sy, -1, 1)))
+    spot = np.clip((cone[1] - ang) / (cone[1] - cone[0]), 0, 1); spot = spot * spot * (3 - 2 * spot)
+    spot = 0.18 + 0.82 * spot          # a little light still reaches the far side
+    diff = np.clip(nx * lx + ny * ly + nz * lz, 0, 1) * spot
+    hx, hy, hz = lx, ly, lz + 1; hn = np.sqrt(hx * hx + hy * hy + hz * hz)
+    spec = (np.clip((nx * hx + ny * hy + nz * hz) / hn, 0, 1) ** 18) * spot
+    base = np.array(BLUE, np.float32)
+    lit = (0.42 + 0.75 * diff ** 1.2)[..., None]
+    blue = base[None, None, :] * np.minimum(lit, 1.0)
+    g = np.array(GOLD, np.float32)[None, None, :]
+    # how gold: only the most strongly lit part; 'gold' lowers the threshold
+    dn = diff / max(float(diff.max()), 1e-3)
+    thr = 0.97 - gold
+    a = np.clip((np.maximum(dn, spec * 1.2) - thr) / 0.08, 0, 1); a = a * a * (3 - 2 * a)
+    goldc = g * np.clip(0.55 + 0.6 * diff, 0, 1)[..., None]                # gold dims with the light, stays gold
+    col = blue * (1 - a[..., None]) + goldc * a[..., None]
+    col *= (1 - 0.45 * np.sin(np.pi * a))[..., None]                       # keep the in-between dark, never pale
+    edge = np.clip(1 - np.minimum(t, 1 - t) * width / 0.8, 0, 1) * 0.55
+    col = col * (1 - edge[..., None])
+    out = np.zeros((H, W, 4), np.float32); out[..., :3] = np.clip(col, 0, 255); out[..., 3] = cover * 255
+    # shadow cast away from the light, just outside the ring
+    d_out = r - (r_in + width)
+    away = np.clip(-(ux * src[0] + uy * src[1]) / np.hypot(*src), 0, 1)
+    sh = np.where((d_out > -1) & (d_out < 7), (1 - np.clip(d_out, 0, 7) / 7) ** 2, 0) * (0.25 + 0.6 * away)
+    so = np.zeros((H, W, 4), np.float32); so[..., 3] = sh * 220
+    c.over(Image.fromarray(so.astype(np.uint8)))
+    c.over(Image.fromarray(out.astype(np.uint8)))
+
+def opt_cone(gold, width=11):
+    c = base(False); cx, cy = CX - X0, CY - Y0
+    W, H = c.im.size; X, Y = c.P(cx, cy); R = (RM + 1) * SS
+    c.over(glow(W, H, (X, Y, X, Y), R + width * SS, u(10), BLUE, 0.4))
+    ring_cone(c, cx, cy, RM - 2, width, gold)
+    chevs(c, cx, cy, RM + 6 + width // 2, RM + 6 + width // 2)
+    pill(c, (cx - 118, 6, cx + 118, 34), "Dustwallow Marsh", 15, GOLD, right="05:52")
+    pill(c, (cx - 52, cy + RM + 16, cx + 52, cy + RM + 42), "62.5, 44.4", 15, WHITE)
+    button(c, (cx + 84, cy - 86), SUN); button(c, (cx - 86, cy + 84), GEM)
+    return c.done()
+
 if __name__ == '__main__':
-    opts = [("Bevel, light top-left", opt_3d('bevel')),
-            ("1  Light top-right, white shine", opt_3d('bevel', light=(0.55, -0.65))),
-            ("2  Top-right, gold shine", opt_3d('bevel', light=(0.55, -0.65), hl=GOLD)),
-            ("3  Top-right, gold-lit face", opt_3d('bevel', light=(0.55, -0.65), hl=GOLD, tint=0.6))]
+    opts = [("Last: 2 Gold shine", opt_3d('bevel', light=(0.55, -0.65), hl=GOLD)),
+            ("1  Sun cone, a little gold", opt_cone(0.1)),
+            ("2  Sun cone, middle gold", opt_cone(0.22)),
+            ("3  Sun cone, more gold", opt_cone(0.36))]
     tiles = [label(im, name, 20) for name, im in opts]
     for (name, im), k in zip(opts, "0123"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0
