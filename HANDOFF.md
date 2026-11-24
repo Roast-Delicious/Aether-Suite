@@ -82,18 +82,26 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
-- Last delivered build (Nov 24, afternoon): Coords 1.3.11 (round
-  waypoint glow, still the old 1 <-> 0.35 pulse), Pathfinder 1.9.5
-  (General Goods pins Aether gold), Ledger 1.6.1 (tracker +/- hover
-  white), Frames 1.14.6 (no-aggro fade 20%, bars 35%, one-time
-  migration db.fade20), Chat 1.0.8 (compact tab strip measured from
-  the tab names' top + 5; tab names Aether gold, others dimmed; typing
-  line hidden again via OnShow). Others unchanged: Hub 1.14.2, Bars
-  1.14.2, Meter 1.13.8, Marks 1.6.13, Pack 1.6.0, ItemID 1.1.3.
-  Tests: chat_compact_test, chat_reshow_test (new).
-  CONFIRMED in game (Nov 24, 10:12): Chat, Frames (gold chevrons),
-  Coords (round gold glow), Pathfinder, Ledger, quest tracker order and
-  look, tapped mobs gray, Pack 1.6.0.
+- Last delivered build (Nov 24, 14:05): AetherSkins 1.0.2 (NEW: minimap),
+  AetherCoords 1.3.13, AetherHub 1.14.3, AetherLedger 1.7.0 (tooltip spot
+  B, sky-blue turn-in text). Others: Pathfinder 1.9.5, Frames 1.14.6,
+  Chat 1.0.8, Bars 1.14.2, Meter 1.13.8, Marks 1.6.13, Pack 1.6.0,
+  ItemID 1.1.3. Twelve addons now (README says twelve).
+  NOT yet confirmed in game: Ledger 1.7.0, AetherSkins 1.0.2 (Forever's
+  own sun hidden? pill clear of tracking/calendar? 3D chevrons),
+  Coords 1.3.13 (pill under the chevron), Hub 1.14.3 (navy button).
+  Seen in game before the fixes (13:58): ring, glow, our sun, zone pill
+  and coordinates pill all render; 1.0.0 left Forever's sun showing.
+  If anything is off: /skins debug output + a screenshot.
+  CONFIRMED in game earlier (Nov 24, 10:12): Chat, Frames (gold
+  chevrons), Coords (round gold glow), Pathfinder, Ledger tracker order
+  and look, tapped mobs gray, Pack 1.6.0.
+- OPEN QUESTION (14:05): 3D bevel chevrons (A) on ALL Aether windows too?
+  Mockup sent (Reputation, flat vs A). Would touch every addon's window
+  trim (chev textures + per-direction art, as on the minimap).
+- Next AetherSkins batch (looks approved, not built): world map + quest
+  log, Reputation, Friends, Progress Track; then more windows. No Hub
+  tab for AetherSkins yet (slash only).
 - Waiting on the user: glow steady at the dim level, or a softer pulse?
   (user liked the dim end). Screenshots came in: chevrons and glow are
   Aether gold.
@@ -154,9 +162,6 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   direction, not rotated in game; the dark outline still rotates).
   Windows with A accents: mockup made (14:03), waiting on feedback; not
   built for windows.
-- Next for AetherSkins (approved looks, not built): world map + quest
-  log, Reputation, Friends, Progress Track, then more windows in batches.
-  Hub tab/toggle for AetherSkins not made yet (slash only).
 - Designs in progress, NOT queued: key stats in item tooltips: two tight
   chevrons (chev58_left art) after the stat, pointing back at it, stat
   text Aether gold (mock/stat_gold.py). Still open: A all marked lines
@@ -233,6 +238,7 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 24, 2026 (14:06): session closed; AetherDev.zip made for the next.
 - Nov 24, 2026 (14:05): AetherSkins 1.0.2 (zone pill, 3D chevrons),
   AetherCoords 1.3.13 (coordinates below the chevron).
 - Nov 24, 2026 (13:40): AetherSkins 1.0.1 (Forever's own sun hidden).
