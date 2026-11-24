@@ -112,16 +112,17 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   too; per-character stat list in the Hub (class defaults, user ticks).
 - AetherSkins (DESIGN, not queued, nothing built): user wants ALL Blizzard
   windows in the Aether look, the world map for sure, and a minimap
-  restyle. Mockups Nov 24 (mock/skins_lib.py, skin_rep.py, skin_more.py,
-  skin_minimap.py): Reputation in A Clean (recommended) / B Cards /
-  C Glass; Friends and Progress Track (Forever's Legacy Points window)
-  in A; minimap A round blue ring / B square window (recommended) /
-  C round gold ring / D square minimal. Rules used: tracker-style
-  headers, Neutral bars Aether gold, Friendly+ #22e650, Blizzard's
-  yellow UI glyphs recolored (white, gold when selected), Fira Sans.
-  Waiting on: style pick, minimap pick, a world map screenshot.
-  Minimap shape/border/hide-art is still done by 12.0/12.1 addons
-  (MidnightMap, ClassyMap, BasicMinimap), so it's allowed.
+  restyle. Mock kit: mock/skins_lib.py, skin_rep.py, skin_more.py,
+  skin_minimap.py. CHOSEN (Nov 24, 11:01): windows = style A (Clean:
+  tracker-style headers, blue selected band) with B's capsule (pill)
+  bars; ONLY the window's four gold chevrons as accents, nothing added
+  on the portrait crest or elsewhere (crest = plain navy disc, blue
+  rim). Minimap = round with the blue ring, thicker; thickness options
+  shown 4 / 6 (recommended) / 8 px, waiting on the pick. Other rules
+  used: Neutral bars Aether gold, Friendly+ #22e650, Blizzard's yellow UI
+  glyphs recolored (white, gold when selected), Fira Sans. Still need a
+  world map screenshot. Minimap shape/border/hide-art is still done by
+  12.0/12.1 addons (MidnightMap, ClassyMap, BasicMinimap): allowed.
 - Stale tests (fail on the Nov 24 morning code too): bars_glow_test,
   bars_sidefix_test, ledger_suggest_test, lens_test, meter_login_test,
   meter_test, meter_test2, names_test*, radar_test, tracker_test.

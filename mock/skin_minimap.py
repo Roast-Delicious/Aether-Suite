@@ -56,16 +56,17 @@ def button(c, xy, icon, r=17):
     d.ellipse([X - R, Y - R, X + R, Y + R], fill=NAVY + (255,), outline=BLUE + (255,), width=SS); c.over(Lr)
     k = int(r * 1.5); c.paste(icon, (x - k / 2, y - k / 2), (k, k))
 
-def opt_round(ring):
+def opt_round(ring, width=2):
     c = base(False); cx, cy = CX - X0, CY - Y0
     W, H = c.im.size; X, Y = c.P(cx, cy); R = (RM + 1) * SS
     c.over(glow(W, H, (X, Y, X, Y), R, u(10), BLUE, 0.45))
     Lr, d = c.layer()
     col = GOLD if ring == 'gold' else BLUE
-    d.ellipse([X - R, Y - R, X + R, Y + R], outline=col + (255,), width=2 * SS)
+    Ro = R + (width // 2) * SS   # a thicker ring grows outward; the map stays the same size
+    d.ellipse([X - Ro, Y - Ro, X + Ro, Y + Ro], outline=col + (255,), width=width * SS)
     i = u(3); d.ellipse([X - R + i, Y - R + i, X + R - i, Y + R - i], outline=BLUE + (90,), width=SS)
     c.over(Lr)
-    if ring != 'gold': chevs(c, cx, cy, RM + 6, RM + 6)
+    if ring != 'gold': chevs(c, cx, cy, RM + 6 + width // 2, RM + 6 + width // 2)
     pill(c, (cx - 118, 6, cx + 118, 34), "Dustwallow Marsh", 15, GOLD, right="05:52")
     pill(c, (cx - 52, cy + RM + 16, cx + 52, cy + RM + 42), "62.5, 44.4", 15, WHITE)
     button(c, (cx + 84, cy - 86), SUN); button(c, (cx - 86, cy + 84), GEM)
@@ -106,13 +107,12 @@ def opt_square(style):
     return c.done()
 
 if __name__ == '__main__':
-    opts = [("Now", FULL.crop((X0, Y0, X1, Y1))),
-            ("A  Round, blue ring", opt_round('blue')),
-            ("B  Square window (recommended)", opt_square('window')),
-            ("C  Round, gold ring", opt_round('gold')),
-            ("D  Square, minimal", opt_square('minimal'))]
+    opts = [("Last time (2 px)", opt_round('blue', 2)),
+            ("1  Medium (4 px)", opt_round('blue', 4)),
+            ("2  Thick (6 px)", opt_round('blue', 6)),
+            ("3  Heavy (8 px)", opt_round('blue', 8))]
     tiles = [label(im, name, 20) for name, im in opts]
-    for (name, im), k in zip(opts, "NABCD"): im.save('/tmp/sk/mm_%s.png' % k)
+    for (name, im), k in zip(opts, "0123"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0
     for t in tiles: sheet.paste(t, (x, 0)); x += t.width
     sheet.save('/tmp/sk/mm_sheet.png'); print(sheet.size)

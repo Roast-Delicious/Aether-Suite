@@ -130,10 +130,6 @@ class Canvas:
             L.alpha_composite(ic, (X - k // 2, Y - k // 2))
         i = 4 * SS; d.ellipse([X - R + i, Y - R + i, X + R - i, Y + R - i], outline=BLUE + (90,), width=SS)
         self.over(L)
-        k = u(22)
-        for name, col in (('win_chev_dark', (10, 11, 14)), ('win_chev_gold', GOLD)):
-            self.im.alpha_composite(tga(name, col, (k, k)), (X - k // 2, Y - R - k // 2))
-        self.d = ImageDraw.Draw(self.im)
     def recolor_icon(self, im, color):
         """Blizzard's yellow UI glyphs -> one color (Aether gold is the only yellow)."""
         a = np.array(im.convert('RGBA')).astype(np.float32)

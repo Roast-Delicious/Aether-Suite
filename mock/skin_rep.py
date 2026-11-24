@@ -38,7 +38,7 @@ def draw(style):
             if sel:
                 Lr, d = c.layer(); d.rounded_rectangle(c.P(L0 - 4, y - 5, L1 + 4, y + 37), u(4), fill=BLUE + (48,)); c.over(Lr)
             c.text((L0 + 16, y + 16), name, 17, WHITE, 'Regular', 'lm')
-            c.bar((330, y + 3, L1 - 4, y + 29), fr, col, st)
+            c.bar((330, y + 5, L1 - 4, y + 27), fr, col, st, pill=True)
             y += 44
         elif style == 'B':
             Lr, d = c.layer()
@@ -68,7 +68,7 @@ def draw(style):
     c.text((cx, 158), "Honored", 17, GREEN, 'Regular', 'mm')
     if style == 'A':
         Lr, d = c.layer(); d.line(c.P(650, 178, 950, 178), fill=GOLD + (120,), width=SS); c.over(Lr)
-    c.bar((656, 196, 944, 226), .22, GREEN, "2,651 / 12,000", pill=(style != 'A'))
+    c.bar((656, 196, 944, 226), .22, GREEN, "2,651 / 12,000", pill=True)
     yy = 252
     for line in textwrap.wrap(DESC, 34):
         c.text((652, yy), line, 16, DIM if style == 'C' else (205, 210, 220), 'Regular'); yy += 24
@@ -78,7 +78,7 @@ def draw(style):
 
 if __name__ == '__main__':
     out = []
-    for k, name in (('A', "A  Clean (recommended)"), ('B', "B  Cards"), ('C', "C  Glass")):
+    for k, name in (('A', "Reputation: Clean + capsule bars"),):
         im = draw(k); im.save('/tmp/sk/rep_%s.png' % k); out.append(label(im, name))
     W = sum(o.width for o in out); sheet = Image.new('RGB', (W, out[0].height))
     x = 0
