@@ -37,8 +37,13 @@ Then read this file. The addons live at the repo root (one folder each);
   confirmed Nov 24).
 - Never reproduce Blizzard's class icons; use the original Aether
   glyphs only.
-- Mockups: show at actual in-game size (about 1.15 px per UI unit on
-  the user's screen), plus a zoom.
+- Mockups: show at actual in-game size, plus a zoom. The user's own
+  screenshots measure about 1.5-1.6 px per UI unit (AetherPack window
+  408 units = 648 px); build mockups on top of their screenshot when
+  possible. Give 3-5 options with a recommendation.
+- Ask before guessing: when a report can't be reproduced here, ask for
+  a screenshot, a short video (frames via ffmpeg) or debug output
+  (/qm debug, /af auras, /ledger tracker).
 - The user tests in game; ask for screenshots or /af auras output when
   behavior can't be checked here.
 
@@ -71,32 +76,52 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-- Last delivered build (Nov 24, latest): Frames 1.14.5 (mobs tagged by
-  someone else gray out: name, health bar, dimmed flat portrait), plus
-  the build before it: Pack 1.6.0, ItemID
-  1.1.3, Marks 1.6.13 (gold-only yellows), Coords 1.3.10 (Aether star
-  waypoints, option C, 18/14 units), Ledger 1.6.0 + Hub 1.14.2 (quest
-  tracker: lowest level at the top; Aether look in
-  AetherLedger_TrackerLook.lua = H1 headers + option A icons/colors,
-  "All Objectives" hidden with its 38-unit space left (Edit Mode can move
-  the tracker), Hub checkbox "trackerLook"). Waiting on the user's
-  in-game check, especially: sort order direction, tracker look on
-  WoW Forever's tracker (built against mainline Blizzard_ObjectiveTracker
-  from wow-ui-source, Nov 18 2026), and the star pins.
-- AetherMarks far names (Nov 24): beyond 41 yards (WoW Forever's nameplate
-  cap, Rare Radar already sets it) mobs have no nameplate; the tiny names
-  there are drawn by the game in reaction colors and addons can't color,
-  move or find them. Within 41 yards quest mobs turn blue (confirmed in
-  two user videos). User chose to leave Marks as is. A speculative
-  "odd wording" fix was dropped (tools/marks_wording_test.py documents it).
-- Tests added: tracker_look_test.py, tracker_sort_test.py.
+- Nothing queued, nothing waiting for a go-ahead. No open branches.
+- Last delivered build (Nov 24): AetherAddons.zip with Hub 1.14.2,
+  Bars 1.14.2, Frames 1.14.5, Meter 1.13.8, Pathfinder 1.9.4, Marks
+  1.6.13, Ledger 1.6.0, Pack 1.6.0, Coords 1.3.10, ItemID 1.1.3, Chat
+  1.0.7. Not yet confirmed in game:
+  * Ledger quest tracker: lowest level on top (Apply adds highest
+    first; if the order is still wrong, the game appends instead of
+    prepends: flip the loop in Apply), the Aether look
+    (AetherLedger_TrackerLook.lua: H1 headers, option A icons/colors,
+    "All Objectives" hidden, its 38-unit space left; Edit Mode can move
+    the tracker). Built against mainline Blizzard_ObjectiveTracker
+    (github.com/Gethe/wow-ui-source, sparse checkout), since WoW
+    Forever's tracker matched it in screenshots; Forever adds levels and
+    difficulty colors to titles.
+  * Coords waypoint star (option C: navy disc, gold ring, gold star;
+    18 world / 14 minimap).
+  * Frames: mobs tagged by someone else gray out (name, health bar,
+    flat portrait 0.5).
+  * Pack 1.6.0: gold capsule + session tooltip; Free slots text rows
+    (Bags/Reagent colored, Ammo Warning at half a quiver and pulsing
+    Low at 300, Shards pulsing Low under 3; the user didn't weigh in on
+    shards); "Show"/"Show empty" on folded headers.
+- AetherMarks far names (decided, leave as is): beyond 41 yards (WoW
+  Forever's nameplate cap, Rare Radar sets it) there's no nameplate; the
+  tiny names are the game's, in reaction colors, and addons can't color,
+  move or find them. Mouseover still gives a far mob a unit token, so
+  its tooltip and target frame show the right color. Within 41 yards
+  quest mobs turn blue (confirmed in two user videos). A speculative
+  "odd wording" fix was dropped (tools/marks_wording_test.py keeps it).
 - Green for "good" in AetherPack is #22e650 (user chose F). Other addons
   still use their own greens; not asked to change them.
 - Tests needing the user's SavedVariables (hard-coded under
   /mnt/user-data/uploads): hub_general_test, ledger_full_test,
   marks_namekey_test, marks_plates_test. itemid_test*.py fail on old
   code too (mocks lack the window-trim textures): stale, fix when
-  working on ItemID. travel_window_test.py checks the directions window.
+  working on ItemID. New this session: tracker_look_test,
+  tracker_sort_test, travel_window_test, frames_tapped_test,
+  marks_wording_test.
+
+## Session log
+
+- Nov 24, 2026: gold capsule and Free slots redesign (Pack), Aether gold
+  as the only yellow, Ledger directions window fit + mouseover, Aether
+  waypoint star, quest tracker restyle and order, tagged mobs gray out.
+  Rules added: no building without a go-ahead; bug fixes prepped and
+  queued; dev zip only at session end.
 
 ## Tests
 
