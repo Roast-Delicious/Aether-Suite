@@ -85,6 +85,22 @@ Then read this file. The addons live at the repo root (one folder each);
   tinted), same pulsing gold glow; pins 18 on the world map (was 24) and
   14 on the minimap (was 18). README updated on the branch. Mockup:
   mock/stars.py.
+- APPROVED DESIGN, not yet prepped (AetherLedger quest tracker restyle,
+  reskins Blizzard's objective tracker; mockups mock/tracker.py option A,
+  mock/headers.py H1):
+  * Sort: the tracker shows watches in reverse, so add watches highest
+    level first to get lowest at the TOP (keep the cap dropping the
+    highest levels). Confirm in game.
+  * Hide Blizzard's "All Objectives" bar (the Quests bar keeps its fold).
+  * Header (H1): navy band fading out to the right with a soft start,
+    gold "Quests", a gold line under it thickest in the middle and
+    tapering at both ends; a plain gold minus (no box).
+  * Option A: no panel behind the list. Quest icons ("..." in progress,
+    "?" ready) become a navy disc with a gold ring and gold glyph (like
+    the waypoint star). Yellow titles -> Aether gold; other difficulty
+    colors stay. "Ready for turn-in" in the vivid green #22e650. Aether
+    font (Fira). Hover highlight blue, not brown. Reapply after every
+    tracker update.
 - Green for "good" in AetherPack is #22e650 (user chose F). Other addons
   still use their own greens; not asked to change them.
 - Tests needing the user's SavedVariables (hard-coded under
