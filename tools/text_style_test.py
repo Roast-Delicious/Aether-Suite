@@ -14,6 +14,7 @@ function FO:SetFont(file, size, flags)
 function FO:GetFont() return self.file, self.size, self.flags end
 function FO:CopyFontObject(o) self.file, self.size, self.flags, self.color = o.file, o.size, o.flags, o.color end
 function FO:SetShadowColor(r,g,b,a) self.shadow = a end
+function FO:SetTextColor(r,g,b) self.color = {r,g,b} end
 function FO:SetShadowOffset(x,y) self.sx = x end
 function CreateFont(name) local f = setmetatable({}, FO); _G[name] = f; return f end
 local function Base(name, size, color) local f = CreateFont(name); f.file='Fonts\\\\FRIZQT__.TTF'; f.size=size; f.flags=''; f.color=color end
@@ -29,7 +30,8 @@ def check(name, cond):
 L = run(True)
 E = L.eval
 check("window text: Fira Regular, Blizzard's color", E("AetherFontHighlight.file:find('Regular') ~= nil and AetherFontHighlight.color == 'white'"))
-check("gold headings: Fira SemiBold, gold", E("AetherFontNormal.file:find('SemiBold') ~= nil and AetherFontNormal.color == 'gold'"))
+check("gold headings: Fira SemiBold, in the Aether gold (amber)", E("AetherFontNormal.file:find('SemiBold') ~= nil and AetherFontNormal.color[2] == 0.69"))
+check("world gold text is amber too", E("AetherFontWorldNormalSmall.color[2] == 0.69") and E("type(AetherFontWorld.color) == 'string'"))
 check("sizes 5% up for Fira's shorter capitals", abs(E("AetherFontHighlightSmall.size") - 10.5) < 1e-6 and abs(E("AetherFontNormalLarge.size") - 16.8) < 1e-6)
 check("window text: soft shadow, no outline", E("AetherFontHighlight.flags") == "" and abs(E("AetherFontHighlight.shadow") - 0.8) < 1e-6)
 check("world text: Fira Bold with outline", E("AetherFontWorldSmall.file:find('Bold') ~= nil and AetherFontWorldSmall.flags == 'OUTLINE'"))

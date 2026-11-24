@@ -314,7 +314,7 @@ local function AetherDecorate(frame, titleHeight)
         t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, -S); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -R, -S); t:SetHeight(R - S)
         t = Tex("BORDER", 0, WHITE, NAVY)                 -- the rest, full width
         t:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -R); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -R); t:SetHeight(titleHeight - R)
-        local line = Tex("BORDER", 2, WHITE, { 1, 0.82, 0, 0.7 })
+        local line = Tex("BORDER", 2, WHITE, { 1, 0.69, 0, 0.7 })
         line:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -titleHeight); line:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -titleHeight)
         line:SetHeight(1)
     end
@@ -326,7 +326,7 @@ local function AetherDecorate(frame, titleHeight)
     for _, c in ipairs({ { "top", "TOP", 0, 3, 0, 26 }, { "bottom", "BOTTOM", 0, -3, math.pi, 26 },
                          { "left", "LEFT", -3, 0, math.pi / 2, 34 }, { "right", "RIGHT", 3, 0, -math.pi / 2, 34 } }) do
         local set = {}
-        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.82, 0, 1 }, 7 } }) do
+        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.69, 0, 1 }, 7 } }) do
             local ch = Tex("OVERLAY", g[3], MEDIA .. "win_chev_" .. g[1], g[2])
             ch:SetSize(c[6], c[6])
             ch:SetPoint("CENTER", frame, c[2], c[3], c[4])
@@ -419,7 +419,7 @@ local function Render(extra)
     for i, step in ipairs(trip.steps) do
         local mark
         if i < trip.at then mark = "|cff33dd66done|r  |cff888888" .. step.text .. "|r"
-        elseif i == trip.at then mark = "|cffffd100> " .. step.text .. "|r"
+        elseif i == trip.at then mark = "|cffffb000> " .. step.text .. "|r"
         else mark = "|cffbbbbbb  " .. step.text .. "|r" end
         lines[#lines + 1] = mark
     end
@@ -544,7 +544,7 @@ local function Flash(title, subtitle)
         flash.title:SetShadowOffset(2, -2)
         flash.sub = flash:CreateFontString(nil, "OVERLAY", "AetherFontNormalLarge")
         flash.sub:SetPoint("TOP", flash.title, "BOTTOM", 0, -6)
-        flash.sub:SetTextColor(1, 0.82, 0)
+        flash.sub:SetTextColor(1, 0.69, 0)
         flash.sub:SetShadowOffset(1, -1)
         flash:SetScript("OnUpdate", function(self)
             local t = GetTime() - self.started

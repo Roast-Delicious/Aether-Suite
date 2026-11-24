@@ -65,9 +65,40 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-Current build: Hub 1.14.0, Meter 1.13.7, Bars 1.14.1, Coords 1.3.7,
-Pathfinder 1.9.3, Ledger 1.5.13, Pack 1.3.0, Frames 1.14.2, Chat 1.0.6
-(others unchanged).
+Current build: Hub 1.14.1, Meter 1.13.8, Bars 1.14.2, Coords 1.3.8,
+Pathfinder 1.9.4, ItemID 1.1.1, Ledger 1.5.14, Pack 1.4.0, Frames 1.14.3,
+Chat 1.0.7 (Marks unchanged).
+
+THE AETHER GOLD (2026-11-23, user's choice): one warm amber, 1, 0.69, 0
+(|cffffb000), everywhere the old Blizzard yellow (1, 0.82, 0) was used:
+gold text (AETHER TEXT snippet: the Normal/WorldNormal font objects get
+SetTextColor(1, 0.69, 0)), color codes, and accents (title underline,
+chevrons, ticks, checkmarks, Meter's "you" strip). On purpose still
+1, 0.82, 0: AetherFrames level colors (yellow = same level) and AetherPack's
+FillColor "getting full" bar. It's 37% of the way from gold (255,209,0) to
+orange (255,120,0). Hub's "Aether yellow" selected text is now this gold.
+
+AetherPack 1.4.0 deposit slot, final design (from many mockup rounds; the
+user cared about every detail, ask before changing it):
+- Under the last section: bars on the left, deposit block on the right
+  (win.depositBox, 68 x 60 units, TOPRIGHT at -PAD), centered on each other;
+  Free slots line full width. Bars RIGHT inset PAD + 60 when on.
+- Block art from tools/gen_deposit_art.py (Media/dep_*.tga, white = tinted
+  amber): slot 37 units at (13, 23) shaped like an item slot (our own rim,
+  cut corners), dark well, soft inner glow with tapered random rays (seed 7)
+  fading toward the center, darker middle; dep_ink = "No swaps. / Just
+  drops." hand-lettered (Gochi Hand, refs/fonts, OFL; baked into the image)
+  tilted 3 degrees + a hand-drawn hook arrow from the label into the slot,
+  on its own frame above the slot; dep_ink_sh its shadow.
+- Number: Fira Sans Black 11 (AetherHub/Media/Fonts/FiraSans-Black.ttf),
+  color 1, 0.78, 0.30, soft amber dep_numglow behind. Pulse: Alpha 1 -> 0.1,
+  1.35 s, BOUNCE, IN_OUT (2.7 s a cycle); db.depositPulse "item" (default,
+  while CursorHasItem; CURSOR_CHANGED/CURSOR_UPDATE), "always", "off";
+  /pack pulse item|always|off.
+- Full bags: rim + glow tint FULL (0.9, 0.35, 0.3); ink stays amber.
+- Check the art like the game layers it: tools/dep_compose.py.
+- Mockup scripts: mock/deposit_mock.py (+ deposit_layout_mock.py) render on
+  the user's screenshot; they need the screenshot and fonts from this session.
 
 Aether text style (2026-11-23, built and sent; in-game check pending):
 tools/aether_text.lua is the shared AETHER TEXT snippet, pasted near the top
@@ -84,7 +115,7 @@ missing file -> Blizzard's font. Not converted (on purpose): Chat (chat
 text), ItemID (tooltip font), Marks (nameplate text). Test:
 tools/text_style_test.py.
 
-AetherPack 1.3.0: "No swaps. Just drops." deposit slot (AetherPackDeposit),
+AetherPack 1.3.0 (layout and look superseded by 1.4.0 above; the drop logic is the same): deposit slot (AetherPackDeposit),
 bottom right beside the bars, label on the last folded section row (else its
 own row). Drop/click -> PutItemInBackpack/PutItemInBag into a free slot:
 reagent bag first for crafting reagents (GetItemInfo 17th return), special

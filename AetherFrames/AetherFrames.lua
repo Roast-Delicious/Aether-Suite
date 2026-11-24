@@ -12,8 +12,10 @@
 -- for text, SemiBold for the gold headings, with a soft shadow. Over the game
 -- world (AetherFontWorld...): Bold with a thin black outline and a shadow, so
 -- it reads on any background, faded or not. Each copies the Blizzard font it
--- stands in for (size, color), so layouts stay the same. The files live in
--- AetherHub\Media\Fonts; if one can't load, Blizzard's font stays.
+-- stands in for (size, color), so layouts stay the same, except that the gold
+-- ones use the Aether gold (a warm amber, 1, 0.69, 0) instead of Blizzard's
+-- yellow. The files live in AetherHub\Media\Fonts; if one can't load,
+-- Blizzard's font stays.
 AETHER_FONT_DIR = AETHER_FONT_DIR or "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-"
 local function AetherFontFile(weight) return AETHER_FONT_DIR .. weight .. ".ttf" end
 
@@ -26,7 +28,7 @@ end
 if CreateFont and not AetherFontHighlight then
     -- Fira's capitals are a little shorter than Friz Quadrata's at the same size.
     local SCALE = 1.05
-    local function Make(name, base, weight, world)
+    local function Make(name, base, weight, world, gold)
         local f = CreateFont(name)
         local src = _G[base]
         if src then f:CopyFontObject(src) end
@@ -37,21 +39,22 @@ if CreateFont and not AetherFontHighlight then
         end
         f:SetShadowColor(0, 0, 0, world and 1 or 0.8)
         f:SetShadowOffset(1, -1)
+        if gold then f:SetTextColor(1, 0.69, 0) end
     end
     for _, d in ipairs({
-        { "AetherFontNormal",           "GameFontNormal",         "SemiBold" },
-        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold" },
-        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold" },
-        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold" },
+        { "AetherFontNormal",           "GameFontNormal",         "SemiBold", false, true },
+        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold", false, true },
+        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold", false, true },
+        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold", false, true },
         { "AetherFontHighlight",        "GameFontHighlight",      "Regular" },
         { "AetherFontHighlightSmall",   "GameFontHighlightSmall", "Regular" },
         { "AetherFontDisable",          "GameFontDisable",        "Regular" },
         { "AetherFontDisableSmall",     "GameFontDisableSmall",   "Regular" },
-        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true },
-        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true },
+        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true, true },
+        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true, true },
         { "AetherFontWorld",            "GameFontHighlight",      "Bold", true },
         { "AetherFontWorldSmall",       "GameFontHighlightSmall", "Bold", true },
-    }) do Make(d[1], d[2], d[3], d[4]) end
+    }) do Make(d[1], d[2], d[3], d[4], d[5]) end
 end
 
 local ADDON = ...
@@ -84,7 +87,7 @@ local frames = {}
 local inCombat = false
 
 local BLUE   = { 0.30, 0.70, 1.00 }
-local GOLD   = { 1.00, 0.82, 0.00 }
+local GOLD   = { 1.00, 0.69, 0.00 }
 local DARK   = { 0.043, 0.051, 0.071 }   -- inside the rings
 local PANEL  = { 0.051, 0.051, 0.051 }   -- capsule fill (AetherMeter's window color)
 local BARBG  = { 0.024, 0.039, 0.071 }
@@ -613,7 +616,7 @@ end
 -- orange (3-4 above), yellow (within 2), green (lower but still worth
 -- experience), gray (too low to give any).
 local DIFF = {
-    red = { 1, 0.13, 0.13 }, orange = { 1, 0.5, 0.13 }, yellow = GOLD,
+    red = { 1, 0.13, 0.13 }, orange = { 1, 0.5, 0.13 }, yellow = { 1, 0.82, 0 },   -- level colors keep the game's yellow
     green = { 0.25, 0.75, 0.25 }, gray = { 0.55, 0.55, 0.55 },
 }
 local function GrayLevel(my)
@@ -1770,7 +1773,7 @@ local function AetherDecorate(frame, titleHeight)
         t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, -S); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -R, -S); t:SetHeight(R - S)
         t = Tex("BORDER", 0, WHITE, NAVY)                 -- the rest, full width
         t:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -R); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -R); t:SetHeight(titleHeight - R)
-        local line = Tex("BORDER", 2, WHITE, { 1, 0.82, 0, 0.7 })
+        local line = Tex("BORDER", 2, WHITE, { 1, 0.69, 0, 0.7 })
         line:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -titleHeight); line:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -titleHeight)
         line:SetHeight(1)
     end
@@ -1782,7 +1785,7 @@ local function AetherDecorate(frame, titleHeight)
     for _, c in ipairs({ { "top", "TOP", 0, 3, 0, 26 }, { "bottom", "BOTTOM", 0, -3, math.pi, 26 },
                          { "left", "LEFT", -3, 0, math.pi / 2, 34 }, { "right", "RIGHT", 3, 0, -math.pi / 2, 34 } }) do
         local set = {}
-        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.82, 0, 1 }, 7 } }) do
+        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.69, 0, 1 }, 7 } }) do
             local ch = Tex("OVERLAY", g[3], MEDIA .. "win_chev_" .. g[1], g[2])
             ch:SetSize(c[6], c[6])
             ch:SetPoint("CENTER", frame, c[2], c[3], c[4])
@@ -1941,7 +1944,7 @@ local function Mover(key, f)
     bg:SetAllPoints(); bg:SetColorTexture(0.07, 0.17, 0.32, 0.95)
     local edge = done:CreateTexture(nil, "BORDER")
     edge:SetPoint("TOPLEFT", -1, 1); edge:SetPoint("BOTTOMRIGHT", 1, -1)
-    edge:SetColorTexture(1, 0.82, 0, 1)
+    edge:SetColorTexture(1, 0.69, 0, 1)
     bg:SetDrawLayer("ARTWORK")
     local dt = done:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     dt:SetPoint("CENTER"); dt:SetText("Done")

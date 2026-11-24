@@ -19,8 +19,10 @@
 -- for text, SemiBold for the gold headings, with a soft shadow. Over the game
 -- world (AetherFontWorld...): Bold with a thin black outline and a shadow, so
 -- it reads on any background, faded or not. Each copies the Blizzard font it
--- stands in for (size, color), so layouts stay the same. The files live in
--- AetherHub\Media\Fonts; if one can't load, Blizzard's font stays.
+-- stands in for (size, color), so layouts stay the same, except that the gold
+-- ones use the Aether gold (a warm amber, 1, 0.69, 0) instead of Blizzard's
+-- yellow. The files live in AetherHub\Media\Fonts; if one can't load,
+-- Blizzard's font stays.
 AETHER_FONT_DIR = AETHER_FONT_DIR or "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-"
 local function AetherFontFile(weight) return AETHER_FONT_DIR .. weight .. ".ttf" end
 
@@ -33,7 +35,7 @@ end
 if CreateFont and not AetherFontHighlight then
     -- Fira's capitals are a little shorter than Friz Quadrata's at the same size.
     local SCALE = 1.05
-    local function Make(name, base, weight, world)
+    local function Make(name, base, weight, world, gold)
         local f = CreateFont(name)
         local src = _G[base]
         if src then f:CopyFontObject(src) end
@@ -44,21 +46,22 @@ if CreateFont and not AetherFontHighlight then
         end
         f:SetShadowColor(0, 0, 0, world and 1 or 0.8)
         f:SetShadowOffset(1, -1)
+        if gold then f:SetTextColor(1, 0.69, 0) end
     end
     for _, d in ipairs({
-        { "AetherFontNormal",           "GameFontNormal",         "SemiBold" },
-        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold" },
-        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold" },
-        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold" },
+        { "AetherFontNormal",           "GameFontNormal",         "SemiBold", false, true },
+        { "AetherFontNormalSmall",      "GameFontNormalSmall",    "SemiBold", false, true },
+        { "AetherFontNormalLarge",      "GameFontNormalLarge",    "SemiBold", false, true },
+        { "AetherFontNormalHuge",       "GameFontNormalHuge",     "SemiBold", false, true },
         { "AetherFontHighlight",        "GameFontHighlight",      "Regular" },
         { "AetherFontHighlightSmall",   "GameFontHighlightSmall", "Regular" },
         { "AetherFontDisable",          "GameFontDisable",        "Regular" },
         { "AetherFontDisableSmall",     "GameFontDisableSmall",   "Regular" },
-        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true },
-        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true },
+        { "AetherFontWorldNormal",      "GameFontNormal",         "Bold", true, true },
+        { "AetherFontWorldNormalSmall", "GameFontNormalSmall",    "Bold", true, true },
         { "AetherFontWorld",            "GameFontHighlight",      "Bold", true },
         { "AetherFontWorldSmall",       "GameFontHighlightSmall", "Bold", true },
-    }) do Make(d[1], d[2], d[3], d[4]) end
+    }) do Make(d[1], d[2], d[3], d[4], d[5]) end
 end
 
 local ADDON_NAME = ...
@@ -274,7 +277,7 @@ local function AetherDecorate(frame, titleHeight)
         t:SetPoint("TOPLEFT", frame, "TOPLEFT", R, -S); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -R, -S); t:SetHeight(R - S)
         t = Tex("BORDER", 0, WHITE, NAVY)                 -- the rest, full width
         t:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -R); t:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -R); t:SetHeight(titleHeight - R)
-        local line = Tex("BORDER", 2, WHITE, { 1, 0.82, 0, 0.7 })
+        local line = Tex("BORDER", 2, WHITE, { 1, 0.69, 0, 0.7 })
         line:SetPoint("TOPLEFT", frame, "TOPLEFT", S, -titleHeight); line:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -S, -titleHeight)
         line:SetHeight(1)
     end
@@ -286,7 +289,7 @@ local function AetherDecorate(frame, titleHeight)
     for _, c in ipairs({ { "top", "TOP", 0, 3, 0, 26 }, { "bottom", "BOTTOM", 0, -3, math.pi, 26 },
                          { "left", "LEFT", -3, 0, math.pi / 2, 34 }, { "right", "RIGHT", 3, 0, -math.pi / 2, 34 } }) do
         local set = {}
-        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.82, 0, 1 }, 7 } }) do
+        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.69, 0, 1 }, 7 } }) do
             local ch = Tex("OVERLAY", g[3], MEDIA .. "win_chev_" .. g[1], g[2])
             ch:SetSize(c[6], c[6])
             ch:SetPoint("CENTER", frame, c[2], c[3], c[4])
@@ -596,12 +599,12 @@ local function MakeCheck(parent, label)
         t:SetPoint("BOTTOMRIGHT", -4, 4)
         return t
     end
-    cb:SetCheckedTexture(Mark(1, 0.82, 0))
+    cb:SetCheckedTexture(Mark(1, 0.69, 0))
     cb:SetDisabledCheckedTexture(Mark(0.45, 0.45, 0.48))
     function cb:UpdateEdge()
         if not self.SetBackdropBorderColor then return end
         if not self:IsEnabled() then self:SetBackdropBorderColor(0.4, 0.4, 0.42, 0.9)
-        elseif self:GetChecked() then self:SetBackdropBorderColor(1, 0.82, 0, 1)
+        elseif self:GetChecked() then self:SetBackdropBorderColor(1, 0.69, 0, 1)
         else self:SetBackdropBorderColor(0.3, 0.65, 1, 0.9) end
     end
     cb.label = cb:CreateFontString(nil, "OVERLAY", "AetherFontHighlight")
@@ -662,7 +665,7 @@ local function AddSlider(page, label, min, max, step, get, set, suffix, tip)
     s:SetValueStep(step)
     if s.SetObeyStepOnDrag then s:SetObeyStepOnDrag(true) end
     local thumb = s:CreateTexture(nil, "OVERLAY")      -- Aether look: a gold handle
-    thumb:SetColorTexture(1, 0.82, 0, 1)
+    thumb:SetColorTexture(1, 0.69, 0, 1)
     thumb:SetSize(8, 16)
     s:SetThumbTexture(thumb)
     s:EnableMouse(true)
@@ -839,8 +842,8 @@ local function NeedReload()
     needsReload = true
     local b = hub and hub.reload
     if b then
-        if b.SetBackdropBorderColor then b:SetBackdropBorderColor(1, 0.82, 0, 1) end
-        b:SetText("|cffffd100Reload UI|r")
+        if b.SetBackdropBorderColor then b:SetBackdropBorderColor(1, 0.69, 0, 1) end
+        b:SetText("|cffffb000Reload UI|r")
     end
 end
 
@@ -1004,7 +1007,7 @@ BUILDERS.Character = function(p)
             local line = string.format("%s  %d / %d", prof.name, prof.rank, prof.max)
             local nextRank = NextRank(prof)
             if nextRank then
-                line = line .. "  |cffffd100train " .. nextRank.name .. (((me.level or 0) < nextRank.level)
+                line = line .. "  |cffffb000train " .. nextRank.name .. (((me.level or 0) < nextRank.level)
                     and (" at level " .. nextRank.level) or " now") .. "|r"
             elseif prof.max >= 300 and prof.rank >= 300 then
                 line = line .. "  |cff33dd66maxed|r"
@@ -1019,11 +1022,11 @@ BUILDERS.Character = function(p)
         local lines = {}
         for _, name in ipairs(ADDONS) do
             do
-                lines[#lines + 1] = name .. "  " .. (IsLoaded(name) and ("|cffffd100v" .. Version(name) .. "|r")
+                lines[#lines + 1] = name .. "  " .. (IsLoaded(name) and ("|cffffb000v" .. Version(name) .. "|r")
                     or "|cff888888not installed|r")
             end
         end
-        table.insert(lines, 1, "AetherHub  |cffffd100v" .. Version("AetherHub") .. "|r")
+        table.insert(lines, 1, "AetherHub  |cffffb000v" .. Version("AetherHub") .. "|r")
         return table.concat(lines, "\n")
     end, 12)
     AddNote(p, "Read straight from the game, so it's always up to date and right on every character. "
@@ -1645,7 +1648,7 @@ SelectPage = function(name)
     for n, page in pairs(pages) do page:SetShown(n == name) end
     for n, tab in pairs(tabs) do
         tab.selected:SetShown(n == name)
-        tab.text:SetTextColor(n == name and 1 or 0.85, n == name and 0.82 or 0.85, n == name and 0 or 0.85)
+        tab.text:SetTextColor(n == name and 1 or 0.85, n == name and 0.69 or 0.85, n == name and 0 or 0.85)
     end
     if hubDB then hubDB.lastPage = name end
 end
@@ -1689,7 +1692,7 @@ local function BuildPage(name)
     barBg:SetColorTexture(0.12, 0.28, 0.5, 0.6)
     view.bar.thumb = view.bar:CreateTexture(nil, "ARTWORK")
     view.bar.thumb:SetWidth(4)
-    view.bar.thumb:SetColorTexture(1, 0.82, 0, 0.9)
+    view.bar.thumb:SetColorTexture(1, 0.69, 0, 0.9)
     view:EnableMouseWheel(true)
     view:SetScript("OnMouseWheel", function(self, delta)
         local range = math.max(0, page:GetHeight() - self:GetHeight())

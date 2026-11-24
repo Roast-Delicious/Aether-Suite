@@ -86,6 +86,27 @@ PutItemInBackpack=function() PUT[#PUT+1]='backpack' end
 PutItemInBag=function(s) PUT[#PUT+1]='bag'..s end
 ERR={}; UIErrorsFrame={AddMessage=function(_,m) ERR[#ERR+1]=m end}
 """)
+L.execute("""
+local CF = CreateFrame
+CreateFrame = function(...)
+  local f = CF(...)
+  f.CreateAnimationGroup = function(self)
+    local ag = { playing = false }
+    function ag:SetLooping(v) self.looping = v end
+    function ag:CreateAnimation(kind) local a = { kind = kind }
+      function a:SetFromAlpha(v) ag.from = v end function a:SetToAlpha(v) ag.to = v end
+      function a:SetDuration(v) ag.dur = v end function a:SetSmoothing(v) ag.smooth = v end
+      return a end
+    function ag:Play() self.playing = true end
+    function ag:Stop() self.playing = false end
+    function ag:IsPlaying() return self.playing end
+    self.ag = ag
+    return ag
+  end
+  f.GetFrameLevel = function() return 5 end
+  return f
+end
+""")
 L.execute(open('/home/claude/brand/AetherPack/AetherPack.lua').read())
 L.execute('for _,f in ipairs(FR) do if rawget(f,"OnEvent") then EV=f end end; EV.OnEvent(EV,"ADDON_LOADED","AetherPack"); EV.OnEvent(EV,"PLAYER_LOGIN"); ToggleAllBags(); Fire()')
 fails=[]
@@ -96,8 +117,8 @@ E=L.eval
 def drop(item):
     L.execute(f"PUT={{}}; ERR={{}}; CURSOR={item}; AetherPackDeposit.OnReceiveDrag(AetherPackDeposit)")
     return list(E("PUT").values()), list(E("ERR").values())
-check("slot and label are shown", E("AetherPackDeposit.shown") and E("AetherPackFrame.depositLabel.shown"))
-check("label text", E("AetherPackFrame.depositLabel.text") == "No swaps. Just drops.")
+check("the deposit block is shown", E("AetherPackFrame.depositBox.shown") == True)
+check("its art: well, glow, dark middle, rim, number glow, ink", E("AetherPackDeposit.tint[1] ~= nil and AetherPackDeposit.tint[2] ~= nil") == True)
 check("count = free regular slots (backpack 2 + bag 3)", E("AetherPackDeposit.count.text") == 5)
 put,_=drop(2589); check("cloth (crafting reagent) goes to the reagent bag", put == ["bag35"])
 put,_=drop(3030); check("arrows go to the quiver", put == ["bag31"])
@@ -110,23 +131,37 @@ L.execute("ITEMS[2]={{1,'a',0,1,1,1},{2,'b',0,1,2,1},{3,'c',0,1,3,1},{4,'d',0,1,
 put,err=drop(5000); check("all full: nothing moved, a message instead", put == [] and len(err) == 1)
 L.execute("PUT={}; CURSOR=nil; AetherPackDeposit.OnClick(AetherPackDeposit)")
 check("click with nothing on the cursor does nothing", len(E("PUT")) == 0)
-L.execute('for _,t in ipairs(AetherPackDeposit.gold) do t.SetVertexColor=function(self,r,g,b,a) self.vc={r,g,b} end end')
+L.execute('for _,t in ipairs(AetherPackDeposit.tint) do t.SetVertexColor=function(self,r,g,b,a) self.vc={r,g,b} end end')
 L.execute('EV.OnEvent(EV,"BAG_UPDATE_DELAYED"); Fire()')
 check("count shows 0 when the regular bags are full", E("AetherPackDeposit.count.text") == 0)
-check("frame turns red when full", E("AetherPackDeposit.gold[1].vc[1]") > 0.85 and E("AetherPackDeposit.gold[1].vc[2]") < 0.4)
+check("frame turns red when full", E("AetherPackDeposit.tint[1].vc[1]") > 0.85 and E("AetherPackDeposit.tint[1].vc[2]") < 0.4)
 # layout: label on the folded Free slots row, slot under it at the right, window tall enough
 L.execute("ITEMS[2]={{1,'Cutthroat Hat',4,2,8888,1}}; EV.OnEvent(EV,'BAG_UPDATE_DELAYED'); Fire()")
-check("slot at the right edge, under the label", E("AetherPackDeposit.pos[1]") == -10)
-check("gold again with room", E("AetherPackDeposit.gold[1].vc[2]") > 0.8)
-check("bars stop short of it (PAD + 37 + 10)", E("AetherPackFrame.bars[1].pos[1]") == -57)
-L.execute("for _,f in ipairs(FR) do if f.kind=='Button' and f.parent==AetherPackFrame then f.SetPoint=function(self,a,b,c,x,y) if a=='TOPLEFT' then self.tl=y end end end end; EV.OnEvent(EV,'BAG_UPDATE_DELAYED'); Fire()")
-L.execute("HY=nil for _,f in ipairs(FR) do if f.kind=='Button' and f.parent==AetherPackFrame and f.shown and rawget(f,'text') and type(f.text)=='table' and (f.text.text or ''):find('Free slots') then HY=f.tl end end")
-check("label sits on the folded Free slots row", E("HY") is not None and E("AetherPackFrame.depositLabel.pos[2]") == E("HY") - 9)
-check("slot just under the label", E("AetherPackDeposit.pos[2]") == E("AetherPackFrame.depositLabel.pos[2]") - 12)
-check("window tall enough for the slot", E("AetherPackFrame.h") >= -E("AetherPackDeposit.pos[2]") + 37)
+check("amber again with room", abs(E("AetherPackDeposit.tint[1].vc[2]") - 0.69) < 1e-6)
+check("bars stop short of the block (PAD + 68 - 8)", E("AetherPackFrame.bars[1].pos[1]") == -70)
+check("block at the right edge, under the last section", E("AetherPackFrame.depositBox.pos[1]") == -10)
+L.execute("for _,b in ipairs(AetherPackFrame.bars) do local sp = b.SetPoint; b.SetPoint = function(self, a, r, rp, x, y) if a == 'TOPLEFT' then self.top = y end return sp(self, a, r, rp, x, y) end end; EV.OnEvent(EV,'BAG_UPDATE_DELAYED'); Fire()")
+L.execute("BY = AetherPackFrame.depositBox.pos[2]; B1 = AetherPackFrame.bars[1].top; NB = 0 for _,b in ipairs(AetherPackFrame.bars) do if b.shown then NB = NB + 1 end end")
+bh = E("NB") * 18
+check("bars centered on the block", abs((E("B1") - bh / 2) - (E("BY") - 60 / 2)) <= 1)
+check("window tall enough for the block", E("AetherPackFrame.h") >= -E("BY") + 60)
+# the pulse
+L.execute("AetherPackDeposit.IsVisible = function() return true end; CURSOR = nil; EV.OnEvent(EV, 'CURSOR_CHANGED')")
+check("pulse: set to 100% -> 10% and back, 2.7 s, eased", E("AetherPackDeposit.pulse.from") == 1 and abs(E("AetherPackDeposit.pulse.to") - 0.1) < 1e-6 and abs(E("AetherPackDeposit.pulse.dur") - 1.35) < 1e-6 and E("AetherPackDeposit.pulse.looping") == "BOUNCE")
+check("no item held: the number stays still", not E("AetherPackDeposit.pulse.playing"))
+L.execute("CURSOR = 2589; EV.OnEvent(EV, 'CURSOR_CHANGED')")
+check("picking up an item starts the pulse", E("AetherPackDeposit.pulse.playing") == True)
+L.execute("CURSOR = nil; EV.OnEvent(EV, 'CURSOR_UPDATE')")
+check("putting it down stops it", not E("AetherPackDeposit.pulse.playing"))
+L.execute('SlashCmdList.AETHERPACK("pulse always")')
+check("/pack pulse always: pulses with nothing held", E("AetherPackDeposit.pulse.playing") == True)
+L.execute('SlashCmdList.AETHERPACK("pulse off"); CURSOR = 2589; EV.OnEvent(EV, "CURSOR_CHANGED")')
+check("/pack pulse off: never", not E("AetherPackDeposit.pulse.playing"))
+L.execute('SlashCmdList.AETHERPACK("pulse item"); CURSOR = nil')
 L.execute('SlashCmdList.AETHERPACK("deposit off")')
-check("/pack deposit off hides it", not E("AetherPackDeposit.shown") and not E("AetherPackFrame.depositLabel.shown"))
+check("/pack deposit off hides it", not E("AetherPackFrame.depositBox.shown"))
+check("bars full width again", E("AetherPackFrame.bars[1].pos[1]") == -10)
 L.execute('SlashCmdList.AETHERPACK("deposit on")')
-check("/pack deposit on brings it back", E("AetherPackDeposit.shown"))
+check("/pack deposit on brings it back", E("AetherPackFrame.depositBox.shown") == True)
 print("FAILED:", fails) if fails else print("all passed")
 sys.exit(1 if fails else 0)
