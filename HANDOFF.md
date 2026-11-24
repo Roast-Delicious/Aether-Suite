@@ -83,6 +83,11 @@ Then read this file. The addons live at the repo root (one folder each);
   (Media/wp_glow.tga, tools/gen_wp_glow.py) replaces the square
   action-button art. User liked the dim end of the pulse; asked: steady
   at that level, or a softer pulse? Coords 1.3.11 when built.
+- Branch aether-gold-sweep (queued, NOT built): Pathfinder General Goods
+  pins (1, 0.85, 0.2) -> Aether gold; Ledger tracker +/- hover pale
+  yellow -> white. Code audit found no other off yellows; chevrons and
+  gold fonts already use Aether gold. User to send a current screenshot
+  (refs/f_057.png is old: diamonds, olive accents).
 - Idea under discussion: AetherSkins (reskin Blizzard windows/popups
   in the Aether look). Waiting on which windows; mockups first.
 - Last delivered build (Nov 24): AetherAddons.zip with Hub 1.14.2,
