@@ -132,7 +132,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     Blizzard's click kept); calendar button hidden (our sun opens it).
     (mock/skin_mmlayout.py, mock/skin_magnifier.py)
   * Zone pill stops 3 units short of the bar's buttons (moot with layout 3).
-  STILL OPEN: magnifier icon A gold / B pale / C gold + glass (rec. A);
+  * Magnifier icon (user, 14:57): flat, in AETHER BLUE (not A/B/C).
+  * Quest list (screenshot 14:56): header starts ~30 px below the current
+    coordinates pill; layout 3 stacks both pills in about the same space,
+    so it clears (re-check after build).
+  STILL OPEN:
   what the "1" badge under the calendar is; a screenshot of the quest list
   top to check it clears the new zone pill.
   NOTE: that chat's code (branch fix/forever-coords) and mockup scripts were
