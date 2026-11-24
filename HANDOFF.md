@@ -97,13 +97,23 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 - Waiting on the user: glow steady at the dim level, or a softer pulse?
   (user liked the dim end). Screenshots came in: chevrons and glow are
   Aether gold.
-- Designs in progress, NOT coded: tooltip moved to the left of the
-  quest list: user PICKED B (mid-screen, mock/tooltip_place.py), waiting
-  for go; quest tracker "Ready for turn-in" green -> a blue (options in
-  mock/turnin_blue.py, titles keep level colors), waiting for a pick; key stats in item tooltips: two tight chevrons pointing
-  back at the stat (mock/stat_gold.py), stat text Aether gold; still
-  open: A all marked lines gold vs B Equip lines stay green; tooltips
-  only or character sheet too; per-character stat list in the Hub.
+- QUEUED FOR THE NEXT BUILD (user, Nov 24 10:27: "save this for the
+  next build", to continue in a new session). First thing: ask which
+  blue, confirm go, then code, test and build:
+  * Tooltip spot B: tooltips that use the game's default spot (bottom
+    right, over the meter) go just LEFT of the quest list, centered at
+    mid-screen, following the tracker if moved (mock/tooltip_place.py).
+    Hook GameTooltip_SetDefaultAnchor; the tracker is Blizzard's
+    ObjectiveTracker (AetherLedger restyles it).
+  * Quest tracker "Ready for turn-in" text: green -> blue; titles keep
+    their level colors. Which blue is NOT picked yet: ask first.
+    Options (mock/turnin_blue.py): A baby blue (137,207,240), B Aether
+    sky blue (115,191,255) recommended, C pale ice blue (185,225,255).
+- Designs in progress, NOT queued: key stats in item tooltips: two tight
+  chevrons (chev58_left art) after the stat, pointing back at it, stat
+  text Aether gold (mock/stat_gold.py). Still open: A all marked lines
+  gold vs B Equip lines stay green; tooltips only or character sheet
+  too; per-character stat list in the Hub (class defaults, user ticks).
 - Idea: AetherSkins (reskin Blizzard windows/popups). Waiting on which
   windows; mockups first.
 - Stale tests (fail on the Nov 24 morning code too): bars_glow_test,
@@ -128,6 +138,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 24, 2026 (late morning): build confirmed in game; tooltip spot B
+  and blue turn-in text queued for the next build.
 - Nov 24, 2026 (afternoon): round waypoint glow, gold sweep, frames
   fade 10% more, chat compact strip/gold tabs/typing line. Rule: WoW
   Forever only.
