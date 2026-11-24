@@ -121,7 +121,7 @@ local function StyleHeader(header)
         Sync(nil, header.GetParent and header:GetParent() and header:GetParent().IsCollapsed
             and header:GetParent():IsCollapsed())
         if header.SetCollapsed then hooksecurefunc(header, "SetCollapsed", Sync) end
-        mb:HookScript("OnEnter", function() glyph:SetTextColor(1, 0.85, 0.45) end)
+        mb:HookScript("OnEnter", function() glyph:SetTextColor(1, 1, 1) end)   -- white on hover (Aether gold is the only yellow)
         mb:HookScript("OnLeave", function() glyph:SetTextColor(GOLD[1], GOLD[2], GOLD[3]) end)
     end
 end

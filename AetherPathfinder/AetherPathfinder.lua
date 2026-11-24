@@ -95,7 +95,7 @@ local CATEGORIES = {
     { key = "classpet",  label = "Class Pet Trainer",color = { 0.40, 0.90, 0.70 }, on = true },
     { key = "stable",  label = "Stable Master",      color = { 0.85, 0.60, 0.30 }, on = true,
       words = { "stable master" } },
-    { key = "general", label = "General Goods",      color = { 1.00, 0.85, 0.20 }, on = true,
+    { key = "general", label = "General Goods",      color = { 1.00, 0.69, 0.00 }, on = true,
       words = { "general goods", "general supplies", "general store", "general trade",
                 "trade goods", "trade supplies", "trade supplier", "tradesman" } },
     { key = "ammo",    label = "Ammo / Bows / Guns", color = { 0.95, 0.45, 0.25 }, on = true,
