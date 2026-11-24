@@ -304,10 +304,11 @@ AetherCoords - coordinates and waypoints                  /mc and /way
   - Your coordinates under the minimap (Shift-drag to move them).
   - On the world map: the coordinates under your cursor, and your own
     position in the top-right corner.
-  - Waypoints: the Aether star (a gold star in a thin gold ring on a
-    navy disc, with a soft pulsing glow) and your own note, on the
-    world map and the minimap. Ones beyond the minimap's edge sit on its rim, pointing the
-    way. Hover a star for its note and how many yards away it is.
+  - Waypoints: the Aether star (a gold star in a thin gold ring on a navy
+    disc, with a soft pulsing glow) and your own note, on the world map
+    and the minimap. Ones beyond the minimap's edge sit on its rim,
+    pointing the way. Hover a star for its note and how many yards away it
+    is.
     To add one:
       - double-click a spot on a zone map and type a note, or
       - type /way 26 42 Rok'Alim (uses the map you have open, or your
