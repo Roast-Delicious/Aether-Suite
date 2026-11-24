@@ -110,8 +110,18 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   text Aether gold (mock/stat_gold.py). Still open: A all marked lines
   gold vs B Equip lines stay green; tooltips only or character sheet
   too; per-character stat list in the Hub (class defaults, user ticks).
-- Idea: AetherSkins (reskin Blizzard windows/popups). Waiting on which
-  windows; mockups first.
+- AetherSkins (DESIGN, not queued, nothing built): user wants ALL Blizzard
+  windows in the Aether look, the world map for sure, and a minimap
+  restyle. Mockups Nov 24 (mock/skins_lib.py, skin_rep.py, skin_more.py,
+  skin_minimap.py): Reputation in A Clean (recommended) / B Cards /
+  C Glass; Friends and Progress Track (Forever's Legacy Points window)
+  in A; minimap A round blue ring / B square window (recommended) /
+  C round gold ring / D square minimal. Rules used: tracker-style
+  headers, Neutral bars Aether gold, Friendly+ #22e650, Blizzard's
+  yellow UI glyphs recolored (white, gold when selected), Fira Sans.
+  Waiting on: style pick, minimap pick, a world map screenshot.
+  Minimap shape/border/hide-art is still done by 12.0/12.1 addons
+  (MidnightMap, ClassyMap, BasicMinimap), so it's allowed.
 - Stale tests (fail on the Nov 24 morning code too): bars_glow_test,
   bars_sidefix_test, ledger_suggest_test, lens_test, meter_login_test,
   meter_test, meter_test2, names_test*, radar_test, tracker_test.
