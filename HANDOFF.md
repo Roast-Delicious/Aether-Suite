@@ -145,8 +145,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     coordinates pill; layout 3 stacks both pills in about the same space,
     so it clears (re-check after build).
   * The "1" badge under the calendar = Blizzard's ADDON COMPARTMENT
-    (tooltip "AddOns"; menu lists AetherHub only). User asked (15:01)
-    what to do with it in layout 3: options given, waiting on the pick.
+    (tooltip "AddOns"; menu lists AetherHub only). CHOSEN (user, 15:01):
+    option 1, HIDE it in layout 3 (AetherHub's ring button covers it).
   STILL OPEN:
   a screenshot of the quest list
   top to check it clears the new zone pill.
