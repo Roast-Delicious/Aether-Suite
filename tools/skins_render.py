@@ -17,10 +17,10 @@ def put(img, x, y, size, rot=0):
     im.alpha_composite(t, (int(round(x - s / 2)), int(round(y - s / 2))))
 night = len(sys.argv) > 1 and sys.argv[1] == 'night'
 put(tga('ring_plain'), cx, cy, 2 * K * R); put(tga('ring_night' if night else 'ring_day'), cx, cy, 2 * K * R)
-for dx, dy, rot in ((0, 1, 0), (1, 0, -90), (0, -1, 180), (-1, 0, 90)):
+for dx, dy, rot, name in ((0, 1, 0, 'up'), (1, 0, -90, 'right'), (0, -1, 180, 'down'), (-1, 0, 90, 'left')):
     x, y = cx + dx * 1.094 * R, cy - dy * 1.094 * R
     put(tint(tga('win_chev_dark'), (0.04, 0.045, 0.055)), x, y, 0.343 * R, rot)
-    put(tint(tga('win_chev_gold'), (1, 0.69, 0)), x, y, 0.343 * R, rot)
+    put(tga('chev3d_' + name), x, y, 0.343 * R)
 sx, sy = cx + 0.718 * R, cy - 0.735 * R
 put(tga('btn_disc'), sx, sy, 0.29 * R)
 put(tint(tga('ico_moon' if night else 'ico_sun'), (0.88, 0.91, 0.96) if night else (1, 0.69, 0)), sx, sy, 0.29 * R * 0.75)

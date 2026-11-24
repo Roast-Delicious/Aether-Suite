@@ -123,7 +123,10 @@ expect("no errors at login", L.eval('OUT'), "")
 expect("Blizzard ring hidden", (L.eval('MinimapCompassTexture.alpha'), L.eval('MinimapBackdrop.regs[1].alpha')), (0, 0))
 expect("ring made, 2K wide", near(L.eval('AetherSkinsMinimapRing.w'), 2 * 1.2821 * 70, 0.1), True)
 expect("ring texture (day)", L.eval('AetherSkinsMinimapRing.lit.texture'), "Interface\\AddOns\\AetherSkins\\Media\\ring_day")
-expect("four chevrons, rotated", [L.eval('AetherSkinsMinimapRing.chevrons[%d].gold.rot' % i) for i in (1, 2, 3, 4)],
+expect("four 3D chevrons, one texture per direction (not rotated)",
+       [(L.eval('AetherSkinsMinimapRing.chevrons[%d].gold.texture' % i).split('\\')[-1], L.eval('AetherSkinsMinimapRing.chevrons[%d].gold.rot' % i)) for i in (1, 2, 3, 4)],
+       [("chev3d_up", None), ("chev3d_right", None), ("chev3d_down", None), ("chev3d_left", None)])
+expect("dark outlines rotated", [L.eval('AetherSkinsMinimapRing.chevrons[%d].dark.rot' % i) for i in (1, 2, 3, 4)],
        [None, -3.141592653589793 / 2, 3.141592653589793, 3.141592653589793 / 2])
 expect("sun button on the ring at the top-right", [round(v, 1) for v in L.eval('{AetherSkinsDayNight.points[1][4], AetherSkinsDayNight.points[1][5]}').values()], [50.3, 51.4])
 expect("sun icon, Aether gold", (L.eval('AetherSkinsDayNight.icon.texture'), tuple(round(v, 2) for v in list(L.eval('AetherSkinsDayNight.icon.vc').values())[:3])),

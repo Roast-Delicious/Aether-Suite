@@ -2,7 +2,8 @@
 -- AetherSkins: Blizzard's windows in the Aether look
 -- First part: the minimap.
 --  * Blizzard's ring art is hidden; a navy bevel ring takes its place, with
---    the four gold chevrons (12, 3, 6, 9) and a soft blue glow.
+--    the four gold chevrons (12, 3, 6, 9, beveled like the ring) and a
+--    soft blue glow.
 --  * Light comes from the sun/moon button at the top-right: by day a gold
 --    glow on the ring's inner wall across from it, by night a white one.
 --    It follows the game's day and night (realm time), and changes over
@@ -382,12 +383,13 @@ local function InstallMinimap()
     ring.lit = ring:CreateTexture(nil, "ARTWORK", nil, 1); ring.lit:SetAllPoints()
     ours[ring.plain] = true; ours[ring.lit] = true
     ring.chevrons = {}
-    for _, c in ipairs({ { 0, 1, 0 }, { 1, 0, -math.pi / 2 }, { 0, -1, math.pi }, { -1, 0, math.pi / 2 } }) do
+    -- 3D gold chevrons (bevel ridge), lit from the top-right like the ring: one
+    -- baked texture per direction, so the light stays put (no rotation).
+    for _, c in ipairs({ { 0, 1, 0, "up" }, { 1, 0, -math.pi / 2, "right" }, { 0, -1, math.pi, "down" }, { -1, 0, math.pi / 2, "left" } }) do
         local dark = ring:CreateTexture(nil, "OVERLAY", nil, 0); dark:SetTexture(MEDIA .. "win_chev_dark")
         dark:SetVertexColor(0.04, 0.045, 0.055, 1)
-        local gold = ring:CreateTexture(nil, "OVERLAY", nil, 1); gold:SetTexture(MEDIA .. "win_chev_gold")
-        gold:SetVertexColor(GOLD[1], GOLD[2], GOLD[3], 1)
-        if c[3] ~= 0 then dark:SetRotation(c[3]); gold:SetRotation(c[3]) end
+        local gold = ring:CreateTexture(nil, "OVERLAY", nil, 1); gold:SetTexture(MEDIA .. "chev3d_" .. c[4])
+        if c[3] ~= 0 then dark:SetRotation(c[3]) end
         ours[dark] = true; ours[gold] = true
         ring.chevrons[#ring.chevrons + 1] = { dx = c[1], dy = c[2], dark = dark, gold = gold }
     end

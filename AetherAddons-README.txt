@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 24, 2026 (13:40)
+Last updated: November 24, 2026 (14:05)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -848,7 +848,8 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
   the minimap.
   - Blizzard's ring around the minimap is replaced by a navy ring with a
     bevel (a ridge along its middle), the four gold chevrons at 12, 3, 6
-    and 9 o'clock, and a soft blue glow around it.
+    and 9 o'clock (beveled too, lit from the sun's side), and a soft
+    blue glow around it.
   - Light comes from the sun or moon button at the top-right of the
     ring. By day a gold glow lights the ring's inner wall across from it
     and fades softly back into the navy; by night the glow is white. It

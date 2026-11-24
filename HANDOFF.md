@@ -138,8 +138,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   calendar (~1.6R) and the small button under it (~1.5R) excluded.
   /skins debug now lists everything near the ring's top-right. NOT yet
   confirmed in game; if Forever's sun still shows, ask for /skins debug.
-- FIX READY on branch fix-zone-pill (AetherSkins 1.0.2), NOT shipped
-  (user, 13:58: the zone/clock pill covered the tracking magnifier and
+- SHIPPED Nov 24, 14:05 (go 14:02): AetherSkins 1.0.2 + AetherCoords
+  1.3.13 (user, 13:58: the zone/clock pill covered the tracking magnifier and
   the calendar). 1.0.1 sized the pill to the whole top bar; now it spans
   the zone text button to the clock (if on the same row) only, one frame
   level under them, so the bar's buttons stay clear and on top; re-placed
@@ -148,6 +148,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   the bottom chevron): with AetherSkins_RingActive the readout sits
   R*0.28+4 below the minimap (chevron reaches ~0.27R), else 6;
   AetherCoords_RefreshMini, called by AetherSkins after its ring.
+- 3D chevrons (accents): user picked A, BEVEL RIDGE (14:02), built on the
+  minimap in 1.0.2: AetherSkins/Media/chev3d_up/right/down/left.tga baked
+  by mock/skin_chevron3d.py (light from the top-right, so one texture per
+  direction, not rotated in game; the dark outline still rotates).
+  Windows with A accents: mockup made (14:03), waiting on feedback; not
+  built for windows.
 - Next for AetherSkins (approved looks, not built): world map + quest
   log, Reputation, Friends, Progress Track, then more windows in batches.
   Hub tab/toggle for AetherSkins not made yet (slash only).
@@ -227,6 +233,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 24, 2026 (14:05): AetherSkins 1.0.2 (zone pill, 3D chevrons),
+  AetherCoords 1.3.13 (coordinates below the chevron).
 - Nov 24, 2026 (13:40): AetherSkins 1.0.1 (Forever's own sun hidden).
 - Nov 24, 2026 (12:40): built AetherSkins 1.0.0 (minimap), Coords
   1.3.12, Hub 1.14.3. Window, world map and minimap looks approved.
