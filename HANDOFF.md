@@ -88,18 +88,17 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
-- QUEUED for the next build (user, Nov 24 16:10, "let's use c"): minimap
-  ring light C = same glow as B on a SHORTER ARC: ring_ref gain 0.8,
-  peak 0.45, spread 34 (B was 48), halo_amt 0.15, navy=True. Rebake
-  ring_day (and night to match) in AetherSkins/Media; bump AetherSkins
-  (with the 1.1.1 fix -> 1.1.2 or fold into 1.1.1) and the README table.
-  Mockup: Ringlight_shorter_arc(.png/_zoom), made with mock/skin_minimap
-  opt_ref. Not built; wait for the go-ahead.
-- READY, NOT SHIPPED (branch fix-debug-forbidden): AetherSkins 1.1.1.
-  /skins debug errored (user, 15:52): CoordTextAnywhere walked UIParent
-  into a forbidden frame (CommunitiesAddDialog). All region/child scans
-  now go through Regions()/Children() (pcall + IsForbidden). Test added
-  to skins_minimap_test. README table says 1.1.1. Ship on the next go.
+- LAST BUILD (Nov 24, 16:15; go-ahead 16:12): AetherSkins 1.1.1 only
+  (others unchanged from 15:44). What's in it:
+  * /skins debug fix (user, 15:52): scans skip forbidden frames
+    (Regions()/Children(), pcall + IsForbidden).
+  * PLAIN NAVY RING (user, 16:11: "the whole ring navy blue, without the
+    light source"): ring_day and ring_night are now baked identical to
+    ring_plain (tools/gen_skins_art.py), so there's no gold/white glow and
+    the day/night swap changes only the sun/moon icon. Ring light C (16:10)
+    was picked, then dropped for this before shipping. The Lua's light
+    code is untouched (harmless; could be simplified later).
+  NOT yet confirmed in game: plain ring, /skins debug runs clean.
 - CONFIRMED in game (15:50-15:53): 1.1.0 minimap layout (magnifier menu
   + hover work, Forever coords gone, pills placed, quest list clears by a
   few px), 3D chevrons on AetherHub's window.
@@ -335,6 +334,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 24, 2026 (16:15): built AetherSkins 1.1.1 (debug fix + plain navy
+  ring, no light source).
 - Nov 24, 2026 (16:00): session closed; AetherDev.zip made. GITHUB IS
   BEHIND: this session couldn't push (no repo access granted). origin/main
   is at 18dcc02. Push main AND branch fix-debug-forbidden first thing

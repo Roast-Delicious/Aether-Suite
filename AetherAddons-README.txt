@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 24, 2026 (15:44)
+Last updated: November 24, 2026 (16:15)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -851,11 +851,8 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
     bevel (a ridge along its middle), the four gold chevrons at 12, 3, 6
     and 9 o'clock (beveled too, lit from the sun's side), and a soft
     blue glow around it.
-  - Light comes from the sun or moon button at the top-right of the
-    ring. By day a soft gold-cream glow lights the ring's inner wall
-    across from it and fades back into the navy; by night the glow is
-    white. It follows the game's own day and night (realm time) and
-    changes over with a short fade. The map itself isn't tinted.
+  - The ring is plain navy all the way around, day and night, with no
+    glow from the sun or moon. The map itself isn't tinted.
   - The sun or moon button is the Aether one: a navy button with a gold
     sun by day and a pale moon at night. Hover it for the game time;
     click it for the calendar (it replaces the calendar button).
@@ -875,8 +872,8 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
   - More of Blizzard's windows (world map, reputation, friends and so
     on) get the same look in coming updates.
   - Commands: /skins minimap (on or off, then /reload), /skins day and
-    /skins night to preview the light (/skins auto follows the game
-    again), /skins debug (what it found and changed: send this if
+    /skins night to preview the sun or moon (/skins auto follows the
+    game again), /skins debug (what it found and changed: send this if
     something on the minimap looks off).
 
 

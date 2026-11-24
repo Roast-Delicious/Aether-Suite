@@ -2,8 +2,8 @@
 # (mock/skin_minimap.py ring_ref, _sun('B'), _moon()), so the game shows
 # exactly what was approved.
 #   ring_plain.tga  navy bevel ring, no light (shown while day <-> night changes)
-#   ring_day.tga    same + gold light on the inner wall across from the sun
-#   ring_night.tga  same + white light
+#   ring_day.tga    same as ring_plain (no light, user Nov 24 16:11)
+#   ring_night.tga  same as ring_plain
 #   btn_disc.tga    navy button with a blue rim (sun/moon, AetherHub)
 #   ico_sun.tga     12-ray sun, white with alpha (tinted Aether gold in game)
 #   ico_moon.tga    crescent, white with alpha (tinted pale in game)
@@ -41,7 +41,9 @@ def ring(kind, size=512):
     c = SL.Canvas(Image.new('RGBA', (2 * HALF, 2 * HALF), (0, 0, 0, 0)))
     W, H = c.im.size; X, Y = c.P(HALF, HALF); R = (RM + 1) * SL.SS; width = 11
     c.over(SL.glow(W, H, (X, Y, X, Y), R + width * SL.SS, SL.u(10), SL.BLUE, 0.4))
-    if kind == 'plain':
+    # User, Nov 24 16:11: the whole ring plain navy, no light source. Day and
+    # night get the plain ring too, so the Lua's day/night swap changes nothing.
+    if kind in ('plain', 'day', 'night'):
         MM.ring_ref(c, HALF, HALF, RM - 2, width, navy=True, spread=1e-4, glint=False)
     else:
         night = kind == 'night'
