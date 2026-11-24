@@ -19,11 +19,12 @@ Then read this file. The addons live at the repo root (one folder each);
   the one exception and must not change). Update it with every change,
   including the version table.
 - Bump the version in each changed addon's .toc and the README table.
-- NEVER build (no code changes to the addons, no AetherAddons.zip) until
-  the user explicitly says to go ahead and build. This applies to
-  everything, bugs included: describe the fix, mock it up if useful, then
-  wait for the go-ahead. Approving a design ("I like it", "save it") is
-  not a go-ahead. (Set Nov 24, 2026.)
+- NEVER build (no AetherAddons.zip, no new features in the code) until
+  the user explicitly says to go ahead and build. Approving a design
+  ("I like it", "save it") is not a go-ahead. (Set Nov 24, 2026.)
+- Bugs: when you find one, work out the fix and get it ready (on a
+  branch, tested), then tell the user it's ready for the next build.
+  Don't ship it until they say go.
 - After an approved build: test, update the README, send the zip.
 - AetherDev.zip (this repo, the handoff kit) is made ONLY at the end of a
   session, when the user says they're opening the next one. Don't send it
