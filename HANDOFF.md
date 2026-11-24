@@ -78,6 +78,13 @@ Then read this file. The addons live at the repo root (one folder each);
   fits, solid on mouseover), Frames 1.14.4, Coords 1.3.9, ItemID 1.1.3,
   Marks 1.6.13 (Aether gold as the only yellow). Waiting on the user's
   in-game check.
+- READY FOR NEXT BUILD (branch `prep-star-c`, tested, user approved the
+  design; merge only when the user says go): AetherCoords 1.3.10, the
+  waypoint pin becomes our own Aether star, option C: navy disc, thin
+  gold ring, gold star (Media/wp_disc, wp_ring, wp_star.tga, white,
+  tinted), same pulsing gold glow; pins 18 on the world map (was 24) and
+  14 on the minimap (was 18). README updated on the branch. Mockup:
+  mock/stars.py.
 - Green for "good" in AetherPack is #22e650 (user chose F). Other addons
   still use their own greens; not asked to change them.
 - Tests needing the user's SavedVariables (hard-coded under
