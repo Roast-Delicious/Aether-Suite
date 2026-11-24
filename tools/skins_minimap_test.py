@@ -93,7 +93,12 @@ local function Kid(parent, name, x, y, w, prot)
   local f = new("Button", name); f.parent = parent; parent.kids[#parent.kids+1] = f
   f.cx, f.cy, f.w, f.h, f.protected = 1000 + x, 700 + y, w, w, prot; return f
 end
-DAYNIGHT = Kid(Minimap, "ForeverDayNightButton", 50, 52, 28)
+-- Forever's sun/moon: about 1 o'clock (57 deg), 1.08 map radii out, one level down
+HOLDER = Kid(MinimapCluster, "ForeverHolder", 0, 0, 200)
+DAYNIGHT = Kid(HOLDER, "ForeverDayNightButton", 41, 63, 30)
+-- the zone bar's calendar and the small button under it: further out, left alone
+CALBTN = Kid(MinimapCluster, "GameTimeFrame", 58, 101, 24)
+ONEBTN = Kid(MinimapCluster, "ForeverIndicator", 58, 84, 18)
 HUBBTN = Kid(Minimap, "AetherHubMinimapButton", -55, -48, 31)
 PROT = Kid(MinimapCluster, "SomeProtectedButton", 48, 50, 26, true)
 ZOOM = Kid(Minimap, "MinimapZoomIn", 76, -12, 24)
@@ -122,6 +127,7 @@ expect("Forever's day/night icon hidden", (L.eval('DAYNIGHT.alpha'), L.eval('DAY
 expect("AetherHub's button left alone", L.eval('HUBBTN.alpha'), 1)
 expect("protected frame left alone", L.eval('PROT.alpha'), 1)
 expect("zoom button left alone", L.eval('ZOOM.alpha'), 1)
+expect("calendar and the small button by the bar left alone", (L.eval('CALBTN.alpha'), L.eval('ONEBTN.alpha')), (1, 1))
 expect("zone bar art hidden", L.eval('MinimapCluster.BorderTop.alpha'), 0)
 expect("yellow zone text -> Aether gold", tuple(round(v, 2) for v in L.eval('{MinimapZoneText:GetTextColor()}').values()), (1, 0.69, 0))
 L.execute('MinimapZoneText:SetTextColor(0.1, 1, 0.1)')
@@ -153,6 +159,7 @@ expect("click: calendar", L.eval('CALENDAR'), 1)
 L.execute('OUT = ""; SlashCmdList.AETHERSKINS("debug")')
 out = L.eval('OUT')
 expect("debug names the replaced icon", "ForeverDayNightButton" in out, True)
+expect("debug lists what's near the top-right", "GameTimeFrame (60 deg" in out, True)
 L.execute('OUT = ""; SlashCmdList.AETHERSKINS("day")')
 expect("/skins day previews day", L.eval('OUT').strip().endswith("day (set by /skins)"), True)
 L.execute('SlashCmdList.AETHERSKINS("minimap off")')

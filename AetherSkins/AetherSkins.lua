@@ -208,38 +208,88 @@ local function MakeSunButton()
     return b
 end
 
--- Forever's own day/night icon sits on the ring at the top-right. It's found by
--- where it is (never by guessing its name): a button-sized frame centered near
--- that spot on the ring. Ours goes there instead. Protected frames and other
--- addons' minimap buttons are left alone.
+-- Forever's own day/night icon sits on the ring at the top-right (about
+-- 1 o'clock, a little higher than ours). It's found by where it is, never by
+-- guessing its name: something button-sized whose center is on the ring
+-- (0.8-1.35 map radii out) between 20 and 85 degrees (3 o'clock = 0, 12 = 90).
+-- Frames and loose textures are both checked, a few levels deep under the
+-- minimap and its cluster. The zone bar's buttons sit further out and aren't
+-- touched; nor are protected frames or other addons' minimap buttons.
+local ARC = { 20, 85 }; local DIST = { 0.8, 1.35 }; local AIM = { 57, 1.08 }
 local function IsOtherAddonsButton(f)
     local n = f.GetName and f:GetName() or ""
-    return n:find("^LibDBIcon") or n:find("^AetherHub") or n:find("^Aether") and not n:find("^AetherSkins")
+    return n:find("^LibDBIcon") or (n:find("^Aether") and not n:find("^AetherSkins"))
 end
-local function FindDayNightIcon()
-    local mx, my = Minimap:GetCenter()
-    if not mx then return end
+local function Spot(obj)
+    -- where obj's center is, in degrees and map radii from the minimap's center
+    local mx, my = Minimap:GetCenter(); local cx, cy = obj:GetCenter()
+    if not (mx and cx) then return end
+    local s = obj:GetEffectiveScale() / Minimap:GetEffectiveScale()
+    local dx, dy = cx * s - mx, cy * s - my
     local R = Radius()
-    local tx, ty = mx + SUN_AT[1] * R, my + SUN_AT[2] * R
-    local best, bestD
-    local parents = { Minimap, Obj(_G.MinimapCluster) or false, Obj(_G.MinimapBackdrop) or false }
-    for _, p in ipairs(parents) do
-        if p and p.GetChildren then
-            for _, f in ipairs({ p:GetChildren() }) do
-                if not ours[f] and f:IsShown() and not IsOtherAddonsButton(f) and not f:IsProtected() then
-                    local cx, cy = f:GetCenter(); local w, h = f:GetSize()
-                    -- positions and sizes are in the frame's own scale; compare in the minimap's
-                    local s = f:GetEffectiveScale() / Minimap:GetEffectiveScale()
-                    if cx and w then w, h = w * s, h * s end
-                    if cx and w and w > 0.15 * R and w < 0.6 * R and h > 0.15 * R and h < 0.6 * R then
-                        local d = math.sqrt((cx * s - tx) ^ 2 + (cy * s - ty) ^ 2)
-                        if d < 0.3 * R and (not bestD or d < bestD) then best, bestD = f, d end
-                    end
-                end
+    local w, h = obj:GetSize(); w, h = (w or 0) * s, (h or 0) * s
+    return math.deg(math.atan2(dy, dx)), math.sqrt(dx * dx + dy * dy) / R, w / R, h / R
+end
+local function Candidate(obj)
+    if ours[obj] or not obj.GetCenter or not obj:IsShown() then return end
+    if obj.IsProtected and obj:IsProtected() then return end
+    if obj.GetName and IsOtherAddonsButton(obj) then return end
+    local ang, dist, w, h = Spot(obj)
+    if not ang then return end
+    if ang >= ARC[1] and ang <= ARC[2] and dist >= DIST[1] and dist <= DIST[2]
+        and w > 0.15 and w < 0.8 and h > 0.15 and h < 0.8 then
+        return math.abs(ang - AIM[1]) / 40 + math.abs(dist - AIM[2])   -- how far from the expected spot
+    end
+end
+local function Scan(frame, depth, best)
+    if not frame or depth > 3 then return best end
+    if frame.GetRegions then
+        for _, r in ipairs({ frame:GetRegions() }) do
+            if r.GetObjectType and r:GetObjectType() == "Texture" then
+                local score = Candidate(r)
+                if score and (not best.score or score < best.score) then best.obj, best.score = r, score end
             end
         end
     end
+    if frame.GetChildren then
+        for _, f in ipairs({ frame:GetChildren() }) do
+            local score = Candidate(f)
+            if score and (not best.score or score < best.score) then best.obj, best.score = f, score end
+            if not ours[f] then Scan(f, depth + 1, best) end
+        end
+    end
     return best
+end
+local function FindDayNightIcon()
+    if not Minimap:GetCenter() then return end
+    local best = { }
+    local named = Obj(_G.GameTimeFrame)
+    if named and Candidate(named) then return named end      -- Blizzard's classic sun/moon, if it's on the ring
+    for _, p in ipairs({ Minimap, Obj(_G.MinimapCluster) or false, Obj(_G.MinimapBackdrop) or false }) do
+        if p then Scan(p, 1, best) end
+    end
+    return best.obj
+end
+-- for /skins debug: everything near the ring's top-right, with where it is
+local function NearTopRight()
+    local out = {}
+    local function Look(frame, depth)
+        if not frame or depth > 3 then return end
+        if not frame.GetChildren then return end
+        for _, f in ipairs({ frame:GetChildren() }) do
+            if not ours[f] and f.GetCenter then
+                local ang, dist = Spot(f)
+                if ang and ang > 0 and ang < 110 and dist > 0.6 and dist < 1.9 then
+                    out[#out + 1] = string.format("%s (%d deg, %.2fR%s)", Name(f), ang, dist, f:IsShown() and "" or ", hidden")
+                end
+                Look(f, depth + 1)
+            end
+        end
+    end
+    for _, p in ipairs({ Minimap, Obj(_G.MinimapCluster) or false, Obj(_G.MinimapBackdrop) or false }) do
+        if p then Look(p, 1) end
+    end
+    return out
 end
 
 -- Zone name + clock: a navy pill behind Blizzard's bar (its art hidden). The
@@ -382,6 +432,8 @@ SlashCmdList["AETHERSKINS"] = function(msg)
         Print(string.format("minimap %s, %.0f wide; ring %s", db.minimap and "on" or "off", Minimap:GetWidth() or 0, ring and "shown" or "not made"))
         Print("now: " .. (day and "day" or "night") .. " (" .. src .. "), game time " .. GameTimeText())
         Print("day/night icon replaced: " .. tostring(found.daynight))
+        local near = NearTopRight()
+        Print("near the ring's top-right: " .. (#near > 0 and table.concat(near, ", ") or "nothing"))
         Print("zone bar: " .. tostring(found.bar))
         Print("hidden (" .. #hiddenNames .. "): " .. table.concat(hiddenNames, ", "))
         local kids = {}
