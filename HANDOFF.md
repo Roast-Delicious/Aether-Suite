@@ -19,15 +19,21 @@ Then read this file. The addons live at the repo root (one folder each);
   the one exception and must not change). Update it with every change,
   including the version table.
 - Bump the version in each changed addon's .toc and the README table.
-- For questions: answer and suggest. Build only after the user says go.
-- Bugs: fix and send right away. After a build: test, update the
-  README, send the zip.
+- NEVER build (no code changes to the addons, no AetherAddons.zip) until
+  the user explicitly says to go ahead and build. This applies to
+  everything, bugs included: describe the fix, mock it up if useful, then
+  wait for the go-ahead. Approving a design ("I like it", "save it") is
+  not a go-ahead. (Set Nov 24, 2026.)
+- After an approved build: test, update the README, send the zip.
+- AetherDev.zip (this repo, the handoff kit) is made ONLY at the end of a
+  session, when the user says they're opening the next one. Don't send it
+  with builds.
 - Casual, friendly, concise (the user reads on a phone). Oxford comma.
 - Check sources before answering factual questions: reliable, multiple
   and independent (not citing each other). Cite them.
 - Slow down and think things through.
-- Aether gold (1, 0.69, 0) is the only yellow in the suite (scope of
-  the cleanup still to confirm with the user).
+- Aether gold (1, 0.69, 0) is the only yellow in the suite (whole suite,
+  confirmed Nov 24).
 - Never reproduce Blizzard's class icons; use the original Aether
   glyphs only.
 - Mockups: show at actual in-game size (about 1.15 px per UI unit on
@@ -64,21 +70,33 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-- APPROVED, NOT YET BUILT (AetherPack Free slots, layout "C1 text"):
+- Last delivered build (Nov 24): AetherPack 1.5.0 (gold capsule, coin
+  colors, session tooltip), AetherLedger 1.5.15 (directions window fits
+  its text, solid on mouseover). Everything else as in the user's zip.
+- Branch `wip-not-approved`: started before the user's "no build without
+  go-ahead" rule; NOT delivered, NOT tested. It has (1) Aether gold as the
+  only yellow suite-wide (Frames level yellow and neutral names, Coords
+  waypoint glow, Pack warning/deposit count, ItemID tips, Marks neutral
+  names and cast bar, README note) and (2) the Free slots "C1 text" rows
+  in AetherPack. Use it only after the user says go; then finish, test
+  (pack_test.py, pack_class_test.py, a render check) and update README.
+- APPROVED DESIGN, waiting for go-ahead (AetherPack Free slots, "C1 text"):
   keep the deposit slot, arrow and "No swaps. Just drops." ink; rows to
   the right of the ink, no bars: label (soft white) + right-aligned value.
   Bags "22 free" (green / Aether gold in last 25% / red in last 10%),
   Reagent "Full" (red when full). Ammo: above 50% of quiver capacity a
   white count only; at 50% or less "Warning" in Aether gold before the
   white count; at 300 or less "Low" in red before the white count, Low
-  pulsing bright/dim about once a second (only while the window is
-  open). Full numbers in each row's tooltip. "(show)" becomes
-  "Show empty" at the right end of the header line. Mockups:
-  freeC1_text.png / ammo_states.png (mock/ scripts pack_mock.py, c3.py, c4.py).
-- Waiting on the user: (1) with no quiver, Warning has nothing to measure
-  50% against; proposed plain count, then Low at 300. (2) New rule
-  "Aether gold is the only yellow": apply suite-wide now or AetherPack only?
-  (3) Which green to use (greens.png options A-E vs current #6edb78).
+  pulsing bright/dim about once a second. No quiver: plain count, then
+  Low at 300 (user confirmed). Full numbers in each row's tooltip.
+  "(show)" becomes "Show empty" at the right end of the header line.
+- APPROVED: Aether gold (1, 0.69, 0) is the only yellow, whole suite
+  (user confirmed). Waiting for go-ahead to build.
+- Waiting on the user: which green. They want something more vibrant
+  than the current soft green #6edb78; options shown in greens_vivid.png:
+  F #22e650 (suggested), G #00e676, H #00ff7f, I #6eff3c, J #39ff14.
+- Not yet asked: should warlock soul shards get the same pulsing Low
+  (under 3)? The WIP branch does that.
 - hub_general_test and ledger_full_test need the user's AetherLedger
   SavedVariables file (path is hard-coded under /mnt/user-data/uploads);
   ask for it before working on Ledger or the Hub. travel_window_test.py
