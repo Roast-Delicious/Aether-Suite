@@ -96,9 +96,16 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   CONFIRMED in game earlier (Nov 24, 10:12): Chat, Frames (gold
   chevrons), Coords (round gold glow), Pathfinder, Ledger tracker order
   and look, tapped mobs gray, Pack 1.6.0.
-- OPEN QUESTION (14:05): 3D bevel chevrons (A) on ALL Aether windows too?
-  Mockup sent (Reputation, flat vs A). Would touch every addon's window
-  trim (chev textures + per-direction art, as on the minimap).
+- QUEUED FOR THE NEXT BUILD (user, Nov 24 14:06): upgrade ALL chevrons
+  in the suite to the 3D bevel ridge (A), as on AetherSkins' minimap:
+  every Aether window's 12/3/6/9 chevrons (win_chev_gold in each addon's
+  Media), the XP bar chevrons, the docked meter's top chevron, frame
+  crests, and any other gold chevron. Use per-direction baked art lit
+  from the top-right (mock/skin_chevron3d.py chevron3d('bevel', rot),
+  rotate the image, no SetRotation on the gold; dark outline may still
+  rotate), as in AetherSkins/Media/chev3d_*.tga. Grep all addons for
+  win_chev_gold / chev58_* / chev80_* to find every use; bake matching
+  sizes. Confirm the go-ahead before building (standing rule).
 - Next AetherSkins batch (looks approved, not built): world map + quest
   log, Reputation, Friends, Progress Track; then more windows. No Hub
   tab for AetherSkins yet (slash only).
