@@ -105,6 +105,23 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   "Ready for turn-in" in Aether sky blue (115,191,255). Tests:
   tooltip_spot_test (new), tracker_look_test (updated). NOT yet
   confirmed in game.
+- QUEUED FOR THE NEXT BUILD (user, Nov 24 12:23: "add it to the next
+  build"): the minimap restyle, as approved in the mockups
+  (mock/skin_minimap.py ring_ref navy=True, night; _sun('B'), _moon()):
+  * Round minimap, Blizzard's ring and art hidden; plain NAVY (#13284A)
+    bevel ring, 11 px, ridge + crest line; four gold chevrons at
+    12/3/6/9; soft blue glow outside.
+  * Light from the sun/moon button (top-right): gold (day) / white
+    (night) glow on the INNER slope across from it, long soft fade
+    through cream, stopping at the crest; nothing on the map. Bake: navy
+    bevel texture + shine texture (white with alpha) tinted by
+    SetVertexColor; switch by realm time (GetGameTime) when the icon
+    flips (check Forever's rule); change over through plain navy.
+  * Day/night button: navy disc, blue rim, our own icons: sun B (12
+    pointed rays, Aether gold), moon (pale crescent). Never Blizzard's.
+  * Zone + clock in a navy pill above; coordinates pill below.
+  Still to settle when building: which addon holds it (new AetherSkins,
+  or AetherCoords, which already does the coordinates). Ask first.
 - Designs in progress, NOT queued: key stats in item tooltips: two tight
   chevrons (chev58_left art) after the stat, pointing back at it, stat
   text Aether gold (mock/stat_gold.py). Still open: A all marked lines
@@ -145,7 +162,7 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   option 1, plain navy (no edge lines); night version shown.
   Sun/moon icons: user likes the moon stand-in (pale crescent on a navy
   button, mock _moon). Original sun designs in Aether gold (_sun A round
-  rays / B pointed rays / C halo ring); waiting on the pick.
+  rays / B pointed rays / C halo ring). CHOSEN: B, as is (user, 12:23).
   World map mockups (11:54, from the user's windowed and
   full-screen screenshots; mock/skin_worldmap.py): Aether window, plain
   crest, zone buttons as navy capsules (current zone gold, blue
