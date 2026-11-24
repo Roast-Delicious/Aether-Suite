@@ -97,18 +97,14 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 - Waiting on the user: glow steady at the dim level, or a softer pulse?
   (user liked the dim end). Screenshots came in: chevrons and glow are
   Aether gold.
-- QUEUED FOR THE NEXT BUILD (user, Nov 24 10:27: "save this for the
-  next build", to continue in a new session). First thing: ask which
-  blue, confirm go, then code, test and build:
-  * Tooltip spot B: tooltips that use the game's default spot (bottom
-    right, over the meter) go just LEFT of the quest list, centered at
-    mid-screen, following the tracker if moved (mock/tooltip_place.py).
-    Hook GameTooltip_SetDefaultAnchor; the tracker is Blizzard's
-    ObjectiveTracker (AetherLedger restyles it).
-  * Quest tracker "Ready for turn-in" text: green -> blue; titles keep
-    their level colors. Which blue is NOT picked yet: ask first.
-    Options (mock/turnin_blue.py): A baby blue (137,207,240), B Aether
-    sky blue (115,191,255) recommended, C pale ice blue (185,225,255).
+- Built Nov 24 (late morning, after the queue): Ledger 1.7.0. Tooltip
+  spot B (new AetherLedger_TooltipSpot.lua, hooks
+  GameTooltip_SetDefaultAnchor; right edge 8 units left of the tracker,
+  mid-screen; goes on the tracker's right if it has < 240 units of room
+  on its left; /ledger tooltip toggles, AetherLedgerDB.tooltipSpot) and
+  "Ready for turn-in" in Aether sky blue (115,191,255). Tests:
+  tooltip_spot_test (new), tracker_look_test (updated). NOT yet
+  confirmed in game.
 - Designs in progress, NOT queued: key stats in item tooltips: two tight
   chevrons (chev58_left art) after the stat, pointing back at it, stat
   text Aether gold (mock/stat_gold.py). Still open: A all marked lines
@@ -134,10 +130,13 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   code too (mocks lack the window-trim textures): stale, fix when
   working on ItemID. New this session: tracker_look_test,
   tracker_sort_test, travel_window_test, frames_tapped_test,
+  tooltip_spot_test,
   marks_wording_test.
 
 ## Session log
 
+- Nov 24, 2026 (10:37): built Ledger 1.7.0 (tooltip spot B, sky-blue
+  turn-in text).
 - Nov 24, 2026 (late morning): build confirmed in game; tooltip spot B
   and blue turn-in text queued for the next build.
 - Nov 24, 2026 (afternoon): round waypoint glow, gold sweep, frames

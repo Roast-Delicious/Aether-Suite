@@ -106,7 +106,7 @@ expect("fold glyph shows + when folded", L.eval('QuestObjectiveTracker.Header.ae
 expect("yellow title -> Aether gold", col('B1.HeaderText.color'), (1, 0.69, 0))
 expect("orange title unchanged", col('B2.HeaderText.color'), (1, 0.5, 0.25))
 expect("yellow color code in title -> gold", L.eval('B3.HeaderText.text'), "|cffffb000[35]|r Bloodscalp Ears")
-expect("Ready for turn-in -> vivid green", col('B1.usedLines[1].Text.color'), (0.13, 0.9, 0.31))
+expect("Ready for turn-in -> Aether sky blue", col('B1.usedLines[1].Text.color'), (0.45, 0.75, 1))
 expect("objective line stays light gray", col('B2.usedLines[1].Text.color'), (0.8, 0.8, 0.8))
 expect("complete quest icon shows ?", (L.eval('B1.poiButton.aetherIcon.mark.shown'), L.eval('B1.poiButton.aetherIcon.dots.shown')), (True, False))
 expect("in-progress icon shows dots", (L.eval('B2.poiButton.aetherIcon.mark.shown'), L.eval('B2.poiButton.aetherIcon.dots.shown')), (False, True))

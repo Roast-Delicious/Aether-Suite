@@ -7,7 +7,7 @@
 --    gold - / + instead of Blizzard's button;
 --  * quest icons: a navy disc with a gold ring and gold dots (in progress)
 --    or a gold "?" (ready to turn in);
---  * yellow text becomes the Aether gold; "Ready for turn-in" turns green;
+--  * yellow text becomes the Aether gold; "Ready for turn-in" turns sky blue;
 --  * the Aether font (Fira Sans), and a soft blue band behind a quest you
 --    point at.
 -- Only looks are changed: Blizzard's tracker still lays everything out and
@@ -20,7 +20,7 @@ local WHITE = "Interface\\Buttons\\WHITE8X8"
 local GOLD  = { 1, 0.69, 0 }
 local NAVY  = { 0.075, 0.157, 0.29 }
 local BLUE  = { 0.3, 0.65, 1 }
-local GREEN = { 0.133, 0.902, 0.314 }   -- the Aether "good" green (#22e650)
+local READY = { 115 / 255, 191 / 255, 1 }   -- Aether sky blue (115, 191, 255): "Ready for turn-in"
 
 local function Wants()
     return not (AetherHub_Profile and AetherHub_Profile.Interest) or AetherHub_Profile.Interest("trackerLook")
@@ -35,7 +35,7 @@ end
 -- ------------------------------------------
 -- Any yellow (red full, green 0.75-0.92, blue low) is swapped for the gold at
 -- the same brightness; other colors are left alone. "Ready for turn-in" is
--- green. Runs after Blizzard sets a color, so it never fights the game.
+-- sky blue. Runs after Blizzard sets a color, so it never fights the game.
 local function IsYellow(r, g, b)
     return r and r > 0.6 and g > r * 0.72 and g < r * 0.93 and b < 0.3 * r
 end
@@ -52,7 +52,7 @@ end
 
 local function Recolor(fs, ready)
     if not fs or not fs.GetTextColor then return end
-    if ready then fs:SetTextColor(GREEN[1], GREEN[2], GREEN[3]); return end
+    if ready then fs:SetTextColor(READY[1], READY[2], READY[3]); return end
     local r, g, b = fs:GetTextColor()
     if IsYellow(r, g, b) then fs:SetTextColor(r * GOLD[1], r * GOLD[2], r * GOLD[3]) end
     local text = fs.GetText and fs:GetText()

@@ -1156,6 +1156,12 @@ SlashCmdList["AETHERLEDGER"] = function(msg)
         if AetherLedger_Tracker then AetherLedger_Tracker.Explain() end
     elseif cmd == "sort" then
         if AetherLedger_Tracker then AetherLedger_Tracker.Apply() end
+    elseif cmd == "tooltip" then
+        if AetherLedger_TooltipSpot then
+            local on = AetherLedger_TooltipSpot.Toggle()
+            print(PREFIX .. (on and "tooltips go beside the quest tracker |cff33dd66on|r"
+                or "tooltips go beside the quest tracker |cffff5555off|r (the game's usual spot)"))
+        end
     elseif cmd == "resetwindows" then
         Settings().windowPos = nil
         print(PREFIX .. "Ledger's windows will open in their usual spots again.")
@@ -1177,6 +1183,7 @@ SlashCmdList["AETHERLEDGER"] = function(msg)
         print("  /ledger suggest   turn zone suggestions on or off")
         print("  /ledger cleanup   gray quests you could drop; /ledger sort re-sorts the quest tracker")
         print("  /ledger tracker   why each quest is or isn't on the tracker")
+        print("  /ledger tooltip   tooltips beside the quest tracker, or back in the corner")
         print("  /ledger resetwindows   put Ledger's windows back in their usual spots")
     end
 end

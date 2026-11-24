@@ -23,7 +23,7 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.3     What an item is for, when you hover it
-  AetherLedger       1.6.1     Where to quest, train and skin next,
+  AetherLedger       1.7.0     Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.0     Your bags sorted into sections
   AetherChat         1.0.8     Chat with the Aether look, fitted beside
@@ -473,12 +473,18 @@ AetherLedger - where to quest, train and skin next             /ledger
     icons become a navy disc with a gold ring: gold dots while you're
     working on it, a gold ? when it's ready (a soft gold glow marks
     the quest you're following). Yellow quest names turn Aether gold
-    (other difficulty colors stay), "Ready for turn-in" is green, the
+    (other difficulty colors stay), "Ready for turn-in" is sky blue, the
     text uses the Aether font, and a soft blue band shows behind the
     quest you point at. Turn it off on AetherHub's AetherLedger tab
     (takes effect after a reload).
   - /ledger tracker lists every quest in your log with its color, zone
     and why it is or isn't on the tracker.
+  - Tooltips: ones the game puts in its usual corner (bottom right,
+    over AetherMeter) show just left of the quest tracker instead,
+    centered at mid-screen. Move the tracker in Edit Mode and they
+    follow it (if it's near the left edge, they go on its right).
+    Tooltips placed by your mouse or beside a button or bag stay put.
+    /ledger tooltip switches back to the corner, or on again.
   - Gray quests: when quests in your log turn gray (little XP now),
     you're told once, and Clean up opens a small window listing them,
     each with an Abandon button (click once, then again on "Sure?").
@@ -511,7 +517,8 @@ AetherLedger - where to quest, train and skin next             /ledger
     (check now and show the window), /ledger go and /ledger stop
     (directions), /ledger suggest (on or off), /ledger cleanup (gray
     quests to drop), /ledger sort (re-sort the quest tracker), /ledger
-    tracker, /ledger (record now), /ledger status.
+    tracker, /ledger tooltip (tooltip spot), /ledger (record now),
+    /ledger status.
 
 AetherPack - your bags, sorted into sections                    /pack
   Everything in your bags in one compact window, sorted into sections.
