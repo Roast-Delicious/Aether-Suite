@@ -117,21 +117,21 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   tracker-style headers, blue selected band) with B's capsule (pill)
   bars; ONLY the window's four gold chevrons as accents, nothing added
   on the portrait crest or elsewhere (crest = plain navy disc, blue
-  rim). Minimap = round blue ring, 3D BEVEL (ridge), 11 px. LIGHT (user, 11:22):
-  a cone whose TIP is just off the sun/moon's bottom-left edge, aimed
-  down-left across the map (mock/skin_minimap.py ring_spot: tip 20 px
-  in from the icon, 28 px up, full strength on the axis fading out by
-  78 deg). So the gold falls on the ring's INNER slope on the far
-  (bottom-left) side, brightest opposite the sun, fading toward 9 and 5
-  o'clock; nothing lights up next to the sun. Gold steps 0.12 / 0.22
-  (recommended) / 0.34. Day/night: shine Aether gold by day (sun), white
-  by night (moon). Plan: bake the blue bevel as one texture and the
-  shine as a second white-with-alpha texture, SetVertexColor gold or
-  white from the realm clock (GetGameTime) when the sun/moon icon flips
-  (check how Forever's icon decides). Change over by fading the shine
-  to plain blue and back: never gold+white mixed (pale yellow). The
-  blue->gold change is a short dark step, never a 50/50 blend (pale
-  gray-white). Waiting on the gold-step pick.
+  rim). Minimap = round blue ring, 3D bevel, 11 px. LIGHT follows the user's
+  reference image (11:40; a blue ring lit by a warm light at the top-
+  right): mock/skin_minimap.py ring_ref. Gold glows on the INNER wall
+  across from the sun (gaussian, ~48 deg), fading back to blue over a
+  long arc THROUGH A LIGHT WARM CREAM (255,236,196) like the reference
+  (the user found the earlier short step too abrupt); outer edge stays
+  blue; soft gold halo just inside the lit wall; small glint on the
+  outer edge by the sun (hidden under the sun button at this spot).
+  Option 2 adds warm light pooling onto the map. Night: same in white
+  with the moon. Plan: blue bevel texture + shine texture (white with
+  alpha), SetVertexColor gold or white by realm time (GetGameTime) when
+  the sun/moon icon flips (check how Forever's icon decides); change
+  over through plain blue, never gold+white mixed. Hex: Aether gold
+  #FFB000, Aether blue #4DA6FF, navy #13284A, sky blue #73BFFF.
+  Waiting on 1 vs 2.
   Other rules
   used: Neutral bars Aether gold, Friendly+ #22e650, Blizzard's yellow UI
   glyphs recolored (white, gold when selected), Fira Sans. Still need a

@@ -296,12 +296,75 @@ def opt_spot(gold=0.22, night=False, width=11, show_tip=False, **kw):
         d.ellipse(c.P(px - 3, py - 3, px + 3, py + 3), fill=(255, 255, 255, 230)); c.over(Lr)
     return c.done()
 
+def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread=48, pool=0.0, glint=True):
+    """Lit like the user's reference image: light from beyond the sun/moon
+    (top-right). Gold glows on the INNER wall across from it, with a long,
+    soft fade back to blue through a light warm cream (no gray, no hard
+    edge). A small glint on the outer edge nearest the light. pool = warm
+    light spilling onto the map next to the lit wall (0 = none)."""
+    W, H = c.im.size; X, Y = c.P(cx, cy)
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    dx, dy = (xx - X) / SS, (yy - Y) / SS; r = np.hypot(dx, dy)
+    t = (r - r_in) / width
+    cover = np.clip(np.minimum(t * width + 0.5, (1 - t) * width + 0.5), 0, 1)
+    ux, uy = dx / np.maximum(r, 1e-3), dy / np.maximum(r, 1e-3)
+    sl = np.hypot(*sun); sx, sy = sun[0] / sl, sun[1] / sl
+    tc = np.clip(t, 0, 1)
+    # base blue bevel: ridge, gently lit from the sun's side
+    nr = np.where(tc < 0.5, -0.7, 0.7)
+    diff = np.clip(nr * (ux * sx + uy * sy) * 0.6 + 0.72 * 0.75, 0, 1)
+    base = np.array(BLUE, np.float32)
+    col = base[None, None, :] * (0.55 + 0.5 * diff)[..., None]
+    # inner-wall glow: centered straight across from the light, long soft fade
+    opp = np.degrees(np.arccos(np.clip(-(ux * sx + uy * sy), -1, 1)))     # 0 = directly across from the sun
+    along = np.exp(-(opp / spread) ** 2)
+    across = np.clip(1.45 - tc * 1.35, 0, 1) ** 0.9                         # inner wall and most of the face, fading toward the outer edge
+    I = np.clip(along * across * 1.15, 0, 1)[..., None]
+    g = np.array(hl, np.float32)[None, None, :]
+    cream = (np.array((255, 236, 196), np.float32) if not night else np.array((236, 244, 255), np.float32))[None, None, :]
+    # blue -> cream -> gold: the middle of the fade is light and warm, like the reference
+    m1 = np.clip(I / 0.5, 0, 1); m2 = np.clip((I - 0.5) / 0.5, 0, 1)
+    warm = col * (1 - m1) + cream * m1
+    warm = warm * (1 - m2) + g * m2
+    w = np.clip(I * 1.6, 0, 1) ** 1.2
+    col = col * (1 - w * 0.0) * (1 - w) + warm * w
+    # glint: a small hot spot on the outer edge nearest the light
+    if glint:
+        near = np.degrees(np.arccos(np.clip(ux * sx + uy * sy, -1, 1)))
+        gl = np.exp(-(near / 16) ** 2) * np.clip((tc - 0.55) / 0.3, 0, 1) * np.clip((1 - tc) / 0.25, 0, 1)
+        col = col * (1 - gl[..., None] * 0.85) + (g * 0.6 + cream * 0.4) * gl[..., None] * 0.85
+    edge = np.clip(1 - np.minimum(t, 1 - t) * width / 0.8, 0, 1) * 0.5
+    col = col * (1 - edge[..., None])
+    # warm light around the lit wall: a soft halo inside the ring (and a pool on the map if asked)
+    d_in = r_in - r
+    halo = np.where(d_in > -1, np.exp(-np.clip(d_in, 0, None) / 9), 0) * along * 0.55
+    if pool: halo = halo + np.where(d_in > 0, np.exp(-d_in / 45), 0) * along * pool
+    hl_img = np.zeros((H, W, 4), np.float32); hl_img[..., :3] = hl; hl_img[..., 3] = np.clip(halo, 0, 1) * 200 * (cover < 1)
+    c.over(Image.fromarray(hl_img.astype(np.uint8)))
+    # soft shadow outside, away from the light
+    d_out = r - (r_in + width); away = np.clip(-(ux * sx + uy * sy), 0, 1)
+    sh = np.where((d_out > -1) & (d_out < 7), (1 - np.clip(d_out, 0, 7) / 7) ** 2, 0) * (0.2 + 0.6 * away)
+    so = np.zeros((H, W, 4), np.float32); so[..., 3] = sh * 220
+    c.over(Image.fromarray(so.astype(np.uint8)))
+    out = np.zeros((H, W, 4), np.float32); out[..., :3] = np.clip(col, 0, 255); out[..., 3] = cover * 255
+    c.over(Image.fromarray(out.astype(np.uint8)))
+
+def opt_ref(night=False, width=11, **kw):
+    c = base(False); cx, cy = CX - X0, CY - Y0
+    W, H = c.im.size; X, Y = c.P(cx, cy); R = (RM + 1) * SS
+    c.over(glow(W, H, (X, Y, X, Y), R + width * SS, u(10), BLUE, 0.4))
+    ring_ref(c, cx, cy, RM - 2, width, hl=(WHITE if night else GOLD), night=night, **kw)
+    chevs(c, cx, cy, RM + 6 + width // 2, RM + 6 + width // 2)
+    pill(c, (cx - 118, 6, cx + 118, 34), "Dustwallow Marsh", 15, GOLD, right="05:52")
+    pill(c, (cx - 52, cy + RM + 16, cx + 52, cy + RM + 42), "62.5, 44.4", 15, WHITE)
+    button(c, (cx + 84, cy - 86), MOON if night else SUN); button(c, (cx - 86, cy + 84), GEM)
+    return c.done()
+
 if __name__ == '__main__':
-    opts = [("Cone guide (not part of the look)", opt_spot(show_tip=True)),
-            ("1  Day, a little gold", opt_spot(0.12)),
-            ("2  Day, middle gold", opt_spot(0.22)),
-            ("3  Day, more gold", opt_spot(0.34)),
-            ("Night (with 2)", opt_spot(0.22, night=True))]
+    opts = [("Last: sharp step", opt_spot(0.22)),
+            ("1  Like your image", opt_ref()),
+            ("2  Same, plus warm light on the map", opt_ref(pool=0.18)),
+            ("Night (with 1)", opt_ref(night=True))]
     tiles = [label(im, name, 20) for name, im in opts]
     for (name, im), k in zip(opts, "01234"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0
