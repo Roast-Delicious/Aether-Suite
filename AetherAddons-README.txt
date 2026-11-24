@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 23, 2026
+Last updated: November 24, 2026
 
 A set of eleven addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -25,7 +25,7 @@ window, so you rarely need to type a command.
   AetherItemID       1.1.2     What an item is for, when you hover it
   AetherLedger       1.5.14    Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.4.2     Your bags sorted into sections
+  AetherPack         1.5.0     Your bags sorted into sections
   AetherChat         1.0.7     Chat with the Aether look, fitted beside
                                your action bars
   AetherFrames       1.14.3    Your, your pet's, your target's, its
@@ -567,7 +567,11 @@ AetherPack - your bags, sorted into sections                    /pack
   - Right-click to use, equip, drink or sell, just like normal bags,
     and hovering an item still opens AetherItemID's window.
   - At a vendor, the Sell junk button sells every gray item (and
-    nothing else). Your gold shows next to the title.
+    nothing else).
+  - Your gold sits in a capsule next to the title, each number in its
+    coin's color. Hover it to see what you've gained or lost this
+    session and your gold per hour (shown after 10 minutes). The
+    session starts when you log in or reload.
   - Drag the window by its edge to move it; it remembers the spot.
   - WoW doesn't let addons rearrange bag buttons during a fight, so
     the sections catch up when combat ends. Items still work.

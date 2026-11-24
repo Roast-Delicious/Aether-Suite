@@ -62,6 +62,14 @@ if CreateFont and not AetherFontHighlight then
         { "AetherFontWorldSmall",       "GameFontHighlightSmall", "Bold", true },
     }) do Make(d[1], d[2], d[3], d[4], d[5]) end
 end
+-- The gold capsule's numbers: SemiBold, a step bigger than window text.
+if CreateFont and not AetherFontMoney then
+    local f = CreateFont("AetherFontMoney")
+    if GameFontHighlight then f:CopyFontObject(GameFontHighlight) end
+    if not AetherSetFont(f, "SemiBold", 14.5) and GameFontHighlightLarge then f:CopyFontObject(GameFontHighlightLarge) end
+    f:SetShadowColor(0, 0, 0, 1)
+    f:SetShadowOffset(1, -1)
+end
 
 local PREFIX = "|cff4da6ffAetherPack:|r "
 
@@ -505,6 +513,96 @@ local GAP = 2
 local PAD = 10
 
 local win, holders, buttons, headers = nil, {}, {}, {}
+
+-- The gold capsule in the title strip: bigger numbers, each in its coin's
+-- color, in a dark navy pill with a thin gold edge. Hovering it shows what
+-- you've gained or lost since you logged in (or last reloaded).
+local COIN_COLORS = { "ffce3c", "d6dce6", "e8925a" }   -- gold, silver, copper
+local COIN_ICONS = { "UI-GoldIcon", "UI-SilverIcon", "UI-CopperIcon" }
+local COIN_ICON = 13
+local session = { money = nil, start = nil }
+
+local function CapsuleCoins(amount)
+    amount = math.max(0, math.floor(tonumber(amount) or 0))
+    local v = { math.floor(amount / 10000), math.floor(amount / 100) % 100, amount % 100 }
+    local parts = {}
+    for i = 1, 3 do
+        if v[i] > 0 or (i == 3 and #parts == 0) then
+            parts[#parts + 1] = "|cff" .. COIN_COLORS[i] .. v[i] .. "|r|TInterface\\MoneyFrame\\"
+                .. COIN_ICONS[i] .. ":" .. COIN_ICON .. ":" .. COIN_ICON .. ":2:0|t"
+        end
+    end
+    return table.concat(parts, "  ")
+end
+
+local function UpdateMoney()
+    if not (win and win.coins) then return end
+    local money = GetMoney()
+    if not session.money then session.money, session.start = money, GetTime() end
+    win.coins.text:SetText(CapsuleCoins(money))
+    win.coins:SetWidth(math.floor((win.coins.text:GetStringWidth() or 60) + 22 + 0.5))
+end
+
+local function ShowMoneyTooltip(self)
+    GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT", self:GetWidth(), -4)
+    GameTooltip:SetText("Gold", 1, 0.69, 0)
+    local money = GetMoney()
+    GameTooltip:AddDoubleLine("On hand", AetherCoins(money), 0.6, 0.62, 0.67, 1, 1, 1)
+    local diff = money - (session.money or money)
+    local r, g, b = 1, 1, 1
+    if diff > 0 then r, g, b = 0.43, 0.86, 0.47 elseif diff < 0 then r, g, b = 1, 0.38, 0.35 end
+    local sign = diff > 0 and "+" or (diff < 0 and "-" or "")
+    GameTooltip:AddDoubleLine("This session", sign .. AetherCoins(math.abs(diff)), 0.6, 0.62, 0.67, r, g, b)
+    local mins = (GetTime() - (session.start or GetTime())) / 60
+    if mins >= 10 then
+        local raw = diff / mins * 60
+        local per = raw >= 0 and math.floor(raw + 0.5) or -math.floor(-raw + 0.5)
+        GameTooltip:AddDoubleLine("Per hour", (per > 0 and "+" or (per < 0 and "-" or "")) .. AetherCoins(math.abs(per)),
+            0.6, 0.62, 0.67, r, g, b)
+    else
+        GameTooltip:AddDoubleLine("Per hour", "after 10 min", 0.6, 0.62, 0.67, 0.5, 0.52, 0.57)
+    end
+    GameTooltip:AddLine("Counts from when you logged in or last reloaded.", 0.5, 0.52, 0.57, true)
+    GameTooltip:Show()
+end
+
+local function BuildCoinCapsule(parent, anchor)
+    local MEDIA, WHITE = "Interface\\AddOns\\AetherPack\\Media\\", "Interface\\Buttons\\WHITE8X8"
+    local H, CAP = 22, 11
+    local c = CreateFrame("Frame", nil, parent)
+    c:SetSize(80, H)
+    c:SetPoint("RIGHT", anchor, "LEFT", -6, 0)
+    c:EnableMouse(true)
+    local function Piece(file, layer, sub, r, g, b, a)
+        local t = c:CreateTexture(nil, layer, nil, sub)
+        t:SetTexture(file); t:SetVertexColor(r, g, b, a)
+        return t
+    end
+    -- Fill (navy) and edge (gold): round caps from a circle, a stretched middle.
+    for _, spec in ipairs({ { "pack_pill_fill", "BACKGROUND", 1, 0.03, 0.063, 0.125, 1 },
+                            { "pack_pill_ring", "BORDER", 2, 1, 0.69, 0, 0.67 } }) do
+        local file, layer, sub, r, g, b, a = unpack(spec)
+        local l = Piece(MEDIA .. file, layer, sub, r, g, b, a)
+        l:SetTexCoord(0, 0.5, 0, 1); l:SetSize(CAP, H); l:SetPoint("LEFT")
+        local rt = Piece(MEDIA .. file, layer, sub, r, g, b, a)
+        rt:SetTexCoord(0.5, 1, 0, 1); rt:SetSize(CAP, H); rt:SetPoint("RIGHT")
+        if file == "pack_pill_fill" then
+            local m = Piece(WHITE, layer, sub, r, g, b, a)
+            m:SetPoint("TOPLEFT", l, "TOPRIGHT"); m:SetPoint("BOTTOMRIGHT", rt, "BOTTOMLEFT")
+        else
+            for _, edge in ipairs({ "TOP", "BOTTOM" }) do
+                local m = Piece(WHITE, layer, sub, r, g, b, a)
+                m:SetHeight(1)
+                m:SetPoint(edge .. "LEFT", l, edge .. "RIGHT"); m:SetPoint(edge .. "RIGHT", rt, edge .. "LEFT")
+            end
+        end
+    end
+    c.text = c:CreateFontString(nil, "OVERLAY", "AetherFontMoney")
+    c.text:SetPoint("CENTER", 1, 0)
+    c:SetScript("OnEnter", ShowMoneyTooltip)
+    c:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    return c
+end
 local layoutPending, searchText = false, ""
 
 local function ButtonFor(bag, slot)
@@ -779,7 +877,7 @@ function AetherPack_Layout()
     end
     for i = #rows + 1, #win.bars do win.bars[i]:Hide() end
 
-    win.money:SetText(AetherCoins(GetMoney()))
+    UpdateMoney()
     win.junkValue = junkValue
     win.sell:SetShown(win.atMerchant and junkValue > 0)
     UpdateBackpackCount(st)
@@ -1065,8 +1163,7 @@ local function BuildWindow()
 
     -- Gold next to the title; space bars and Sell junk at the bottom.
     win.bars = {}
-    win.money = win:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
-    win.money:SetPoint("RIGHT", close, "LEFT", -8, 0)
+    win.coins = BuildCoinCapsule(win, close)
     win.sell = AetherButton(win, nil, true)
     win.sell:SetSize(76, 18)
     win.sell:SetPoint("BOTTOM", win, "BOTTOM", 0, 7)
@@ -1414,6 +1511,7 @@ events:SetScript("OnEvent", function(_, event, arg1)
         if type(db.bagPos) ~= "table" then db.bagPos = {} end
     elseif event == "PLAYER_LOGIN" then
         BuildWindow()
+        UpdateMoney()          -- also notes the gold you logged in with
         HookBags()
         C_Timer.After(2, function() UpdateBackpackCount() end)
     elseif not win then
@@ -1439,7 +1537,7 @@ events:SetScript("OnEvent", function(_, event, arg1)
         if win:IsShown() then RefreshButtons() end
         ForEachBagWindow(function(w) if w:IsShown() then RefreshBagWindow(w) end end)
     elseif event == "PLAYER_MONEY" then
-        if win:IsShown() then win.money:SetText(AetherCoins(GetMoney())) end
+        UpdateMoney()
     else
         if event == "BAG_UPDATE_DELAYED" then UpdateBackpackCount() end   -- even with the window closed
         LayoutSoon()

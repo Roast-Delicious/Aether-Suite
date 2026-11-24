@@ -28,7 +28,7 @@ function Fire() for _=1,40 do local t=TIMERS; TIMERS={}; if #t==0 then break end
 COMBAT=false; InCombatLockdown=function() return COMBAT end
 strlower=string.lower; strtrim=function(s) return (s:gsub("^%s+",""):gsub("%s+$","")) end
 CopyTable=function(t) local o={} for k,v in pairs(t) do o[k]=v end return o end
-GetMoney=function() return 123456 end
+GetMoney=function() return MONEY or 123456 end; NOW=0; GetTime=function() return NOW end
 CLASS='HUNTER'; UnitClass=function() return 'Hunter', CLASS end
 MainMenuBarBackpackButton=Obj(); FormatLargeNumber=function(n) return tostring(n) end
 GetCoinTextureString=function(c) return c.."c" end
@@ -72,7 +72,20 @@ def bars():
     L.execute("""BARS={} for _,b in ipairs(AetherPackFrame.bars) do if b.shown then BARS[#BARS+1]=b.label.text.." | "..b.text.text..(b.fill.shown and (" | fill "..math.floor(b.fill.w)) or "") end end""")
     for x in L.eval('BARS').values(): print("   bar:", x)
 bars()
-print("money:", L.eval('AetherPackFrame.money.text'))
+print("money:", L.eval('AetherPackFrame.coins.text.text'))
+# Gold capsule tooltip: gain over 30 minutes, then a loss.
+L.execute(r'''
+TT={}; GameTooltip.AddDoubleLine=function(s,a,b) TT[#TT+1]=a.." = "..b end
+GameTooltip.SetText=function(s,a) TT[#TT+1]="["..a.."]" end
+GameTooltip.AddLine=function(s,a) TT[#TT+1]=a end
+''')
+def tip(money, now):
+    L.execute('TT={}; MONEY=%d; NOW=%d; local c=AetherPackFrame.coins; c.OnEnter(c)' % (money, now))
+    return list(L.eval('TT').values())
+print("tip at start:", tip(123456, 0))
+print("tip +2g after 30 min:", tip(143456, 1800))
+print("tip -50s after 30 min:", tip(118456, 1800))
+
 print("== B again closes")
 L.execute('ToggleAllBags(); Fire()'); print("shown:", L.eval('AetherPackFrame.shown'))
 print("== search 'arrow'")

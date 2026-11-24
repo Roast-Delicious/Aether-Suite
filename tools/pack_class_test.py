@@ -28,7 +28,7 @@ function Fire() for _=1,40 do local t=TIMERS; TIMERS={}; if #t==0 then break end
 COMBAT=false; InCombatLockdown=function() return COMBAT end
 strlower=string.lower; strtrim=function(s) return (s:gsub("^%s+",""):gsub("%s+$","")) end
 CopyTable=function(t) local o={} for k,v in pairs(t) do o[k]=v end return o end
-GetMoney=function() return 123456 end
+GetMoney=function() return MONEY or 123456 end; NOW=0; GetTime=function() return NOW end
 CLASS='HUNTER'; UnitClass=function() return 'Hunter', CLASS end
 MainMenuBarBackpackButton=Obj(); FormatLargeNumber=function(n) return tostring(n) end
 GetCoinTextureString=function(c) return c.."c" end
