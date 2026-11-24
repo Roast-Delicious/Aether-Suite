@@ -249,10 +249,13 @@ end
 -- Add one with /way 26 42 note, or double-click the world map. Hover a pin for
 -- its note and distance; right-click it to remove it.
 
-local WAYPOINT_ICON = "Interface\\TargetingFrame\\UI-RaidTargetingIcon_1"   -- gold star
-local WORLD_PIN_SIZE, MINI_PIN_SIZE = 24, 18
+-- The Aether waypoint star (our own art, white, tinted in game): a navy
+-- disc, a thin gold ring and a gold star, like the unit frame crests.
+local WP_MEDIA = "Interface\\AddOns\\AetherCoords\\Media\\"
+local WP_GOLD = { 1, 0.69, 0 }                -- Aether gold
+local WP_NAVY = { 0.075, 0.157, 0.29, 0.92 }  -- the title strips' navy
+local WORLD_PIN_SIZE, MINI_PIN_SIZE = 18, 14
 local GLOW_TEXTURE = "Interface\\Buttons\\UI-ActionButton-Border"
-local CIRCLE_MASK = "Interface\\CharacterFrame\\TempPortraitAlphaMask"
 local waypointsDirty = true
 
 local function Waypoints()
@@ -332,7 +335,7 @@ local function PinTooltip(pin)
     GameTooltip:Show()
 end
 
--- A gold star on a dark disc, with a soft gold glow that slowly pulses, so it
+-- The Aether star (gold star in a gold ring on navy), with a soft gold glow that slowly pulses, so it
 -- stands out on any part of the map.
 local function MakeWaypointPin(parent, size)
     local pin = CreateFrame("Button", nil, parent)
@@ -346,20 +349,15 @@ local function MakeWaypointPin(parent, size)
     glow:SetPoint("CENTER")
     glow:SetSize(size * 2.4, size * 2.4)   -- the glow art has empty padding around it
 
-    local disc = pin:CreateTexture(nil, "BORDER")
-    disc:SetPoint("TOPLEFT", -2, 2)
-    disc:SetPoint("BOTTOMRIGHT", 2, -2)
-    disc:SetColorTexture(0, 0, 0, 0.65)
-    if pin.CreateMaskTexture then
-        local mask = pin:CreateMaskTexture()
-        mask:SetTexture(CIRCLE_MASK, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-        mask:SetAllPoints(disc)
-        disc:AddMaskTexture(mask)
+    -- Disc, ring and star: three white images tinted navy and Aether gold.
+    for _, part in ipairs({ { "wp_disc", "BORDER", WP_NAVY }, { "wp_ring", "ARTWORK", WP_GOLD },
+                            { "wp_star", "OVERLAY", WP_GOLD } }) do
+        local t = pin:CreateTexture(nil, part[2])
+        t:SetAllPoints()
+        t:SetTexture(WP_MEDIA .. part[1])
+        local c = part[3]
+        t:SetVertexColor(c[1], c[2], c[3], c[4] or 1)
     end
-
-    local icon = pin:CreateTexture(nil, "OVERLAY")
-    icon:SetAllPoints()
-    icon:SetTexture(WAYPOINT_ICON)
 
     if glow.CreateAnimationGroup then
         local pulse = glow:CreateAnimationGroup()
