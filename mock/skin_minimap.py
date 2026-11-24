@@ -296,7 +296,7 @@ def opt_spot(gold=0.22, night=False, width=11, show_tip=False, **kw):
         d.ellipse(c.P(px - 3, py - 3, px + 3, py + 3), fill=(255, 255, 255, 230)); c.over(Lr)
     return c.done()
 
-def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread=48, pool=0.0, glint=True):
+def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread=48, pool=0.0, glint=True, border_blue=False):
     """Lit like the user's reference image: light from beyond the sun/moon
     (top-right). Gold glows on the INNER wall across from it, with a long,
     soft fade back to blue through a light warm cream (no gray, no hard
@@ -314,9 +314,13 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
     nr = np.where(tc < 0.5, -0.7, 0.7)                 # the two slopes of the ridge
     L = np.array([sx * 0.8, sy * 0.8, 0.6]); L /= np.linalg.norm(L)
     diff = np.clip(nr * ux * L[0] + nr * uy * L[1] + 0.72 * L[2], 0, 1)
-    face = (0.30 + 0.95 * diff ** 1.3)                  # strong light/dark split between the slopes
     crest = np.exp(-((tc - 0.5) / 0.07) ** 2)           # a fine bright line along the ridge top
-    face = face + 0.25 * crest
+    if border_blue:
+        # keep the ring's overall color at the window-border blue (#4DA6FF):
+        # the shaded slope a little darker, the lit slope a little lighter
+        face = 0.86 + 0.42 * diff ** 1.1 + 0.16 * crest
+    else:
+        face = (0.30 + 0.95 * diff ** 1.3) + 0.25 * crest   # strong light/dark split between the slopes
     base = np.array(BLUE, np.float32)
     col = base[None, None, :] * np.minimum(face, 1.15)[..., None]
     # inner-wall glow: centered straight across from the light, long soft fade
@@ -340,7 +344,7 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
         near = np.degrees(np.arccos(np.clip(ux * sx + uy * sy, -1, 1)))
         gl = np.exp(-(near / 16) ** 2) * np.clip((tc - 0.55) / 0.3, 0, 1) * np.clip((1 - tc) / 0.25, 0, 1)
         col = col * (1 - gl[..., None] * 0.85) + (g * 0.6 + cream * 0.4) * gl[..., None] * 0.85
-    edge = np.clip(1 - np.minimum(t, 1 - t) * width / 0.8, 0, 1) * 0.5
+    edge = np.clip(1 - np.minimum(t, 1 - t) * width / 0.8, 0, 1) * (0.22 if border_blue else 0.5)
     col = col * (1 - edge[..., None])
     # warm light around the lit wall: a soft halo inside the ring (and a pool on the map if asked)
     d_in = r_in - r
@@ -368,10 +372,9 @@ def opt_ref(night=False, width=11, **kw):
     return c.done()
 
 if __name__ == '__main__':
-    opts = [("Last (bevel lost)", opt_ref()),
-            ("1  Bevel back", opt_ref()),
-            ("2  Bevel, plus warm light on the map", opt_ref(pool=0.18)),
-            ("Night (with 1)", opt_ref(night=True))]
+    opts = [("Now (deeper blue)", opt_ref()),
+            ("Border blue", opt_ref(border_blue=True)),
+            ("Border blue, night", opt_ref(border_blue=True, night=True))]
     tiles = [label(im, name, 20) for name, im in opts]
     for (name, im), k in zip(opts, "01234"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0

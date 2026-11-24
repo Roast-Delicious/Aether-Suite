@@ -137,7 +137,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   faces away from the light and stays shaded blue.
   LOOK APPROVED as a mockup (11:51; '/tmp' renders in mock/skin_minimap.py
   ring_ref). Fine-tune in game after the first build. CHOSEN (11:54): option 1,
-  light on the ring only, NO light on the map.
+  light on the ring only, NO light on the map. Ring color (12:00): the
+  window-border blue #4DA6FF overall (ring_ref border_blue=True: face
+  0.86-1.28 + crest, edge darkening 0.22; measured mean ~82,166,235),
+  bevel kept. Waiting on OK.
   World map mockups (11:54, from the user's windowed and
   full-screen screenshots; mock/skin_worldmap.py): Aether window, plain
   crest, zone buttons as navy capsules (current zone gold, blue
