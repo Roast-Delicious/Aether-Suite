@@ -255,7 +255,7 @@ local WP_MEDIA = "Interface\\AddOns\\AetherCoords\\Media\\"
 local WP_GOLD = { 1, 0.69, 0 }                -- Aether gold
 local WP_NAVY = { 0.075, 0.157, 0.29, 0.92 }  -- the title strips' navy
 local WORLD_PIN_SIZE, MINI_PIN_SIZE = 18, 14
-local GLOW_TEXTURE = "Interface\\Buttons\\UI-ActionButton-Border"
+local GLOW_TEXTURE = WP_MEDIA .. "wp_glow"   -- round soft glow (tools/gen_wp_glow.py)
 local waypointsDirty = true
 
 local function Waypoints()
@@ -347,7 +347,7 @@ local function MakeWaypointPin(parent, size)
     glow:SetBlendMode("ADD")
     glow:SetVertexColor(1, 0.69, 0)   -- Aether gold
     glow:SetPoint("CENTER")
-    glow:SetSize(size * 2.4, size * 2.4)   -- the glow art has empty padding around it
+    glow:SetSize(size * 2.4, size * 2.4)   -- brightest at the disc's edge, fading out round
 
     -- Disc, ring and star: three white images tinted navy and Aether gold.
     for _, part in ipairs({ { "wp_disc", "BORDER", WP_NAVY }, { "wp_ring", "ARTWORK", WP_GOLD },
