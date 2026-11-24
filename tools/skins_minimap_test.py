@@ -209,11 +209,17 @@ for (h, m), want in (((5, 29), False), ((5, 30), True), ((20, 59), True), ((21, 
 L.execute('AetherSkinsDayNight.scripts.OnClick()')
 expect("click: calendar", L.eval('CALENDAR'), 1)
 # commands
+# a forbidden Blizzard frame on screen (like CommunitiesAddDialog): touching it errors
+L.execute('''FORB = NEW("Frame", "CommunitiesAddDialog"); FORB.parent = UIParent; UIParent.kids[#UIParent.kids+1] = FORB
+FORB.IsForbidden = function() return true end
+FORB.GetRegions = function() error("Attempt to access forbidden object from code tainted by an AddOn") end
+FORB.GetChildren = FORB.GetRegions''')
 L.execute('OUT = ""; SlashCmdList.AETHERSKINS("debug")')
 out = L.eval('OUT')
 expect("debug names the replaced icon", "ForeverDayNightButton" in out, True)
 expect("debug lists what's near the top-right", "GameTimeFrame (60 deg" in out, True)
 expect("debug names the coordinates it hid", "PlayerCoords" in out, True)
+expect("debug skips forbidden frames and finishes", "other minimap frames:" in out, True)
 expect("debug names the tracking button", "tracking (magnifier on the ring): MiniMapTracking" in out, True)
 L.execute('OUT = ""; SlashCmdList.AETHERSKINS("day")')
 expect("/skins day previews day", L.eval('OUT').strip().endswith("day (set by /skins)"), True)

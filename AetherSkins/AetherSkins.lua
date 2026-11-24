@@ -35,6 +35,19 @@ AetherSkinsDB = AetherSkinsDB or {}
 local db
 local function Print(s) print(PREFIX .. s) end
 local function Obj(x) return type(x) == "table" and x or nil end   -- only real frames/regions
+-- Some Blizzard frames are forbidden to addons (touching them errors); every
+-- scan lists regions and children through these, which skip such frames.
+local function SafeList(obj, method)
+    if not obj or not obj[method] then return {} end
+    if obj.IsForbidden then
+        local okF, forb = pcall(obj.IsForbidden, obj)
+        if not okF or forb then return {} end
+    end
+    local ok, list = pcall(function() return { obj[method](obj) } end)
+    return ok and list or {}
+end
+local function Regions(obj) return SafeList(obj, "GetRegions") end
+local function Children(obj) return SafeList(obj, "GetChildren") end
 local function FontFile(weight)
     return (AETHER_FONT_DIR or "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-") .. weight .. ".ttf"
 end
@@ -83,7 +96,7 @@ local ours = {}         -- everything AetherSkins creates is skipped by the scan
 local function HideTextures(frame)
     frame = Obj(frame)
     if not frame or not frame.GetRegions then return end
-    for _, r in ipairs({ frame:GetRegions() }) do
+    for _, r in ipairs(Regions(frame)) do
         if not ours[r] and r.GetObjectType and r:GetObjectType() == "Texture" then HideRegion(r) end
     end
 end
@@ -211,7 +224,7 @@ local function MakeSunButton()
         GameTooltip:Show()
     end)
     b:SetScript("OnLeave", function() GameTooltip:Hide() end)
-    for _, r in ipairs({ b:GetRegions() }) do ours[r] = true end
+    for _, r in ipairs(Regions(b)) do ours[r] = true end
     ours[b] = true
     return b
 end
@@ -252,7 +265,7 @@ end
 local function Scan(frame, depth, best)
     if not frame or depth > 3 then return best end
     if frame.GetRegions then
-        for _, r in ipairs({ frame:GetRegions() }) do
+        for _, r in ipairs(Regions(frame)) do
             if r.GetObjectType and r:GetObjectType() == "Texture" then
                 local score = Candidate(r)
                 if score and (not best.score or score < best.score) then best.obj, best.score = r, score end
@@ -260,7 +273,7 @@ local function Scan(frame, depth, best)
         end
     end
     if frame.GetChildren then
-        for _, f in ipairs({ frame:GetChildren() }) do
+        for _, f in ipairs(Children(frame)) do
             local score = Candidate(f)
             if score and (not best.score or score < best.score) then best.obj, best.score = f, score end
             if not ours[f] then Scan(f, depth + 1, best) end
@@ -284,7 +297,7 @@ local function NearTopRight()
     local function Look(frame, depth)
         if not frame or depth > 3 then return end
         if not frame.GetChildren then return end
-        for _, f in ipairs({ frame:GetChildren() }) do
+        for _, f in ipairs(Children(frame)) do
             if not ours[f] and f.GetCenter then
                 local ang, dist = Spot(f)
                 if ang and ang > 0 and ang < 110 and dist > 0.6 and dist < 1.9 then
@@ -440,7 +453,7 @@ end
 local function HideCoordText(frame, depth)
     if not frame or depth > 4 or ours[frame] then return end
     if frame.GetRegions then
-        for _, r in ipairs({ frame:GetRegions() }) do
+        for _, r in ipairs(Regions(frame)) do
             if not ours[r] and r.GetObjectType and r:GetObjectType() == "FontString" and IsCoordText(r) then
                 if not hidden[r] then found.coords = (found.coords and found.coords .. ", " or "") .. Name(r) end
                 HideRegion(r)
@@ -448,7 +461,7 @@ local function HideCoordText(frame, depth)
         end
     end
     if frame.GetChildren then
-        for _, c in ipairs({ frame:GetChildren() }) do HideCoordText(c, depth + 1) end
+        for _, c in ipairs(Children(frame)) do HideCoordText(c, depth + 1) end
     end
 end
 local function HideForeverCoords()
@@ -473,13 +486,13 @@ local function CoordTextAnywhere()
     local function Look(frame, depth)
         if not frame or depth > 4 or ours[frame] then return end
         if frame.GetRegions then
-            for _, r in ipairs({ frame:GetRegions() }) do
+            for _, r in ipairs(Regions(frame)) do
                 if r.GetObjectType and r:GetObjectType() == "FontString" and IsCoordText(r) then
                     out[#out + 1] = Name(r) .. (hidden[r] and " (hidden)" or "")
                 end
             end
         end
-        if frame.GetChildren then for _, c in ipairs({ frame:GetChildren() }) do Look(c, depth + 1) end end
+        if frame.GetChildren then for _, c in ipairs(Children(frame)) do Look(c, depth + 1) end end
     end
     Look(UIParent, 1)
     return out
@@ -497,7 +510,7 @@ local function SkinTopBar()
     if zoneButton then HideTextures(zoneButton) end
     clock = Obj(_G.TimeManagerClockButton)
     if clock then
-        for _, r in ipairs({ clock:GetRegions() }) do
+        for _, r in ipairs(Regions(clock)) do
             if r:GetObjectType() == "Texture" and r ~= clock:GetHighlightTexture() then HideRegion(r) end
         end
     end
@@ -629,7 +642,7 @@ SlashCmdList["AETHERSKINS"] = function(msg)
         Print("hidden (" .. #hiddenNames .. "): " .. table.concat(hiddenNames, ", "))
         local kids = {}
         for _, p in ipairs({ Minimap, Obj(_G.MinimapCluster) or false }) do
-            if p then for _, c in ipairs({ p:GetChildren() }) do if not ours[c] then kids[#kids + 1] = Name(c) end end end
+            if p then for _, c in ipairs(Children(p)) do if not ours[c] then kids[#kids + 1] = Name(c) end end end
         end
         Print("other minimap frames: " .. table.concat(kids, ", "))
     else

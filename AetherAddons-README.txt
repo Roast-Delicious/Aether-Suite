@@ -32,7 +32,7 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.7    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.1.0     The Aether look for Blizzard's windows,
+  AetherSkins        1.1.1     The Aether look for Blizzard's windows,
                                starting with the minimap
 
 
