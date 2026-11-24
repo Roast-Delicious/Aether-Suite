@@ -322,7 +322,8 @@ def opt_spot(gold=0.22, night=False, width=11, show_tip=False, **kw):
         d.ellipse(c.P(px - 3, py - 3, px + 3, py + 3), fill=(255, 255, 255, 230)); c.over(Lr)
     return c.done()
 
-def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread=48, pool=0.0, glint=True, border_blue=False, navy=False, edges=False):
+def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread=48, pool=0.0, glint=True, border_blue=False, navy=False, edges=False,
+             gain=1.0, peak=1.0, halo_amt=0.55):
     """Lit like the user's reference image: light from beyond the sun/moon
     (top-right). Gold glows on the INNER wall across from it, with a long,
     soft fade back to blue through a light warm cream (no gray, no hard
@@ -358,11 +359,11 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
     # only the INNER slope faces the light; the gold stops at the crest. The
     # outer slope on this side faces away from the light and stays shaded blue.
     across = np.clip((0.5 - tc) / 0.06, 0, 1)
-    I = np.clip(along * across * 1.15, 0, 1)[..., None]
+    I = np.clip(along * across * 1.15 * gain, 0, 1)[..., None]
     g = np.array(hl, np.float32)[None, None, :]
     cream = (np.array((255, 236, 196), np.float32) if not night else np.array((236, 244, 255), np.float32))[None, None, :]
     # blue -> cream -> gold: the middle of the fade is light and warm, like the reference
-    m1 = np.clip(I / 0.5, 0, 1); m2 = np.clip((I - 0.5) / 0.5, 0, 1)
+    m1 = np.clip(I / 0.5, 0, 1); m2 = np.clip((I - 0.5) / 0.5, 0, 1) * peak
     warm = col * (1 - m1) + cream * m1
     warm = warm * (1 - m2) + g * m2
     w = np.clip(I * 1.6, 0, 1) ** 1.2
@@ -378,7 +379,7 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
     col = col * (1 - edge[..., None])
     # warm light around the lit wall: a soft halo inside the ring (and a pool on the map if asked)
     d_in = r_in - r
-    halo = np.where(d_in > -1, np.exp(-np.clip(d_in, 0, None) / 9), 0) * along * 0.55
+    halo = np.where(d_in > -1, np.exp(-np.clip(d_in, 0, None) / 9), 0) * along * halo_amt
     if pool: halo = halo + np.where(d_in > 0, np.exp(-d_in / 45), 0) * along * pool
     hl_img = np.zeros((H, W, 4), np.float32); hl_img[..., :3] = hl; hl_img[..., 3] = np.clip(halo, 0, 1) * 200 * (cover < 1)
     c.over(Image.fromarray(hl_img.astype(np.uint8)))

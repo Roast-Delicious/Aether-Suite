@@ -148,17 +148,28 @@ local function PlaceMini()
     if db.point then
         mini:SetPoint("CENTER", UIParent, "BOTTOMLEFT", db.point[1], db.point[2])
     elseif Minimap then
-        -- AetherSkins' ring has a gold chevron hanging below the minimap: sit under it
+        -- AetherSkins' ring has a gold chevron hanging below the minimap: sit
+        -- just under it, about 2 units clear (its dark backing reaches 0.223
+        -- map radii below the minimap's edge)
         local gap = 6
-        if _G.AetherSkins_RingActive then gap = (Minimap:GetWidth() or 140) / 2 * 0.28 + 4 end
+        if _G.AetherSkins_RingActive then gap = (Minimap:GetWidth() or 140) / 2 * 0.223 + 2 end
         mini:SetPoint("TOP", Minimap, "BOTTOM", 0, -gap)
     else
         mini:SetPoint("TOP", UIParent, "TOP", 0, -10)
     end
+    -- AetherSkins stacks the zone/clock pill under the readout: keep it in step
+    if AetherSkins_PlaceZonePill then pcall(AetherSkins_PlaceZonePill) end
 end
 
 -- AetherSkins calls this once its ring is up (it loads after AetherCoords)
-function AetherCoords_RefreshMini() if mini then PlaceMini() end end
+function AetherCoords_RefreshMini()
+    if mini then PlaceMini() end
+end
+-- for AetherSkins: the readout, if it's showing in its usual spot under the
+-- minimap (nil when it's turned off or moved somewhere else)
+function AetherCoords_MiniUnderMap()
+    if mini and mini:IsShown() and db and not db.point then return mini end
+end
 
 local function CreateMini()
     mini = MakePanel(UIParent, 12)
@@ -897,7 +908,7 @@ SlashCmdList.AETHERCOORDS = function(input)
         db.decimals = math.max(0, math.min(2, math.floor(tonumber(val))))
         Print("Decimal places: " .. db.decimals)
     elseif cmd == "minimap" then
-        db.minimap = (val ~= "off"); mini:SetShown(db.minimap)
+        db.minimap = (val ~= "off"); mini:SetShown(db.minimap); PlaceMini()
         Print("Minimap readout " .. (db.minimap and "on" or "off"))
     elseif cmd == "popup" then
         db.popup = (val ~= "off")

@@ -35,6 +35,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 - Before any recommendation or diagnosis, check it against everything
   QUEUED FOR THE NEXT BUILD (and any unshipped branch), and say how the
   queue affects it. (User, Nov 24 14:42.)
+- At session start, look for OTHER Aether chats (recent_chats) updated
+  after this repo's last commit, and read them: decisions made there are
+  not in this kit. (Nov 24: a parallel chat's minimap picks were missed.)
 - AetherDev.zip (this repo, the handoff kit) is made ONLY at the end of a
   session, when the user says they're opening the next one. Don't send it
   with builds.
@@ -85,6 +88,35 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
+- LAST BUILD (Nov 24, 15:44; go-ahead 15:36): Ledger 1.7.1, Skins 1.1.0,
+  Coords 1.3.14, Hub 1.14.4, Bars 1.14.3, Frames 1.14.7, ItemID 1.1.4,
+  Meter 1.13.9, Pack 1.6.1 (Pathfinder 1.9.5, Marks 1.6.13, Chat 1.0.8
+  unchanged). What's in it:
+  * Turn-in text Aether Blue (READY = BLUE).
+  * 3D bevel gold chevrons everywhere: tools/gen_chev3d.py bakes
+    chev3d_up/right/down/left.tga into each addon's Media (from
+    win_chev_gold) and AetherFrames' chev58/chev80_<dir>_gold3d.tga (from
+    each direction's own flat art, light in screen space). Gold is never
+    rotated or tinted; dark backings still rotate. Mirrored (target)
+    frames swap left/right art instead of flipping. Test chev3d_test.
+  * AetherSkins 1.1.0 = the minimap decisions below (layout 3, ring
+    light B, Aether Blue magnifier, calendar + addon compartment hidden,
+    Forever's PlayerCoords hidden by name + by content). Zone pill:
+    AetherSkinsZonePill, 5 under AetherCoords_MiniUnderMap() (else at its
+    spot), Blizzard's zone button + clock re-anchored into it and kept
+    there (SetPoint hooks); mail IndicatorFrame left of the pill;
+    MinimapCluster.Tracking moved onto the ring at (-0.718R, 0.735R),
+    strata MEDIUM, art hidden, our disc + ico_track (Aether Blue) with
+    mouse off. Coords gap now 0.223R + 2 (chevron backing reaches 0.223R
+    below the edge). Tests: skins_minimap_test (layout 3), coords_pill_
+    test; render tools/skins_render.py. The parallel chat's 1.0.3 code was
+    rebuilt from its transcript here (its "stop 3 short" pill code dropped:
+    moot with layout 3).
+  NOT yet confirmed in game: all of it. Check: chevrons on every window,
+  XP bar, frames; ring light; magnifier menu opens; zone pill + clock +
+  mail icon spot; quest list clears; Forever's coords gone. If off:
+  /skins debug + screenshot.
+
 - Last delivered build (Nov 24, 14:05): AetherSkins 1.0.2 (NEW: minimap),
   AetherCoords 1.3.13, AetherHub 1.14.3, AetherLedger 1.7.0 (tooltip spot
   B, sky-blue turn-in text). Others: Pathfinder 1.9.5, Frames 1.14.6,
@@ -104,11 +136,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   #FFB000 (the only yellow), Aether Blue #4DA6FF (edges, rims, glow, blue
   text), Aether Navy #13284A (title strips, buttons, pills, minimap ring).
   Aether Sky #73BFFF is retired.
-- QUEUED FOR THE NEXT BUILD (user, Nov 24 14:31): "Ready for turn-in" text
+- SHIPPED 15:44 (was queued (user, Nov 24 14:31): "Ready for turn-in" text
   in the quest tracker from Aether Sky to AETHER BLUE (AetherLedger_
   TrackerLook.lua READY = {0.3, 0.65, 1}; update tracker_look_test and the
   README line). Bump Ledger. Confirm the go-ahead before building.
-- QUEUED FOR THE NEXT BUILD (user, Nov 24 14:06): upgrade ALL chevrons
+- SHIPPED 15:44 (was queued (user, Nov 24 14:06): upgrade ALL chevrons
   in the suite to the 3D bevel ridge (A), as on AetherSkins' minimap:
   every Aether window's 12/3/6/9 chevrons (win_chev_gold in each addon's
   Media), the XP bar chevrons, the docked meter's top chevron, frame
@@ -118,7 +150,7 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   rotate), as in AetherSkins/Media/chev3d_*.tga. Grep all addons for
   win_chev_gold / chev58_* / chev80_* to find every use; bake matching
   sizes. Confirm the go-ahead before building (standing rule).
-- MINIMAP DECISIONS (user, Nov 24 ~14:15-14:24, in the separate chat
+- SHIPPED 15:44 in Skins 1.1.0: MINIMAP DECISIONS (user, Nov 24 ~14:15-14:24, in the separate chat
   "Aether minimap coordinates bug"), part of the NEXT BUILD, waiting for go:
   * AetherSkins 1.0.3: hide Forever's OWN minimap coordinates text (the
     game option "Player Minimap Coordinates"), found by content (a pair of
@@ -147,9 +179,7 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   * The "1" badge under the calendar = Blizzard's ADDON COMPARTMENT
     (tooltip "AddOns"; menu lists AetherHub only). CHOSEN (user, 15:01):
     option 1, HIDE it in layout 3 (AetherHub's ring button covers it).
-  Nothing open: all minimap picks made. Waiting only on the go-ahead.
-  NOTE: that chat's code (branch fix/forever-coords) and mockup scripts were
-  never pushed and are NOT in this repo; recreate from its transcript.
+  (That chat's branch was never pushed; rebuilt here for 1.1.0.)
 - Next AetherSkins batch (looks approved, not built): world map + quest
   log, Reputation, Friends, Progress Track; then more windows. No Hub
   tab for AetherSkins yet (slash only).
@@ -289,6 +319,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 24, 2026 (15:44): built Ledger 1.7.1 (Aether Blue turn-in), 3D
+  chevrons suite-wide, AetherSkins 1.1.0 (minimap layout 3), Coords 1.3.14.
+  Lesson: a parallel Aether chat (14:07-14:24) made decisions the dev zip
+  never got. At session start, check recent_chats for other Aether chats
+  since the dev zip's last commit and read them.
 - Nov 24, 2026 (14:06): session closed; AetherDev.zip made for the next.
 - Nov 24, 2026 (14:05): AetherSkins 1.0.2 (zone pill, 3D chevrons),
   AetherCoords 1.3.13 (coordinates below the chevron).

@@ -10,8 +10,12 @@
 --    by fading to the plain ring and back.
 --  * The day/night button is our own: a navy button with an Aether-gold
 --    sun or a pale moon. Click it for the calendar.
---  * The zone name and clock bar gets a navy pill; yellow zone text turns
---    Aether gold (Aether gold is the only yellow).
+--  * Under the minimap: AetherCoords' coordinates pill just under the
+--    bottom chevron, then a navy pill with the zone name and the clock
+--    (yellow zone text turns Aether gold, the only yellow). The tracking
+--    magnifier moves onto the ring across from the sun; the calendar button
+--    (our sun opens it), the addon compartment and Forever's own minimap
+--    coordinates are hidden.
 -- Only looks change: the map, its pins and every button keep working.
 -- /skins for options; /skins debug lists what was found and hidden.
 -- ==========================================
@@ -118,6 +122,7 @@ AetherSkins_Pill = Pill
 -- The minimap
 -- ------------------------------------------
 local ring, sunButton, state, topBar, zoneText, found = nil, nil, {}, nil, nil, {}
+local PlaceTracking      -- defined with the top bar below; Layout calls it
 
 local function Radius() return (Minimap:GetWidth() or 140) / 2 end
 
@@ -131,6 +136,8 @@ local function Layout()
         c.dark:ClearAllPoints(); c.dark:SetPoint("CENTER", Minimap, "CENTER", c.dx * 1.094 * R, c.dy * 1.094 * R)
         c.gold:ClearAllPoints(); c.gold:SetAllPoints(c.dark)
     end
+    if PlaceTracking then PlaceTracking() end
+    if AetherSkins_PlaceZonePill then AetherSkins_PlaceZonePill() end
     if sunButton then
         sunButton:SetSize(SUN_SIZE * R, SUN_SIZE * R)
         sunButton:ClearAllPoints()
@@ -293,8 +300,11 @@ local function NearTopRight()
     return out
 end
 
--- Zone name + clock: a navy pill behind Blizzard's bar (its art hidden). The
--- bar's buttons (tracking, calendar, clock) keep working where they are.
+-- Zone name + clock. Layout 3 (user, Nov 24): under the minimap come
+-- AetherCoords' coordinates pill (just under the bottom chevron), then a navy
+-- pill with the zone name and the clock. Blizzard's own zone button and clock
+-- are moved into it, so they keep working (click the clock for the stopwatch,
+-- hover the zone for its tooltip). The top bar's art stays hidden.
 local function GoldZoneText(fs)
     if not fs or fs.aetherGold then return end
     fs.aetherGold = true
@@ -313,55 +323,207 @@ local function GoldZoneText(fs)
     end)
 end
 
+local cluster, zoneButton, clock, indicator, zonePill, placing
+local PILL_H, PILL_PAD, PILL_GAP = 20, 10, 5      -- pill height, end padding, gap under the coordinates
+local function TextWidth(fs, fallback)
+    local ok, w = pcall(function() return fs:GetStringWidth() end)
+    return (ok and w and w > 0) and w or fallback
+end
+-- Re-anchored Blizzard frames go back to Blizzard's spot when its minimap
+-- re-lays itself out; put them back in the pill when that happens.
+local function Keep(frame)
+    if not frame or frame.aetherKept then return end
+    frame.aetherKept = true
+    hooksecurefunc(frame, "SetPoint", function()
+        if placing or not zonePill then return end
+        C_Timer.After(0, function() if AetherSkins_PlaceZonePill then AetherSkins_PlaceZonePill() end end)
+    end)
+end
+function AetherSkins_PlaceZonePill()
+    if not zonePill or placing then return end
+    placing = true
+    local ok, err = pcall(function()
+        zonePill:ClearAllPoints()
+        local mini = AetherCoords_MiniUnderMap and AetherCoords_MiniUnderMap()
+        if mini then
+            zonePill:SetPoint("TOP", mini, "BOTTOM", 0, -PILL_GAP)
+            found.zonePill = "under the coordinates"
+        else   -- no coordinates pill there: take its spot, just under the bottom chevron
+            zonePill:SetPoint("TOP", Minimap, "BOTTOM", 0, -(Radius() * 0.223 + 2))
+            found.zonePill = "under the minimap"
+        end
+        -- contents: the zone name on the left, the clock on the right
+        local zw = math.min(TextWidth(zoneText, 80), 130)
+        local width = PILL_PAD + zw + PILL_PAD
+        if zoneButton then
+            zoneButton:ClearAllPoints()
+            zoneButton:SetPoint("LEFT", zonePill, "LEFT", PILL_PAD - 2, 0)
+            zoneButton:SetSize(zw + 4, 14)
+        end
+        if clock and clock:IsShown() then
+            local cw = TextWidth(_G.TimeManagerClockTicker, clock:GetWidth() or 40)
+            clock:ClearAllPoints()
+            clock:SetPoint("RIGHT", zonePill, "RIGHT", -(PILL_PAD - 2), 0)
+            clock:SetSize(cw + 4, 16)
+            width = width + 12 + cw
+        end
+        zonePill:SetSize(width, PILL_H)
+        -- the mail / crafting-order indicator hung under the tracking button,
+        -- which is now on the ring: it sits just left of the pill instead
+        if indicator then
+            indicator:ClearAllPoints()
+            indicator:SetPoint("RIGHT", zonePill, "LEFT", -3, 0)
+        end
+        local lv = zoneButton and zoneButton:GetFrameLevel() or 2
+        if clock then lv = math.min(lv, clock:GetFrameLevel() or lv) end
+        zonePill:SetFrameLevel(math.max(0, lv - 1))
+    end)
+    placing = false
+    if not ok then found.zonePill = "error: " .. tostring(err) end
+end
+
+-- The tracking magnifier on the ring, across from the sun (top-left): Blizzard's
+-- own button (its menu and clicks unchanged), its art hidden, our navy disc
+-- and a flat magnifier in Aether Blue on top. Mouse goes through ours to it.
+local TRACK_AT = { -SUN_AT[1], SUN_AT[2] }
+local tracking, trackBtn, trackDeco
+PlaceTracking = function()
+    if not tracking then return end
+    placing = true
+    local R = Radius(); local d = SUN_SIZE * R
+    tracking:ClearAllPoints()
+    tracking:SetPoint("CENTER", Minimap, "CENTER", TRACK_AT[1] * R, TRACK_AT[2] * R)
+    tracking:SetSize(d, d)
+    if trackBtn ~= tracking then trackBtn:ClearAllPoints(); trackBtn:SetAllPoints(tracking) end
+    placing = false
+end
+local function MoveTracking()
+    tracking = (cluster and Obj(cluster.Tracking)) or Obj(_G.MiniMapTracking)
+    if not tracking then found.track = "none found"; return end
+    trackBtn = Obj(tracking.Button) or Obj(_G.MiniMapTrackingButton) or tracking
+    HideTextures(tracking); if trackBtn ~= tracking then HideTextures(trackBtn) end
+    if tracking.SetFrameStrata then tracking:SetFrameStrata("MEDIUM") end
+    tracking:SetFrameLevel((Minimap:GetFrameLevel() or 1) + 9)
+    if trackBtn ~= tracking then trackBtn:SetFrameLevel((Minimap:GetFrameLevel() or 1) + 10) end
+    trackDeco = CreateFrame("Frame", "AetherSkinsTracking", tracking)
+    trackDeco:SetAllPoints(tracking); trackDeco:EnableMouse(false)
+    trackDeco:SetFrameLevel((Minimap:GetFrameLevel() or 1) + 11)
+    local disc = trackDeco:CreateTexture(nil, "BACKGROUND"); disc:SetAllPoints(); disc:SetTexture(MEDIA .. "btn_disc")
+    local icon = trackDeco:CreateTexture(nil, "ARTWORK"); icon:SetTexture(MEDIA .. "ico_track")
+    icon:SetVertexColor(BLUE[1], BLUE[2], BLUE[3], 1); icon:SetPoint("CENTER")
+    local hl = trackDeco:CreateTexture(nil, "OVERLAY"); hl:SetAllPoints(); hl:SetTexture(MEDIA .. "btn_disc")
+    hl:SetBlendMode("ADD"); hl:SetAlpha(0)
+    trackDeco:SetScript("OnSizeChanged", function(_, w) icon:SetSize(w * 0.68, w * 0.68) end)
+    trackBtn:HookScript("OnEnter", function() hl:SetAlpha(0.3) end)
+    trackBtn:HookScript("OnLeave", function() hl:SetAlpha(0) end)
+    ours[trackDeco] = true; ours[disc] = true; ours[icon] = true; ours[hl] = true
+    trackDeco.icon = icon
+    hooksecurefunc(tracking, "SetPoint", function()
+        if not placing then C_Timer.After(0, PlaceTracking) end
+    end)
+    PlaceTracking()
+    found.track = Name(tracking)
+end
+
+-- Forever's own coordinates under the minimap (the game option "Player
+-- Minimap Coordinates"): AetherCoords' pill replaces them. /fstack showed the
+-- frame: MinimapCluster.MinimapContainer.PlayerCoords (with .CoordText). It's
+-- hidden by name; any other text near the minimap that reads as a pair of
+-- numbers ("26.8, 77.0") is hidden too, in case the name differs.
+local function IsCoordText(fs)
+    if not fs.GetText then return false end
+    local ok, t = pcall(fs.GetText, fs)
+    if not ok or type(t) ~= "string" then return false end
+    t = t:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", "")
+    return t:match("^%s*%(?%s*%d+%.?%d*%s*[,/ ]%s*%d+%.?%d*%s*%)?%s*$") ~= nil
+end
+local function HideCoordText(frame, depth)
+    if not frame or depth > 4 or ours[frame] then return end
+    if frame.GetRegions then
+        for _, r in ipairs({ frame:GetRegions() }) do
+            if not ours[r] and r.GetObjectType and r:GetObjectType() == "FontString" and IsCoordText(r) then
+                if not hidden[r] then found.coords = (found.coords and found.coords .. ", " or "") .. Name(r) end
+                HideRegion(r)
+            end
+        end
+    end
+    if frame.GetChildren then
+        for _, c in ipairs({ frame:GetChildren() }) do HideCoordText(c, depth + 1) end
+    end
+end
+local function HideForeverCoords()
+    local box = cluster and Obj(cluster.MinimapContainer)
+    local pc = box and Obj(box.PlayerCoords)
+    if pc then
+        if not hidden[pc] then found.coords = (found.coords and found.coords .. ", " or "") .. Name(pc) end
+        HideRegion(pc)
+        if not pc.aetherHidden and pc.Hide then
+            pc.aetherHidden = true
+            pc:Hide()
+            hooksecurefunc(pc, "Show", function(self) self:Hide() end)
+        end
+    end
+    for _, p in ipairs({ Minimap, cluster or false, Obj(_G.MinimapBackdrop) or false }) do
+        if p then HideCoordText(p, 1) end
+    end
+end
+-- for /skins debug: coordinate-like text anywhere on screen, with its frame
+local function CoordTextAnywhere()
+    local out = {}
+    local function Look(frame, depth)
+        if not frame or depth > 4 or ours[frame] then return end
+        if frame.GetRegions then
+            for _, r in ipairs({ frame:GetRegions() }) do
+                if r.GetObjectType and r:GetObjectType() == "FontString" and IsCoordText(r) then
+                    out[#out + 1] = Name(r) .. (hidden[r] and " (hidden)" or "")
+                end
+            end
+        end
+        if frame.GetChildren then for _, c in ipairs({ frame:GetChildren() }) do Look(c, depth + 1) end end
+    end
+    Look(UIParent, 1)
+    return out
+end
+
 local function SkinTopBar()
-    local cluster = Obj(_G.MinimapCluster)
+    cluster = Obj(_G.MinimapCluster)
     local bar = (cluster and Obj(cluster.BorderTop)) or Obj(_G.MinimapBorderTop)
-    local zoneButton = (cluster and Obj(cluster.ZoneTextButton)) or Obj(_G.MinimapZoneTextButton)
+    zoneButton = (cluster and Obj(cluster.ZoneTextButton)) or Obj(_G.MinimapZoneTextButton)
     zoneText = Obj(_G.MinimapZoneText) or (zoneButton and Obj(zoneButton.Text))
-    local anchor
     if bar then
         if bar.GetObjectType and bar:GetObjectType() == "Texture" then HideRegion(bar) else HideTextures(bar) end
-        anchor = bar
-    elseif zoneButton then
-        anchor = zoneButton
     end
+    found.bar = bar and Name(bar) or "none"
     if zoneButton then HideTextures(zoneButton) end
-    local clock = Obj(_G.TimeManagerClockButton)
+    clock = Obj(_G.TimeManagerClockButton)
     if clock then
         for _, r in ipairs({ clock:GetRegions() }) do
             if r:GetObjectType() == "Texture" and r ~= clock:GetHighlightTexture() then HideRegion(r) end
         end
     end
+    indicator = cluster and Obj(cluster.IndicatorFrame)
     GoldZoneText(zoneText)
-    found.bar = anchor and Name(anchor) or "none"
-    -- The pill covers only the zone name and the clock, not the whole bar:
-    -- the bar also holds the tracking button (left) and the calendar (right),
-    -- and those stay clear and on top.
-    local left = zoneButton or anchor
-    if not left then return end
-    local holder = CreateFrame("Frame", nil, left:GetParent() or UIParent)
-    ours[holder] = true
-    local p = Pill(holder, "BACKGROUND")
-    local function SameRow(a, b)
-        local _, ay = a:GetCenter(); local _, by = b:GetCenter()
-        return ay and by and math.abs(ay - by) < math.max(a:GetHeight() or 0, 8)
-    end
-    local function Place()
-        holder:ClearAllPoints()
-        holder:SetPoint("TOPLEFT", left, "TOPLEFT", 0, 0)
-        local right = (clock and clock:IsShown() and SameRow(left, clock)) and clock or left
-        holder:SetPoint("BOTTOMRIGHT", right, "BOTTOMRIGHT", 0, 0)
-        found.pill = Name(left) .. (right ~= left and (" to " .. Name(right)) or "")
-        -- just under the zone text and clock, so every button on the bar stays above it
-        local lv = left:GetFrameLevel() or 1
-        if right ~= left then lv = math.min(lv, right:GetFrameLevel() or lv) end
-        holder:SetFrameLevel(math.max(0, lv - 1))
-        p:Place(holder, 2, 1)
-    end
-    Place()
-    holder:SetScript("OnSizeChanged", function() p:Place(holder, 2, 1) end)
-    C_Timer.After(1, Place)          -- the bar may still be laying out at login
-    topBar = holder
+    -- the calendar button and the addon compartment ("1"): hidden. Our sun
+    -- opens the calendar; AetherHub's ring button opens the Hub.
+    local cal = Obj(_G.GameTimeFrame)
+    if cal then HideRegion(cal) end
+    local comp = Obj(_G.AddonCompartmentFrame)
+    if comp then HideRegion(comp) end
+    found.hidTop = (cal and "calendar " or "") .. (comp and "addon compartment" or "")
+    -- the pill
+    zonePill = CreateFrame("Frame", "AetherSkinsZonePill", (zoneButton and zoneButton:GetParent()) or cluster or UIParent)
+    ours[zonePill] = true
+    zonePill:EnableMouse(false)
+    local p = Pill(zonePill, "BACKGROUND")
+    zonePill:SetScript("OnSizeChanged", function() p:Place(zonePill, 0, 0) end)
+    zonePill:SetSize(120, PILL_H); p:Place(zonePill, 0, 0)
+    Keep(zoneButton); Keep(clock); Keep(indicator)
+    if zoneText and zoneText.SetText then hooksecurefunc(zoneText, "SetText", function() AetherSkins_PlaceZonePill() end) end
+    AetherSkins_PlaceZonePill()
+    C_Timer.After(1, AetherSkins_PlaceZonePill)          -- the bar may still be laying out at login
+    -- the tracking magnifier goes onto the ring
+    pcall(MoveTracking)
+    found.pill = (zoneButton and Name(zoneButton) or "no zone button") .. (clock and (" + " .. Name(clock)) or "")
 end
 
 local function InstallMinimap()
@@ -404,8 +566,12 @@ local function InstallMinimap()
     end
     -- the minimap's buttons may not be in place yet right at login: try again shortly
     if not ReplaceIcon() then C_Timer.After(2, ReplaceIcon); C_Timer.After(6, ReplaceIcon) end
-    -- 4) Zone + clock pill
-    pcall(SkinTopBar)
+    -- 4) Zone + clock pill under the coordinates; magnifier onto the ring;
+    --    calendar and addon compartment hidden
+    local ok, err = pcall(SkinTopBar)
+    if not ok then found.pill = "error: " .. tostring(err) end
+    -- 5) Forever's own coordinates text (it may only get its text a moment after login)
+    HideForeverCoords(); C_Timer.After(2, HideForeverCoords); C_Timer.After(6, HideForeverCoords)
     -- keep it all in step
     hooksecurefunc(Minimap, "SetSize", Layout)
     Minimap:HookScript("OnSizeChanged", Layout)
@@ -413,7 +579,7 @@ local function InstallMinimap()
     if AetherHub_RefreshMinimapButton then pcall(AetherHub_RefreshMinimapButton) end
     if AetherCoords_RefreshMini then pcall(AetherCoords_RefreshMini) end   -- coordinates go under the bottom chevron
     CheckDay(true)
-    C_Timer.NewTicker(15, function() CheckDay(false); Rehide() end)
+    C_Timer.NewTicker(15, function() CheckDay(false); HideForeverCoords(); Rehide(); AetherSkins_PlaceZonePill() end)
 end
 
 -- ------------------------------------------
@@ -455,7 +621,11 @@ SlashCmdList["AETHERSKINS"] = function(msg)
         Print("day/night icon replaced: " .. tostring(found.daynight))
         local near = NearTopRight()
         Print("near the ring's top-right: " .. (#near > 0 and table.concat(near, ", ") or "nothing"))
-        Print("zone bar: " .. tostring(found.bar) .. "; pill behind: " .. tostring(found.pill))
+        Print("zone bar art: " .. tostring(found.bar) .. "; zone pill holds " .. tostring(found.pill) .. ", " .. tostring(found.zonePill))
+        Print("tracking (magnifier on the ring): " .. tostring(found.track) .. "; hidden at the top: " .. tostring(found.hidTop))
+        Print("Forever's coordinates hidden: " .. tostring(found.coords or "none found"))
+        local ct = CoordTextAnywhere()
+        Print("coordinate text on screen: " .. (#ct > 0 and table.concat(ct, ", ") or "none"))
         Print("hidden (" .. #hiddenNames .. "): " .. table.concat(hiddenNames, ", "))
         local kids = {}
         for _, p in ipairs({ Minimap, Obj(_G.MinimapCluster) or false }) do

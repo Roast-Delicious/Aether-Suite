@@ -52,6 +52,11 @@ function M.HookScript(s, k, f) s.scripts[k] = f end
 function M.GetHighlightTexture(s) return s.hl end
 function M.GetFont(s) return "Fonts\\FRIZQT__.TTF", 12, "" end
 function M.SetFont(s, f) s.font = f end
+function M.GetStringWidth(s) return s.sw end
+function M.SetText(s, t) s.text = t end
+function M.GetText(s) return s.text end
+function M.SetFrameStrata(s, v) s.strata = v end
+function M.SetAllPoints(s, r) s.points = { { "ALL", r } } end
 CreateFrame = function(kind, name, parent)
   local f = new("Frame", name); f.parent = parent
   if parent then parent.kids[#parent.kids+1] = f; f.level = (parent.level or 1) + 1 end
@@ -102,8 +107,24 @@ CALBTN = Kid(MinimapCluster, "GameTimeFrame", 58, 101, 24)
 -- the top bar: tracking (left), zone name, clock, calendar (right), all on one row
 ZONEBTN = Kid(MinimapCluster, "MinimapZoneTextButton", -20, 112, 120); ZONEBTN.h = 16; ZONEBTN.level = 5
 MinimapCluster.ZoneTextButton = ZONEBTN
-TRACK = Kid(MinimapCluster, "MiniMapTracking", -92, 112, 20); TRACK.level = 5
-ONEBTN = Kid(MinimapCluster, "ForeverIndicator", 58, 84, 18)
+TRACK = Kid(MinimapCluster, "MiniMapTracking", -92, 112, 17); TRACK.level = 5
+MinimapCluster.Tracking = TRACK
+TRACK.Background = TRACK:CreateTexture()
+TRACK.Button = Kid(TRACK, "MiniMapTrackingButton", -92, 112, 13); TRACK.Button.level = 6
+TRACKART = TRACK.Button:CreateTexture()
+MinimapCluster.IndicatorFrame = Kid(MinimapCluster, "IndicatorFrame", -92, 96, 20)
+-- the "1" under the calendar: Blizzard's addon compartment
+ONEBTN = Kid(MinimapCluster, "AddonCompartmentFrame", 58, 84, 18)
+-- Forever's own coordinates under the minimap (/fstack, Nov 24)
+MinimapCluster.MinimapContainer = Kid(MinimapCluster, "MinimapContainer", 0, 0, 215)
+PCOORDS = Kid(MinimapCluster.MinimapContainer, "PlayerCoords", 0, -80, 60); PCOORDS.h = 14
+MinimapCluster.MinimapContainer.PlayerCoords = PCOORDS
+PCOORDS.CoordText = PCOORDS:CreateFontString(); PCOORDS.CoordText.text = "32.9, 20.2"; PCOORDS.CoordText.name = "CoordText"
+MinimapZoneText.sw = 96
+TimeManagerClockTicker = NEW("FontString", "TimeManagerClockTicker"); TimeManagerClockTicker.sw = 34
+-- AetherCoords' readout under the map (its API, as AetherCoords provides it)
+COORDPILL = NEW("Frame", "AetherCoordsMini"); COORDPILL.shown = true
+AetherCoords_MiniUnderMap = function() return COORDPILL.shown and COORDPILL or nil end
 HUBBTN = Kid(Minimap, "AetherHubMinimapButton", -55, -48, 31)
 PROT = Kid(MinimapCluster, "SomeProtectedButton", 48, 50, 26, true)
 ZOOM = Kid(Minimap, "MinimapZoomIn", 76, -12, 24)
@@ -135,13 +156,32 @@ expect("Forever's day/night icon hidden", (L.eval('DAYNIGHT.alpha'), L.eval('DAY
 expect("AetherHub's button left alone", L.eval('HUBBTN.alpha'), 1)
 expect("protected frame left alone", L.eval('PROT.alpha'), 1)
 expect("zoom button left alone", L.eval('ZOOM.alpha'), 1)
-expect("calendar and the small button by the bar left alone", (L.eval('CALBTN.alpha'), L.eval('ONEBTN.alpha')), (1, 1))
+expect("calendar button hidden (our sun opens it)", (L.eval('CALBTN.alpha'), L.eval('CALBTN.mouse')), (0, False))
+expect("addon compartment ('1') hidden", L.eval('ONEBTN.alpha'), 0)
 expect("zone bar art hidden", L.eval('MinimapCluster.BorderTop.alpha'), 0)
-L.execute('''PILL = nil; for _, f in ipairs(FRAMES) do if f.points[1] and f.points[1][2] == ZONEBTN and f.points[1][1] == "TOPLEFT" then PILL = f end end''')
-expect("pill starts at the zone name (not the whole bar)", L.eval('PILL ~= nil'), True)
-expect("pill ends at the clock", L.eval('PILL.points[2][2] == TimeManagerClockButton and PILL.points[2][1]'), "BOTTOMRIGHT")
-expect("pill sits under the bar's buttons", L.eval('PILL.level < TRACK.level and PILL.level < CALBTN.level + 5'), True)
-expect("tracking and calendar untouched", (L.eval('TRACK.alpha'), L.eval('CALBTN.alpha')), (1, 1))
+# layout 3: the zone + clock pill under the coordinates pill
+expect("zone pill made", L.eval('AetherSkinsZonePill ~= nil'), True)
+expect("zone pill sits 5 under the coordinates pill", [L.eval('AetherSkinsZonePill.points[1][%d]' % i) for i in (1, 3, 5)], ["TOP", "BOTTOM", -5])
+expect("... anchored to the coordinates pill", L.eval('AetherSkinsZonePill.points[1][2] == COORDPILL'), True)
+expect("zone name inside the pill, on the left", (L.eval('ZONEBTN.points[1][1]'), L.eval('ZONEBTN.points[1][2] == AetherSkinsZonePill'), L.eval('ZONEBTN.points[1][3]')), ("LEFT", True, "LEFT"))
+expect("clock inside the pill, on the right", (L.eval('TimeManagerClockButton.points[1][1]'), L.eval('TimeManagerClockButton.points[1][2] == AetherSkinsZonePill')), ("RIGHT", True))
+expect("pill fits the zone name and clock (10 + 96 + 10 + 12 + 34)", (L.eval('AetherSkinsZonePill.w'), L.eval('AetherSkinsZonePill.h')), (162, 20))
+expect("pill under the zone name and clock", L.eval('AetherSkinsZonePill.level < ZONEBTN.level and AetherSkinsZonePill.level < TimeManagerClockButton.level'), True)
+expect("mail indicator moves beside the pill", (L.eval('MinimapCluster.IndicatorFrame.points[1][1]'), L.eval('MinimapCluster.IndicatorFrame.points[1][2] == AetherSkinsZonePill')), ("RIGHT", True))
+L.execute('COORDPILL.shown = false; AetherSkins_PlaceZonePill()')
+expect("coordinates off: pill takes its spot under the chevron", (L.eval('AetherSkinsZonePill.points[1][2] == Minimap'), round(L.eval('AetherSkinsZonePill.points[1][5]'), 2)), (True, round(-(70 * 0.223 + 2), 2)))
+L.execute('COORDPILL.shown = true; AetherSkins_PlaceZonePill()')
+L.execute('ZONEBTN:SetPoint("LEFT", MinimapCluster.BorderTop, "LEFT", 4, 0); for _, f in ipairs(AFTER) do f() end')
+expect("Blizzard re-anchors the zone name: back in the pill", L.eval('ZONEBTN.points[1][2] == AetherSkinsZonePill'), True)
+# the tracking magnifier on the ring, across from the sun
+expect("tracking moved to the ring's top-left", [round(v, 1) for v in (L.eval('TRACK.points[1][4]'), L.eval('TRACK.points[1][5]'))], [-50.3, 51.4])
+expect("tracking is sun-button sized", (round(L.eval('TRACK.w'), 1), L.eval('TRACK.Button.points[1][1]')), (20.3, "ALL"))
+expect("Blizzard's tracking art hidden, its button still clickable", (L.eval('TRACK.Background.alpha'), L.eval('TRACKART.alpha'), L.eval('TRACK.Button.mouse')), (0, 0, True))
+expect("our disc + flat magnifier in Aether Blue", (L.eval('AetherSkinsTracking.icon.texture')[-9:], tuple(round(v, 2) for v in list(L.eval('AetherSkinsTracking.icon.vc').values())[:3])), ("ico_track", (0.3, 0.65, 1)))
+expect("our art doesn't catch the mouse", L.eval('AetherSkinsTracking.mouse'), False)
+expect("Forever's minimap coordinates hidden", (L.eval('PCOORDS.shown'), L.eval('PCOORDS.alpha')), (False, 0))
+L.execute('PCOORDS:Show()')
+expect("... and stay hidden if the game shows them", L.eval('PCOORDS.shown'), False)
 expect("yellow zone text -> Aether gold", tuple(round(v, 2) for v in L.eval('{MinimapZoneText:GetTextColor()}').values()), (1, 0.69, 0))
 L.execute('MinimapZoneText:SetTextColor(0.1, 1, 0.1)')
 expect("green (friendly) zone text kept", tuple(round(v, 2) for v in L.eval('{MinimapZoneText:GetTextColor()}').values()), (0.1, 1, 0.1))
@@ -173,6 +213,8 @@ L.execute('OUT = ""; SlashCmdList.AETHERSKINS("debug")')
 out = L.eval('OUT')
 expect("debug names the replaced icon", "ForeverDayNightButton" in out, True)
 expect("debug lists what's near the top-right", "GameTimeFrame (60 deg" in out, True)
+expect("debug names the coordinates it hid", "PlayerCoords" in out, True)
+expect("debug names the tracking button", "tracking (magnifier on the ring): MiniMapTracking" in out, True)
 L.execute('OUT = ""; SlashCmdList.AETHERSKINS("day")')
 expect("/skins day previews day", L.eval('OUT').strip().endswith("day (set by /skins)"), True)
 L.execute('SlashCmdList.AETHERSKINS("minimap off")')

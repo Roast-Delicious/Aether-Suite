@@ -7,6 +7,7 @@
 #   btn_disc.tga    navy button with a blue rim (sun/moon, AetherHub)
 #   ico_sun.tga     12-ray sun, white with alpha (tinted Aether gold in game)
 #   ico_moon.tga    crescent, white with alpha (tinted pale in game)
+#   ico_track.tga   flat magnifier (tracking button), white with alpha (tinted Aether Blue)
 #   pill_cap.tga    half disc for the zone and coordinate pills (white)
 #   pill_capline.tga half-ring outline for the pills (white)
 # Ring textures span +-K map radii around the minimap's center (K below);
@@ -44,7 +45,9 @@ def ring(kind, size=512):
         MM.ring_ref(c, HALF, HALF, RM - 2, width, navy=True, spread=1e-4, glint=False)
     else:
         night = kind == 'night'
-        MM.ring_ref(c, HALF, HALF, RM - 2, width, hl=(SL.WHITE if night else SL.GOLD), night=night, navy=True)
+        # day: ring light B (user, Nov 24): the same glow, lighter, a soft gold-cream
+        light = {} if night else dict(gain=0.85, peak=0.3, halo_amt=0.2)
+        MM.ring_ref(c, HALF, HALF, RM - 2, width, hl=(SL.WHITE if night else SL.GOLD), night=night, navy=True, **light)
     return c.im.resize((size, size), Image.LANCZOS)
 
 def disc(size=64):
@@ -69,6 +72,20 @@ def moon(size=128):
     d.ellipse([28 * s, 28 * s, 148 * s, 148 * s], fill=255); d.ellipse([60 * s, 14 * s, 176 * s, 130 * s], fill=0)
     return white_alpha(im.resize((size, size), Image.LANCZOS))
 
+def magnifier(size=128, ring_w=17, lens=38, handle_w=21, cx=72, cy=72, reach=56):
+    """Flat magnifier like the sun and moon: a bold lens ring and a handle to
+    the bottom-right (mock/skin_magnifier.py, the approved proportions)."""
+    N = 176 * 4; s = 4; im = Image.new('L', (N, N), 0); d = ImageDraw.Draw(im)
+    X, Y = cx * s, cy * s; r = lens * s; hw0 = ring_w * s / 2
+    d.ellipse([X - r - hw0, Y - r - hw0, X + r + hw0, Y + r + hw0], fill=255)
+    d.ellipse([X - r + hw0, Y - r + hw0, X + r - hw0, Y + r - hw0], fill=0)
+    a = math.radians(45)
+    x0, y0 = X + (r + hw0) * math.cos(a), Y + (r + hw0) * math.sin(a)
+    x1, y1 = X + (r + reach * s) * math.cos(a), Y + (r + reach * s) * math.sin(a)
+    d.line([x0, y0, x1, y1], fill=255, width=int(handle_w * s)); hw = handle_w * s / 2
+    d.ellipse([x1 - hw, y1 - hw, x1 + hw, y1 + hw], fill=255)
+    return white_alpha(im.resize((size, size), Image.LANCZOS))
+
 def pill_cap(size=64, line=False):
     """Left half of a pill: a half disc (or its 1-unit outline), right edge flat."""
     S = 8; n = size * S; im = Image.new('L', (n // 2, n), 0); d = ImageDraw.Draw(im)
@@ -83,5 +100,6 @@ if __name__ == '__main__':
     for k in ('plain', 'day', 'night'): write_rgba(f'{OUT}/ring_{k}.tga', ring(k))
     write_rgba(f'{OUT}/btn_disc.tga', disc())
     write_rgba(f'{OUT}/ico_sun.tga', sun()); write_rgba(f'{OUT}/ico_moon.tga', moon())
+    write_rgba(f'{OUT}/ico_track.tga', magnifier())
     write_rgba(f'{OUT}/pill_cap.tga', pill_cap()); write_rgba(f'{OUT}/pill_capline.tga', pill_cap(line=True))
     print('K =', round(K, 4), 'written to', OUT)

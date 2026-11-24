@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 24, 2026 (14:05)
+Last updated: November 24, 2026 (15:44)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -15,24 +15,24 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.14.3    One window with every addon's settings
-  AetherMeter        1.13.8    Damage and healing meter
-  AetherBars         1.14.2    Clean action bars with a cooldown glow
-  AetherCoords       1.3.13    Coordinates, plus your own map waypoints
+  AetherHub          1.14.4    One window with every addon's settings
+  AetherMeter        1.13.9    Damage and healing meter
+  AetherBars         1.14.3    Clean action bars with a cooldown glow
+  AetherCoords       1.3.14    Coordinates, plus your own map waypoints
   AetherPathfinder   1.9.5     Trainers, vendors, flight masters and
                                mailboxes on the world map and minimap
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
-  AetherItemID       1.1.3     What an item is for, when you hover it
-  AetherLedger       1.7.0     Where to quest, train and skin next,
+  AetherItemID       1.1.4     What an item is for, when you hover it
+  AetherLedger       1.7.1     Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.6.0     Your bags sorted into sections
+  AetherPack         1.6.1     Your bags sorted into sections
   AetherChat         1.0.8     Chat with the Aether look, fitted beside
                                your action bars
-  AetherFrames       1.14.6    Your, your pet's, your target's, its
+  AetherFrames       1.14.7    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.0.2     The Aether look for Blizzard's windows,
+  AetherSkins        1.1.0     The Aether look for Blizzard's windows,
                                starting with the minimap
 
 
@@ -306,7 +306,8 @@ AetherCoords - coordinates and waypoints                  /mc and /way
   Shows where you are, and lets you mark spots on the map with notes.
   - Your coordinates under the minimap, in a navy pill with a fine blue
     edge (Shift-drag to move them). With AetherSkins' minimap they sit
-    just below its bottom gold chevron.
+    just under its bottom gold chevron, with the zone name and clock in
+    a second pill below them.
   - On the world map: the coordinates under your cursor, and your own
     position in the top-right corner.
   - Waypoints: the Aether star (a gold star in a thin gold ring on a navy
@@ -479,8 +480,8 @@ AetherLedger - where to quest, train and skin next             /ledger
     icons become a navy disc with a gold ring: gold dots while you're
     working on it, a gold ? when it's ready (a soft gold glow marks
     the quest you're following). Yellow quest names turn Aether gold
-    (other difficulty colors stay), "Ready for turn-in" is sky blue, the
-    text uses the Aether font, and a soft blue band shows behind the
+    (other difficulty colors stay), "Ready for turn-in" is Aether blue,
+    the text uses the Aether font, and a soft blue band shows behind the
     quest you point at. Turn it off on AetherHub's AetherLedger tab
     (takes effect after a reload).
   - /ledger tracker lists every quest in your log with its color, zone
@@ -661,7 +662,7 @@ AetherFrames - player, pet, target and party frames            /af
   look. They work the same way: click a frame to target, right-click
   for its menu.
   - Round crest: the live portrait inside a thin gold ring and a blue
-    ring, with gold chevrons (thick, with a fine echo) pointing outward
+    ring, with beveled gold chevrons (with a fine echo) pointing outward
     at 12, 3 and 9 o'clock.
   - Class medallion at 3 o'clock, where the crest meets the capsule:
     for player characters (you, and players you target), a small dark
@@ -851,17 +852,24 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
     and 9 o'clock (beveled too, lit from the sun's side), and a soft
     blue glow around it.
   - Light comes from the sun or moon button at the top-right of the
-    ring. By day a gold glow lights the ring's inner wall across from it
-    and fades softly back into the navy; by night the glow is white. It
-    follows the game's own day and night (realm time) and changes over
-    with a short fade. The map itself isn't tinted.
+    ring. By day a soft gold-cream glow lights the ring's inner wall
+    across from it and fades back into the navy; by night the glow is
+    white. It follows the game's own day and night (realm time) and
+    changes over with a short fade. The map itself isn't tinted.
   - The sun or moon button is the Aether one: a navy button with a gold
     sun by day and a pale moon at night. Hover it for the game time;
-    click it for the calendar.
-  - The zone name and clock sit on a navy pill (the tracking and
-    calendar buttons beside them stay clear). A yellow
-    zone name turns Aether gold; other zone colors (friendly, hostile,
-    contested) stay as they are. Its buttons work as before.
+    click it for the calendar (it replaces the calendar button).
+  - The tracking magnifier sits on the ring across from the sun, on the
+    same navy button, as a flat magnifier in Aether blue. Click it for
+    the tracking menu as before.
+  - Under the minimap: your coordinates (AetherCoords) just under the
+    bottom chevron, then a navy pill with the zone name and the clock.
+    A yellow zone name turns Aether gold; other zone colors (friendly,
+    hostile, contested) stay. The clock and zone name work as before,
+    and the mail icon sits just left of the pill.
+  - Hidden: the calendar button (the sun opens it), the addon button
+    with the "1" (AetherHub's own button is on the ring), and Forever's
+    own coordinates under the minimap (the Aether pill shows them).
   - The map, its pins, AetherCoords' waypoints, AetherPathfinder's NPCs
     and other addons' minimap buttons all work as before.
   - More of Blizzard's windows (world map, reputation, friends and so
@@ -909,11 +917,13 @@ GOOD TO KNOW
   inner line, a soft Aether-blue glow (brightest at the edge, fading
   out over about 10 pixels), a navy title strip with a gold underline,
   and gold chevrons (thick, with a fine echo) pointing outward at 12,
-  3, 6 and 9 o'clock, the side ones a little larger. When AetherMeter
-  is docked beside your bars, it keeps only the top chevron. Buttons
-  are navy with a blue edge. In AetherHub, gold
-  means "on": a checked box fills gold with a gold edge, and slider
-  handles are gold.
+  3, 6 and 9 o'clock, the side ones a little larger. Every gold chevron
+  in the suite (windows, bars, the XP bar, the meter and the unit
+  frames) is beveled, lit from the top-right like the minimap ring.
+  When AetherMeter is docked beside your bars, it keeps only the top
+  chevron. Buttons are navy with a blue edge. In AetherHub, gold means
+  "on": a checked box fills gold with a gold edge, and slider handles
+  are gold.
 - If an addon ever seems to do nothing, type /console scriptErrors 1 and
   /reload. WoW hides addon errors by default; this shows them, and the
   error text pinpoints the problem.
