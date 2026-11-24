@@ -14,11 +14,11 @@ ROWS = [("H", "Horde"), ("Darkspear Trolls", "Honored", .22, GREEN), ("Orgrimmar
 DESC = ("This tribe of exiled trolls has joined forces with Thrall and the Horde. "
         "They now call Durotar their home, which they share with their orc allies.")
 
-def draw(style):
+def draw(style, chev3d=False):
     bg = WORLD.crop((300, 250, 300 + 1040, 250 + 860))
     c = Canvas(bg)
     box = (40, 50, 1000, 810)
-    c.window(box, "Reputation", alpha=(205 if style == 'C' else 242))
+    c.window(box, "Reputation", alpha=(205 if style == 'C' else 242), chev3d=chev3d)
     c.crest((86, 96), 40, HAT)
     c.close(974, 69)
     # left list

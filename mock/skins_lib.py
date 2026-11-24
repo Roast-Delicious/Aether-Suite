@@ -51,7 +51,7 @@ class Canvas:
         else:
             self.d.text((x + SS, y + SS), s, font=f, fill=(0, 0, 0, 200), anchor=anchor)
         self.d.text((x, y), s, font=f, fill=color + (255,), anchor=anchor)
-    def window(self, box, title, alpha=242, chevrons=True, strip=24):
+    def window(self, box, title, alpha=242, chevrons=True, strip=24, chev3d=False):
         x0, y0, x1, y1 = self.P(*box); R = u(8); W, H = self.im.size
         self.over(glow(W, H, (x0, y0, x1, y1), R, u(10), BLUE, 0.42))
         L, d = self.layer()
@@ -71,9 +71,14 @@ class Canvas:
             cx, cy = (x0 + x1) // 2, (y0 + y1) // 2; Pp = u(3)
             for x, y, rot, sz in ((cx, y0 - Pp, 0, 26), (cx, y1 + Pp, 180, 26), (x1 + Pp, cy, -90, 34), (x0 - Pp, cy, 90, 34)):
                 k = u(sz)
-                for name, col in (('win_chev_dark', (10, 11, 14)), ('win_chev_gold', GOLD)):
-                    c = tga(name, col, (k, k)).rotate(rot, resample=Image.BICUBIC)
-                    self.im.alpha_composite(c, (x - k // 2, y - k // 2))
+                c = tga('win_chev_dark', (10, 11, 14), (k, k)).rotate(rot, resample=Image.BICUBIC)
+                self.im.alpha_composite(c, (x - k // 2, y - k // 2))
+                if chev3d:     # the 3D (bevel ridge) chevron, lit from the top-right
+                    import skin_chevron3d as C3
+                    c = C3.chevron3d('bevel', rot).rotate(rot, resample=Image.BICUBIC).resize((k, k), Image.LANCZOS)
+                else:
+                    c = tga('win_chev_gold', GOLD, (k, k)).rotate(rot, resample=Image.BICUBIC)
+                self.im.alpha_composite(c, (x - k // 2, y - k // 2))
             self.d = ImageDraw.Draw(self.im)
     def close(self, cx, cy):
         s = 11; x0, y0, x1, y1 = self.P(cx - s, cy - s, cx + s, cy + s)
