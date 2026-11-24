@@ -144,7 +144,7 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   separators, white arrows), map art kept inside a fine rounded blue
   edge, "You:" box as a navy pill, quest log like the tracker (header
   band, navy/gold quest icons, Ready for turn-in sky blue, gold-check
-  boxes, difficulty colors kept, yellow -> gold). Waiting on feedback.
+  boxes, difficulty colors kept, yellow -> gold). APPROVED (11:57).
   Other rules
   used: Neutral bars Aether gold, Friendly+ #22e650, Blizzard's yellow UI
   glyphs recolored (white, gold when selected), Fira Sans. Still need a
