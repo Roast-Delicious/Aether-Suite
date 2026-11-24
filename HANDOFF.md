@@ -71,37 +71,20 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-- Last delivered build (Nov 24): AetherPack 1.5.0 (gold capsule, coin
-  colors, session tooltip), AetherLedger 1.5.15 (directions window fits
-  its text, solid on mouseover). Everything else as in the user's zip.
-- Branch `wip-not-approved`: started before the user's "no build without
-  go-ahead" rule; NOT delivered, NOT tested. It has (1) Aether gold as the
-  only yellow suite-wide (Frames level yellow and neutral names, Coords
-  waypoint glow, Pack warning/deposit count, ItemID tips, Marks neutral
-  names and cast bar, README note) and (2) the Free slots "C1 text" rows
-  in AetherPack. Use it only after the user says go; then finish, test
-  (pack_test.py, pack_class_test.py, a render check) and update README.
-- APPROVED DESIGN, waiting for go-ahead (AetherPack Free slots, "C1 text"):
-  keep the deposit slot, arrow and "No swaps. Just drops." ink; rows to
-  the right of the ink, no bars: label (soft white) + right-aligned value.
-  Bags "22 free" (green / Aether gold in last 25% / red in last 10%),
-  Reagent "Full" (red when full). Ammo: above 50% of quiver capacity a
-  white count only; at 50% or less "Warning" in Aether gold before the
-  white count; at 300 or less "Low" in red before the white count, Low
-  pulsing bright/dim about once a second. No quiver: plain count, then
-  Low at 300 (user confirmed). Full numbers in each row's tooltip.
-  "(show)" becomes "Show empty" at the right end of the header line.
-- APPROVED: Aether gold (1, 0.69, 0) is the only yellow, whole suite
-  (user confirmed). Waiting for go-ahead to build.
-- Waiting on the user: which green. They want something more vibrant
-  than the current soft green #6edb78; options shown in greens_vivid.png:
-  F #22e650 (suggested), G #00e676, H #00ff7f, I #6eff3c, J #39ff14.
-- Not yet asked: should warlock soul shards get the same pulsing Low
-  (under 3)? The WIP branch does that.
-- hub_general_test and ledger_full_test need the user's AetherLedger
-  SavedVariables file (path is hard-coded under /mnt/user-data/uploads);
-  ask for it before working on Ledger or the Hub. travel_window_test.py
-  checks the directions window layout without it.
+- Last delivered build (Nov 24): Pack 1.6.0 (gold capsule, Free slots
+  text rows: Bags/Reagent colored, Ammo Warning at half a quiver and a
+  pulsing Low at 300, Shards pulsing Low under 3, "Show"/"Show empty" on
+  folded headers, vivid green #22e650), Ledger 1.5.15 (directions window
+  fits, solid on mouseover), Frames 1.14.4, Coords 1.3.9, ItemID 1.1.3,
+  Marks 1.6.13 (Aether gold as the only yellow). Waiting on the user's
+  in-game check.
+- Green for "good" in AetherPack is #22e650 (user chose F). Other addons
+  still use their own greens; not asked to change them.
+- Tests needing the user's SavedVariables (hard-coded under
+  /mnt/user-data/uploads): hub_general_test, ledger_full_test,
+  marks_namekey_test, marks_plates_test. itemid_test*.py fail on old
+  code too (mocks lack the window-trim textures): stale, fix when
+  working on ItemID. travel_window_test.py checks the directions window.
 
 ## Tests
 
