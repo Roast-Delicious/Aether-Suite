@@ -88,6 +88,13 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
+- QUEUED for the next build (user, Nov 24 16:10, "let's use c"): minimap
+  ring light C = same glow as B on a SHORTER ARC: ring_ref gain 0.8,
+  peak 0.45, spread 34 (B was 48), halo_amt 0.15, navy=True. Rebake
+  ring_day (and night to match) in AetherSkins/Media; bump AetherSkins
+  (with the 1.1.1 fix -> 1.1.2 or fold into 1.1.1) and the README table.
+  Mockup: Ringlight_shorter_arc(.png/_zoom), made with mock/skin_minimap
+  opt_ref. Not built; wait for the go-ahead.
 - READY, NOT SHIPPED (branch fix-debug-forbidden): AetherSkins 1.1.1.
   /skins debug errored (user, 15:52): CoordTextAnywhere walked UIParent
   into a forbidden frame (CommunitiesAddDialog). All region/child scans
