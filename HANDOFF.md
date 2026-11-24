@@ -143,6 +143,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   deeper, crest line; option 2 adds fine Aether-blue lines on both edges
   like the window frame. Gold/white light unchanged. CHOSEN (12:05):
   option 1, plain navy (no edge lines); night version shown.
+  Sun/moon icons: user likes the moon stand-in (pale crescent on a navy
+  button, mock _moon). Original sun designs in Aether gold (_sun A round
+  rays / B pointed rays / C halo ring); waiting on the pick.
   World map mockups (11:54, from the user's windowed and
   full-screen screenshots; mock/skin_worldmap.py): Aether window, plain
   crest, zone buttons as navy capsules (current zone gold, blue

@@ -27,6 +27,32 @@ def _moon():   # a simple pale crescent for the mockup (the game shows its own m
     return im.resize((44, 44), Image.LANCZOS)
 MOON = _moon()
 
+def _sun(style):
+    """Original flat sun icons to pair with the moon stand-in (Aether gold)."""
+    import math
+    N = 176; im = Image.new('RGBA', (N, N), (0, 0, 0, 0)); d = ImageDraw.Draw(im); c0 = N / 2
+    G = GOLD + (255,)
+    if style == 'A':      # disc + 8 short rounded rays
+        d.ellipse([c0 - 40, c0 - 40, c0 + 40, c0 + 40], fill=G)
+        for k in range(8):
+            a = math.radians(k * 45); r0, r1 = 54, 78
+            d.line([(c0 + r0 * math.cos(a), c0 + r0 * math.sin(a)), (c0 + r1 * math.cos(a), c0 + r1 * math.sin(a))], fill=G, width=13)
+            for rr in (r0, r1):
+                d.ellipse([c0 + rr * math.cos(a) - 6.5, c0 + rr * math.sin(a) - 6.5, c0 + rr * math.cos(a) + 6.5, c0 + rr * math.sin(a) + 6.5], fill=G)
+    elif style == 'B':    # disc + 12 thin tapered rays
+        d.ellipse([c0 - 36, c0 - 36, c0 + 36, c0 + 36], fill=G)
+        for k in range(12):
+            a = math.radians(k * 30); w = math.radians(7)
+            pts = [(c0 + 48 * math.cos(a - w), c0 + 48 * math.sin(a - w)), (c0 + 82 * math.cos(a), c0 + 82 * math.sin(a)),
+                   (c0 + 48 * math.cos(a + w), c0 + 48 * math.sin(a + w))]
+            d.polygon(pts, fill=G)
+    else:                 # disc + a thin halo ring
+        d.ellipse([c0 - 44, c0 - 44, c0 + 44, c0 + 44], fill=G)
+        d.ellipse([c0 - 70, c0 - 70, c0 + 70, c0 + 70], outline=G, width=9)
+    return im.resize((44, 44), Image.LANCZOS)
+SUNS = {k: _sun(k) for k in 'ABC'}
+
+
 def base(square, half=126):
     im = CLEAN.copy()
     if square:
@@ -368,7 +394,7 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
     out = np.zeros((H, W, 4), np.float32); out[..., :3] = np.clip(col, 0, 255); out[..., 3] = cover * 255
     c.over(Image.fromarray(out.astype(np.uint8)))
 
-def opt_ref(night=False, width=11, **kw):
+def opt_ref(night=False, width=11, sun_icon=None, **kw):
     c = base(False); cx, cy = CX - X0, CY - Y0
     W, H = c.im.size; X, Y = c.P(cx, cy); R = (RM + 1) * SS
     c.over(glow(W, H, (X, Y, X, Y), R + width * SS, u(10), BLUE, 0.4))
@@ -376,12 +402,14 @@ def opt_ref(night=False, width=11, **kw):
     chevs(c, cx, cy, RM + 6 + width // 2, RM + 6 + width // 2)
     pill(c, (cx - 118, 6, cx + 118, 34), "Dustwallow Marsh", 15, GOLD, right="05:52")
     pill(c, (cx - 52, cy + RM + 16, cx + 52, cy + RM + 42), "62.5, 44.4", 15, WHITE)
-    button(c, (cx + 84, cy - 86), MOON if night else SUN); button(c, (cx - 86, cy + 84), GEM)
+    button(c, (cx + 84, cy - 86), MOON if night else (sun_icon or SUN)); button(c, (cx - 86, cy + 84), GEM)
     return c.done()
 
 if __name__ == '__main__':
-    opts = [("Day (sun)", opt_ref(navy=True)),
-            ("Night (moon)", opt_ref(navy=True, night=True))]
+    opts = [("A  Short round rays", opt_ref(navy=True, sun_icon=SUNS['A'])),
+            ("B  Thin pointed rays", opt_ref(navy=True, sun_icon=SUNS['B'])),
+            ("C  Halo ring", opt_ref(navy=True, sun_icon=SUNS['C'])),
+            ("Moon (for comparison)", opt_ref(navy=True, night=True))]
     tiles = [label(im, name, 20) for name, im in opts]
     for (name, im), k in zip(opts, "01234"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0
