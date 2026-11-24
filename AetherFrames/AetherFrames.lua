@@ -64,7 +64,7 @@ local function Print(msg) print(PREFIX .. msg) end
 local defaults = {
     enabled     = true,   -- replace Blizzard's player, pet and target frames
     alpha       = 0.5,    -- frames and bars out of combat (text and faces stay solid)
-    combatAlpha = 0.3,    -- in combat, frames without aggro on your target (with aggro fading on)
+    combatAlpha = 0.2,    -- in combat, frames without aggro on your target (with aggro fading on)
     fadeFaces   = false,  -- fade the portraits too
     buffs       = true,   -- the target's buffs and debuffs under its frame
     myBuffs     = false,  -- your own buffs in your frame (Blizzard shows them top right)
@@ -911,7 +911,7 @@ end
 -- FADING
 -- ==========================================
 local ApplyAlphaHidden
-local BAR_MIN = 0.45            -- the bars never fade below this (they carry your health)
+local BAR_MIN = 0.35            -- the bars never fade below this (they carry your health)
 -- faceA: the portrait's alpha (in combat without aggro); nil = the usual
 -- (solid, or faded with the frame if "Faces fade too" is on).
 local function ApplyAlpha(f, a, faceA)
@@ -1447,7 +1447,7 @@ end
 -- Hidden levels: per texture brightness through a curve (no math on hidden
 -- values), one curve per base brightness, rebuilt when the fade level changes.
 local fadeCurves, fadeCurvesAlpha = {}, nil
-local function CombatFade() return db.combatAlpha or 0.3 end
+local function CombatFade() return db.combatAlpha or 0.2 end
 local function FadeCurve(key)
     if fadeCurvesAlpha ~= CombatFade() then fadeCurves, fadeCurvesAlpha = {}, CombatFade() end
     local c = fadeCurves[key]
@@ -2132,6 +2132,12 @@ ev:SetScript("OnEvent", function(_, event, arg1, arg2, arg3, arg4)
         if arg1 ~= ADDON then return end
         AetherFramesDB = AetherFramesDB or {}
         db = AetherFramesDB
+        -- 1.14.6: frames without aggro fade 10% more (30% -> 20%), unless
+        -- the fade was set by hand (/af combatalpha).
+        if not db.fade20 then
+            if db.combatAlpha == 0.3 then db.combatAlpha = nil end
+            db.fade20 = true
+        end
         for k, v in pairs(defaults) do if db[k] == nil then db[k] = v end end
         return
     end
@@ -2478,7 +2484,7 @@ SlashCmdList["AETHERFRAMES"] = function(input)
         print("  /af faces on|off     faces fade too (now " .. OnOff(db.fadeFaces) .. ")")
         print("  /af buffs on|off     buff row (now " .. OnOff(db.buffs) .. ")")
         print("  /af mybuffs on|off   your own buffs in your frame too (now " .. OnOff(db.myBuffs) .. ")")
-        print("  /af combatalpha 0-1  in combat, frames without aggro on your target (now " .. (db.combatAlpha or 0.3) .. ")")
+        print("  /af combatalpha 0-1  in combat, frames without aggro on your target (now " .. (db.combatAlpha or 0.2) .. ")")
         print("  /af aggro on|off     in combat, only the target and whoever has aggro on it go solid (now " .. OnOff(db.aggroFade) .. ")")
         print("  /af levelglow on|off an enemy target's portrait glow takes its level color at the rim (now " .. OnOff(db.levelGlow ~= false) .. ")")
         print("  /af classglow on|off players and friendly NPCs get their class color behind the portrait (now " .. OnOff(db.classGlow ~= false) .. ")")
