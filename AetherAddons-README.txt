@@ -14,7 +14,7 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.14.1    One window with every addon's settings
+  AetherHub          1.14.2    One window with every addon's settings
   AetherMeter        1.13.8    Damage and healing meter
   AetherBars         1.14.2    Clean action bars with a cooldown glow
   AetherCoords       1.3.10    Coordinates, plus your own map waypoints
@@ -23,7 +23,7 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.3     What an item is for, when you hover it
-  AetherLedger       1.5.15    Where to quest, train and skin next,
+  AetherLedger       1.6.0     Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.0     Your bags sorted into sections
   AetherChat         1.0.7     Chat with the Aether look, fitted beside
@@ -119,11 +119,10 @@ that can't be undone asks first.
     Clear Learned Recipes...
   AetherLedger tab: What AetherLedger does for you (zone suggestions,
     rank-up reminders, profession and class quests, skinning spots,
-    keeping your quest tracker on your zone), Check Zones Now, Save
-    Quest Log to File, Clean Up Quest Log, and your three best
-    zones: click one to see its quests below, or Go for directions.
-    Under that: rank-ups due, class and profession quests, and where
-    to skin.
+    keeping your quest tracker on your zone, its Aether look), Check Zones
+    Now, Save Quest Log to File, Clean Up Quest Log, and your three best
+    zones: click one to see its quests below, or Go for directions. Under
+    that: rank-ups due, class and profession quests, and where to skin.
   AetherPack tab: open it instead of Blizzard's bags, free slots on
     the backpack button, Open Bags, Reset Bag Window Position, and
     icons per row.
@@ -449,11 +448,11 @@ AetherLedger - where to quest, train and skin next             /ledger
     teaches it. Expert and Artisan crafting are only taught by some
     trainers ("Artisan" and "Master" titles), and for Cooking, First
     Aid and Fishing those ranks come from a book or quest.
-  - Quest tracker: the objectives list on your screen follows where
-    you are. In a zone it shows that zone's quests, lowest level first,
-    plus quests ready to hand in there (a finished quest shows up in
-    the zone where you turn it in, not where you got it). Red quests
-    (too hard for now) are left out until a level-up turns them orange.
+  - Quest tracker: the objectives list on your screen follows where you
+    are. In a zone it shows that zone's quests, lowest level at the top,
+    plus quests ready to hand in there (a finished quest shows up in the
+    zone where you turn it in, not where you got it). Red quests (too hard
+    for now) are left out until a level-up turns them orange.
   - Somewhere with nothing for you (a city, a road), it shows the
     quests of the zone you're heading to with Go, or else the zone
     holding most of your quests. A line in chat says which zone the
@@ -466,6 +465,18 @@ AetherLedger - where to quest, train and skin next             /ledger
     it was red, since there's nothing left to fight. If WoW adds a quest
     to the tracker on its own (it does when you make progress), Ledger
     puts the list back a second later.
+  - The tracker's Aether look: Blizzard's "All Objectives" bar is
+    gone (each section keeps its own fold; its space stays, so move the
+    tracker up in Edit Mode if you like). Section headers like
+    "Quests" get a navy band that fades to the right, gold lettering,
+    a gold line that tapers at both ends and a plain gold - / +. Quest
+    icons become a navy disc with a gold ring: gold dots while you're
+    working on it, a gold ? when it's ready (a soft gold glow marks
+    the quest you're following). Yellow quest names turn Aether gold
+    (other difficulty colors stay), "Ready for turn-in" is green, the
+    text uses the Aether font, and a soft blue band shows behind the
+    quest you point at. Turn it off on AetherHub's AetherLedger tab
+    (takes effect after a reload).
   - /ledger tracker lists every quest in your log with its color, zone
     and why it is or isn't on the tracker.
   - Gray quests: when quests in your log turn gray (little XP now),

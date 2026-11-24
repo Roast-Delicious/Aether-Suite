@@ -427,6 +427,7 @@ local INTERESTS = {
     { key = "classQuests", label = "Suggest class quests" },
     { key = "skinning",    label = "Suggest where to skin for skill-ups" },
     { key = "manageTracker", label = "Keep my quest tracker on my zone, sorted by level" },
+    { key = "trackerLook", label = "Give the quest tracker the Aether look" },
 }
 
 local profCache, profDirty = nil, true
@@ -1478,6 +1479,7 @@ local LEDGER_TIPS = {
     classQuests = "Quests for your class, listed on their own.",
     skinning = "Zones with beasts that give skinning skill-ups at your skill.",
     manageTracker = "The objectives list on your screen follows your zone, lowest level first, and leaves out red quests.",
+    trackerLook = "Aether headers, quest icons and colors, and no All Objectives bar. Turning it off takes effect after a reload.",
 }
 
 BUILDERS.AetherLedger = function(p)
@@ -1495,6 +1497,9 @@ BUILDERS.AetherLedger = function(p)
                 if AetherLedger_API and AetherLedger_API.Refresh then AetherLedger_API.Refresh() end
                 if v and interest.key == "manageTracker" and AetherLedger_API and AetherLedger_API.SortTracker then
                     AetherLedger_API.SortTracker()
+                end
+                if v and interest.key == "trackerLook" and AetherLedger_TrackerLook then
+                    AetherLedger_TrackerLook.Install()
                 end
             end, nil, nil, nil, LEDGER_TIPS[interest.key])
     end

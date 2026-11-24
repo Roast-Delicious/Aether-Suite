@@ -1,7 +1,7 @@
 -- ==========================================
 -- AetherLedger quest tracker
 -- Keeps the quest tracker (the objectives list on screen) on the zone you're
--- in: that zone's quests in level order, lowest first, plus quests ready to
+-- in: that zone's quests in level order, lowest at the top, plus quests ready to
 -- hand in here. Red quests (too hard for now) are left out until a level-up
 -- makes them orange. Somewhere with nothing to do (a city, a road), it shows
 -- the quests of where you're headed instead. Quests you track or untrack yourself are left as you set
@@ -340,6 +340,7 @@ local function Watch(q, on)
 end
 
 local lastFocus
+local lastWantKey, lastReadKey   -- what we last put on the tracker, and the order the game then reported
 local function Apply()
     if not Wants("manageTracker") then return end
     if InCombatLockdown() then waitingForCombat = true; return end
@@ -399,11 +400,14 @@ local function Apply()
     local cap = MaxWatches()
     while #want > cap do table.remove(want) end
 
-    -- Nothing to do if the tracker already shows exactly this, in this order.
-    local current = WatchOrder(byIndex)
-    local same = #current == #want
-    for i = 1, #want do if current[i] ~= want[i].id then same = false; break end end
-    if same then return end
+    -- Nothing to do if the tracker already shows what we last set up and
+    -- nothing has moved since. (The order the game reports isn't the order
+    -- it shows, so compare with what it reported right after we set it.)
+    local ids = {}
+    for i, q in ipairs(want) do ids[i] = tostring(q.id) end
+    local wantKey = table.concat(ids, ",")
+    local currentKey = table.concat(WatchOrder(byIndex), ",")
+    if wantKey == lastWantKey and currentKey == lastReadKey then return end
 
     -- Say which zone the list follows when that changes.
     if focusMap and focusMap ~= lastFocus then
@@ -418,9 +422,14 @@ local function Apply()
     applying = true
     local ok, err = pcall(function()
         for _, q in ipairs(quests) do if q.watched then Watch(q, false) end end
-        for _, q in ipairs(want) do Watch(q, true) end
+        -- In WoW Forever the tracker lists quests in the reverse of the order
+        -- they were added (the newest on top), so add
+        -- the highest level first and the lowest last: lowest ends up on top.
+        for i = #want, 1, -1 do Watch(want[i], true) end
     end)
     applying = false
+    lastWantKey = wantKey
+    lastReadKey = table.concat(WatchOrder(byIndex), ",")
     if QuestWatch_Update then pcall(QuestWatch_Update) end
     if not ok then print(PREFIX .. "couldn't sort the quest tracker: " .. tostring(err)) end
 end

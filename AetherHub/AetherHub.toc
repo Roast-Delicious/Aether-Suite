@@ -4,7 +4,7 @@
 ## Author: Aether
 ## IconTexture: Interface\Icons\Spell_Arcane_Arcane02
 ## AddonCompartmentFunc: AetherHub_OnCompartmentClick
-## Version: 1.14.1
+## Version: 1.14.2
 ## SavedVariables: AetherHubDB
 ## SavedVariablesPerCharacter: AetherHubCharDB
 

@@ -71,43 +71,23 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-- Last delivered build (Nov 24): Pack 1.6.0 (gold capsule, Free slots
-  text rows: Bags/Reagent colored, Ammo Warning at half a quiver and a
-  pulsing Low at 300, Shards pulsing Low under 3, "Show"/"Show empty" on
-  folded headers, vivid green #22e650), Ledger 1.5.15 (directions window
-  fits, solid on mouseover), Frames 1.14.4, Coords 1.3.9, ItemID 1.1.3,
-  Marks 1.6.13 (Aether gold as the only yellow). Waiting on the user's
-  in-game check.
-- READY FOR NEXT BUILD (branch `prep-star-c`, tested, user approved the
-  design; merge only when the user says go): AetherCoords 1.3.10, the
-  waypoint pin becomes our own Aether star, option C: navy disc, thin
-  gold ring, gold star (Media/wp_disc, wp_ring, wp_star.tga, white,
-  tinted), same pulsing gold glow; pins 18 on the world map (was 24) and
-  14 on the minimap (was 18). README updated on the branch. Mockup:
-  mock/stars.py.
+- Last delivered build (Nov 24, late): Pack 1.6.0, Frames 1.14.4, ItemID
+  1.1.3, Marks 1.6.13 (gold-only yellows), Coords 1.3.10 (Aether star
+  waypoints, option C, 18/14 units), Ledger 1.6.0 + Hub 1.14.2 (quest
+  tracker: lowest level at the top; Aether look in
+  AetherLedger_TrackerLook.lua = H1 headers + option A icons/colors,
+  "All Objectives" hidden with its 38-unit space left (Edit Mode can move
+  the tracker), Hub checkbox "trackerLook"). Waiting on the user's
+  in-game check, especially: sort order direction, tracker look on
+  WoW Forever's tracker (built against mainline Blizzard_ObjectiveTracker
+  from wow-ui-source, Nov 18 2026), and the star pins.
 - AetherMarks far names (Nov 24): beyond 41 yards (WoW Forever's nameplate
   cap, Rare Radar already sets it) mobs have no nameplate; the tiny names
   there are drawn by the game in reaction colors and addons can't color,
   move or find them. Within 41 yards quest mobs turn blue (confirmed in
-  two user videos). User wants far names colored, not hidden: not
-  possible; hiding them was declined. A speculative "odd wording" fix was
-  dropped (tools/marks_wording_test.py documents the idea).
-- APPROVED DESIGN, not yet prepped (AetherLedger quest tracker restyle,
-  reskins Blizzard's objective tracker; mockups mock/tracker.py option A,
-  mock/headers.py H1):
-  * Sort: the tracker shows watches in reverse, so add watches highest
-    level first to get lowest at the TOP (keep the cap dropping the
-    highest levels). Confirm in game.
-  * Hide Blizzard's "All Objectives" bar (the Quests bar keeps its fold).
-  * Header (H1): navy band fading out to the right with a soft start,
-    gold "Quests", a gold line under it thickest in the middle and
-    tapering at both ends; a plain gold minus (no box).
-  * Option A: no panel behind the list. Quest icons ("..." in progress,
-    "?" ready) become a navy disc with a gold ring and gold glyph (like
-    the waypoint star). Yellow titles -> Aether gold; other difficulty
-    colors stay. "Ready for turn-in" in the vivid green #22e650. Aether
-    font (Fira). Hover highlight blue, not brown. Reapply after every
-    tracker update.
+  two user videos). User chose to leave Marks as is. A speculative
+  "odd wording" fix was dropped (tools/marks_wording_test.py documents it).
+- Tests added: tracker_look_test.py, tracker_sort_test.py.
 - Green for "good" in AetherPack is #22e650 (user chose F). Other addons
   still use their own greens; not asked to change them.
 - Tests needing the user's SavedVariables (hard-coded under
