@@ -435,7 +435,8 @@ AetherLedger - where to quest, train and skin next             /ledger
     widens to fit its steps; a very long step wraps under itself, and
     the title stays on one line. Like AetherMeter, it fades to
     the meter's transparency when you're not using it, and turns solid
-    for a few seconds when you click it or a step is done. When you
+    while your mouse is over it, and for a few seconds when you click
+    it or a step is done. When you
     click the quest giver (or walk right up to them), "You're there!"
     and their name flash in big letters in the upper middle of the
     screen, the waypoint comes off your map and the window closes. Its

@@ -349,6 +349,8 @@ local tick = 0
 -- then back to the meter's in-combat or out-of-combat transparency.
 local WAKE_SECONDS = 10
 local awakeUntil = 0
+local hovered = false        -- the mouse is over the window: stay solid
+local HOVER_LINGER = 2       -- seconds it stays solid after the mouse leaves
 
 local SHOW_ARRIVED, FADE_SECONDS = 2.5, 1.5   -- "You're there!" stays this long, then fades out
 
@@ -359,7 +361,7 @@ local function ApplyAlpha()
         win:SetAlpha(t < SHOW_ARRIVED and 1 or math.max(0, 1 - (t - SHOW_ARRIVED) / FADE_SECONDS))
         return
     end
-    if GetTime() < awakeUntil then win:SetAlpha(1); return end
+    if hovered or GetTime() < awakeUntil then win:SetAlpha(1); return end
     local m = AetherMeterDB or {}
     local alpha = InCombatLockdown() and (m.opacityInCombat or 0.8) or (m.opacityOutCombat or 0.3)
     win:SetAlpha(alpha)
@@ -386,6 +388,12 @@ local function BuildWindow()
         Wake()
     end)
     win:SetScript("OnMouseDown", Wake)
+    win:SetScript("OnEnter", function() hovered = true; ApplyAlpha() end)
+    win:SetScript("OnLeave", function()
+        hovered = false
+        awakeUntil = math.max(awakeUntil, GetTime() + HOVER_LINGER)
+        ApplyAlpha()
+    end)
     if win.SetBackdrop then
         win:SetBackdrop({ bgFile = "Interface\\Buttons\\WHITE8x8", edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1 })
         win:SetBackdropColor(0.05, 0.06, 0.09, 0.88)
