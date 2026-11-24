@@ -131,8 +131,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   the sun/moon icon flips (check how Forever's icon decides); change
   over through plain blue, never gold+white mixed. Hex: Aether gold
   #FFB000, Aether blue #4DA6FF, navy #13284A, sky blue #73BFFF.
-  The bevel must stay visible under the glow (11:47): ridge slopes lit
-  from the sun's side, a fine crest line, gold shaded by the slopes.
+  The bevel must stay visible under the glow (11:47, 11:49): ridge slopes
+  lit from the sun's side, a fine crest line, and the gold ONLY on the
+  inner slope, stopping at the crest; the outer slope on the far side
+  faces away from the light and stays shaded blue.
   Waiting on 1 (ring only, recommended) vs 2 (warm light on the map).
   Other rules
   used: Neutral bars Aether gold, Friendly+ #22e650, Blizzard's yellow UI

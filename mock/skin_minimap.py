@@ -322,7 +322,9 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
     # inner-wall glow: centered straight across from the light, long soft fade
     opp = np.degrees(np.arccos(np.clip(-(ux * sx + uy * sy), -1, 1)))     # 0 = directly across from the sun
     along = np.exp(-(opp / spread) ** 2)
-    across = np.clip(1.45 - tc * 1.35, 0, 1) ** 0.9                         # inner wall and most of the face, fading toward the outer edge
+    # only the INNER slope faces the light; the gold stops at the crest. The
+    # outer slope on this side faces away from the light and stays shaded blue.
+    across = np.clip((0.5 - tc) / 0.06, 0, 1)
     I = np.clip(along * across * 1.15, 0, 1)[..., None]
     g = np.array(hl, np.float32)[None, None, :]
     cream = (np.array((255, 236, 196), np.float32) if not night else np.array((236, 244, 255), np.float32))[None, None, :]
