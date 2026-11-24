@@ -765,12 +765,12 @@ AetherFrames - player, pet, target and party frames            /af
   - Aggro fading: in combat, only your target, the target of target and
     whoever has aggro on your target (you, your pet or a party member)
     stay solid. Whoever your target is attacking lights up at once.
-    Everyone else fades further than out of combat: the frame to 30%, the
-    bars to 45% (they carry your health), and the portrait to 30% over a
+    Everyone else fades further than out of combat: the frame to 20%, the
+    bars to 35% (they carry your health), and the portrait to 20% over a
     dark disc, so the lit frame stands out. If your own frame lights up
     while your pet tanks, you've pulled. Names and numbers never fade. /af
     combatalpha 0-1 sets the in-combat level; /af aggro off makes every
-    frame solid in combat again. The bars never fade below 45%, in or out
+    frame solid in combat again. The bars never fade below 35%, in or out
     of combat.
   - Hit flash: when you, your pet or a party member takes a hit, that
     crest's ring and the glow around it flash red: full red for a tenth of
