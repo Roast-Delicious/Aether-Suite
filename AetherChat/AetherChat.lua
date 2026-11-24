@@ -260,11 +260,22 @@ local function SelectedChat()
     return (dock and dock.selected) or _G.SELECTED_CHAT_FRAME or Chat()
 end
 
+-- Tab names in Aether gold (Blizzard colors them its own yellow): the tab
+-- you're on full strength, the others dimmed.
+local function ColorTab(tab, selected)
+    if not tab then return end
+    local fs = tab.Text
+    if type(fs) ~= "table" and tab.GetFontString then fs = tab:GetFontString() end
+    if type(fs) ~= "table" or not fs.SetTextColor then return end
+    if selected then fs:SetTextColor(1, 0.69, 0) else fs:SetTextColor(0.6, 0.41, 0) end
+end
+
 local function UpdateTabs()
     local sel = SelectedChat()
     for _, cf in ipairs(ChatFrames()) do
         local tab = StyleTab(cf)
         if tab and tab.aetherUnder then tab.aetherUnder:SetShown(cf == sel) end
+        ColorTab(tab, cf == sel)
     end
 end
 
@@ -305,6 +316,15 @@ local function SetupEditBoxes()
             end)
             PlaceEditBox(eb, cf)
             if db.slimEdit and not eb:HasFocus() then eb:Hide() end
+            -- Blizzard shows the typing line again on its own (with the
+            -- "Classic" chat style it stays up all the time, over the newest
+            -- line). Hide it whenever it shows up without you typing in it.
+            eb:HookScript("OnShow", function(self)
+                if not db.slimEdit then return end
+                C_Timer.After(0, function()
+                    if self:IsShown() and not self:HasFocus() then self:Hide() end
+                end)
+            end)
         end
     end
 end
@@ -375,6 +395,7 @@ local function HookBlizzard()
         end)
     end
     if FCF_Tab_OnClick then hooksecurefunc("FCF_Tab_OnClick", function() C_Timer.After(0, UpdateTabs) end) end
+    if FCFTab_UpdateColors then hooksecurefunc("FCFTab_UpdateColors", function() UpdateTabs() end) end
     if FCF_OpenTemporaryWindow then
         hooksecurefunc("FCF_OpenTemporaryWindow", function() C_Timer.After(0, ApplyAll) end)
     end
