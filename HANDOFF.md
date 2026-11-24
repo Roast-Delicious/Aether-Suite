@@ -98,8 +98,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   (user liked the dim end). Screenshots came in: chevrons and glow are
   Aether gold.
 - Designs in progress, NOT coded: tooltip moved to the left of the
-  quest list (options A/B in mock/tooltip_place.py; B recommended, not
-  yet picked); key stats in item tooltips: two tight chevrons pointing
+  quest list: user PICKED B (mid-screen, mock/tooltip_place.py), waiting
+  for go; quest tracker "Ready for turn-in" green -> a blue (options in
+  mock/turnin_blue.py, titles keep level colors), waiting for a pick; key stats in item tooltips: two tight chevrons pointing
   back at the stat (mock/stat_gold.py), stat text Aether gold; still
   open: A all marked lines gold vs B Equip lines stay green; tooltips
   only or character sheet too; per-character stat list in the Hub.
