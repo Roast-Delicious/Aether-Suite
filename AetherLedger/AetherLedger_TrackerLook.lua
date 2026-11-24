@@ -20,7 +20,7 @@ local WHITE = "Interface\\Buttons\\WHITE8X8"
 local GOLD  = { 1, 0.69, 0 }
 local NAVY  = { 0.075, 0.157, 0.29 }
 local BLUE  = { 0.3, 0.65, 1 }
-local READY = { 115 / 255, 191 / 255, 1 }   -- Aether sky blue (115, 191, 255): "Ready for turn-in"
+local READY = BLUE                           -- Aether Blue #4DA6FF: "Ready for turn-in"
 
 local function Wants()
     return not (AetherHub_Profile and AetherHub_Profile.Interest) or AetherHub_Profile.Interest("trackerLook")

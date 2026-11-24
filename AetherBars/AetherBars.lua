@@ -1308,9 +1308,9 @@ local function MakeTrim(m)
     -- the chevron (shown on the block holding Action Bar 1), pointing up: a
     -- smooth image on a dark backing, fading with the panel
     p.gem = {}
-    for _, g in ipairs({ { "dark", 0.04, 0.05, 0.07, 6 }, { "gold", 1, 0.69, 0, 7 } }) do
+    for _, g in ipairs({ { "dark", 0.04, 0.05, 0.07, 6 }, { "gold", 1, 1, 1, 7 } }) do   -- gold = 3D bevel art (its own color)
         local t = p:CreateTexture(nil, "OVERLAY", nil, g[5])
-        t:SetTexture("Interface\\AddOns\\AetherBars\\Media\\win_chev_" .. g[1])
+        t:SetTexture("Interface\\AddOns\\AetherBars\\Media\\" .. (g[1] == "gold" and "chev3d_up" or "win_chev_dark"))
         t:SetVertexColor(g[2], g[3], g[4], 1)
         if t.SetSnapToPixelGrid then t:SetSnapToPixelGrid(false); t:SetTexelSnappingBias(0) end
         t:SetSize(18.7 * m, 18.7 * m); t:SetPoint("CENTER", p, "TOP", 0, 2 * m)
@@ -2078,11 +2078,13 @@ local function BuildXPArt()
     end
     a.tip = XPTex(ov, "ARTWORK", 5, "Interface\\Buttons\\WHITE8X8", XPC.gold)
     a.chev = {}
-    for _, c in ipairs({ { "top", 0 }, { "bottom", math.pi }, { "left", math.pi / 2 }, { "right", -math.pi / 2 } }) do
+    for _, c in ipairs({ { "top", 0, "up" }, { "bottom", math.pi, "down" }, { "left", math.pi / 2, "left" }, { "right", -math.pi / 2, "right" } }) do
         local set = {}
-        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", XPC.gold, 7 } }) do
-            local t = XPTex(ov, "OVERLAY", g[3], XP_MEDIA .. "win_chev_" .. g[1], g[2])
-            if c[2] ~= 0 and t.SetRotation then t:SetRotation(c[2]) end    -- positive turns counter-clockwise
+        for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 1, 1, 1 }, 7 } }) do
+            -- gold: the 3D bevel, one image per direction (lit from the top-right), never rotated
+            local gold3d = g[1] == "gold"
+            local t = XPTex(ov, "OVERLAY", g[3], XP_MEDIA .. (gold3d and ("chev3d_" .. c[3]) or ("win_chev_" .. g[1])), g[2])
+            if not gold3d and c[2] ~= 0 and t.SetRotation then t:SetRotation(c[2]) end    -- positive turns counter-clockwise
             set[#set + 1] = t
         end
         a.chev[c[1]] = set

@@ -61,12 +61,15 @@ for t in texs:
             if l2<=r2: im=im.crop((int(round(l2*iw)),0,max(int(round(l2*iw))+1,int(round(r2*iw))),im.height))
             else: im=im.crop((int(round(r2*iw)),0,max(int(round(r2*iw))+1,int(round(l2*iw))),im.height)).transpose(Image.FLIP_LEFT_RIGHT)
         if t.rot: im=im.rotate(math.degrees(t.rot),resample=Image.BICUBIC)
-        al=np.array(im.resize((pw,ph),Image.LANCZOS)).astype(np.float32)[...,3]/255
+        arr=np.array(im.resize((pw,ph),Image.LANCZOS)).astype(np.float32)
+        al=arr[...,3]/255; artrgb=arr[...,:3]/255
     c=t.c; col=np.array([c[1]*255,c[2]*255,c[3]*255],np.float32); al=al*c[4]
+    if 'WHITE' not in t.file.upper() and 'chev3d' in t.file: col=artrgb*col[None,None,:]   # 3D art carries its own color
     x0,y0=int(round((l+M)*SC)),int(round((tp+M)*SC))
     sl=bg[max(0,y0):y0+ph, max(0,x0):x0+pw]
     aa=al[max(0,-y0):max(0,-y0)+sl.shape[0], max(0,-x0):max(0,-x0)+sl.shape[1]][...,None]
-    sl[...]=sl*(1-aa)+col*aa
+    cc=col[max(0,-y0):max(0,-y0)+sl.shape[0], max(0,-x0):max(0,-x0)+sl.shape[1]] if col.ndim==3 else col
+    sl[...]=sl*(1-aa)+cc*aa
 out=Image.fromarray(bg.clip(0,255).astype(np.uint8)).resize((cw,ch),Image.LANCZOS)
 out.save('/tmp/xpbar_real.png')
 z=out.crop((0,0,300,ch)).resize((900,ch*3),Image.LANCZOS); z2=out.crop((cw//2-150,0,cw//2+150,ch)).resize((900,ch*3),Image.LANCZOS)

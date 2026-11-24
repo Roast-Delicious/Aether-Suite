@@ -82,7 +82,9 @@ def render(fname, out, bg=(43,36,24)):
             c=o.vc or (1,1,1,1)
             r,g,b_,al=im.split()
             al=al.point(lambda v: int(v*a))
-            col=Image.new("RGBA",im.size,(int(c[1]*255),int(c[2]*255),int(c[3]*255),255)); col.putalpha(al)
+            import numpy as _np   # tint = the art's own color times the vertex color (3D art carries color)
+            rgb=(_np.array(im.convert("RGB")).astype(_np.float32)*_np.array((c[1],c[2],c[3]),_np.float32)).clip(0,255).astype(_np.uint8)
+            col=Image.fromarray(rgb).convert("RGBA"); col.putalpha(al)
             over.alpha_composite(col,(int(round(l*SC)),int(round(t*SC))))
             continue
         if o.kind=="StatusBar":

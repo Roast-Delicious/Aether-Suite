@@ -221,9 +221,13 @@ local function Chevron(f, cx, cy, dir)
     local S = f.spec.S
     local box = CHEV_BOX[S] or 22.49
     local made = {}
-    for _, g in ipairs({ { "dark", DARK, 5 }, { "gold", GOLD, 6 } }) do
-        made[#made + 1] = Art(f, "OVERLAY", g[3], "chev" .. S .. "_" .. dir .. "_" .. g[1], g[2], 1, true, cx - box / 2, cy - box / 2, box, box, true)
-    end
+    made[#made + 1] = Art(f, "OVERLAY", 5, "chev" .. S .. "_" .. dir .. "_dark", DARK, 1, true, cx - box / 2, cy - box / 2, box, box, true)
+    -- the gold is the 3D bevel, lit from the screen's top-right: on a mirrored
+    -- (target) frame use the opposite side's art instead of flipping it, so the
+    -- light doesn't flip too
+    local d3 = dir
+    if f.mirror then d3 = (dir == "left" and "right") or (dir == "right" and "left") or dir end
+    made[#made + 1] = Art(f, "OVERLAY", 6, "chev" .. S .. "_" .. d3 .. "_gold3d", { 1, 1, 1 }, 1, true, cx - box / 2, cy - box / 2, box, box, false)
     return made
 end
 
@@ -1816,10 +1820,14 @@ local function AetherDecorate(frame, titleHeight)
                          { "left", "LEFT", -3, 0, math.pi / 2, 34 }, { "right", "RIGHT", 3, 0, -math.pi / 2, 34 } }) do
         local set = {}
         for _, g in ipairs({ { "dark", { 0.04, 0.05, 0.07, 1 }, 6 }, { "gold", { 1, 0.69, 0, 1 }, 7 } }) do
-            local ch = Tex("OVERLAY", g[3], MEDIA .. "win_chev_" .. g[1], g[2])
+            -- the gold is the 3D bevel, baked per direction and lit from the
+            -- top-right, so it's never rotated; the dark backing still turns
+            local gold3d = g[1] == "gold"
+            local ch = Tex("OVERLAY", g[3], MEDIA .. (gold3d and ("chev3d_" .. ({ top = "up", bottom = "down", left = "left", right = "right" })[c[1]]) or ("win_chev_" .. g[1])),
+                gold3d and { 1, 1, 1, 1 } or g[2])
             ch:SetSize(c[6], c[6])
             ch:SetPoint("CENTER", frame, c[2], c[3], c[4])
-            if c[5] ~= 0 and ch.SetRotation then ch:SetRotation(c[5]) end   -- positive turns counter-clockwise
+            if not gold3d and c[5] ~= 0 and ch.SetRotation then ch:SetRotation(c[5]) end   -- positive turns counter-clockwise
             set[#set + 1] = ch
         end
         frame.aetherChevrons[c[1]] = set
