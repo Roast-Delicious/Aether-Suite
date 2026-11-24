@@ -91,9 +91,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   line hidden again via OnShow). Others unchanged: Hub 1.14.2, Bars
   1.14.2, Meter 1.13.8, Marks 1.6.13, Pack 1.6.0, ItemID 1.1.3.
   Tests: chat_compact_test, chat_reshow_test (new).
-- Waiting on the user: fresh screenshots (unit frames for chevron color;
-  a waypoint close-up, the old glow looked blue/purple). Glow: steady at
-  the dim level, or a softer pulse? (user liked the dim end).
+  CONFIRMED in game (Nov 24, 10:12): Chat, Frames (gold chevrons),
+  Coords (round gold glow), Pathfinder, Ledger, quest tracker order and
+  look, tapped mobs gray, Pack 1.6.0.
+- Waiting on the user: glow steady at the dim level, or a softer pulse?
+  (user liked the dim end). Screenshots came in: chevrons and glow are
+  Aether gold.
 - Designs in progress, NOT coded: tooltip moved to the left of the
   quest list (options A/B in mock/tooltip_place.py; B recommended, not
   yet picked); key stats in item tooltips: two tight chevrons pointing
