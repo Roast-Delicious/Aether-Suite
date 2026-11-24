@@ -138,6 +138,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   calendar (~1.6R) and the small button under it (~1.5R) excluded.
   /skins debug now lists everything near the ring's top-right. NOT yet
   confirmed in game; if Forever's sun still shows, ask for /skins debug.
+- FIX READY on branch fix-zone-pill (AetherSkins 1.0.2): the zone/clock pill
+  covered the tracking and calendar buttons. Not shipped yet.
 - Next for AetherSkins (approved looks, not built): world map + quest
   log, Reputation, Friends, Progress Track, then more windows in batches.
   Hub tab/toggle for AetherSkins not made yet (slash only).
