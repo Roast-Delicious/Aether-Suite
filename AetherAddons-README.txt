@@ -23,7 +23,7 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.12    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.2     What an item is for, when you hover it
-  AetherLedger       1.5.14    Where to quest, train and skin next,
+  AetherLedger       1.5.15    Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.5.0     Your bags sorted into sections
   AetherChat         1.0.7     Chat with the Aether look, fitted beside
@@ -430,8 +430,10 @@ AetherLedger - where to quest, train and skin next             /ledger
     the most of your quests, and opens a small directions window:
     the zeppelin or boat to take, the flight master to fly from (one
     whose path you know, from AetherPathfinder), and the walk at the
-    end with yards and direction. Steps tick off as you go, and on the
-    flight map your stop glows green. Like AetherMeter, it fades to
+    end with yards and direction. Steps tick off with a green check as
+    you go, and on the flight map your stop glows green. The window
+    widens to fit its steps; a very long step wraps under itself, and
+    the title stays on one line. Like AetherMeter, it fades to
     the meter's transparency when you're not using it, and turns solid
     for a few seconds when you click it or a step is done. When you
     click the quest giver (or walk right up to them), "You're there!"

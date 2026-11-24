@@ -26,6 +26,8 @@ Then read this file. The addons live at the repo root (one folder each);
 - Check sources before answering factual questions: reliable, multiple
   and independent (not citing each other). Cite them.
 - Slow down and think things through.
+- Aether gold (1, 0.69, 0) is the only yellow in the suite (scope of
+  the cleanup still to confirm with the user).
 - Never reproduce Blizzard's class icons; use the original Aether
   glyphs only.
 - Mockups: show at actual in-game size (about 1.15 px per UI unit on
@@ -62,13 +64,25 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-- None. As of Nov 24 the user confirmed in game: rounded windows, XP bar,
-  button names, target debuffs in combat, level-number nudge. The shared
-  UI kit, lighter per-frame updates, extra Hub pages and smaller
-  AetherFrames art are done (Hub 1.14.1, Frames 1.14.3).
+- APPROVED, NOT YET BUILT (AetherPack Free slots, layout "C1 text"):
+  keep the deposit slot, arrow and "No swaps. Just drops." ink; rows to
+  the right of the ink, no bars: label (soft white) + right-aligned value.
+  Bags "22 free" (green / Aether gold in last 25% / red in last 10%),
+  Reagent "Full" (red when full). Ammo: above 50% of quiver capacity a
+  white count only; at 50% or less "Warning" in Aether gold before the
+  white count; at 300 or less "Low" in red before the white count, Low
+  pulsing bright/dim about once a second (only while the window is
+  open). Full numbers in each row's tooltip. "(show)" becomes
+  "Show empty" at the right end of the header line. Mockups:
+  freeC1_text.png / ammo_states.png (mock/ scripts pack_mock.py, c3.py, c4.py).
+- Waiting on the user: (1) with no quiver, Warning has nothing to measure
+  50% against; proposed plain count, then Low at 300. (2) New rule
+  "Aether gold is the only yellow": apply suite-wide now or AetherPack only?
+  (3) Which green to use (greens.png options A-E vs current #6edb78).
 - hub_general_test and ledger_full_test need the user's AetherLedger
   SavedVariables file (path is hard-coded under /mnt/user-data/uploads);
-  ask for it before working on Ledger or the Hub.
+  ask for it before working on Ledger or the Hub. travel_window_test.py
+  checks the directions window layout without it.
 
 ## Tests
 

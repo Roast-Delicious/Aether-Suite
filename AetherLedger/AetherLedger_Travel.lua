@@ -396,11 +396,11 @@ local function BuildWindow()
     win.title:SetPoint("TOPLEFT", 10, -8)
     win.title:SetPoint("RIGHT", win, "RIGHT", -26, 0)
     win.title:SetJustifyH("LEFT")
-    win.body = win:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
-    win.body:SetPoint("TOPLEFT", win.title, "BOTTOMLEFT", 0, -6)
-    win.body:SetPoint("RIGHT", win, "RIGHT", -10, 0)
-    win.body:SetJustifyH("LEFT")
-    win.body:SetSpacing(3)
+    win.title:SetWordWrap(false)          -- one line, so it always fits the title strip
+    if win.title.SetMaxLines then win.title:SetMaxLines(1) end
+    win.rows = {}                         -- one row per step: a marker column and wrapped text
+    win.extra = win:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
+    win.extra:SetJustifyH("LEFT")
     local close = AetherClose(win)
     close:SetScript("OnClick", function() AetherLedger_Travel.Stop() end)
     win:SetScript("OnUpdate", function(_, elapsed)
@@ -413,20 +413,88 @@ local function BuildWindow()
     win:Hide()
 end
 
+-- Width of a text on one line (wrapping ignored).
+local function OneLineWidth(fs, text)
+    fs:SetText(text)
+    if fs.GetUnboundedStringWidth then
+        local ok, w = pcall(fs.GetUnboundedStringWidth, fs)
+        if ok and w then return w end
+    end
+    return fs:GetStringWidth() or 0
+end
+
+local MIN_W, MAX_W = 280, 430   -- the window grows to fit, up to MAX_W, then wraps
+local PADX, MARK = 10, 14       -- side padding; the marker column (> or a check)
+
+local function Row(i)
+    local r = win.rows[i]
+    if r then return r end
+    r = {}
+    r.mark = win:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
+    r.mark:SetJustifyH("LEFT")
+    r.check = win:CreateTexture(nil, "OVERLAY")
+    r.check:SetTexture("Interface\\RaidFrame\\ReadyCheck-Ready")
+    r.check:SetSize(11, 11)
+    r.text = win:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
+    r.text:SetJustifyH("LEFT")
+    r.text:SetWordWrap(true)
+    r.text:SetSpacing(2)
+    win.rows[i] = r
+    return r
+end
+
 local function Render(extra)
     if not trip then return end
-    local lines = {}
-    for i, step in ipairs(trip.steps) do
-        local mark
-        if i < trip.at then mark = "|cff33dd66done|r  |cff888888" .. step.text .. "|r"
-        elseif i == trip.at then mark = "|cffffb000> " .. step.text .. "|r"
-        else mark = "|cffbbbbbb  " .. step.text .. "|r" end
-        lines[#lines + 1] = mark
+    -- Title: destination and zone; if that's too long, the destination alone
+    -- (and if even that is too long, the game trims it with "...").
+    local full = "To " .. trip.dest.name .. " (" .. MapName(trip.dest.map) .. ")"
+    local titleText = full
+    if OneLineWidth(win.title, full) + PADX + 40 > MAX_W then titleText = "To " .. trip.dest.name end
+    local want = OneLineWidth(win.title, titleText) + PADX + 40
+    for _, step in ipairs(trip.steps) do
+        want = math.max(want, OneLineWidth(win.extra, step.text) + PADX * 2 + MARK + 2)
     end
-    if extra then lines[#lines + 1] = " "; lines[#lines + 1] = extra end
-    win.title:SetText("To " .. trip.dest.name .. " (" .. MapName(trip.dest.map) .. ")")
-    win.body:SetText(table.concat(lines, "\n"))
-    win:SetHeight(win.body:GetStringHeight() + 40)
+    if extra then want = math.max(want, OneLineWidth(win.extra, extra) + PADX * 2) end
+    local width = math.floor(math.min(MAX_W, math.max(MIN_W, want)) + 0.5)
+    win:SetWidth(width)
+    win.title:SetText(titleText)
+
+    local y = -34                    -- just below the title strip (26) and its underline
+    local textW = width - PADX * 2 - MARK
+    for i, step in ipairs(trip.steps) do
+        local r = Row(i)
+        r.mark:ClearAllPoints(); r.mark:SetPoint("TOPLEFT", win, "TOPLEFT", PADX, y)
+        r.check:ClearAllPoints(); r.check:SetPoint("TOPLEFT", win, "TOPLEFT", PADX - 1, y + 1)
+        r.text:ClearAllPoints(); r.text:SetPoint("TOPLEFT", win, "TOPLEFT", PADX + MARK, y)
+        r.text:SetWidth(textW)
+        r.text:SetText(step.text)
+        r.mark:SetText(i == trip.at and ">" or "")
+        r.check:SetShown(i < trip.at)
+        if i < trip.at then
+            r.text:SetTextColor(0.53, 0.53, 0.53)
+        elseif i == trip.at then
+            r.text:SetTextColor(1, 0.69, 0); r.mark:SetTextColor(1, 0.69, 0)
+        else
+            r.text:SetTextColor(0.73, 0.73, 0.73)
+        end
+        r.mark:Show(); r.text:Show()
+        y = y - (r.text:GetStringHeight() or 12) - 4
+    end
+    for i = #trip.steps + 1, #win.rows do
+        local r = win.rows[i]; r.mark:Hide(); r.text:Hide(); r.check:Hide()
+    end
+    win.extra:ClearAllPoints()
+    if extra then
+        y = y - 6
+        win.extra:SetPoint("TOPLEFT", win, "TOPLEFT", PADX, y)
+        win.extra:SetWidth(width - PADX * 2)
+        win.extra:SetText(extra)
+        win.extra:Show()
+        y = y - (win.extra:GetStringHeight() or 12)
+    else
+        win.extra:SetText(""); win.extra:Hide()
+    end
+    win:SetHeight(math.floor(-y + 10 + 0.5))
 end
 
 -- ==========================================
