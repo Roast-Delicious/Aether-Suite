@@ -124,6 +124,13 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     game option "Player Minimap Coordinates"), found by content (a pair of
     numbers) under Minimap/MinimapCluster/MinimapBackdrop, retries 2 s/6 s
     and every 15 s; /skins debug lists it. Test skins_coords_test.
+  * CONFIRMED by /fstack (user, 14:59): Forever's text is
+    MinimapCluster.MinimapContainer.PlayerCoords (frame) with
+    .PlayerCoords.CoordText (FontString), from Blizzard_Minimap/Mainline/
+    Minimap.xml:101, strata LOW level 3. Hide that FRAME by name (hook
+    its Show / SetShown so it stays hidden), keep the by-content search
+    only as a fallback. The 1.0.3 search (MinimapCluster, depth 4) would
+    have reached it too.
   * Ring light = B: lighter soft gold-cream (ring_ref gain 0.85, peak 0.3,
     halo_amt 0.2; mock/skin_ringlight.py), rebake ring_day.
   * Layout 3: coordinates pill ~2 px under the bottom chevron; zone+clock
