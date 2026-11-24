@@ -147,9 +147,7 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   * The "1" badge under the calendar = Blizzard's ADDON COMPARTMENT
     (tooltip "AddOns"; menu lists AetherHub only). CHOSEN (user, 15:01):
     option 1, HIDE it in layout 3 (AetherHub's ring button covers it).
-  STILL OPEN:
-  a screenshot of the quest list
-  top to check it clears the new zone pill.
+  Nothing open: all minimap picks made. Waiting only on the go-ahead.
   NOTE: that chat's code (branch fix/forever-coords) and mockup scripts were
   never pushed and are NOT in this repo; recreate from its transcript.
 - Next AetherSkins batch (looks approved, not built): world map + quest
