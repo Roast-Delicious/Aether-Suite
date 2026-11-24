@@ -148,11 +148,17 @@ local function PlaceMini()
     if db.point then
         mini:SetPoint("CENTER", UIParent, "BOTTOMLEFT", db.point[1], db.point[2])
     elseif Minimap then
-        mini:SetPoint("TOP", Minimap, "BOTTOM", 0, -6)
+        -- AetherSkins' ring has a gold chevron hanging below the minimap: sit under it
+        local gap = 6
+        if _G.AetherSkins_RingActive then gap = (Minimap:GetWidth() or 140) / 2 * 0.28 + 4 end
+        mini:SetPoint("TOP", Minimap, "BOTTOM", 0, -gap)
     else
         mini:SetPoint("TOP", UIParent, "TOP", 0, -10)
     end
 end
+
+-- AetherSkins calls this once its ring is up (it loads after AetherCoords)
+function AetherCoords_RefreshMini() if mini then PlaceMini() end end
 
 local function CreateMini()
     mini = MakePanel(UIParent, 12)

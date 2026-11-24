@@ -144,6 +144,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   the zone text button to the clock (if on the same row) only, one frame
   level under them, so the bar's buttons stay clear and on top; re-placed
   1 s after login. /skins debug shows what the pill sits behind.
+  Same branch: AetherCoords 1.3.13 (user, 13:59: the coordinates covered
+  the bottom chevron): with AetherSkins_RingActive the readout sits
+  R*0.28+4 below the minimap (chevron reaches ~0.27R), else 6;
+  AetherCoords_RefreshMini, called by AetherSkins after its ring.
 - Next for AetherSkins (approved looks, not built): world map + quest
   log, Reputation, Friends, Progress Track, then more windows in batches.
   Hub tab/toggle for AetherSkins not made yet (slash only).

@@ -409,6 +409,7 @@ local function InstallMinimap()
     Minimap:HookScript("OnSizeChanged", Layout)
     _G.AetherSkins_RingActive = true
     if AetherHub_RefreshMinimapButton then pcall(AetherHub_RefreshMinimapButton) end
+    if AetherCoords_RefreshMini then pcall(AetherCoords_RefreshMini) end   -- coordinates go under the bottom chevron
     CheckDay(true)
     C_Timer.NewTicker(15, function() CheckDay(false); Rehide() end)
 end

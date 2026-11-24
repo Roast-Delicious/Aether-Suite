@@ -18,7 +18,7 @@ window, so you rarely need to type a command.
   AetherHub          1.14.3    One window with every addon's settings
   AetherMeter        1.13.8    Damage and healing meter
   AetherBars         1.14.2    Clean action bars with a cooldown glow
-  AetherCoords       1.3.12    Coordinates, plus your own map waypoints
+  AetherCoords       1.3.13    Coordinates, plus your own map waypoints
   AetherPathfinder   1.9.5     Trainers, vendors, flight masters and
                                mailboxes on the world map and minimap
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
@@ -305,7 +305,8 @@ AetherBars - cleaner action bars                               /cb
 AetherCoords - coordinates and waypoints                  /mc and /way
   Shows where you are, and lets you mark spots on the map with notes.
   - Your coordinates under the minimap, in a navy pill with a fine blue
-    edge (Shift-drag to move them).
+    edge (Shift-drag to move them). With AetherSkins' minimap they sit
+    just below its bottom gold chevron.
   - On the world map: the coordinates under your cursor, and your own
     position in the top-right corner.
   - Waypoints: the Aether star (a gold star in a thin gold ring on a navy
