@@ -118,6 +118,25 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   rotate), as in AetherSkins/Media/chev3d_*.tga. Grep all addons for
   win_chev_gold / chev58_* / chev80_* to find every use; bake matching
   sizes. Confirm the go-ahead before building (standing rule).
+- MINIMAP DECISIONS (user, Nov 24 ~14:15-14:24, in the separate chat
+  "Aether minimap coordinates bug"), part of the NEXT BUILD, waiting for go:
+  * AetherSkins 1.0.3: hide Forever's OWN minimap coordinates text (the
+    game option "Player Minimap Coordinates"), found by content (a pair of
+    numbers) under Minimap/MinimapCluster/MinimapBackdrop, retries 2 s/6 s
+    and every 15 s; /skins debug lists it. Test skins_coords_test.
+  * Ring light = B: lighter soft gold-cream (ring_ref gain 0.85, peak 0.3,
+    halo_amt 0.2; mock/skin_ringlight.py), rebake ring_day.
+  * Layout 3: coordinates pill ~2 px under the bottom chevron; zone+clock
+    pill right below it; Blizzard's tracking button moved onto the ring
+    across from the sun (art hidden, navy disc + FLAT magnifier icon,
+    Blizzard's click kept); calendar button hidden (our sun opens it).
+    (mock/skin_mmlayout.py, mock/skin_magnifier.py)
+  * Zone pill stops 3 units short of the bar's buttons (moot with layout 3).
+  STILL OPEN: magnifier icon A gold / B pale / C gold + glass (rec. A);
+  what the "1" badge under the calendar is; a screenshot of the quest list
+  top to check it clears the new zone pill.
+  NOTE: that chat's code (branch fix/forever-coords) and mockup scripts were
+  never pushed and are NOT in this repo; recreate from its transcript.
 - Next AetherSkins batch (looks approved, not built): world map + quest
   log, Reputation, Friends, Progress Track; then more windows. No Hub
   tab for AetherSkins yet (slash only).
