@@ -10,6 +10,9 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Standing rules (from the user)
 
+- The user plays WoW Forever ONLY, no other WoW version. Answer for
+  Forever. Retail/Midnight or Classic sources are background at most:
+  say so, and say what still needs checking in Forever.
 - All addon names start with "Aether".
 - Deliver the suite as one zip, AetherAddons.zip, built from the repo
   root (`zip -qr9 AetherAddons.zip Aether*`). Never write into the
@@ -76,7 +79,12 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-- Nothing queued, nothing waiting for a go-ahead. No open branches.
+- Branch coords-round-glow (queued, NOT built): round waypoint glow
+  (Media/wp_glow.tga, tools/gen_wp_glow.py) replaces the square
+  action-button art. User liked the dim end of the pulse; asked: steady
+  at that level, or a softer pulse? Coords 1.3.11 when built.
+- Idea under discussion: AetherSkins (reskin Blizzard windows/popups
+  in the Aether look). Waiting on which windows; mockups first.
 - Last delivered build (Nov 24): AetherAddons.zip with Hub 1.14.2,
   Bars 1.14.2, Frames 1.14.5, Meter 1.13.8, Pathfinder 1.9.4, Marks
   1.6.13, Ledger 1.6.0, Pack 1.6.0, Coords 1.3.10, ItemID 1.1.3, Chat
