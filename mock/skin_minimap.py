@@ -380,10 +380,8 @@ def opt_ref(night=False, width=11, **kw):
     return c.done()
 
 if __name__ == '__main__':
-    opts = [("Border blue (last)", opt_ref(border_blue=True)),
-            ("1  Navy", opt_ref(navy=True)),
-            ("2  Navy, blue edge lines", opt_ref(navy=True, edges=True)),
-            ("Night (with 2)", opt_ref(navy=True, edges=True, night=True))]
+    opts = [("Day (sun)", opt_ref(navy=True)),
+            ("Night (moon)", opt_ref(navy=True, night=True))]
     tiles = [label(im, name, 20) for name, im in opts]
     for (name, im), k in zip(opts, "01234"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0

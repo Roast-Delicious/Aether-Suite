@@ -141,7 +141,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   title strip / dark border), not the bright edge blue (that was a
   misread). ring_ref navy=True: lit slope lighter navy, shaded slope
   deeper, crest line; option 2 adds fine Aether-blue lines on both edges
-  like the window frame. Gold/white light unchanged. Waiting on 1 vs 2.
+  like the window frame. Gold/white light unchanged. CHOSEN (12:05):
+  option 1, plain navy (no edge lines); night version shown.
   World map mockups (11:54, from the user's windowed and
   full-screen screenshots; mock/skin_worldmap.py): Aether window, plain
   crest, zone buttons as navy capsules (current zone gold, blue
