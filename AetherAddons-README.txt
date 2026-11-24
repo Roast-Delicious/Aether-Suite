@@ -25,7 +25,7 @@ window, so you rarely need to type a command.
   AetherItemID       1.1.1     What an item is for, when you hover it
   AetherLedger       1.5.14    Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.4.0     Your bags sorted into sections
+  AetherPack         1.4.1     Your bags sorted into sections
   AetherChat         1.0.7     Chat with the Aether look, fitted beside
                                your action bars
   AetherFrames       1.14.3    Your, your pet's, your target's, its
@@ -526,10 +526,11 @@ AetherPack - your bags, sorted into sections                    /pack
                 powder, priest candles and feathers, shaman ankhs,
                 paladin symbols, druid seeds and herbs, rogue powders,
                 warlock stones); red at 2 or less
-  - No swaps. Just drops.: under the last section, beside the space
-    bars, a slot like your item slots with an amber rim, a soft glow
-    that falls into a dark middle, and "No swaps. Just drops."
-    hand-lettered above it with an arrow drawn into the slot. Drop an
+  - No swaps. Just drops.: a row of its own under the last section
+    (right under Free slots when that's folded), lined up with the
+    first column of items: a slot like your item slots with an amber
+    rim and a soft glow that falls into a dark middle, and "NO SWAPS.
+    JUST DROPS." chalked beside it with an arrow curving into it. Drop an
     item on it (or click it while holding one) and it goes into a free
     slot. Nothing already in your bags gets moved or swapped, so a drop
     can't land on another item by accident. Crafting reagents go to
@@ -539,7 +540,7 @@ AetherPack - your bags, sorted into sections                    /pack
     you hold an item (/pack pulse item|always|off). The rim and glow
     turn red when you're full, and a drop then just tells you there's
     no room. /pack deposit off hides it. (The lettering is drawn with
-    the Gochi Hand font, SIL Open Font License.)
+    the Amatic SC font, SIL Open Font License.)
   - Your free bag slots also show as a small number on the backpack
     button, so you can check without opening anything.
   - B (or any key you've bound to your bags) and the backpack button

@@ -478,7 +478,7 @@ end
 -- WINDOW
 -- ==========================================
 local BUTTON = 37      -- Blizzard's bag button size
-local DEP_W, DEP_H = 68, 60   -- the deposit block (see DEPOSIT SLOT)
+local DEP_W, DEP_H = 256, 46  -- the deposit row (see DEPOSIT SLOT)
 local GAP = 2
 local PAD = 10
 
@@ -694,21 +694,19 @@ function AetherPack_Layout()
     end
     if #reagents > 0 then rows[#rows + 1] = { label = "Reagents", text = table.concat(reagents, "  ") } end
 
-    -- Under the last section: the space bars on the left and, when it's on, the
-    -- deposit block (slogan, arrow and slot) on the right, centered on each other.
-    y = y - 4
-    local barsH = #rows * 18
-    local blockH = db.deposit and math.max(barsH, DEP_H) or barsH
+    -- The deposit slot gets a row of its own under the last section (right
+    -- under Free slots when that's folded), lined up with the item grid's
+    -- first column; the space bars follow at full width.
     local depBox = win.depositBox
     if db.deposit then
         depBox:ClearAllPoints()
-        depBox:SetPoint("TOPRIGHT", win, "TOPRIGHT", -PAD, y - math.floor((blockH - DEP_H) / 2))
+        depBox:SetPoint("TOPLEFT", win, "TOPLEFT", PAD, y + 2)
         depBox:Show()
+        y = y - DEP_H
     else
         depBox:Hide()
     end
-    local blockTop = y
-    y = y - math.floor((blockH - barsH) / 2)
+    y = y - 4
     for i, row in ipairs(rows) do
         local bar = win.bars[i] or (function()
             local b = CreateFrame("Frame", nil, win)
@@ -733,7 +731,7 @@ function AetherPack_Layout()
         end)()
         bar:ClearAllPoints()
         bar:SetPoint("TOPLEFT", win, "TOPLEFT", PAD, y)
-        bar:SetPoint("RIGHT", win, "RIGHT", -PAD - (db.deposit and (DEP_W - 8) or 0), 0)
+        bar:SetPoint("RIGHT", win, "RIGHT", -PAD, 0)
         bar.label:SetText(row.label)
         bar.text:SetText(row.text)
         if row.total then
@@ -764,7 +762,6 @@ function AetherPack_Layout()
     win.sell:SetShown(win.atMerchant and junkValue > 0)
     UpdateBackpackCount(st)
     AetherPack_UpdateDeposit(st)
-    y = math.min(y, blockTop - blockH)
     win:SetSize(width, -y + (win.sell:IsShown() and 34 or 10))
 end
 
@@ -845,10 +842,11 @@ local function Deposit()
     end
 end
 
--- The deposit block (art: tools/gen_deposit_art.py): 68 x 60 units. The slot
--- (37) sits at (13, 23) in it; the ink (the hand-lettered slogan and the hook
--- arrow, drawn on) covers the block from its top-left, 68 x 68.
-local DEP_SX, DEP_SY, DEP_SLOT = 13, 23, 37
+-- The deposit row (art: tools/gen_deposit_art.py for the slot, gen_deposit_ink.py
+-- for the chalk lettering): 46 units tall. The slot (37) sits at its left, 3
+-- units down; the ink (256 x 64 units: "NO SWAPS. JUST DROPS." and an arrow
+-- curving back into the slot) has the slot's top-left at (0, 12) on it.
+local DEP_SX, DEP_SY, DEP_SLOT = 0, 3, 37
 local AMBER = { 1, 0.69, 0 }             -- the Aether gold
 local FULL = { 0.9, 0.35, 0.3 }          -- the slot's rim and glow when your bags are full
 
@@ -927,14 +925,12 @@ local function BuildDeposit()
         end
     end
 
-    -- the ink, drawn on top of everything (the arrow ends over the slot's rim)
+    -- the chalk lettering and arrow, drawn on top
     local inkF = CreateFrame("Frame", nil, box)
     inkF:SetAllPoints(box)
     inkF:SetFrameLevel((d:GetFrameLevel() or 1) + 3)
-    local sh = Tex(inkF, "OVERLAY", 6, "dep_ink_sh")
-    sh:SetSize(68, 68); sh:SetPoint("TOPLEFT", box, "TOPLEFT", 0.7, -0.7)
     local ink = Tex(inkF, "OVERLAY", 7, "dep_ink", true)
-    ink:SetSize(68, 68); ink:SetPoint("TOPLEFT", box, "TOPLEFT", 0, 0)
+    ink:SetSize(256, 64); ink:SetPoint("TOPLEFT", d, "TOPLEFT", 0, 12)   -- chalk: no shadow
 
     d:SetScript("OnReceiveDrag", Deposit)
     d:SetScript("OnClick", Deposit)

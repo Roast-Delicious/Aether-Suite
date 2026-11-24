@@ -66,7 +66,7 @@ Then read this file. The addons live at the repo root (one folder each);
 ## Open items / waiting on the user
 
 Current build: Hub 1.14.1, Meter 1.13.8, Bars 1.14.2, Coords 1.3.8,
-Pathfinder 1.9.4, ItemID 1.1.1, Ledger 1.5.14, Pack 1.4.0, Frames 1.14.3,
+Pathfinder 1.9.4, ItemID 1.1.1, Ledger 1.5.14, Pack 1.4.1, Frames 1.14.3,
 Chat 1.0.7 (Marks unchanged).
 
 THE AETHER GOLD (2026-11-23, user's choice): one warm amber, 1, 0.69, 0
@@ -78,8 +78,20 @@ chevrons, ticks, checkmarks, Meter's "you" strip). On purpose still
 FillColor "getting full" bar. It's 37% of the way from gold (255,209,0) to
 orange (255,120,0). Hub's "Aether yellow" selected text is now this gold.
 
-AetherPack 1.4.0 deposit slot, final design (from many mockup rounds; the
-user cared about every detail, ask before changing it):
+AetherPack 1.4.1 (after the user saw 1.4.0 in game: the block beside the
+bars looked misaligned): the deposit slot now has its OWN ROW under the last
+section, at the item grid's first column (depositBox TOPLEFT PAD, y + 2; row
+46 units; slot 3 units down); bars back to full width after it. Lettering:
+"NO SWAPS. JUST DROPS." in Amatic SC Bold (refs/fonts, OFL), tilted 8 deg,
+right of the slot and a bit above, with an arrow curving back into the slot;
+chalk texture (streaks along strokes, ragged edges, dust; no shadow), tinted
+amber. tools/gen_deposit_ink.py makes dep_ink.tga (256 x 64 units; slot's
+top-left at (0, 12) on it). dep_ink_sh is gone. tools/dep_place_check.py
+places the real textures on a screenshot. The user's reference for chalk
+was a photo of chalk lettering (streaky along the strokes).
+
+AetherPack 1.4.0 deposit slot (look still current except placement and
+lettering, see 1.4.1 above):
 - Under the last section: bars on the left, deposit block on the right
   (win.depositBox, 68 x 60 units, TOPRIGHT at -PAD), centered on each other;
   Free slots line full width. Bars RIGHT inset PAD + 60 when on.

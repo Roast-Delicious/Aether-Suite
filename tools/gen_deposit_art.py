@@ -5,15 +5,13 @@
 #   dep_well.tga     the dark well inside the rim (not tinted)
 #   dep_glow.tga     soft glow inside the rim plus tapered rays fading toward the middle (tinted)
 #   dep_dark.tga     darker middle, under the number (black)
-#   dep_ink.tga      the hand-lettered slogan and the hook arrow (tinted)
-#   dep_ink_sh.tga   their soft shadow (black)
 #   dep_numglow.tga  soft glow behind the number (tinted)
-# Usage: python3 gen_deposit_art.py <AetherPack/Media dir> <handwriting font .ttf>
+# Usage: python3 gen_deposit_art.py <AetherPack/Media dir> [unused]
 import sys, struct
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
-OUT, HAND = sys.argv[1], sys.argv[2]
+OUT = sys.argv[1]
 
 def write_tga(path, rgba):
     """rgba: float array h x w x 4 in 0..1 (top row first)."""
@@ -110,48 +108,5 @@ u = (xx - n2 / 2) / (n2 / 2); w_ = (yy - n2 / 2) / (n2 / 2)
 blob = np.clip(1 - np.sqrt(u ** 2 + w_ ** 2), 0, 1) ** 1.6
 write_tga(OUT + '/dep_numglow.tga', down(white(blob), SS))
 
-# ---------- the ink: slogan + hook arrow, on a 68 x 68 unit canvas (256 px) ----------
-CAN = 68.0
-IPX, ISS = 256, 4
-M = IPX * ISS
-K = M / CAN                                    # px per unit
-SX, SY = 13.0, 23.0                            # the slot's top-left on this canvas (units)
-cx = SX + SLOT / 2; ytop = SY - 18.1
-ink = Image.new('L', (M, M), 0); di = ImageDraw.Draw(ink)
-font = ImageFont.truetype(HAND, int(12.5 * K))
-for i, line in enumerate(("No swaps.", "Just drops.")):
-    di.text(((cx + (i * 2 - 1) * 0.72) * K, (ytop + i * 10.1) * K), line, font=font, fill=255, anchor='mm')
-ink = ink.rotate(3, resample=Image.BICUBIC, center=(cx * K, (ytop + 5) * K))   # tilted a little, like a quick note
-di = ImageDraw.Draw(ink)
-def bez(p0, p1, p2, p3, n=60):
-    t = np.linspace(0, 1, n)[:, None]
-    return ((1 - t) ** 3) * p0 + 3 * ((1 - t) ** 2) * t * p1 + 3 * (1 - t) * t ** 2 * p2 + t ** 3 * p3
-sx1, sy0 = SX + SLOT, SY
-P2U = 1 / 1.38                                 # the mockup was drawn in screen px at 1.38 px per unit
-pts = bez(np.array([cx + 37 * P2U, ytop + 18 * P2U]), np.array([sx1 + 20 * P2U, ytop + 20 * P2U]),
-          np.array([sx1 + 18 * P2U, sy0 + 20 * P2U]), np.array([sx1 - 7 * P2U, sy0 + 13 * P2U]))
-rng = np.random.default_rng(3)
-tang = np.gradient(pts, axis=0); tang /= np.linalg.norm(tang, axis=1)[:, None] + 1e-9
-nrm = np.stack([-tang[:, 1], tang[:, 0]], 1)
-pts = pts + nrm * np.convolve(rng.normal(0, 0.55 * P2U, len(pts)), np.ones(9) / 9, mode='same')[:, None]
-def stroke(points, w0, w1, wmid=None):
-    n_ = len(points)
-    for i_, (x_, y_) in enumerate(points):
-        t_ = i_ / max(1, n_ - 1)
-        if wmid is None: w_ = w0 + (w1 - w0) * t_
-        else: w_ = (w0 + (wmid - w0) * min(1, t_ / 0.35)) * (1 - max(0, t_ - 0.75) / 0.25 * (1 - w1 / wmid))
-        r = w_ * K / 2
-        di.ellipse([x_ * K - r, y_ * K - r, x_ * K + r, y_ * K + r], fill=255)
-stroke(pts, 0.9, 1.9, 2.3)
-tip = pts[-1]; dirv = pts[-1] - pts[-6]; dirv /= np.linalg.norm(dirv)
-for side, ang, ln in ((1, 0.62, 7.0 * P2U), (-1, 0.55, 6.2 * P2U)):
-    ca, sa = np.cos(side * ang), np.sin(side * ang)
-    back = -np.array([dirv[0] * ca - dirv[1] * sa, dirv[0] * sa + dirv[1] * ca])
-    seg = np.array([tip + back * ln * t_ for t_ in np.linspace(0, 1, 18)])
-    seg = seg + np.stack([-back[1], back[0]])[None, :] * np.convolve(rng.normal(0, 0.35 * P2U, 18), np.ones(5) / 5, mode='same')[:, None]
-    stroke(seg, 2.1, 1.1)
-ink_a = np.array(ink).astype(np.float32) / 255
-write_tga(OUT + '/dep_ink.tga', down(white(ink_a), ISS))
-sh = np.array(ink.filter(ImageFilter.GaussianBlur(0.5 * K))).astype(np.float32) / 255 * 0.66
-write_tga(OUT + '/dep_ink_sh.tga', down(black(sh), ISS))
-print("slot art: 128 px for 37 units; ink: 256 px for 68 units; slot at", (SX, SY), "on the ink canvas")
+# The lettering and arrow: tools/gen_deposit_ink.py.
+print("slot art: 128 px for 37 units")
