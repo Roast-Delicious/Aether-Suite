@@ -106,11 +106,60 @@ def opt_square(style):
         button(c, (box[2] - 20, box[1] + 36), SUN, 14); button(c, (box[0] + 20, box[1] + 36), GEM, 14)
     return c.done()
 
+def ring3d(c, cx, cy, r_in, width, style):
+    """A blue ring drawn with light from the top-left: 'tube' (round, glossy),
+    'bevel' (flatter, lit top half, shaded bottom half), 'sunk' (tube plus
+    a soft shadow cast onto the map edge, so the map sits below it)."""
+    W, H = c.im.size; X, Y = c.P(cx, cy)
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    dx, dy = xx - X, yy - Y; r = np.hypot(dx, dy) / SS
+    t = (r - r_in) / width                      # 0 inner edge .. 1 outer edge
+    cover = np.clip(np.minimum(t * width + 0.5, (1 - t) * width + 0.5), 0, 1)   # anti-aliased band
+    ux, uy = dx / np.maximum(r * SS, 1e-3), dy / np.maximum(r * SS, 1e-3)
+    L = np.array([-0.55, -0.65, 0.52]); L = L / np.linalg.norm(L)    # top-left, a bit in front
+    tc = np.clip(t, 0, 1)
+    if style == 'bevel':
+        nr = np.where(tc < 0.5, -0.7, 0.7); nz = np.full_like(tc, 0.72)
+    else:
+        nr = 2 * tc - 1; nz = np.sqrt(np.clip(1 - nr ** 2, 0, 1))
+    nx, ny = nr * ux, nr * uy
+    diff = np.clip(nx * L[0] + ny * L[1] + nz * L[2], 0, 1)
+    # specular: reflect the view (0,0,1) about the normal
+    hx, hy, hz = L[0], L[1], L[2] + 1; hn = np.sqrt(hx * hx + hy * hy + hz * hz)
+    spec = np.clip((nx * hx + ny * hy + nz * hz) / hn, 0, 1) ** (40 if style != 'bevel' else 18)
+    base = np.array(BLUE, np.float32)
+    col = base[None, None, :] * (0.12 + 1.1 * diff ** 1.4)[..., None] + 255 * (1.0 * spec)[..., None]
+    edge = np.clip(1 - np.minimum(t, 1 - t) * width / 0.8, 0, 1) * 0.55     # thin dark rim at both edges
+    col = col * (1 - edge[..., None])
+    out = np.zeros((H, W, 4), np.float32); out[..., :3] = np.clip(col, 0, 255); out[..., 3] = cover * 255
+    d_out = r - (r_in + width)
+    lit = np.clip(ux * L[0] + uy * L[1], -1, 1)          # -1 = side facing away from the light
+    sh_o = np.where((d_out > -1) & (d_out < 7), (1 - np.clip(d_out, 0, 7) / 7) ** 2, 0) * np.clip(-lit * 0.9 + 0.2, 0, 1)
+    so = np.zeros((H, W, 4), np.float32); so[..., 3] = sh_o * 220
+    c.over(Image.fromarray(so.astype(np.uint8)))
+    if style == 'sunk':     # soft shadow on the map, just inside the ring, heavier at the bottom-right
+        d_in = r_in - r
+        sh = np.where((d_in > -1) & (d_in < 16), (1 - np.clip(d_in, 0, 16) / 16) ** 1.4, 0) * (0.55 + 0.45 * np.clip(-lit, 0, 1) + 0.3 * np.clip(lit, 0, 1))
+        shadow = np.zeros((H, W, 4), np.float32); shadow[..., 3] = np.clip(sh, 0, 1) * 250
+        c.over(Image.fromarray(shadow.astype(np.uint8)))
+    c.over(Image.fromarray(out.astype(np.uint8)))
+
+def opt_3d(style, width=11):
+    c = base(False); cx, cy = CX - X0, CY - Y0
+    W, H = c.im.size; X, Y = c.P(cx, cy); R = (RM + 1) * SS
+    c.over(glow(W, H, (X, Y, X, Y), R + width * SS, u(10), BLUE, 0.4))
+    ring3d(c, cx, cy, RM - 2, width, style)
+    chevs(c, cx, cy, RM + 6 + width // 2, RM + 6 + width // 2)
+    pill(c, (cx - 118, 6, cx + 118, 34), "Dustwallow Marsh", 15, GOLD, right="05:52")
+    pill(c, (cx - 52, cy + RM + 16, cx + 52, cy + RM + 42), "62.5, 44.4", 15, WHITE)
+    button(c, (cx + 84, cy - 86), SUN); button(c, (cx - 86, cy + 84), GEM)
+    return c.done()
+
 if __name__ == '__main__':
-    opts = [("Last time (2 px)", opt_round('blue', 2)),
-            ("1  Medium (4 px)", opt_round('blue', 4)),
-            ("2  Thick (6 px)", opt_round('blue', 6)),
-            ("3  Heavy (8 px)", opt_round('blue', 8))]
+    opts = [("Flat (6 px)", opt_round('blue', 6)),
+            ("1  Tube", opt_3d('tube')),
+            ("2  Bevel", opt_3d('bevel')),
+            ("3  Tube, map set in", opt_3d('sunk'))]
     tiles = [label(im, name, 20) for name, im in opts]
     for (name, im), k in zip(opts, "0123"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0

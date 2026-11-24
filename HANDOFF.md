@@ -117,8 +117,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   tracker-style headers, blue selected band) with B's capsule (pill)
   bars; ONLY the window's four gold chevrons as accents, nothing added
   on the portrait crest or elsewhere (crest = plain navy disc, blue
-  rim). Minimap = round with the blue ring, thicker; thickness options
-  shown 4 / 6 (recommended) / 8 px, waiting on the pick. Other rules
+  rim). Minimap = round with the blue ring, thicker, and 3D (user, 11:05).
+  3D options (mock/skin_minimap.py ring3d, 11 px, light from top-left):
+  1 tube, 2 bevel (ridge), 3 tube with the map set in (inner shadow,
+  recommended). Waiting on the pick. Other rules
   used: Neutral bars Aether gold, Friendly+ #22e650, Blizzard's yellow UI
   glyphs recolored (white, gold when selected), Fira Sans. Still need a
   world map screenshot. Minimap shape/border/hide-art is still done by
