@@ -135,7 +135,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   lit from the sun's side, a fine crest line, and the gold ONLY on the
   inner slope, stopping at the crest; the outer slope on the far side
   faces away from the light and stays shaded blue.
-  Waiting on 1 (ring only, recommended) vs 2 (warm light on the map).
+  LOOK APPROVED as a mockup (11:51; '/tmp' renders in mock/skin_minimap.py
+  ring_ref). Fine-tune in game after the first build. Waiting on 1 (ring
+  only, recommended) vs 2 (warm light on the map).
   Other rules
   used: Neutral bars Aether gold, Friendly+ #22e650, Blizzard's yellow UI
   glyphs recolored (white, gold when selected), Fira Sans. Still need a
