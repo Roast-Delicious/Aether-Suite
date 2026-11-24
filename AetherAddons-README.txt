@@ -28,7 +28,7 @@ window, so you rarely need to type a command.
   AetherPack         1.6.0     Your bags sorted into sections
   AetherChat         1.0.7     Chat with the Aether look, fitted beside
                                your action bars
-  AetherFrames       1.14.4    Your, your pet's, your target's, its
+  AetherFrames       1.14.5    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
 
@@ -720,7 +720,9 @@ AetherFrames - player, pet, target and party frames            /af
     is red for enemies and Aether gold for neutral, and its health and
     power drain toward the crest (a mob with no mana or rage shows an
     empty bar). Its capsule is the same height as yours. Elite targets
-    get a + after their level.
+    get a + after their level. A mob someone else tagged first (no
+    credit or loot for you) turns gray, like on Blizzard's frame: gray
+    name and health bar, and a dimmed flat portrait.
   - Threat glow: a wide, soft Aether-blue halo around the portrait. How it
     moves says how urgent it is; steady means fine, moving means act.
     On your frame and the target's: nothing while your threat is low,

@@ -713,6 +713,27 @@ local function Offline(u)
     return ok and not IsSecret(on) and on == false
 end
 
+-- A mob someone else tagged first (no credit or loot for you): grayed out,
+-- like Blizzard's target frame. Players and pets never count.
+local function TapDenied(u)
+    local okC, controlled = pcall(UnitPlayerControlled, u)
+    if not okC or IsSecret(controlled) or controlled then return false end
+    if UnitIsTapDenied then
+        local ok, v = pcall(UnitIsTapDenied, u)
+        return ok and not IsSecret(v) and v == true
+    end
+    if UnitIsTapped and UnitIsTappedByPlayer then          -- older clients
+        local ok1, tapped = pcall(UnitIsTapped, u)
+        local ok2, mine = pcall(UnitIsTappedByPlayer, u)
+        local ok3, all = pcall(UnitIsTappedByAllThreatList or function() return false end, u)
+        if not (ok1 and ok2 and ok3) or IsSecret(tapped) or IsSecret(mine) or IsSecret(all) then return false end
+        return tapped and not mine and not all and true or false
+    end
+    return false
+end
+
+local TAPPED_BAR, TAPPED_NAME = { 0.5, 0.5, 0.5 }, { 0.6, 0.6, 0.6 }
+
 local function UpdateHealth(f)
     local u = f.unit
     if not UnitExists(u) then return end
@@ -727,7 +748,11 @@ local function UpdateHealth(f)
     SetValues(bar, UnitHealth(u), UnitHealthMax(u), UnitHealthPercent and function()
         return UnitHealthPercent(u, true, CurveConstants and CurveConstants.ScaleTo100)
     end, dead)
-    SetBarColor(bar, 0.184, 0.620, 0.267)
+    if TapDenied(u) then
+        SetBarColor(bar, TAPPED_BAR[1], TAPPED_BAR[2], TAPPED_BAR[3])
+    else
+        SetBarColor(bar, 0.184, 0.620, 0.267)
+    end
 end
 
 local function UpdatePower(f)
@@ -836,8 +861,13 @@ local function UpdateInfo(f, poll)
     if not UnitExists(u) then return end
     f.nameFS:SetText(UnitName(u) or "")
     local off = Offline(u)
-    local c = off and { 0.6, 0.6, 0.6 } or NameColor(u)
+    local tapped = not off and TapDenied(u)
+    local c = (off or tapped) and TAPPED_NAME or NameColor(u)
     f.nameFS:SetTextColor(c[1], c[2], c[3])
+    if f.face.SetVertexColor then
+        local v = tapped and 0.5 or 1                       -- dim the flat portrait, as Blizzard does
+        f.face:SetVertexColor(v, v, v)
+    end
     if f.face.SetDesaturated then f.face:SetDesaturated(off) end
     local lvl = UnitLevel(u)
     local known = not IsSecret(lvl) and lvl ~= nil and lvl > 0
@@ -2168,6 +2198,7 @@ ev:SetScript("OnEvent", function(_, event, arg1, arg2, arg3, arg4)
         end
         if not f or not f:IsShown() then return end
         if event == "UNIT_CONNECTION" or event:find("^PARTY_MEMBER") then UpdateAll(f)
+        elseif event == "UNIT_FACTION" then UpdateInfo(f); UpdateHealth(f)   -- tagged by someone else, or not
         elseif event:find("HEALTH") then UpdateHealth(f)
         elseif event:find("POWER") then UpdatePower(f)
         elseif event == "UNIT_PORTRAIT_UPDATE" or event == "UNIT_MODEL_CHANGED" then SetFace(f, true)
