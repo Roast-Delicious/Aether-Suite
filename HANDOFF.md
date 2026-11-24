@@ -5,7 +5,10 @@ Start every session with:
     git clone <this repo> /home/claude/aether-repo
     cd /home/claude/aether-repo && sh setup.sh
 
-Then read this file. The addons live at the repo root (one folder each);
+Then read this file. GitHub: github.com/Roast-Delicious/Aether-Suite
+(main). On Nov 24 the GitHub history (last: Pack 1.4.2) was joined to
+this one with a keep-ours merge; this tree is the user's real build.
+Push with `git -c push.negotiate=true push origin main`. The addons live at the repo root (one folder each);
 `tools/` has the tests and art generators; `mock/` has mockup scripts.
 
 ## Standing rules (from the user)
