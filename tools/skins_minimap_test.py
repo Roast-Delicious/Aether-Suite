@@ -87,6 +87,7 @@ MinimapCluster.BorderTop = MinimapCluster:CreateTexture(); MinimapCluster.Border
 MinimapCluster.BorderTop.parent = MinimapCluster; MinimapCluster.BorderTop.w, MinimapCluster.BorderTop.h = 175, 16
 MinimapZoneText = NEW("FontString", "MinimapZoneText"); MinimapZoneText.color = {1, 0.82, 0}
 TimeManagerClockButton = new("Frame", "TimeManagerClockButton"); TimeManagerClockButton:CreateTexture()
+TimeManagerClockButton.cx, TimeManagerClockButton.cy, TimeManagerClockButton.w, TimeManagerClockButton.h, TimeManagerClockButton.level = 1065, 812, 40, 16, 6
 TimeManagerClockButton.hl = TimeManagerClockButton:CreateTexture()
 -- Forever's day/night icon: top-right on the ring (0.72R, 0.73R), 28 wide
 local function Kid(parent, name, x, y, w, prot)
@@ -98,6 +99,10 @@ HOLDER = Kid(MinimapCluster, "ForeverHolder", 0, 0, 200)
 DAYNIGHT = Kid(HOLDER, "ForeverDayNightButton", 41, 63, 30)
 -- the zone bar's calendar and the small button under it: further out, left alone
 CALBTN = Kid(MinimapCluster, "GameTimeFrame", 58, 101, 24)
+-- the top bar: tracking (left), zone name, clock, calendar (right), all on one row
+ZONEBTN = Kid(MinimapCluster, "MinimapZoneTextButton", -20, 112, 120); ZONEBTN.h = 16; ZONEBTN.level = 5
+MinimapCluster.ZoneTextButton = ZONEBTN
+TRACK = Kid(MinimapCluster, "MiniMapTracking", -92, 112, 20); TRACK.level = 5
 ONEBTN = Kid(MinimapCluster, "ForeverIndicator", 58, 84, 18)
 HUBBTN = Kid(Minimap, "AetherHubMinimapButton", -55, -48, 31)
 PROT = Kid(MinimapCluster, "SomeProtectedButton", 48, 50, 26, true)
@@ -129,6 +134,11 @@ expect("protected frame left alone", L.eval('PROT.alpha'), 1)
 expect("zoom button left alone", L.eval('ZOOM.alpha'), 1)
 expect("calendar and the small button by the bar left alone", (L.eval('CALBTN.alpha'), L.eval('ONEBTN.alpha')), (1, 1))
 expect("zone bar art hidden", L.eval('MinimapCluster.BorderTop.alpha'), 0)
+L.execute('''PILL = nil; for _, f in ipairs(FRAMES) do if f.points[1] and f.points[1][2] == ZONEBTN and f.points[1][1] == "TOPLEFT" then PILL = f end end''')
+expect("pill starts at the zone name (not the whole bar)", L.eval('PILL ~= nil'), True)
+expect("pill ends at the clock", L.eval('PILL.points[2][2] == TimeManagerClockButton and PILL.points[2][1]'), "BOTTOMRIGHT")
+expect("pill sits under the bar's buttons", L.eval('PILL.level < TRACK.level and PILL.level < CALBTN.level + 5'), True)
+expect("tracking and calendar untouched", (L.eval('TRACK.alpha'), L.eval('CALBTN.alpha')), (1, 1))
 expect("yellow zone text -> Aether gold", tuple(round(v, 2) for v in L.eval('{MinimapZoneText:GetTextColor()}').values()), (1, 0.69, 0))
 L.execute('MinimapZoneText:SetTextColor(0.1, 1, 0.1)')
 expect("green (friendly) zone text kept", tuple(round(v, 2) for v in L.eval('{MinimapZoneText:GetTextColor()}').values()), (0.1, 1, 0.1))

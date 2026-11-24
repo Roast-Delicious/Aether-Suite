@@ -32,7 +32,7 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.6    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.0.1     The Aether look for Blizzard's windows,
+  AetherSkins        1.0.2     The Aether look for Blizzard's windows,
                                starting with the minimap
 
 
@@ -856,7 +856,8 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
   - The sun or moon button is the Aether one: a navy button with a gold
     sun by day and a pale moon at night. Hover it for the game time;
     click it for the calendar.
-  - The bar with the zone name and clock sits on a navy pill. A yellow
+  - The zone name and clock sit on a navy pill (the tracking and
+    calendar buttons beside them stay clear). A yellow
     zone name turns Aether gold; other zone colors (friendly, hostile,
     contested) stay as they are. Its buttons work as before.
   - The map, its pins, AetherCoords' waypoints, AetherPathfinder's NPCs

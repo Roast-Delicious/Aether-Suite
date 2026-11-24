@@ -333,16 +333,34 @@ local function SkinTopBar()
     end
     GoldZoneText(zoneText)
     found.bar = anchor and Name(anchor) or "none"
-    if anchor then
-        local holder = CreateFrame("Frame", nil, anchor:GetObjectType() == "Texture" and anchor:GetParent() or anchor)
-        holder:SetAllPoints(anchor)
-        holder:SetFrameLevel(math.max(0, (holder:GetParent():GetFrameLevel() or 1) - 1))
-        ours[holder] = true
-        local p = Pill(holder, "BACKGROUND")
-        p:Place(holder, 2, 1)
-        holder:SetScript("OnSizeChanged", function() p:Place(holder, 2, 1) end)
-        topBar = holder
+    -- The pill covers only the zone name and the clock, not the whole bar:
+    -- the bar also holds the tracking button (left) and the calendar (right),
+    -- and those stay clear and on top.
+    local left = zoneButton or anchor
+    if not left then return end
+    local holder = CreateFrame("Frame", nil, left:GetParent() or UIParent)
+    ours[holder] = true
+    local p = Pill(holder, "BACKGROUND")
+    local function SameRow(a, b)
+        local _, ay = a:GetCenter(); local _, by = b:GetCenter()
+        return ay and by and math.abs(ay - by) < math.max(a:GetHeight() or 0, 8)
     end
+    local function Place()
+        holder:ClearAllPoints()
+        holder:SetPoint("TOPLEFT", left, "TOPLEFT", 0, 0)
+        local right = (clock and clock:IsShown() and SameRow(left, clock)) and clock or left
+        holder:SetPoint("BOTTOMRIGHT", right, "BOTTOMRIGHT", 0, 0)
+        found.pill = Name(left) .. (right ~= left and (" to " .. Name(right)) or "")
+        -- just under the zone text and clock, so every button on the bar stays above it
+        local lv = left:GetFrameLevel() or 1
+        if right ~= left then lv = math.min(lv, right:GetFrameLevel() or lv) end
+        holder:SetFrameLevel(math.max(0, lv - 1))
+        p:Place(holder, 2, 1)
+    end
+    Place()
+    holder:SetScript("OnSizeChanged", function() p:Place(holder, 2, 1) end)
+    C_Timer.After(1, Place)          -- the bar may still be laying out at login
+    topBar = holder
 end
 
 local function InstallMinimap()
@@ -434,7 +452,7 @@ SlashCmdList["AETHERSKINS"] = function(msg)
         Print("day/night icon replaced: " .. tostring(found.daynight))
         local near = NearTopRight()
         Print("near the ring's top-right: " .. (#near > 0 and table.concat(near, ", ") or "nothing"))
-        Print("zone bar: " .. tostring(found.bar))
+        Print("zone bar: " .. tostring(found.bar) .. "; pill behind: " .. tostring(found.pill))
         Print("hidden (" .. #hiddenNames .. "): " .. table.concat(hiddenNames, ", "))
         local kids = {}
         for _, p in ipairs({ Minimap, Obj(_G.MinimapCluster) or false }) do
