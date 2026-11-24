@@ -106,7 +106,7 @@ def opt_square(style):
         button(c, (box[2] - 20, box[1] + 36), SUN, 14); button(c, (box[0] + 20, box[1] + 36), GEM, 14)
     return c.done()
 
-def ring3d(c, cx, cy, r_in, width, style):
+def ring3d(c, cx, cy, r_in, width, style, light=(-0.55, -0.65), hl=(255, 255, 255), tint=0.0):
     """A blue ring drawn with light from the top-left: 'tube' (round, glossy),
     'bevel' (flatter, lit top half, shaded bottom half), 'sunk' (tube plus
     a soft shadow cast onto the map edge, so the map sits below it)."""
@@ -116,7 +116,7 @@ def ring3d(c, cx, cy, r_in, width, style):
     t = (r - r_in) / width                      # 0 inner edge .. 1 outer edge
     cover = np.clip(np.minimum(t * width + 0.5, (1 - t) * width + 0.5), 0, 1)   # anti-aliased band
     ux, uy = dx / np.maximum(r * SS, 1e-3), dy / np.maximum(r * SS, 1e-3)
-    L = np.array([-0.55, -0.65, 0.52]); L = L / np.linalg.norm(L)    # top-left, a bit in front
+    L = np.array([light[0], light[1], 0.52]); L = L / np.linalg.norm(L)    # light direction, a bit in front
     tc = np.clip(t, 0, 1)
     if style == 'bevel':
         nr = np.where(tc < 0.5, -0.7, 0.7); nz = np.full_like(tc, 0.72)
@@ -128,7 +128,12 @@ def ring3d(c, cx, cy, r_in, width, style):
     hx, hy, hz = L[0], L[1], L[2] + 1; hn = np.sqrt(hx * hx + hy * hy + hz * hz)
     spec = np.clip((nx * hx + ny * hy + nz * hz) / hn, 0, 1) ** (40 if style != 'bevel' else 18)
     base = np.array(BLUE, np.float32)
-    col = base[None, None, :] * (0.12 + 1.1 * diff ** 1.4)[..., None] + 255 * (1.0 * spec)[..., None]
+    lit_b = (0.12 + 1.1 * diff ** 1.4)[..., None]
+    blue = base[None, None, :] * np.minimum(lit_b, 1.15)
+    # the shine: where the light is strongest, blend toward the highlight color
+    # (blending, not adding, so gold stays exactly Aether gold)
+    a = np.clip((lit_b[..., 0] - 0.95) * 2.2 + spec + tint * diff ** 2, 0, 1)[..., None]
+    col = blue * (1 - a) + np.array(hl, np.float32)[None, None, :] * a
     edge = np.clip(1 - np.minimum(t, 1 - t) * width / 0.8, 0, 1) * 0.55     # thin dark rim at both edges
     col = col * (1 - edge[..., None])
     out = np.zeros((H, W, 4), np.float32); out[..., :3] = np.clip(col, 0, 255); out[..., 3] = cover * 255
@@ -144,11 +149,11 @@ def ring3d(c, cx, cy, r_in, width, style):
         c.over(Image.fromarray(shadow.astype(np.uint8)))
     c.over(Image.fromarray(out.astype(np.uint8)))
 
-def opt_3d(style, width=11):
+def opt_3d(style, width=11, **kw):
     c = base(False); cx, cy = CX - X0, CY - Y0
     W, H = c.im.size; X, Y = c.P(cx, cy); R = (RM + 1) * SS
     c.over(glow(W, H, (X, Y, X, Y), R + width * SS, u(10), BLUE, 0.4))
-    ring3d(c, cx, cy, RM - 2, width, style)
+    ring3d(c, cx, cy, RM - 2, width, style, **kw)
     chevs(c, cx, cy, RM + 6 + width // 2, RM + 6 + width // 2)
     pill(c, (cx - 118, 6, cx + 118, 34), "Dustwallow Marsh", 15, GOLD, right="05:52")
     pill(c, (cx - 52, cy + RM + 16, cx + 52, cy + RM + 42), "62.5, 44.4", 15, WHITE)
@@ -156,10 +161,10 @@ def opt_3d(style, width=11):
     return c.done()
 
 if __name__ == '__main__':
-    opts = [("Flat (6 px)", opt_round('blue', 6)),
-            ("1  Tube", opt_3d('tube')),
-            ("2  Bevel", opt_3d('bevel')),
-            ("3  Tube, map set in", opt_3d('sunk'))]
+    opts = [("Bevel, light top-left", opt_3d('bevel')),
+            ("1  Light top-right, white shine", opt_3d('bevel', light=(0.55, -0.65))),
+            ("2  Top-right, gold shine", opt_3d('bevel', light=(0.55, -0.65), hl=GOLD)),
+            ("3  Top-right, gold-lit face", opt_3d('bevel', light=(0.55, -0.65), hl=GOLD, tint=0.6))]
     tiles = [label(im, name, 20) for name, im in opts]
     for (name, im), k in zip(opts, "0123"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0

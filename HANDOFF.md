@@ -117,10 +117,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   tracker-style headers, blue selected band) with B's capsule (pill)
   bars; ONLY the window's four gold chevrons as accents, nothing added
   on the portrait crest or elsewhere (crest = plain navy disc, blue
-  rim). Minimap = round with the blue ring, thicker, and 3D (user, 11:05).
-  3D options (mock/skin_minimap.py ring3d, 11 px, light from top-left):
-  1 tube, 2 bevel (ridge), 3 tube with the map set in (inner shadow,
-  recommended). Waiting on the pick. Other rules
+  rim). Minimap = round blue ring, 3D BEVEL (ridge), 11 px (user, 11:09),
+  light from the TOP-RIGHT (where the sun/moon button sits). Highlight
+  options (ring3d light=(0.55,-0.65), hl, tint; the shine is BLENDED
+  into the color so gold stays exact Aether gold): 1 white shine,
+  2 gold shine (recommended), 3 gold-lit face. Waiting on the pick.
+  Other rules
   used: Neutral bars Aether gold, Friendly+ #22e650, Blizzard's yellow UI
   glyphs recolored (white, gold when selected), Fira Sans. Still need a
   world map screenshot. Minimap shape/border/hide-art is still done by
