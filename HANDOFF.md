@@ -128,6 +128,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   skins_minimap_test, coords_pill_test, hub_mmbutton_test (new);
   tools/skins_render.py renders the in-game result. If something is off
   in game, ask for /skins debug output and a screenshot.
+- FIX READY on branch fix-daynight-icon (AetherSkins 1.0.1): Forever's own
+  sun still showed; see the branch's HANDOFF. Not shipped yet.
 - Next for AetherSkins (approved looks, not built): world map + quest
   log, Reputation, Friends, Progress Track, then more windows in batches.
   Hub tab/toggle for AetherSkins not made yet (slash only).
