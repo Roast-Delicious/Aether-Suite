@@ -85,15 +85,13 @@ Then read this file. The addons live at the repo root (one folder each);
   tinted), same pulsing gold glow; pins 18 on the world map (was 24) and
   14 on the minimap (was 18). README updated on the branch. Mockup:
   mock/stars.py.
-- BUG FIX READY FOR NEXT BUILD (branch `prep-marks-quest-match`, tested
-  with tools/marks_wording_test.py + marks_test.py): AetherMarks 1.6.14.
-  Far quest mobs stayed red when the kill objective wasn't "<name> slain"
-  (user's case: "Weed Whacked", Carnivorous Weed, lvl 38, STV; exact
-  objective text unknown, quest is done). Now: kill objectives match when
-  they start with the mob's name or plural ("Carnivorous Weeds
-  whacked"); a kill objective seen on a nearby mob's tooltip is learned
-  like an item (it was skipped before), and learned entries check kill
-  objectives too. Not confirmed in game; if it recurs, ask for /qm debug.
+- AetherMarks far names (Nov 24): beyond 41 yards (WoW Forever's nameplate
+  cap, Rare Radar already sets it) mobs have no nameplate; the tiny names
+  there are drawn by the game in reaction colors and addons can't color,
+  move or find them. Within 41 yards quest mobs turn blue (confirmed in
+  two user videos). User wants far names colored, not hidden: not
+  possible; hiding them was declined. A speculative "odd wording" fix was
+  dropped (tools/marks_wording_test.py documents the idea).
 - APPROVED DESIGN, not yet prepped (AetherLedger quest tracker restyle,
   reskins Blizzard's objective tracker; mockups mock/tracker.py option A,
   mock/headers.py H1):
