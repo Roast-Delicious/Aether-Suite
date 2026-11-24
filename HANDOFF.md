@@ -71,7 +71,9 @@ Then read this file. The addons live at the repo root (one folder each);
 
 ## Open items / waiting on the user
 
-- Last delivered build (Nov 24, late): Pack 1.6.0, Frames 1.14.4, ItemID
+- Last delivered build (Nov 24, latest): Frames 1.14.5 (mobs tagged by
+  someone else gray out: name, health bar, dimmed flat portrait), plus
+  the build before it: Pack 1.6.0, ItemID
   1.1.3, Marks 1.6.13 (gold-only yellows), Coords 1.3.10 (Aether star
   waypoints, option C, 18/14 units), Ledger 1.6.0 + Hub 1.14.2 (quest
   tracker: lowest level at the top; Aether look in
@@ -81,12 +83,6 @@ Then read this file. The addons live at the repo root (one folder each);
   in-game check, especially: sort order direction, tracker look on
   WoW Forever's tracker (built against mainline Blizzard_ObjectiveTracker
   from wow-ui-source, Nov 18 2026), and the star pins.
-- BUG FIX READY FOR NEXT BUILD (branch `prep-frames-tapped`, tested with
-  tools/frames_tapped_test.py + frames tests): AetherFrames 1.14.5. A mob
-  tagged by someone else (UnitIsTapDenied, not player-controlled; older
-  UnitIsTapped fallback) grays out like Blizzard's target frame: gray
-  name and health bar, flat portrait dimmed to 0.5. UNIT_FACTION now
-  updates health too. README updated on the branch.
 - AetherMarks far names (Nov 24): beyond 41 yards (WoW Forever's nameplate
   cap, Rare Radar already sets it) mobs have no nameplate; the tiny names
   there are drawn by the game in reaction colors and addons can't color,
