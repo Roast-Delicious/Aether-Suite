@@ -228,11 +228,82 @@ def opt_cone(gold, width=11, night=False):
     button(c, (cx + 84, cy - 86), MOON if night else SUN); button(c, (cx - 86, cy + 84), GEM)
     return c.done()
 
+def ring_spot(c, cx, cy, r_in, width, gold=0.22, hl=GOLD, night=False,
+              sun=(84, -86), tip=20, height=28, cone=(8, 78), reach=260):
+    """Bevel ring lit by a cone of light whose tip sits just off the
+    sun/moon's bottom-left edge (tip px from the icon's center, toward the
+    map's center), shining down-left across the map. Only ring slopes that
+    face the tip and fall inside the cone catch the light; the cone fades
+    from full (cone[0] deg off its axis) to nothing (cone[1] deg)."""
+    W, H = c.im.size; X, Y = c.P(cx, cy)
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    dx, dy = (xx - X) / SS, (yy - Y) / SS; r = np.hypot(dx, dy)
+    t = (r - r_in) / width
+    cover = np.clip(np.minimum(t * width + 0.5, (1 - t) * width + 0.5), 0, 1)
+    ux, uy = dx / np.maximum(r, 1e-3), dy / np.maximum(r, 1e-3)
+    tc = np.clip(t, 0, 1)
+    nr = np.where(tc < 0.5, -0.7, 0.7); nz = 0.72
+    nx, ny = nr * ux, nr * uy
+    sl = np.hypot(*sun); axx, axy = -sun[0] / sl, -sun[1] / sl          # axis: toward the map's center
+    px, py = sun[0] + axx * tip, sun[1] + axy * tip                     # the cone's tip
+    vx, vy, vz = dx - px, dy - py, -np.full_like(dx, height)            # tip -> point
+    vl = np.sqrt(vx * vx + vy * vy + vz * vz)
+    ang = np.degrees(np.arccos(np.clip((vx * axx + vy * axy) / np.maximum(np.hypot(vx, vy), 1e-3), -1, 1)))
+    spot = np.clip((cone[1] - ang) / (cone[1] - cone[0]), 0, 1); spot = spot * spot * (3 - 2 * spot)
+    spot = spot / (1 + (vl / reach) ** 2)
+    lx, ly, lz = -vx / vl, -vy / vl, -vz / vl                           # point -> tip
+    diff = np.clip(nx * lx + ny * ly + nz * lz, 0, 1) * spot
+    hx, hy, hz = lx, ly, lz + 1; hn = np.sqrt(hx * hx + hy * hy + hz * hz)
+    spec = (np.clip((nx * hx + ny * hy + nz * hz) / hn, 0, 1) ** 18) * spot * (cover > 0)
+    base = np.array(BLUE, np.float32)
+    diff = diff * (cover > 0)
+    dmax = max(float(diff.max()), 1e-3)          # brightest point ON THE RING
+    lit = ((0.34 if night else 0.42) + 0.9 * diff / dmax * 0.85)[..., None]
+    blue = base[None, None, :] * np.minimum(lit, 1.0)
+    dn = diff / dmax
+    thr = 0.97 - gold
+    a = np.clip((np.maximum(dn, spec * 1.2) - thr) / 0.08, 0, 1); a = a * a * (3 - 2 * a)
+    g = np.array(hl, np.float32)[None, None, :]
+    goldc = g * np.clip(0.55 + 0.45 * dn, 0, 1)[..., None]
+    col = blue * (1 - a[..., None]) + goldc * a[..., None]
+    col *= (1 - (0.12 if night else 0.45) * np.sin(np.pi * a))[..., None]
+    edge = np.clip(1 - np.minimum(t, 1 - t) * width / 0.8, 0, 1) * 0.55
+    col = col * (1 - edge[..., None])
+    out = np.zeros((H, W, 4), np.float32); out[..., :3] = np.clip(col, 0, 255); out[..., 3] = cover * 255
+    # shadow: the ring's lit inner slope throws a little shade outward, away from the tip
+    d_out = r - (r_in + width)
+    sh = np.where((d_out > -1) & (d_out < 7), (1 - np.clip(d_out, 0, 7) / 7) ** 2, 0) * (0.25 + 0.5 * np.clip(spot / max(float(spot.max()), 1e-3), 0, 1))
+    so = np.zeros((H, W, 4), np.float32); so[..., 3] = sh * 220
+    c.over(Image.fromarray(so.astype(np.uint8)))
+    c.over(Image.fromarray(out.astype(np.uint8)))
+    return (px, py)
+
+def opt_spot(gold=0.22, night=False, width=11, show_tip=False, **kw):
+    c = base(False); cx, cy = CX - X0, CY - Y0
+    W, H = c.im.size; X, Y = c.P(cx, cy); R = (RM + 1) * SS
+    c.over(glow(W, H, (X, Y, X, Y), R + width * SS, u(10), BLUE, 0.4))
+    tipxy = ring_spot(c, cx, cy, RM - 2, width, gold, hl=(WHITE if night else GOLD), night=night, **kw)
+    chevs(c, cx, cy, RM + 6 + width // 2, RM + 6 + width // 2)
+    pill(c, (cx - 118, 6, cx + 118, 34), "Dustwallow Marsh", 15, GOLD, right="05:52")
+    pill(c, (cx - 52, cy + RM + 16, cx + 52, cy + RM + 42), "62.5, 44.4", 15, WHITE)
+    button(c, (cx + 84, cy - 86), MOON if night else SUN); button(c, (cx - 86, cy + 84), GEM)
+    if show_tip:   # guide only: where the cone starts and its edges
+        Lr, d = c.layer(); px, py = cx + tipxy[0], cy + tipxy[1]
+        import math
+        for deg in (-kw.get('cone', (8, 78))[1], 0, kw.get('cone', (8, 78))[1]):
+            a0 = math.atan2(86, -84) + math.radians(deg)
+            d.line(c.P(px, py, px + 230 * math.cos(a0), py + 230 * math.sin(a0)), fill=(255, 255, 255, 90 if deg else 140), width=SS)
+        d.ellipse(c.P(px - 3, py - 3, px + 3, py + 3), fill=(255, 255, 255, 230)); c.over(Lr)
+    return c.done()
+
 if __name__ == '__main__':
-    opts = [("Day: gold (middle)", opt_cone(0.22)),
-            ("Night: white", opt_cone(0.22, night=True))]
+    opts = [("Cone guide (not part of the look)", opt_spot(show_tip=True)),
+            ("1  Day, a little gold", opt_spot(0.12)),
+            ("2  Day, middle gold", opt_spot(0.22)),
+            ("3  Day, more gold", opt_spot(0.34)),
+            ("Night (with 2)", opt_spot(0.22, night=True))]
     tiles = [label(im, name, 20) for name, im in opts]
-    for (name, im), k in zip(opts, "0123"): im.save('/tmp/sk/mm_%s.png' % k)
+    for (name, im), k in zip(opts, "01234"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0
     for t in tiles: sheet.paste(t, (x, 0)); x += t.width
     sheet.save('/tmp/sk/mm_sheet.png'); print(sheet.size)
