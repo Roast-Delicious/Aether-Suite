@@ -311,10 +311,14 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
     sl = np.hypot(*sun); sx, sy = sun[0] / sl, sun[1] / sl
     tc = np.clip(t, 0, 1)
     # base blue bevel: ridge, gently lit from the sun's side
-    nr = np.where(tc < 0.5, -0.7, 0.7)
-    diff = np.clip(nr * (ux * sx + uy * sy) * 0.6 + 0.72 * 0.75, 0, 1)
+    nr = np.where(tc < 0.5, -0.7, 0.7)                 # the two slopes of the ridge
+    L = np.array([sx * 0.8, sy * 0.8, 0.6]); L /= np.linalg.norm(L)
+    diff = np.clip(nr * ux * L[0] + nr * uy * L[1] + 0.72 * L[2], 0, 1)
+    face = (0.30 + 0.95 * diff ** 1.3)                  # strong light/dark split between the slopes
+    crest = np.exp(-((tc - 0.5) / 0.07) ** 2)           # a fine bright line along the ridge top
+    face = face + 0.25 * crest
     base = np.array(BLUE, np.float32)
-    col = base[None, None, :] * (0.55 + 0.5 * diff)[..., None]
+    col = base[None, None, :] * np.minimum(face, 1.15)[..., None]
     # inner-wall glow: centered straight across from the light, long soft fade
     opp = np.degrees(np.arccos(np.clip(-(ux * sx + uy * sy), -1, 1)))     # 0 = directly across from the sun
     along = np.exp(-(opp / spread) ** 2)
@@ -327,7 +331,8 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
     warm = col * (1 - m1) + cream * m1
     warm = warm * (1 - m2) + g * m2
     w = np.clip(I * 1.6, 0, 1) ** 1.2
-    col = col * (1 - w * 0.0) * (1 - w) + warm * w
+    warm = warm * np.clip(0.62 + 0.45 * face, 0, 1.08)[..., None]   # the gold keeps the bevel's light and shade
+    col = col * (1 - w) + warm * w
     # glint: a small hot spot on the outer edge nearest the light
     if glint:
         near = np.degrees(np.arccos(np.clip(ux * sx + uy * sy, -1, 1)))
@@ -361,9 +366,9 @@ def opt_ref(night=False, width=11, **kw):
     return c.done()
 
 if __name__ == '__main__':
-    opts = [("Last: sharp step", opt_spot(0.22)),
-            ("1  Like your image", opt_ref()),
-            ("2  Same, plus warm light on the map", opt_ref(pool=0.18)),
+    opts = [("Last (bevel lost)", opt_ref()),
+            ("1  Bevel back", opt_ref()),
+            ("2  Bevel, plus warm light on the map", opt_ref(pool=0.18)),
             ("Night (with 1)", opt_ref(night=True))]
     tiles = [label(im, name, 20) for name, im in opts]
     for (name, im), k in zip(opts, "01234"): im.save('/tmp/sk/mm_%s.png' % k)

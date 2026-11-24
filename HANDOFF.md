@@ -131,7 +131,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   the sun/moon icon flips (check how Forever's icon decides); change
   over through plain blue, never gold+white mixed. Hex: Aether gold
   #FFB000, Aether blue #4DA6FF, navy #13284A, sky blue #73BFFF.
-  Waiting on 1 vs 2.
+  The bevel must stay visible under the glow (11:47): ridge slopes lit
+  from the sun's side, a fine crest line, gold shaded by the slopes.
+  Waiting on 1 (ring only, recommended) vs 2 (warm light on the map).
   Other rules
   used: Neutral bars Aether gold, Friendly+ #22e650, Blizzard's yellow UI
   glyphs recolored (white, gold when selected), Fira Sans. Still need a
