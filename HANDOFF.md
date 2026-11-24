@@ -96,6 +96,15 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   CONFIRMED in game earlier (Nov 24, 10:12): Chat, Frames (gold
   chevrons), Coords (round gold glow), Pathfinder, Ledger tracker order
   and look, tapped mobs gray, Pack 1.6.0.
+- PALETTE (user, Nov 24 14:31, "go with blue"): the suite's light blue is
+  AETHER BLUE #4DA6FF (0.3, 0.65, 1). Official names: Aether Gold
+  #FFB000 (the only yellow), Aether Blue #4DA6FF (edges, rims, glow, blue
+  text), Aether Navy #13284A (title strips, buttons, pills, minimap ring).
+  Aether Sky #73BFFF is retired.
+- QUEUED FOR THE NEXT BUILD (user, Nov 24 14:31): "Ready for turn-in" text
+  in the quest tracker from Aether Sky to AETHER BLUE (AetherLedger_
+  TrackerLook.lua READY = {0.3, 0.65, 1}; update tracker_look_test and the
+  README line). Bump Ledger. Confirm the go-ahead before building.
 - QUEUED FOR THE NEXT BUILD (user, Nov 24 14:06): upgrade ALL chevrons
   in the suite to the 3D bevel ridge (A), as on AetherSkins' minimap:
   every Aether window's 12/3/6/9 chevrons (win_chev_gold in each addon's
