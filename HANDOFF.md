@@ -136,8 +136,15 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   inner slope, stopping at the crest; the outer slope on the far side
   faces away from the light and stays shaded blue.
   LOOK APPROVED as a mockup (11:51; '/tmp' renders in mock/skin_minimap.py
-  ring_ref). Fine-tune in game after the first build. Waiting on 1 (ring
-  only, recommended) vs 2 (warm light on the map).
+  ring_ref). Fine-tune in game after the first build. CHOSEN (11:54): option 1,
+  light on the ring only, NO light on the map.
+  World map mockups (11:54, from the user's windowed and
+  full-screen screenshots; mock/skin_worldmap.py): Aether window, plain
+  crest, zone buttons as navy capsules (current zone gold, blue
+  separators, white arrows), map art kept inside a fine rounded blue
+  edge, "You:" box as a navy pill, quest log like the tracker (header
+  band, navy/gold quest icons, Ready for turn-in sky blue, gold-check
+  boxes, difficulty colors kept, yellow -> gold). Waiting on feedback.
   Other rules
   used: Neutral bars Aether gold, Friendly+ #22e650, Blizzard's yellow UI
   glyphs recolored (white, gold when selected), Fira Sans. Still need a
