@@ -140,6 +140,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   confirmed in game; if Forever's sun still shows, ask for /skins debug.
 - FIX READY on branch fix-zone-pill (AetherSkins 1.0.2): the zone/clock pill
   covered the tracking and calendar buttons. Not shipped yet.
+- 3D chevron (accent) mockups (user, 13:59; mock/skin_chevron3d.py):
+  A bevel ridge (recommended), B rounded, C chamfered; lit from the
+  top-right like the ring; shading only darkens Aether gold or lifts it
+  toward the ring's cream. Waiting on the pick (and whether windows get
+  it too).
 - Next for AetherSkins (approved looks, not built): world map + quest
   log, Reputation, Friends, Progress Track, then more windows in batches.
   Hub tab/toggle for AetherSkins not made yet (slash only).
