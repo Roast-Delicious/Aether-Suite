@@ -296,7 +296,7 @@ def opt_spot(gold=0.22, night=False, width=11, show_tip=False, **kw):
         d.ellipse(c.P(px - 3, py - 3, px + 3, py + 3), fill=(255, 255, 255, 230)); c.over(Lr)
     return c.done()
 
-def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread=48, pool=0.0, glint=True, border_blue=False):
+def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread=48, pool=0.0, glint=True, border_blue=False, navy=False, edges=False):
     """Lit like the user's reference image: light from beyond the sun/moon
     (top-right). Gold glows on the INNER wall across from it, with a long,
     soft fade back to blue through a light warm cream (no gray, no hard
@@ -315,14 +315,17 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
     L = np.array([sx * 0.8, sy * 0.8, 0.6]); L /= np.linalg.norm(L)
     diff = np.clip(nr * ux * L[0] + nr * uy * L[1] + 0.72 * L[2], 0, 1)
     crest = np.exp(-((tc - 0.5) / 0.07) ** 2)           # a fine bright line along the ridge top
-    if border_blue:
+    if navy:
+        # header navy (#13284A): the lit slope a lighter navy, the shaded slope deeper
+        face = 0.75 + 0.95 * diff ** 1.1 + 0.55 * crest
+    elif border_blue:
         # keep the ring's overall color at the window-border blue (#4DA6FF):
         # the shaded slope a little darker, the lit slope a little lighter
         face = 0.86 + 0.42 * diff ** 1.1 + 0.16 * crest
     else:
         face = (0.30 + 0.95 * diff ** 1.3) + 0.25 * crest   # strong light/dark split between the slopes
-    base = np.array(BLUE, np.float32)
-    col = base[None, None, :] * np.minimum(face, 1.15)[..., None]
+    base = np.array(NAVY if navy else BLUE, np.float32)
+    col = base[None, None, :] * np.minimum(face, 2.2 if navy else 1.15)[..., None]
     # inner-wall glow: centered straight across from the light, long soft fade
     opp = np.degrees(np.arccos(np.clip(-(ux * sx + uy * sy), -1, 1)))     # 0 = directly across from the sun
     along = np.exp(-(opp / spread) ** 2)
@@ -337,7 +340,8 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
     warm = col * (1 - m1) + cream * m1
     warm = warm * (1 - m2) + g * m2
     w = np.clip(I * 1.6, 0, 1) ** 1.2
-    warm = warm * np.clip(0.62 + 0.45 * face, 0, 1.08)[..., None]   # the gold keeps the bevel's light and shade
+    fshade = (face - 0.75) / 1.5 + 0.5 if navy else face
+    warm = warm * np.clip(0.62 + 0.45 * fshade, 0, 1.08)[..., None]   # the gold keeps the bevel's light and shade
     col = col * (1 - w) + warm * w
     # glint: a small hot spot on the outer edge nearest the light
     if glint:
@@ -357,6 +361,10 @@ def ring_ref(c, cx, cy, r_in, width, hl=GOLD, night=False, sun=(84, -86), spread
     sh = np.where((d_out > -1) & (d_out < 7), (1 - np.clip(d_out, 0, 7) / 7) ** 2, 0) * (0.2 + 0.6 * away)
     so = np.zeros((H, W, 4), np.float32); so[..., 3] = sh * 220
     c.over(Image.fromarray(so.astype(np.uint8)))
+    if edges:
+        ln = np.exp(-((r - r_in - 0.6) / 0.7) ** 2) + np.exp(-((r - r_in - width + 0.6) / 0.7) ** 2)
+        ln = np.clip(ln, 0, 1)[..., None] * 0.9
+        col = col * (1 - ln) + np.array(BLUE, np.float32)[None, None, :] * ln
     out = np.zeros((H, W, 4), np.float32); out[..., :3] = np.clip(col, 0, 255); out[..., 3] = cover * 255
     c.over(Image.fromarray(out.astype(np.uint8)))
 
@@ -372,9 +380,10 @@ def opt_ref(night=False, width=11, **kw):
     return c.done()
 
 if __name__ == '__main__':
-    opts = [("Now (deeper blue)", opt_ref()),
-            ("Border blue", opt_ref(border_blue=True)),
-            ("Border blue, night", opt_ref(border_blue=True, night=True))]
+    opts = [("Border blue (last)", opt_ref(border_blue=True)),
+            ("1  Navy", opt_ref(navy=True)),
+            ("2  Navy, blue edge lines", opt_ref(navy=True, edges=True)),
+            ("Night (with 2)", opt_ref(navy=True, edges=True, night=True))]
     tiles = [label(im, name, 20) for name, im in opts]
     for (name, im), k in zip(opts, "01234"): im.save('/tmp/sk/mm_%s.png' % k)
     W = sum(t.width for t in tiles); sheet = Image.new('RGB', (W, tiles[0].height)); x = 0
