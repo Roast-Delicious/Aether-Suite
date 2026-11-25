@@ -88,6 +88,13 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
+- QUEUED for the next build (user, Nov 24 19:54): an AetherSkins tab in
+  AetherHub (today it's slash only; the user looked for it in the Hub).
+  Contents: minimap skin on/off (needs /reload: say so), "Run Debug"
+  button (prints /skins debug), room for one switch per skinned window
+  as the world map etc. arrive. Hub button rules apply (verb first,
+  Title Case, "..." if it asks first). Bump Hub + Skins, README.
+  Not built; wait for the go-ahead.
 - LAST BUILD (Nov 24, 16:15; go-ahead 16:12): AetherSkins 1.1.1 only
   (others unchanged from 15:44). What's in it:
   * /skins debug fix (user, 15:52): scans skip forbidden frames
