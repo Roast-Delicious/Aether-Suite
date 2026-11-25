@@ -190,6 +190,10 @@ expect("...and the ? is back", (L.eval('AetherLedger_TrackerIconFor(B1.poiButton
 expect("no errors printed", L.eval('OUT'), None)
 L.execute('B9 = { HeaderText = { color = {1, 0.1, 0.1} } }; B9.HeaderText.GetTextColor = function(s) return unpack(s.color) end; B9.HeaderText.SetTextColor = function(s, r, g, b) s.color = {r, g, b} end; AetherLedger_TrackerNameColor(B9.HeaderText)')
 expect("red title: the map's lighter red", col("B9.HeaderText.color"), (1, 0.38, 0.34))
+L.execute('B9.HeaderText:SetTextColor(1, 0.1, 0.1)')
+expect("Blizzard sets the red again (tracker update, hover): ours comes back", col("B9.HeaderText.color"), (1, 0.38, 0.34))
+L.execute('B9.HeaderText:SetTextColor(0.25, 0.75, 0.25)')
+expect("...and a green (easy) title is left alone", col("B9.HeaderText.color"), (0.25, 0.75, 0.25))
 L.execute('QUESTLOG_READY = 777; C_QuestLog = C_QuestLog or {}; C_QuestLog.GetNextWaypoint = function(q) return 1413, 0.5, 0.6 end; C_QuestLog.GetTitleForQuestID = function() return "Lost Crate" end; STARTED = nil; AetherLedger_Travel = AetherLedger_Travel or {}; AetherLedger_Travel.Start = function(d) STARTED = d end')
 if L.eval('AetherLedger_GoToTurnIn ~= nil'):
     L.execute('AetherLedger_GoToTurnIn(777)')

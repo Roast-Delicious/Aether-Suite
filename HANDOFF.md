@@ -1492,3 +1492,12 @@ trim), xpbar_render.py (XP bar).
   Hunter") covers it, so that strip's frame level is above window+20.
   Branch dancer2: underline level = highest child level (4 deep) + 1,
   re-measured on OnShow and 0.3 s later (replaces the fixed +200).
+- 16:33 TRACKER RED (user screenshot refs/tracker_red_2026-11-25.png):
+  titles still Blizzard red (255,26,26 = 1,0.1,0.1). NameColor matched it
+  but ran once per Paint; Blizzard sets the color again on updates/hover.
+  READY, NOT SHIPPED (branch dancer2, Ledger 1.8.9): post-hook on each
+  HeaderText's SetTextColor re-applies the light red / orange (busy guard,
+  only when Wants()). tracker_look_test (+2).
+- 16:32 talent detail: a 2nd arrowhead pointing UP under the '1 of 1' pill
+  (base visible, ~13 units wide) on the gray arrow below a maxed node =
+  double-headed arrow. Asked the user for a fresh Talents /skins tree.
