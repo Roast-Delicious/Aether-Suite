@@ -88,6 +88,16 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
+- READY, NOT SHIPPED (branch fix-tracker-icon-pop): AetherLedger 1.7.2.
+  Bug (user video 03:16, "every time a quest is handed in or accepted"):
+  the tracker's Aether quest icon (navy disc + gold ring) balloons to
+  cover the screen for ~0.1 s. Cause: our overlay was a CHILD of the POI
+  button, and Blizzard plays button.AddAnim (Scale) on it when a quest is
+  added/handed in (ObjectiveTrackerPOIButtonTemplate; Forever's scale is
+  evidently far bigger than retail's 1.2). Fix: overlay parented to the
+  BLOCK, anchored to the button (render-time scale doesn't move anchors),
+  weak map button->overlay, hidden on the button's OnHide, rebuilt if a
+  pooled button changes block. tracker_look_test (+1 check).
 - LAST BUILD (Nov 25, 03:45; user 03:11: "go ahead with the entire
   interface", with screenshots of Reputation, Progress Track, Talents,
   Friends): AetherSkins 1.2.0 + Hub 1.14.6.
