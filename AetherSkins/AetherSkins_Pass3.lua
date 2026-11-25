@@ -86,6 +86,7 @@ function P.SideTabExtra(tab)
     local sel = Shown(T(tab, "SelectedTexture"))
     for _, e in ipairs(x.rings) do e:SetShown(sel) end
     x.glow:SetShown(sel)
+    if p.notch then p.notch:Hide() end   -- the thick gold frame replaces it (user, Nov 25 11:36)
 end
 
 -- ------------------------------------------
@@ -140,7 +141,8 @@ local VENDOR = { ["SpellIcon-256x256-RepairAll"] = "btn_repairall", ["SpellIcon-
 -- scroll thumb asks for its size on every resize; replacing it raised
 -- "Usage: C_Texture.GetAtlasInfo(atlas)", user, Nov 25 10:55).
 local over = weak()
-local function Ours(t, file, col, w, h)
+local function Ours(t, file, col, w, h, path)
+    -- (returns our texture)
     local o = over[t]
     local par = t.GetParent and t:GetParent()
     if not par or not par.CreateTexture then return end
@@ -150,23 +152,26 @@ local function Ours(t, file, col, w, h)
             local ok, l, sl = pcall(t.GetDrawLayer, t)
             if ok and l then layer, sub = l, math.min((sl or 0) + 1, 7) end
         end
-        o = Tex(par, layer, sub, MEDIA .. file, col)
+        o = Tex(par, layer, sub, path or (MEDIA .. file), col)
         over[t] = o
         local function Sync()
             o:SetShown(Shown(t))
-            local okd, d = pcall(function() return t.IsDesaturated and t:IsDesaturated() end)
-            if o.SetDesaturated then o:SetDesaturated(okd and d or false) end
+            if o.mirrorDesat then
+                local okd, d = pcall(function() return t.IsDesaturated and t:IsDesaturated() end)
+                if o.SetDesaturated then o:SetDesaturated(okd and d or false) end
+            end
         end
         HookShow(t, Sync)
         if hooksecurefunc and t.SetDesaturated then pcall(hooksecurefunc, t, "SetDesaturated", Sync) end
         Sync()
     end
-    o:SetTexture(MEDIA .. file)
+    o:SetTexture(path or (MEDIA .. file))
     o:SetVertexColor(col[1], col[2], col[3], col[4] or 1)
     o:ClearAllPoints()
     if w then o:SetSize(w, h or w); o:SetPoint("CENTER", t, "CENTER")
     else o:SetPoint("TOPLEFT", t, "TOPLEFT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT") end
     t:SetAlpha(0)
+    return o
 end
 
 -- The Aether page in place of the parchment, with a thin blue edge.
@@ -183,21 +188,33 @@ local function Page(t)
     end
 end
 
+local cardFill, cardSel = weak(), weak()
+local function FriendCardSel(card)
+    local f = cardFill[card]; if not f then return end
+    local sel = cardSel[card] or false
+    local c = sel and { 0.19, 0.34, 0.58, 0.97 } or f.c
+    f.o:SetVertexColor(c[1], c[2], c[3], c[4])
+    local x = card.aetherSel
+    if x then x.notch:SetShown(sel); for _, e in ipairs(x.edge) do e:SetShown(sel) end end
+end
 local friendSel = weak()
 local function FriendSelected(t)
     local card = t.GetParent and t:GetParent()
     if not card or friendSel[t] then return end
     local notch = Tex(card, "OVERLAY", 4, WHITE, GOLD)
-    notch:SetPoint("TOPLEFT", t, "TOPLEFT", 0, -4); notch:SetPoint("BOTTOMLEFT", t, "BOTTOMLEFT", 0, 4); notch:SetWidth(3)
+    notch:SetPoint("TOPLEFT", t, "TOPLEFT", 0, -4); notch:SetPoint("BOTTOMLEFT", t, "BOTTOMLEFT", 0, 4); notch:SetWidth(4)
     local f = CreateFrame("Frame", nil, card)
     f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
     local e = Edge(f, "OVERLAY", 3, { BLUE[1], BLUE[2], BLUE[3], 1 }, 0)
     friendSel[t] = { notch, e }
-    local function Upd()
-        local on = Shown(t)
-        notch:SetShown(on); for _, x in ipairs(e) do x:SetShown(on) end
+    card.aetherSel = { notch = notch, edge = e }
+    -- Blizzard marks the picked friend by locking the card's highlight
+    if hooksecurefunc and card.LockHighlight then
+        pcall(hooksecurefunc, card, "LockHighlight", function() cardSel[card] = true; FriendCardSel(card) end)
+        pcall(hooksecurefunc, card, "UnlockHighlight", function() cardSel[card] = false; FriendCardSel(card) end)
     end
-    HookShow(t, Upd); Upd()
+    notch:SetShown(false); for _, x in ipairs(e) do x:SetShown(false) end
+    FriendCardSel(card)
     -- under the mouse: a thin blue edge (Blizzard's own highlight layer)
     if card.CreateTexture and Once(card, "frhover") then
         Edge(card, "HIGHLIGHT", 1, { BLUE[1], BLUE[2], BLUE[3], 0.9 }, 1)
@@ -211,7 +228,21 @@ function P.ExtraRule(t, a)
         local b = t.GetParent and t:GetParent()
         local nm = b and b.GetName and b:GetName()
         if nm == "MerchantGuildBankRepairButton" then v = "btn_guild" end
-        Ours(t, v, GOLD, 26)
+        local o = Ours(t, v, GOLD, 26)
+        -- gray when there's nothing to repair or sell (user, Nov 25)
+        if o and b and Once(b, "vendorgray") then
+            local function Upd()
+                local on = not (b.IsEnabled and not b:IsEnabled())
+                local c = on and GOLD or { 0.45, 0.47, 0.52 }
+                o:SetVertexColor(c[1], c[2], c[3], 1)
+            end
+            for _, m in ipairs({ "Enable", "Disable", "SetEnabled" }) do
+                if b[m] and hooksecurefunc then pcall(hooksecurefunc, b, m, Upd) end
+            end
+            P3.vendorUpd = P3.vendorUpd or {}
+            P3.vendorUpd[b] = Upd
+            Upd()
+        elseif P3.vendorUpd and P3.vendorUpd[b] then P3.vendorUpd[b]() end
         return true
     end
     -- scroll bars: beveled gold thumb, dark navy track, gold chevrons
@@ -233,10 +264,20 @@ function P.ExtraRule(t, a)
     end
     -- quest and gossip pages
     if a == "QuestBG-Parchment" then Page(t); return true end
-    -- Friends: the picked card
+    -- Friends: our own navy card (Blizzard's art is near-black once tinted);
+    -- the mouse-over highlight a soft blue; the picked card (Blizzard locks
+    -- its highlight) brighter, with a gold notch and a blue edge
     if a == "friends-card-selected" then
-        Tint(t, BLUE, 0.55)
+        Tint(t, BLUE, 0.18)
         FriendSelected(t)
+        return true
+    end
+    if a:find("^friends%-card%-") then
+        local dim = a:find("disabled") or a:find("offline")
+        local c = dim and { 0.07, 0.11, 0.18, 0.97 } or { 0.12, 0.22, 0.38, 0.97 }
+        local o = Ours(t, nil, c, nil, nil, WHITE)
+        local card = t.GetParent and t:GetParent()
+        if card then cardFill[card] = { o = o, c = c } ; FriendCardSel(card) end
         return true
     end
     return false
@@ -283,7 +324,7 @@ function P3.Grip(win)
     local name = win.GetName and win:GetName()
     if not name or NO_GRIP[name] or not Once(win, "grip") then return end
     local g = CreateFrame("Button", nil, win)
-    g:SetSize(16, 16); g:SetPoint("BOTTOMRIGHT", win, "BOTTOMRIGHT", -3, 3)
+    g:SetSize(14, 14); g:SetPoint("BOTTOMRIGHT", win, "BOTTOMRIGHT", 6, -6)   -- on the rim, clear of scroll bars
     g:SetFrameLevel((win.GetFrameLevel and win:GetFrameLevel() or 1) + 20)
     for i, len in ipairs({ 12, 8, 4 }) do      -- three short gold strokes, corner to corner
         local l = Tex(g, "OVERLAY", 1, WHITE, { GOLD[1], GOLD[2], GOLD[3], 0.9 })

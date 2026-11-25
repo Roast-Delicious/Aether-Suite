@@ -311,7 +311,8 @@ local function Scroll(s)
     local tr = T(s, "Track")
     local th = (tr and T(tr, "Thumb")) or T(s, "Thumb")
     if tr then Tint(T(tr, "Begin"), BLUE, 0.35); Tint(T(tr, "Middle"), BLUE, 0.35); Tint(T(tr, "End"), BLUE, 0.35) end
-    if th then Tint(T(th, "Begin"), BLUE); Tint(T(th, "Middle"), BLUE); Tint(T(th, "End"), BLUE) end
+    -- the thumb itself gets our gold art laid over it (AetherSkins_Pass3); no tint here,
+    -- a desaturated thumb turned our gold white (user, Nov 25 11:36)
     for _, k in ipairs({ "Back", "Forward" }) do
         local a = T(s, k)
         if a then Tint(T(a, "Texture") or (a.GetNormalTexture and a:GetNormalTexture()), TEXT) end
