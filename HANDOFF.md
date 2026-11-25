@@ -412,6 +412,16 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   NEXT: Hub cleanup (inventory -> mockups), quest dialog dump.
   Checklist doc for this build: https://claude.ai/artifact/XvgN21CTknwxXLLPLwARsa
   (sections 1-4, Result enum Pass/Partial/Fail/Not tested/Can't test now).
+  QUEST DIALOG dump (07:40, tools/dumps/QuestFrame_Reward_2026-11-25.txt,
+  reward page): QuestFrameRewardPanelBg atlas QuestBG-Parchment (Detail/
+  Progress/Greeting panels likely the same); reward items QuestInfo
+  RewardsFrameQuestInfoItemN: NameFrame tex 136796 (brown plaque),
+  IconBorder 651080; XP .ValueText; Complete button styled. Mockup
+  mock/pass2_quest.py: A keep parchment (tiles navy) / B navy page (gold
+  title+headers, light body text, navy tiles) - my pick B; B needs the
+  quest font objects (QuestFont, QuestTitleFont, QuestFontNormalSmall...)
+  recolored light, which also changes the map quest log detail page
+  (fade its parchment too). Awaiting pick.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in

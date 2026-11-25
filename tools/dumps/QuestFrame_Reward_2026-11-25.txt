@@ -1,0 +1,114 @@
+== Window dump: QuestFrame ==
+Frame QuestFrame 338x496
+  Texture QuestFrameBg 334x473 tex=374155
+  Texture .TopTileStreaks 330x43 atlas=_UI-Frame-TopTileStreaks
+  Texture QuestFramePortrait 60x60
+  Frame .NineSlice 338x496
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 163x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 163x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x325 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x325 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture QuestFramePortrait 62x62 tex=RTPortrait1
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 372x534 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 256x20
+    FontString QuestFrameTitleText 256x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button QuestFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame QuestFrameInset 328x410 [styled inset]
+    Texture .Bg 328x410 tex=374154
+    Frame .NineSlice 328x410
+      Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+      Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+      Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+      Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+      Texture .TopEdge 316x3 atlas=_UI-Frame-InnerTopTile
+      Texture .BottomEdge 316x3 atlas=_UI-Frame-InnerBotTile
+      Texture .LeftEdge 3x399 atlas=!UI-Frame-InnerLeftTile
+      Texture .RightEdge 3x399 atlas=!UI-Frame-InnerRightTile
+  Frame QuestNpcNameFrame 233x14
+  Frame .AccountCompletedNotice 50x14 hidden (2 parts inside, skipped)
+  Frame QuestFrameRewardPanel 384x512
+    Texture QuestFrameRewardPanelBg 299x407 atlas=QuestBG-Parchment
+    Texture QuestFrameRewardPanelMaterialTopLeft 239x300 hidden
+    Texture QuestFrameRewardPanelMaterialTopRight 64x300 hidden
+    Texture QuestFrameRewardPanelMaterialBotLeft 239x138 hidden
+    Texture QuestFrameRewardPanelMaterialBotRight 64x138 hidden
+    Texture .SealMaterialBG 299x407 hidden
+    Button QuestFrameCompleteQuestButton 120x22 [styled button]
+      Texture .Left 12x22 tex=130828
+      Texture .Right 12x22 tex=130828
+      Texture .Middle 96x22 tex=130828
+      FontString QuestFrameCompleteQuestButtonText 93x12
+      Texture .? 120x22 tex=130826
+    ScrollFrame QuestRewardScrollFrame 300x403
+      Frame QuestRewardScrollChildFrame 300x334
+        FontString QuestInfoTitleHeader 285x18
+        FontString QuestInfoRewardText 285x160
+        Frame QuestInfoRewardsFrame 285x122
+          FontString .Header 285x18
+          FontString .ItemChooseText 285x13
+          FontString .ItemReceiveText 138x13
+          FontString .PlayerTitleText 190x13 hidden
+          FontString .QuestSessionBonusReward 270x27 hidden
+          Button .HonorFrame 147x41 hidden (7 parts inside, skipped)
+          Button QuestInfoRewardsFrameQuestInfoItem1 147x41
+            Texture QuestInfoRewardsFrameQuestInfoItem1IconTexture 39x39 tex=132937
+            Texture QuestInfoRewardsFrameQuestInfoItem1NameFrame 128x64 tex=136796
+            FontString QuestInfoRewardsFrameQuestInfoItem1Name 90x36
+            Texture .? 39x39 hidden atlas=auctionhouse-itemicon-border-white
+            Texture .? 39x39 hidden
+            Texture .? 39x39 hidden
+            FontString QuestInfoRewardsFrameQuestInfoItem1Count 1x1 hidden
+            Texture .IconBorder 39x39 tex=651080
+            Texture .IconOverlay 39x39 hidden
+            Texture .QuestRewardContextIcon 16x21 hidden
+            Texture .IconOverlay2 39x39 hidden
+          Frame QuestInfoMoneyFrame 192x28 hidden (3 parts inside, skipped)
+          Button QuestInfoSkillPointFrame 147x41 hidden (10 parts inside, skipped)
+          Frame QuestInfoXPFrame 280x20
+            FontString .ReceiveText 76x13
+            FontString .ValueText 36x16
+          Button .ArtifactXPFrame 147x41 hidden (8 parts inside, skipped)
+          Button .WarModeBonusFrame 147x41 hidden (7 parts inside, skipped)
+          Frame QuestInfoPlayerTitleFrame 500x39 hidden (5 parts inside, skipped)
+          Frame QuestInfoItemHighlight 256x64 hidden (1 parts inside, skipped)
+          Button QuestInfoRewardsFrameQuestInfoItem2 147x41
+            Texture QuestInfoRewardsFrameQuestInfoItem2IconTexture 39x39 tex=133765
+            Texture QuestInfoRewardsFrameQuestInfoItem2NameFrame 128x64 tex=136796
+            FontString QuestInfoRewardsFrameQuestInfoItem2Name 90x36
+            Texture .? 39x39 hidden atlas=auctionhouse-itemicon-border-white
+            Texture .? 39x39 hidden
+            Texture .? 39x39 hidden
+            FontString QuestInfoRewardsFrameQuestInfoItem2Count 1x1 hidden
+            Texture .IconBorder 39x39 tex=651080
+            Texture .IconOverlay 39x39 hidden
+            Texture .QuestRewardContextIcon 16x21 hidden
+            Texture .IconOverlay2 39x39 hidden
+        Frame QuestInfoSpacerFrame 5x5
+      Frame .ScrollBar 8x396 [styled scroll]
+        Frame .Track 8x358
+          Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+          Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+          Texture .Middle 8x342 atlas=!minimal-scrollbar-track-middle
+          Button .Thumb 8x358 hidden (3 parts inside, skipped)
+        Button .Back 17x11
+          Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+        Button .Forward 17x11
+          Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+  Frame QuestFrameProgressPanel 384x512 hidden (9 parts inside, skipped)
+  Frame QuestFrameDetailPanel 338x496 hidden (9 parts inside, skipped)
+  Frame QuestFrameGreetingPanel 384x512 hidden (8 parts inside, skipped)
+  StatusBar .FriendshipStatusBar 230x14 hidden (11 parts inside, skipped)
