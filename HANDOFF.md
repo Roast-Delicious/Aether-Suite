@@ -115,6 +115,15 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     (approved capsule bars, Neutral gold / Friendly+ #22e650), rows and
     section headers (tracker-style), world map specifics: phase 2, from
     the user's screenshots + /skins debug.
+- READY, NOT SHIPPED (branch fix-ledger-skins-errors, includes the tab fix):
+  AetherLedger 1.8.1 + AetherSkins 1.2.1. Two errors from the user's
+  checklist (04:15, 04:16): (1) Ledger.lua:248 concat nil: GiverText was
+  defined above the field-name locals, so GIVER was a nil global ->
+  Hub's Ledger page errored on any moving giver; moved below them,
+  ledger_routes_test now checks the order and the text. (2) Skins
+  IsCoordText (/skins debug + minimap scan) indexed a SECRET string
+  (Midnight secret values) -> issecretvalue guard; zone-text color Fix
+  also guarded.
 - READY, NOT SHIPPED (branch fix-skins-tab-center): AetherSkins 1.2.1. Tab
   boxes centered on the tab's Text (TOP/BOTTOM of the text +-7), not the
   whole button: Talents' Primary/Secondary text sat low (user 1.12 note).

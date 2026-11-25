@@ -240,19 +240,22 @@ end
 
 local DATA = AetherLedger_Data or {}
 
--- Quest givers who walk a route (AetherLedger_Routes, from QuestieDB): their
--- one spot in DATA is only somewhere on the way, so say they're on the move.
-local function Moving(id) return AetherLedger_Routes and id and AetherLedger_Routes[id] ~= nil end
-local function GiverText(id)
-    local d = DATA[id]
-    return d[GIVER] .. (Moving(id) and " (on the move)" or "")
-end
-AetherLedger_Moving = Moving
 -- Field positions in AetherLedger_Data entries.
 local NAME, REQ, LEVEL, MAP, X, Y, GIVER, SIDE, RACES, CLASSES, TOP, LEN, PRE_ANY, PRE_ALL, NOT_WITH =
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
 local KIND, SKILL, SKILL_MIN = 16, 17, 18      -- "c" class quest / "p" profession quest
 local SPECIAL_LOW = 10                         -- class/profession quests up to 10 levels below you still count
+
+-- Quest givers who walk a route (AetherLedger_Routes, from QuestieDB): their
+-- one spot in DATA is only somewhere on the way, so say they're on the move.
+-- (Below the field names: above them GIVER was still nil, Nov 25 error.)
+local function Moving(id) return AetherLedger_Routes and id and AetherLedger_Routes[id] ~= nil end
+local function GiverText(id)
+    local d = DATA[id]
+    return tostring(d and d[GIVER] or "?") .. (Moving(id) and " (on the move)" or "")
+end
+AetherLedger_Moving = Moving
+
 
 local BAND_LOW, BAND_HIGH = 2, 3      -- quests from your level -2 to +3 count
 local MIN_SCORE = 4                   -- a zone needs at least this much to be suggested

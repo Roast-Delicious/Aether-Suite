@@ -323,7 +323,7 @@ local function GoldZoneText(fs)
     fs.aetherGold = true
     local busy = false
     local function Fix(self, r, g, b)
-        if busy or not r then return end
+        if busy or not r or (issecretvalue and (issecretvalue(r) or issecretvalue(g) or issecretvalue(b))) then return end
         if r > 0.6 and g > r * 0.72 and g < r * 0.93 and b < 0.3 * r then
             busy = true; self:SetTextColor(GOLD[1] * r, GOLD[2] * r, GOLD[3]); busy = false
         end
@@ -446,7 +446,10 @@ end
 local function IsCoordText(fs)
     if not fs.GetText then return false end
     local ok, t = pcall(fs.GetText, fs)
-    if not ok or type(t) ~= "string" then return false end
+    -- Forever hides some text from addons (Midnight's "secret" values, in
+    -- instances and combat): reading one is an error, so skip it (user's
+    -- /skins debug error, Nov 25).
+    if not ok or (issecretvalue and issecretvalue(t)) or type(t) ~= "string" then return false end
     t = t:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", "")
     return t:match("^%s*%(?%s*%d+%.?%d*%s*[,/ ]%s*%d+%.?%d*%s*%)?%s*$") ~= nil
 end
