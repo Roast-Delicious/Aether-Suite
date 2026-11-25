@@ -1182,3 +1182,7 @@ trim), xpbar_render.py (XP bar).
   regions + Header art faded, Header.Text hidden, our title FontString
   (same words) at TOP -5; buttons get the panel-button style.
 - BUILD 4 SHIPPED 13:33 (main, merged build4): AetherSkins 1.5.1.
+- BUILD 5 (branch build5): talent arrows (user 13:37: gray arrow still
+  double-headed, heads ran into talents): no more our arrow_head/shaft
+  art, SetSize 20 or thickness 6 - Blizzard's own head + Line, Tint only
+  (gold / blue / gray .62,.65,.72). Primary/Secondary text OK (user).

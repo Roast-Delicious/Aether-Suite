@@ -381,25 +381,18 @@ function Rule(t, a)
     if a:find("^friends%-card") then return P.KeepTint(t, { 0.16, 0.33, 0.6, 0.95 }) end
     if a == "spellbook-item-backplate" then return Tint(t, { 0.12, 0.25, 0.46 }, 0.6) end
     local state = a:match("^talents%-arrow%-head%-(%a+)")
-    -- the ghost head (Blizzard's preview of a pending change) keeps its own
-    -- art: ours came out pointing the wrong way (user, Nov 25 12:57)
+    -- the ghost head (Blizzard's preview of a pending change) is left alone
     if state == "ghost" then return end
     if state then
+        -- Blizzard's own arrow art and geometry, only recolored: our bigger
+        -- heads and thicker shafts ran into the talents, and one shaft showed
+        -- a head at both ends (user, Nov 25 13:37)
         local col = ARROW[state] or "gray"
-        t:SetTexture(MEDIA .. "arrow_head_" .. col); t:SetVertexColor(1, 1, 1, 1)
-        if t.SetDesaturated then t:SetDesaturated(false) end
-        t:SetSize(20, 20)
+        local c = (col == "gold" and GOLD) or (col == "blue" and BLUE) or { 0.62, 0.65, 0.72 }
+        Tint(t, c, 1)
         local par = t.GetParent and t:GetParent()
         local line = par and T(par, "Line")
-        if line and line.SetThickness then
-            line:SetThickness(6)
-            if col == "gray" and line.SetColorTexture then
-                line:SetColorTexture(0.59, 0.6, 0.64, 1)
-            else
-                if line.SetTexture then line:SetTexture(MEDIA .. "arrow_shaft_" .. col) end
-                if line.SetVertexColor then line:SetVertexColor(1, 1, 1, 1) end
-            end
-        end
+        if line then Tint(line, c, 1) end
         return
     end
 end
