@@ -276,6 +276,13 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   SOME POINTS = blue border (was green); UNAVAILABLE = gray, as is.
   Open (asked 07:00): 'can take' (0 points, unlocked) vs locked look;
   arrows; count text color; green 'can learn' glow -> blue?
+  07:03-07:07: arrows YES, thicker + 3D bevel like the accents (mock/
+  talent_details.py), gold/blue/gray by source state. Counts: user wants
+  "2 of 5" wording (mock/talent_counts.py: 3b badge, 3c pill on icon,
+  3d line under) - pick pending. 1: user leaning 1C with locked in navy
+  (mock/talent_1c.py, three strengths) - pick pending. Glow: Aether
+  blue #4DA6FF (mock/talent_glow.py, soft/medium/strong) - pick pending;
+  user said "Aether looks good" (07:07).
   GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
   LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
   (no [styled] marks anywhere): the skinner never caught it -> added
