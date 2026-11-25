@@ -410,6 +410,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   SelectableGlow / SelectableIcon shown), GetNodeInfo ranks, Line
   texture orientation of the 3D shafts, spell item RequiredLevel text.
   NEXT: Hub cleanup (inventory -> mockups), quest dialog dump.
+  Checklist doc for this build: https://claude.ai/artifact/XvgN21CTknwxXLLPLwARsa
+  (sections 1-4, Result enum Pass/Partial/Fail/Not tested/Can't test now).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
