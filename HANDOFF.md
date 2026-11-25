@@ -451,6 +451,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   4th Group Finder button; clamp it to the 64 size (mock/npf.py).
   BAG FRAMES (09:22): B, frame colour = item quality when >=2 (uncommon
   and up), Aether blue otherwise (mock/bagq.py).
+  RESIZE (09:24): corner grip. Small gold grip bottom-right on every
+  skinned window except quest windows; drag = SetScale (clamp 0.7-1.5),
+  saved per window name in AetherSkinsDB.scale; right-click = reset.
+  Character right-panel section pills -> navy (user, checklist).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
