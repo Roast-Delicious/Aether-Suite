@@ -19,9 +19,10 @@ local function addmethods(t)
   t.GetVertexColor = function(s) local c = s.vc or {1,1,1,1}; return c[1], c[2], c[3], c[4] end
   t.SetShown = function(s, v) s.shown = v and true or false end
   t.SetThickness = function(s, v) s.thick = v end
+  t.GetThickness = function(s) return s.thick or 4 end
   t.SetGradient = function(s) s.grad = true end
   t.GetTexture = function(s) return s.texture end
-  t.SetColorTexture = function(s, r, g, b, a) s.colortex = {r, g, b, a} end
+  t.SetColorTexture = function(s, r, g, b, a) s.colortex = {r, g, b, a}; s.atlas = nil end
   return t
 end
 CreateColor = function(r, g, b, a) return {r, g, b, a} end
@@ -68,7 +69,7 @@ end
 NMAX = NODE("talents-node-square-yellow", 5, 5); NPART = NODE("talents-node-square-green", 2, 3)
 NCAN = NODE("talents-node-square-gray"); NCAN.SelectableIcon.shown = true
 NNONE = NODE("talents-node-square-gray"); NLOCK = NODE("talents-node-square-locked")
-ARR = kid(WIN, "Frame"); ARR.Line = tex(ARR); ARR.ArrowHead = tex(ARR, "talents-arrow-head-yellow")
+ARR = kid(WIN, "Frame"); ARR.Line = tex(ARR); ARR.ArrowHead = tex(ARR, "talents-arrow-head-yellow"); ARR.Line.SetAtlas = function(s, a) s.atlas = a; s.colortex = nil end
 SPEC = kid(WIN, "Frame"); SPEC.w, SPEC.h = 48, 48
 SPEC.icon = tex(SPEC); SPEC.icon.w, SPEC.icon.h = 36, 36
 SPEC.MainRing = tex(SPEC, "Talents-Main-Ring-c60"); SPEC.TextBackground = tex(SPEC, "Talents-Main-Ring-Box-c60")
@@ -152,9 +153,17 @@ L.execute('NNONE.SelectableIcon:Show()')
 expect("points come back: the empty talent gets the glow and its color", (border('NNONE'), E('NNONE.Icon.desat')), ((0.82, 0.84, 0.87), False))
 L.execute('NPART.StateBorder:SetAtlas("talents-node-square-yellow")')
 expect("Blizzard re-sets the frame (maxed now): restyled gold", border('NPART'), (1, 0.69, 0))
-expect("arrow: Blizzard's own head and shaft, tinted gold, size untouched", (round(E('ARR.ArrowHead.vc[2]'), 2), round(E('ARR.Line.vc[2]'), 2), E('ARR.Line.thick')), (0.69, 0.69, None))
-L.execute('ARR.ArrowHead:SetAtlas("talents-arrow-head-locked")')
-expect("arrow into a locked talent: light gray head and solid light gray line", (E('ARR.ArrowHead.texture:find("arrow_head_gray") ~= nil'), E('ARR.Line.colortex ~= nil and ARR.Line.colortex[1] == 0.78')), (True, True))
+def arrow(): return (E('ARR.ArrowHead.texture'), tuple(round(E('ARR.ArrowHead.vc[%d]' % k), 2) for k in (1, 2, 3)), tuple(round(E('ARR.Line.colortex[%d]' % k), 2) for k in (1, 2, 3)), E('ARR.Line.thick'))
+FLAT = None
+expect("gold arrow: flat head, solid gold shaft, 3.25 thick", arrow()[1:], ((1, 0.69, 0), (1, 0.69, 0), 3.25))
+expect("gold arrow: our flat head art", E('tostring(ARR.ArrowHead.texture):find("arrow_head_flat") ~= nil'), True)
+# Blizzard's pool: one arrow handed between links in any order
+for st, want in (("locked", (0.78, 0.8, 0.86)), ("yellow", (1, 0.69, 0)), ("ghost", (0.3, 0.65, 1)), ("green", (0.3, 0.65, 1)), ("gray", (0.78, 0.8, 0.86)), ("yellow", (1, 0.69, 0))):
+    L.execute('ARR.ArrowHead:SetAtlas("talents-arrow-head-%s")' % st)
+    got = arrow()
+    expect("pool -> %s: head and shaft %s, same width, nothing left over" % (st, want), (got[1], got[2], got[3], E('ARR.Line.vc[1] == 1 and ARR.Line.vc[2] == 1')), (want, want, 3.25, True))
+L.execute('ARR.ArrowHead:SetAtlas("talents-arrow-head-gray"); ARR.Line:SetAtlas("talents-arrow-line-gray")')
+expect("Blizzard re-sets only the shaft: ours comes back (no art, no 2nd head)", (E('ARR.Line.colortex ~= nil and ARR.Line.colortex[1] == 0.78'), E('ARR.Line.thick')), (True, 3.25))
 expect("spec icon: gold on navy (desaturated, gold, added)", E('SPEC.icon.desat == true and SPEC.icon.vc[2] == 0.69 and SPEC.icon.blend == "ADD"'), True)
 expect("spec ring blue, box navy", E('SPEC.MainRing.vc[3] == 1 and SPEC.TextBackground.vc[3] == 0.52'), True)
 # spellbook

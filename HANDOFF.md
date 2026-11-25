@@ -1289,3 +1289,18 @@ trim), xpbar_render.py (XP bar).
   'red-to-green'). Page Restore Defaults... = this page's addons, asks
   first. Plan: panel opacity stops living only in AetherMeterDB so it
   works without the Meter (shared Hub setting the addons read).
+- TALENT ARROWS (user 15:16-15:19, screenshot): "every reload the talent
+  page looks different" = Blizzard POOLS arrows (same head+line reused for
+  another link each refresh) and our styling left leftovers (gray line's
+  solid color + thickness 3, gold tints on gray/ghost heads, Blizzard's
+  shaft re-set without its head). Measured on the screenshot: long gold
+  shafts 5 px flat, two BM shafts 1 px (Blizzard's thin art), gray 4-5 px.
+  USER SPEC: all arrows the width of the long gold ones, no 3D, no double
+  heads; KEEP the gray hue (0.78, 0.8, 0.86).
+  READY, NOT SHIPPED (branch fix-talent-arrows, AetherSkins 1.5.7):
+  P.Arrow styles every arrow from scratch for its state: our flat head
+  (Media/arrow_head_flat.tga, tools/gen_arrow_flat.py: white, the gray
+  head's shape) tinted gold / Aether blue / light gray; shaft = solid
+  SetColorTexture in the same color, SetThickness 3.25 (~5 px); ghost =
+  blue at 55%. Hooks the shaft's SetAtlas/SetTexture too. skins_pass2_test
+  (pool order test, ALL OK, 111).

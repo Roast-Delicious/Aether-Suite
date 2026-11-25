@@ -324,6 +324,57 @@ local function SpellFrame(b)
     end
 end
 
+-- Talent arrows (user, Nov 25 15:18-15:19): EVERY arrow is one flat solid
+-- shaft, all the same width as the long gold ones (5 px on the user's
+-- screen = 3.25 units), and one flat head of our own (arrow_head_flat,
+-- white, tinted). No 3D, no Blizzard shaft art (its thin variants showed
+-- as 1 px lines, and an atlas shaft could carry a second head). Colors:
+-- gold from a maxed talent, Aether blue from one with some points, the
+-- light gray the user liked (0.78, 0.8, 0.86) otherwise.
+-- Blizzard keeps arrows in a pool and hands the same head + line to other
+-- links on each refresh; everything is set from scratch for the state every
+-- time, and a shaft Blizzard re-sets on its own is restyled with its head.
+-- (Before this, leftovers from an arrow's last use made each /reload look
+-- different.)
+local ARROW = { yellow = "gold", gold = "gold", green = "blue" }   -- Blizzard state -> ours
+local ARROW_THICK = 3.25
+local ARROW_COLOR = {
+    gold = { GOLD[1], GOLD[2], GOLD[3] },
+    blue = { BLUE[1], BLUE[2], BLUE[3] },
+    gray = { 0.78, 0.8, 0.86 },
+}
+local arrowState, lineHead = weak(), weak()
+function P.Arrow(head, state)
+    if not head or Forbidden(head) then return end
+    arrowState[head] = state
+    local par = head.GetParent and head:GetParent()
+    local line = par and T(par, "Line")
+    -- ghost = Blizzard's preview of a change you haven't applied: blue, softer
+    local key = (state == "ghost" and "blue") or ARROW[state] or "gray"
+    local c = ARROW_COLOR[key]
+    local a = (state == "ghost") and 0.55 or 1
+    head:SetTexture(MEDIA .. "arrow_head_flat")
+    if head.SetDesaturated then head:SetDesaturated(false) end
+    head:SetVertexColor(c[1], c[2], c[3], a)
+    if not line then return end
+    lineHead[line] = head
+    if hooksecurefunc and Once(line, "arrowline") then
+        for _, m in ipairs({ "SetAtlas", "SetTexture" }) do
+            if line[m] then pcall(hooksecurefunc, line, m, function(self)
+                if busy[self] or not W.Enabled() then return end
+                local h = lineHead[self]
+                if h and arrowState[h] then pcall(P.Arrow, h, arrowState[h]) end
+            end) end
+        end
+    end
+    busy[line] = true
+    if line.SetColorTexture then line:SetColorTexture(c[1], c[2], c[3], a) end
+    if line.SetDesaturated then line:SetDesaturated(false) end
+    line:SetVertexColor(1, 1, 1, 1)
+    if line.SetThickness then line:SetThickness(ARROW_THICK) end
+    busy[line] = nil
+end
+
 local Rule      -- forward
 function P.Texture(t)
     if not t or W.ours[t] or Forbidden(t) then return end
@@ -357,7 +408,6 @@ function P.Texture(t)
     end
 end
 
-local ARROW = { yellow = "gold", gold = "gold", green = "blue" }
 function Rule(t, a)
     if P.ExtraRule and P.ExtraRule(t, a) then return end   -- Build 2 rules (AetherSkins_Pass3.lua)
     if FADE[a] then
@@ -381,36 +431,7 @@ function Rule(t, a)
     if a:find("^friends%-card") then return P.KeepTint(t, { 0.16, 0.33, 0.6, 1 }) end
     if a == "spellbook-item-backplate" then return Tint(t, { 0.12, 0.25, 0.46 }, 0.6) end
     local state = a:match("^talents%-arrow%-head%-(%a+)")
-    -- the ghost head (Blizzard's preview of a pending change) is left alone
-    if state == "ghost" then return end
-    if state then
-        -- Blizzard's own arrow art and geometry, only recolored: our bigger
-        -- heads and thicker shafts ran into the talents, and one shaft showed
-        -- a head at both ends (user, Nov 25 13:37)
-        local col = ARROW[state] or "gray"
-        -- gray stays Blizzard's own light gray (a gray tint made it near
-        -- invisible on the dark tree, user 14:12)
-        local par = t.GetParent and t:GetParent()
-        local line = par and T(par, "Line")
-        if col == "gray" then
-            -- Blizzard's gray is dark on our pages: a light gray head (our
-            -- art, Blizzard's size) and a solid light gray line (user 14:19)
-            t:SetTexture(MEDIA .. "arrow_head_gray"); t:SetVertexColor(1, 1, 1, 1)
-            if t.SetDesaturated then t:SetDesaturated(false) end
-            -- thin like the gold ones: a solid color fills the whole line
-            -- width, Blizzard's art only its middle (user 14:48: gray shafts
-            -- came out fat)
-            if line and line.SetColorTexture then
-                line:SetColorTexture(0.78, 0.8, 0.86, 1)
-                if line.SetThickness then line:SetThickness(3) end
-            elseif line then Tint(line, { 1, 1, 1 }, 1) end
-            return
-        end
-        local c = (col == "gold" and GOLD) or BLUE
-        Tint(t, c, 1)
-        if line then Tint(line, c, 1) end
-        return
-    end
+    if state then return P.Arrow(t, state) end
 end
 
 -- ------------------------------------------
