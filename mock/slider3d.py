@@ -13,6 +13,20 @@ def thumb(w, h, kind, S=4):
     if kind == 'flat':
         out = np.zeros((H, W, 4), np.float32); out[..., :3] = GOLD; out[..., 3] = m * 255
     else:
+        if kind == 'bev':     # beveled: a sharp ridge down the middle, two flat facets
+            xs = np.linspace(-1, 1, W)
+            k = np.where(xs < 0, 0.6, 1.08) * (0.8 + 0.2 * (1 - np.abs(xs)))
+            ridge = np.exp(-(xs / 0.09) ** 2) * 0.75
+            g = np.array(GOLD, np.float32); pale = g + (255 - g) * 0.75
+            col = g * np.minimum(k, 1.0)[:, None]
+            sp = np.clip(ridge + np.clip(k - 1, 0, 1) * 1.2, 0, 0.8)[:, None]
+            col = col * (1 - sp) + pale * sp
+            edge = np.abs(xs) > 0.86; col[edge] = col[edge] * 0.55
+            out = np.zeros((H, W, 4), np.float32); out[..., :3] = np.repeat(col[None], H, axis=0); out[..., 3] = m * 255
+            d = cv2.dilate(m, np.ones((2 * S + 1, 2 * S + 1), np.uint8)) - m
+            out[d > 0, :3] = (8, 10, 14); out[d > 0, 3] = 230
+            im = Image.fromarray(np.clip(out, 0, 255).astype(np.uint8))
+            return im.resize((w + 2, h + 2), Image.LANCZOS)
         # a rounded bar lit from the top-right: shading runs across the width
         # (darker left, bright ridge right of center), like the gold accents
         xs = np.linspace(-1, 1, W)
@@ -75,7 +89,7 @@ def chev(name, size):
 def track2(img, x, y0, y1, ty0, ty1, w=8, cs=22):
     d = ImageDraw.Draw(img)
     d.rounded_rectangle([x - w // 2, y0, x + w // 2, y1], w // 2, fill=(14, 28, 52, 255))
-    t = thumb(w, ty1 - ty0, 'rim'); img.alpha_composite(t, (x - t.width // 2, ty0))
+    t = thumb(w, ty1 - ty0, 'bev'); img.alpha_composite(t, (x - t.width // 2, ty0))
     up, dn = chev('up', cs), chev('down', cs)
     img.alpha_composite(up, (x - cs // 2, y0 - cs - 2)); img.alpha_composite(dn, (x - cs // 2, y1 + 2))
 import sys; sys.path.insert(0, '/home/claude/aether-repo/tools')
@@ -84,9 +98,9 @@ q = PP.build(3)
 ImageDraw.Draw(q).rectangle([438, 125, 466, 672], fill=(12, 14, 19, 255))
 track2(q, 452, 152, 648, 160, 330)
 rep = base.copy(); ImageDraw.Draw(rep).rectangle([544, 0, 580, 590], fill=(12, 14, 19, 255))
-track2(rep, 555, 34, 556, 40, 300)
+track2(rep, 555, 34, 556, 40, 300, w=6)
 z = _I.new('RGBA', (160, 590), (16, 18, 24, 255)); zd = ImageDraw.Draw(z)
-zz = _I.new('RGBA', (40, 140), (16, 18, 24, 255)); track2(zz, 20, 28, 112, 32, 80, w=8, cs=22)
+zz = _I.new('RGBA', (40, 140), (16, 18, 24, 255)); track2(zz, 20, 28, 112, 32, 80, w=7, cs=22)
 zz = zz.resize((160, 560), _I.LANCZOS); z.alpha_composite(zz, (0, 10))
 def L2(im, t):
     p = _I.new('RGBA', (im.width, im.height + 44), (16, 18, 24, 255))
@@ -95,4 +109,4 @@ parts = [L2(q, "Quest page"), L2(rep, "Reputation"), L2(z, "4x")]
 W = sum(p.width for p in parts) + 40; H = max(p.height for p in parts) + 20
 sh = _I.new('RGBA', (W, H), (16, 18, 24, 255)); x = 10
 for p in parts: sh.alpha_composite(p, (x, 10)); x += p.width + 10
-sh.convert('RGB').save('/home/claude/aether-repo/mock/out_slider2.png'); print(sh.size)
+sh.convert('RGB').save('/home/claude/aether-repo/mock/out_slider3.png'); print(sh.size)
