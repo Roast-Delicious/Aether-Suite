@@ -194,4 +194,19 @@ L.execute('QUESTLOG_READY = 777; C_QuestLog = C_QuestLog or {}; C_QuestLog.GetNe
 if L.eval('AetherLedger_GoToTurnIn ~= nil'):
     L.execute('AetherLedger_GoToTurnIn(777)')
     expect("click a ready quest: travel to the game's turn-in spot", L.eval('STARTED and STARTED.map == 1413 and STARTED.x == 0.5 and STARTED.qid == 777'), True)
+    # hand-in in your own zone: no waypoint, but the "?" marker is on the map (user 16:27)
+    L.execute("""C_QuestLog.GetNextWaypoint = function() return nil end; STARTED = nil
+      C_Map = C_Map or {}; C_Map.GetBestMapForUnit = function() return 1454 end
+      C_Map.GetMapInfo = function(m) return ({ [1454] = { name = "Orgrimmar", mapType = 3, parentMapID = 1414 }, [1414] = { name = "Kalimdor", mapType = 2 }, [1413] = { name = "The Barrens", mapType = 3 } })[m] end
+      C_QuestLog.GetQuestsOnMap = function(m) if m == 1454 then return { { questID = 5, x = 0.1, y = 0.1 }, { questID = 777, x = 0.42, y = 0.37 } } end return {} end
+      AetherLedger_GoToTurnIn(777)""")
+    expect("no waypoint: the quest's map marker where you are", L.eval('STARTED and STARTED.map == 1454 and STARTED.x == 0.42 and STARTED.y == 0.37'), True)
+    L.execute("""C_QuestLog.GetQuestsOnMap = function(m) if m == 1413 then return { { questID = 777, x = 0.6, y = 0.3 } } end return {} end
+      AetherLedger_Zones = AetherLedger_Zones or {}; AetherLedger_Zones[777] = { 1454, 1413 }; STARTED = nil
+      AetherLedger_GoToTurnIn(777)""")
+    expect("...or on its hand-in zone's map (our data)", L.eval('STARTED and STARTED.map == 1413 and STARTED.x == 0.6'), True)
+    L.execute("""C_QuestLog.GetQuestsOnMap = function() return {} end; STARTED = nil; LASTPRINT = nil
+      local p = print; print = function(...) LASTPRINT = table.concat({...}, " ") end
+      AetherLedger_GoToTurnIn(777); print = p""")
+    expect("nothing known: says which zone it's handed in", (L.eval('STARTED'), "handed in in The Barrens" in (L.eval('LASTPRINT') or "")), (None, True))
 print("PASS" if ok else "FAIL"); sys.exit(0 if ok else 1)

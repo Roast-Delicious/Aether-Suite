@@ -1477,3 +1477,11 @@ trim), xpbar_render.py (XP bar).
   (GetTop nil) -> skipped. READY, NOT SHIPPED (branch dancer2): BelowTitle
   retries on the window's OnShow; underline frame level +200 (was +20),
   re-lifted on every OnShow. Asked the user for a screenshot to confirm.
+- 16:27 TURN-IN CLICK (user): chat "no turn-in location known for this
+  quest". GoToTurnIn only asked C_QuestLog.GetNextWaypoint (given for
+  hand-ins in ANOTHER zone). READY, NOT SHIPPED (branch dancer2, Ledger
+  1.8.9): TurnInSpot = GetNextWaypoint, else the quest's map marker via
+  GetNextWaypointForMap / GetQuestsOnMap on the current map + parents,
+  then its hand-in zone and home zone (AetherLedger_Zones); nothing found
+  -> "no exact turn-in spot known; this quest is handed in in <zone>".
+  tracker_look_test (+3). Our data has givers, not enders (no NPC coords).

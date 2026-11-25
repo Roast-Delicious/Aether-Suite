@@ -933,16 +933,73 @@ end
 -- ready quest's icon in the tracker). The game knows the turn-in spot (its
 -- next waypoint); Ledger's travel window plans the trip there. On unless
 -- turned off (AetherLedgerDB.turnInDirections = false; Hub switch later).
+-- Where a finished quest is handed in. The game's "next waypoint" first
+-- (given when the hand-in is in another zone); then the quest's "?" marker
+-- on the map you're on and its parents, and on its hand-in zone from our
+-- data (a hand-in in your own zone has no waypoint, only that marker:
+-- "no turn-in location known", user Nov 25 16:27).
+local function OnMap(qid, map)
+    local Q = C_QuestLog
+    if not (map and map > 0) then return end
+    if Q.GetNextWaypointForMap then
+        local ok, x, y = pcall(Q.GetNextWaypointForMap, qid, map)
+        if ok and type(x) == "number" and type(y) == "number" and x > 0 then return map, x, y end
+    end
+    if Q.GetQuestsOnMap then
+        local ok, list = pcall(Q.GetQuestsOnMap, map)
+        if ok and type(list) == "table" then
+            for _, info in ipairs(list) do
+                if info.questID == qid and type(info.x) == "number" and type(info.y) == "number" then return map, info.x, info.y end
+            end
+        end
+    end
+end
+local function TurnInSpot(qid)
+    local Q = C_QuestLog
+    if Q.GetNextWaypoint then
+        local ok, map, x, y = pcall(Q.GetNextWaypoint, qid)
+        if ok and type(map) == "number" and map > 0 and type(x) == "number" and type(y) == "number" then return map, x, y end
+    end
+    local tried = {}
+    local function Try(map)
+        if not map or tried[map] then return end
+        tried[map] = true
+        return OnMap(qid, map)
+    end
+    local here = C_Map and C_Map.GetBestMapForUnit and C_Map.GetBestMapForUnit("player")
+    for _ = 1, 4 do
+        local m, x, y = Try(here)
+        if m then return m, x, y end
+        local info = here and C_Map.GetMapInfo(here)
+        here = info and info.parentMapID
+        if not here or (info.mapType and info.mapType <= 2) then break end
+    end
+    local z = AetherLedger_Zones and AetherLedger_Zones[qid]
+    if z then
+        local m, x, y = Try(z[2] ~= 0 and z[2] or nil)
+        if m then return m, x, y end
+        m, x, y = Try(z[1] ~= 0 and z[1] or nil)
+        if m then return m, x, y end
+    end
+end
+
 function AetherLedger_GoToTurnIn(qid)
     qid = tonumber(qid)
     if not qid then return false end
     local db = Settings()
     if db.turnInDirections == false then return false end
     local Q = C_QuestLog
-    if not (Q and Q.GetNextWaypoint) then return false end
-    local ok, map, x, y = pcall(Q.GetNextWaypoint, qid)
-    if not ok or type(map) ~= "number" or map <= 0 or type(x) ~= "number" or type(y) ~= "number" then
-        print(PREFIX .. "no turn-in location known for this quest.")
+    if not Q then return false end
+    local map, x, y = TurnInSpot(qid)
+    if not map then
+        local z = AetherLedger_Zones and AetherLedger_Zones[qid]
+        local zone = z and z[2] ~= 0 and z[2]
+        local info = zone and C_Map and C_Map.GetMapInfo and C_Map.GetMapInfo(zone)
+        if info and info.name then
+            print(PREFIX .. "no exact turn-in spot known; this quest is handed in in " .. info.name .. ".")
+        else
+            print(PREFIX .. "no turn-in location known for this quest.")
+        end
         return false
     end
     local title = Q.GetTitleForQuestID and Q.GetTitleForQuestID(qid)
