@@ -296,6 +296,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   #464A54), arrows into locked gray. TALENT DESIGN SETTLED.
   07:17: user "go ahead with the mockups" = mockups 3-5 OK (not a build
   go); Spellbook to follow the talent scheme -> new mock (pass2_book.py).
+  07:19: Spellbook talent-scheme mock APPROVED ("love it"). ALL
+  SECOND-PASS MOCKUPS APPROVED. Waiting for the build go.
   GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
   LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
   (no [styled] marks anywhere): the skinner never caught it -> added
