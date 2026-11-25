@@ -26,6 +26,15 @@ def g(d, kind, cx, cy, r, C):
     elif kind == 'eye':      # group finder: magnifier
         d.ellipse([cx - r * .7, cy - r * .7, cx + r * .3, cy + r * .3], outline=C, width=max(2, int(r * .18)))
         d.line([(cx + r * .2, cy + r * .2), (cx + r * .8, cy + r * .8)], fill=C, width=max(3, int(r * .24)))
+    elif kind == 'eyeball':  # Group Finder listing tab: a flat eye
+        w = r * .95; h = r * .55; pts = []
+        for i in range(41):
+            t = i / 40 * math.pi; pts.append((cx - w * math.cos(t), cy - h * math.sin(t)))
+        for i in range(41):
+            t = i / 40 * math.pi; pts.append((cx + w * math.cos(t), cy + h * math.sin(t)))
+        d.polygon(pts, fill=C)
+        d.ellipse([cx - r * .38, cy - r * .38, cx + r * .38, cy + r * .38], fill=NAVY + (255,))
+        d.ellipse([cx - r * .1, cy - r * .3, cx + r * .1, cy + r * .3], fill=C)
     elif kind == 'friends':  # two people
         for dx, s in ((-r * .35, .85), (r * .35, 1)):
             d.ellipse([cx + dx - r * .25 * s, cy - r * .7 * s, cx + dx + r * .25 * s, cy - r * .2 * s], fill=C)
@@ -66,14 +75,14 @@ def ftab(kind, sel, S=56):
 W, H = 1120, 600
 sheet = Image.new('RGBA', (W, H), (16, 18, 24, 255)); d = ImageDraw.Draw(sheet)
 d.text((20, 14), "Window crests, flat gold on navy", font=F(24, 'SemiBold'), fill=GOLD + (255,))
-for i, (k, name) in enumerate((('map', "World Map"), ('book', "Spellbook"), ('talents', "Talents"), ('eye', "Group Finder"),
+for i, (k, name) in enumerate((('map', "World Map"), ('book', "Spellbook"), ('talents', "Talents"), ('eyeball', "Group Finder"),
                                ('friends', "Friends"), ('track', "Progress Track"))):
     x = 20 + i * 180
     sheet.alpha_composite(crest(k), (x, 56))
     d.text((x + 54, 172), name, font=F(16), fill=DIM + (255,), anchor='ma')
 d.text((20, 214), "Windows about your character (Character, Reputation, Skills...) keep your portrait.", font=F(15), fill=DIM + (255,))
 d.text((20, 260), "Other windows' side tabs, same style as the Character tabs (first one open)", font=F(24, 'SemiBold'), fill=GOLD + (255,))
-rows = [("Friends", ['friends', 'clock', 'request', 'people']), ("Group Finder", ['eye', 'people', 'friends']),
+rows = [("Friends", ['friends', 'clock', 'request', 'people']), ("Group Finder", ['eyeball', 'eye', 'people']),
         ("Progress Track", ['track', 'pvp', 'talents'])]
 for r, (name, kinds) in enumerate(rows):
     y = 310 + r * 92
@@ -81,6 +90,6 @@ for r, (name, kinds) in enumerate(rows):
     for i, k in enumerate(kinds):
         sheet.alpha_composite(ftab(k, i == 0), (200 + i * 90, y))
 d.text((560, 330), "Friends: friends list, recent allies,\nfriend requests, raid", font=F(15), fill=DIM + (255,))
-d.text((560, 422), "Group Finder: find a group, browse,\npremade groups (names to confirm in game)", font=F(15), fill=DIM + (255,))
+d.text((560, 422), "Group Finder: list yourself (eye), browse\ngroups (magnifier), who's around (people)", font=F(15), fill=DIM + (255,))
 d.text((560, 514), "Progress Track: rewards, challenges, tree", font=F(15), fill=DIM + (255,))
 sheet.convert('RGB').save('/home/claude/aether-repo/mock/out_crests.png'); print(sheet.size)
