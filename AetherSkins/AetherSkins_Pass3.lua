@@ -327,21 +327,22 @@ local function PoiButton(t)     -- the icon sits in .Display inside the button
     return b and b.CreateTexture and b or nil
 end
 function P3.MapLogRule(t, a)
-    if a == "UI-QuestPoi-QuestNumber" or a == "UI-QuestPoi-QuestNumber-Pressed" then
+    -- plain and recurring (daily) quests alike
+    if a:find("^UI%-QuestPoi%a*%-QuestNumber") then
         t:SetAlpha(0)
         local b = t.GetParent and t:GetParent()
         if b and b.CreateTexture then PoiLook(b) end
         return true
     end
-    if a == "UI-QuestPoi-InnerGlow" or a == "UI-QuestPoi-OuterGlow" then
+    if a:find("^UI%-QuestPoi%a*%-%a+Glow$") then
         Tint(t, BLUE, 0.5); return true
     end
-    if a == "Quest-In-Progress-Icon-yellow" or a == "UI-QuestIcon-TurnIn-Normal" then
+    if a == "Quest-In-Progress-Icon-yellow" or a == "UI-QuestIcon-TurnIn-Normal" or a == "UI-QuestPoiRecurring-QuestBangTurnIn" then
         t:SetAlpha(0)
         local b = PoiButton(t)
         if b then
             local o = PoiLook(b)
-            local turnIn = (a == "UI-QuestIcon-TurnIn-Normal")
+            local turnIn = (a ~= "Quest-In-Progress-Icon-yellow")
             o.dots:SetShown(not turnIn); o.mark:SetShown(turnIn)
         end
         return true

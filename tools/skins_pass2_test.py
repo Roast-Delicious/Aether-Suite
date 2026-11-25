@@ -311,6 +311,9 @@ expect("map log quest icon: Blizzard's art hidden, navy disc + gold ring", (E('P
 expect("map log turn-in: gold ? instead of dots", E('(function() for _, r in ipairs(POIB.regs) do if r.texture and tostring(r.texture):find("trk_dots") then return r.shown end end end)()'), False)
 expect("map log track box: navy box, one per box", (E('TICK.a.alpha == 0 and TICK.b.alpha == 0'), E('(function() local n = 0; for _, r in ipairs(TICK.regs) do if r.texture and tostring(r.texture):find("WHITE8X8") then n = n + 1 end end return n end)()') >= 1), (True, True))
 expect("map log background: Aether blue (35,75,115)", E('(function() for _, r in ipairs(WIN.regs) do if r ~= QLBG and r.vc and math.abs(r.vc[1] - 35/255) < 0.01 and math.abs(r.vc[3] - 115/255) < 0.01 then return true end end return false end)()'), True)
+L.execute('''RQ = kid(WIN, "Button"); RQ.NormalTexture = tex(RQ, "UI-QuestPoiRecurring-QuestNumber"); RQ.Display = kid(RQ, "Frame")
+RQ.Display.Icon = tex(RQ.Display, "UI-QuestPoiRecurring-QuestBangTurnIn"); AetherSkins_Windows.Contents(WIN)''')
+expect("daily quest icon: same navy disc", (E('RQ.NormalTexture.alpha == 0 and RQ.Display.Icon.alpha == 0'), has_tex('RQ', 'trk_disc')), (True, True))
 # switch off
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)
