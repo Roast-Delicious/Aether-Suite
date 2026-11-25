@@ -135,19 +135,44 @@ end
 -- ------------------------------------------
 local VENDOR = { ["SpellIcon-256x256-RepairAll"] = "btn_repairall", ["SpellIcon-256x256-Repair"] = "btn_repair",
                  ["SpellIcon-256x256-SellJunk"] = "btn_junk" }
+-- Our art goes on a texture of our own laid over Blizzard's, which turns
+-- invisible but keeps its atlas: Blizzard reads some atlases back (the
+-- scroll thumb asks for its size on every resize; replacing it raised
+-- "Usage: C_Texture.GetAtlasInfo(atlas)", user, Nov 25 10:55).
+local over = weak()
 local function Ours(t, file, col, w, h)
-    t:SetTexture(MEDIA .. file)
-    if t.SetDesaturated then t:SetDesaturated(false) end
-    t:SetVertexColor(col[1], col[2], col[3], col[4] or 1)
-    t:SetAlpha(1)
-    if w then t:SetSize(w, h or w) end
+    local o = over[t]
+    local par = t.GetParent and t:GetParent()
+    if not par or not par.CreateTexture then return end
+    if not o then
+        local layer, sub = "ARTWORK", 0
+        if t.GetDrawLayer then
+            local ok, l, sl = pcall(t.GetDrawLayer, t)
+            if ok and l then layer, sub = l, math.min((sl or 0) + 1, 7) end
+        end
+        o = Tex(par, layer, sub, MEDIA .. file, col)
+        over[t] = o
+        local function Sync()
+            o:SetShown(Shown(t))
+            local okd, d = pcall(function() return t.IsDesaturated and t:IsDesaturated() end)
+            if o.SetDesaturated then o:SetDesaturated(okd and d or false) end
+        end
+        HookShow(t, Sync)
+        if hooksecurefunc and t.SetDesaturated then pcall(hooksecurefunc, t, "SetDesaturated", Sync) end
+        Sync()
+    end
+    o:SetTexture(MEDIA .. file)
+    o:SetVertexColor(col[1], col[2], col[3], col[4] or 1)
+    o:ClearAllPoints()
+    if w then o:SetSize(w, h or w); o:SetPoint("CENTER", t, "CENTER")
+    else o:SetPoint("TOPLEFT", t, "TOPLEFT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT") end
+    t:SetAlpha(0)
 end
 
 -- The Aether page in place of the parchment, with a thin blue edge.
 local pageEdge = weak()
 local function Page(t)
     Ours(t, "page_aether", { 1, 1, 1, 1 })
-    if t.SetTexCoord then t:SetTexCoord(0, 1, 0, 1) end
     if not pageEdge[t] then
         local par = t.GetParent and t:GetParent()
         if par then

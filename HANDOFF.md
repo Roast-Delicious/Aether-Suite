@@ -621,6 +621,22 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   pack_ammo_heading_test.py. Ledger: trk_check.tga, blue ring + check on
   hand-ins (tracker_look_test +2). NOT DONE: map quest DETAILS page
   (no dump yet), map dimness, talents brown background.
+  BUILD 2 SHIPPED 10:42 (main). BUG 10:55 (user): Lua error opening a
+  map quest log header: MinimalScrollBar thumb OnSizeChanged calls
+  C_Texture.GetAtlasInfo(self.Begin:GetAtlas()) - our Build 2 thumb rule
+  had SetTexture'd the thumb parts (dump: Thumb .Begin tex=-567). FIX
+  (branch fix-scrollbar-atlas, Skins 1.4.1): Ours() now lays our art on
+  a texture of OUR OWN over Blizzard's (same layer +1, mirrors shown and
+  desaturated) and fades Blizzard's; Blizzard's atlas is never replaced.
+  Used for thumb, arrows, vendor icons, quest page. Also Ledger 1.8.6:
+  hand-in check GOLD, ring gold (user 10:55, mock/trk_check.py A).
+  DECIDED 10:55: map quest log POI icons tracker-style (navy disc, gold
+  ring+dots; turn-in = gold ?/check) + track boxes navy w/ blue edge
+  (mock/maplog_icons.py); talent class art KEPT; map log background:
+  user wants a blue instead of near-black (mock/maplog_bg.py, asking).
+  Ledger idea (user): click a finished quest's tracker icon -> directions
+  to its turn-in NPC; Hub toggle on the Ledger tab -> with Hub cleanup.
+  Map quest DETAILS page still needs a dump (click a quest in the log).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
