@@ -1213,3 +1213,6 @@ trim), xpbar_render.py (XP bar).
   (boxes/strips/rows/tabs/crests). Gray arrows: our arrow_head_gray at
   Blizzard's size + solid light gray line .78,.8,.86.
 - BUILD 6 SHIPPED 14:21 (main, merged build6): AetherSkins 1.5.3.
+- BUILD 7 SHIPPED 14:26 (user 14:25 'like it a lot' black_screens mock):
+  H.PAGE = 10,11,14 (near-black pages), H.NAVY back to 19,40,74 boxes.
+  AetherSkins 1.5.4.
