@@ -247,3 +247,35 @@ if __name__ == '__main__':
         (int(X(PR + 20)) * 2, int(Y(250)) * 2), Image.LANCZOS)
     z.save('out_hub_B_zoom.png')
     print('ok', b.size)
+
+# ---------- one page of layout B, as it opens + the whole page ----------
+def render_b(selected, pagefn, out):
+    from PIL import Image, ImageEnhance
+    global HU, PB, background
+    def tall():
+        bg = Image.open('/tmp/v4/f_057.png').convert('RGB')
+        w, h = int(WU * U + 2 * M), int(HU * U + 2 * M)
+        bg = bg.resize((bg.width * 2, bg.height * 2)).crop((1400, 300, 1400 + w, 300 + h))
+        return ImageEnhance.Brightness(bg).enhance(0.55)
+    base = background
+    for full in (False, True):
+        if full:
+            HU = 4000; PB = HU - 44
+            probe = Page(K.Canvas(Image.new('RGB', (10, 10))))   # measure only
+            c0 = K.Canvas(tall_probe()); p0 = Page(c0); pagefn(p0)
+            HU = int(p0.y + 80); PB = HU - 44
+            background = tall
+        else:
+            HU = 525; PB = HU - 44
+        c = K.Canvas(background()); window(c, footer_moves=True)
+        y = 42
+        for name, sub in GROUPS:
+            tab(c, y, name, selected=(name == selected), h=36, sub=sub); y += 39
+        p = Page(c); pagefn(p)
+        if not full: p.scrollbar(0.4)
+        c.done().save(out + ('_full' if full else '') + '.png')
+        background = base
+    HU = 525; PB = HU - 44
+
+def tall_probe():
+    return Image.new('RGB', (int(WU * U + 2 * M), int(4000 * U + 2 * M)))

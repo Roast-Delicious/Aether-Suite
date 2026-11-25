@@ -1277,3 +1277,15 @@ trim), xpbar_render.py (XP bar).
   Dropped: Reset Pet Frame Position (Line Up + footer reset cover it).
   Restore AetherFrames Defaults... needs a new /af defaults command.
   Waiting on the user's verdict.
+- 15:14 RULE (user, suite-wide): EVERY option gets a Hub control; slash
+  commands stay only as backup / preference. Unit Frames page approved
+  with all NEW options.
+- MOCKUP 3, Action Bar Area (mock/hub_bars.py, out_hub_bars(_full).png;
+  hub_layout.render_b renders any B page): bands Panels (bars+chat panel
+  switches, panel opacity in/out of combat), Action bars, XP bar (NEW
+  width/height sliders = /cb xp width|height), Chat, Meter (Preview
+  Meter here, not on Debug). Open Edit Mode moved here. Cooldown glow
+  label = orange -> green (matches the code; fix tooltip + /cb help
+  'red-to-green'). Page Restore Defaults... = this page's addons, asks
+  first. Plan: panel opacity stops living only in AetherMeterDB so it
+  works without the Meter (shared Hub setting the addons read).
