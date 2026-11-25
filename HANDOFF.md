@@ -469,6 +469,15 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   Model buttons: common-button-square-gray-up/-down -> NavyBox, icon gold.
   SPELLBOOK BROWN = spellbook-item-iconframe-passive (blue = iconframe);
   fade both (+ -hover, -shadow) and draw our blue frame.
+  PACK AMMO HEADING (09:20, user idea; mock/pack_full.py V=3): the Ammo
+  section header reads "<Name>: <count>" (name + colon in gold, count
+  dim): Arrows (bow/crossbow or quiver), Bullets (gun or ammo pouch), Soul
+  shards (warlock / soul bag). Right side of the header line: buy hint,
+  "buy N stacks to fill" (light text; red at AMMO_LOW), N = floor(room /
+  stack), room = quiver capacity - ammo in it; "quiver full"/"pouch full"
+  in green when N = 0 and no room; warlock "room for N more". Header line
+  stops before the hint. Bottom Ammo row STAYS (only warning when you have
+  no ammo and the section is gone).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
