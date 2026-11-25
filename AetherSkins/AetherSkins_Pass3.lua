@@ -24,7 +24,7 @@ if not (P and P.H and W.H) then return end
 local H, PH = W.H, P.H
 local Tex, Fade, T, Edge, NavyBox, Forbidden = H.Tex, H.Fade, H.T, H.Edge, H.NavyBox, H.Forbidden
 local MEDIA, WHITE, GOLD, BLUE, NAVY, TEXT = H.MEDIA, H.WHITE, H.GOLD, H.BLUE, H.NAVY, H.TEXT
-local PAGE = H.PAGE or { 35 / 255, 75 / 255, 115 / 255 }
+local PAGE = H.PAGE or { 42 / 255, 90 / 255, 138 / 255 }
 local Tint, Atlas, FileID, Shown, Once, HookShow = PH.Tint, PH.Atlas, PH.FileID, PH.Shown, PH.Once, PH.HookShow
 local weak = PH.weak
 local P3 = {}
@@ -87,7 +87,7 @@ function P.PageArrow(t, id)
     if not Once(b, "pagearrow") then return true end
     local okw, bw = pcall(b.GetWidth, b)
     local q = math.min(26, math.max(14, ((okw and bw) or 32) - 6))
-    local s = Tex(b, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
+    local s = Tex(b, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 1 })
     s:SetSize(q, q); s:SetPoint("CENTER", b, "CENTER")
     local f = CreateFrame("Frame", nil, b)
     f:SetSize(q, q); f:SetPoint("CENTER", b, "CENTER")
@@ -346,7 +346,7 @@ local cardFill, cardSel = weak(), weak()
 local function FriendCardSel(card)
     local f = cardFill[card]; if not f then return end
     local sel = cardSel[card] or false
-    local c = sel and { PAGE[1], PAGE[2], PAGE[3], 0.97 } or f.c
+    local c = sel and { PAGE[1], PAGE[2], PAGE[3], 1 } or f.c
     f.o:SetVertexColor(c[1], c[2], c[3], c[4])
     local x = card.aetherSel
     if x then x.notch:SetShown(sel); for _, e in ipairs(x.edge) do e:SetShown(sel) end end
@@ -386,7 +386,7 @@ local function PoiLook(b)
     local o = poi[b]
     if o then return o end
     o = {}
-    o.disc = Tex(b, "ARTWORK", 6, MEDIA .. "trk_disc", { NAVY[1], NAVY[2], NAVY[3], 0.96 })
+    o.disc = Tex(b, "ARTWORK", 6, MEDIA .. "trk_disc", { NAVY[1], NAVY[2], NAVY[3], 1 })
     o.ring = Tex(b, "ARTWORK", 7, MEDIA .. "trk_ring", GOLD)
     o.dots = Tex(b, "OVERLAY", 6, MEDIA .. "trk_dots", GOLD)
     o.mark = b:CreateFontString(nil, "OVERLAY")
@@ -430,7 +430,7 @@ function P3.MapLogRule(t, a)
         t:SetAlpha(0)
         local cb = t.GetParent and t:GetParent()
         if cb and cb.CreateTexture and Once(cb, "tickbox") then
-            local f = Tex(cb, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
+            local f = Tex(cb, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 1 })
             f:SetSize(12, 12); f:SetPoint("CENTER", cb, "CENTER")
             local e = CreateFrame("Frame", nil, cb)
             e:SetSize(12, 12); e:SetPoint("CENTER", cb, "CENTER")
@@ -485,11 +485,23 @@ local function BoxEdge(t, col)
 end
 local NAVYC = { NAVY[1], NAVY[2], NAVY[3], 1 }
 local TRACK = { 0.055, 0.1, 0.18, 1 }
-local FADE3 = { ["Profession-Background-Overview"] = true, ["Profession-Background-Template2"] = true,
-    ["Legacy-Tree-Frame-background"] = true, ["spec-background"] = true, ["Legacy-Challenge-BG"] = true,
+-- whole-page backgrounds: page blue instead of near-black (user, 14:00)
+local PAGEBG = { ["Profession-Background-Overview"] = true, ["Profession-Background-Template2"] = true,
+    ["Legacy-Tree-Frame-background"] = true, ["Legacy-Challenge-BG"] = true, ["Legacy-Rewards-Tracker-background"] = true,
+    ["groupfinder-background"] = true, ["UI-Character-Info-Stat-BG"] = true }
+local FADE3 = { ["spec-background"] = true,
     ["Legacy-Challenge-Cards-Ribbon-Blue"] = true, ["Legacy-Challenge-Cards-Ribbon-Blue-Disable"] = true }
 function P3.MoreRule(t, a)
     if FADE3[a] or a:find("^Skillbar_Flare_") then t:SetAlpha(0); return true end
+    if PAGEBG[a] then Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true end
+    -- the class picture behind the stats list: gone, the stats read on plain page blue
+    local cls = a:match("^UI%-Character%-Info%-(%a+)%-BG$")
+    if cls and cls ~= "General" and cls ~= "Stat" then t:SetAlpha(0); return true end
+    -- Legacy reward cards and the Group Finder roles strip: navy boxes
+    if a:find("^Legacy%-Rewards%-Tracker%-Cards") then
+        Ours(t, nil, a:find("Disable") and { 0.047, 0.055, 0.075, 1 } or NAVYC, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    if a == "groupfinder-roles-background" then Ours(t, nil, NAVYC, nil, nil, WHITE); return true end
     -- Spellbook pages: page blue, brighter than the frame (user, Nov 25 12:57)
     if a == "spellbook-Page-Left-C60" or a == "spellbook-Page-Right-C60" then
         Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true
@@ -533,7 +545,7 @@ function P3.MoreRule(t, a)
         if not a:find("tiled") then BoxEdge(t) end          -- one edge per card
         return true
     end
-    if a == "Legacy-Challenge-Left-Sub-Tab" then Tint(t, { 0.2, 0.36, 0.62 }, 0.95); return true end
+    if a == "Legacy-Challenge-Left-Sub-Tab" then Tint(t, { 0.2, 0.36, 0.62 }, 1); return true end
     if a == "Legacy-Challenge-Left-Sub-Tab-selected" then Tint(t, BLUE, 0.45); return true end
     if a == "Legacy-Tree-Frame-icon-frame" then Tint(t, BLUE, 0.9); return true end
     if a == "worldquest-tracker-checkmark" then Tint(t, GOLD); return true end
@@ -575,6 +587,22 @@ function P3.CollRule(t, a)
         local o = Ours(t, nil, NAVYC, nil, nil, WHITE)
         local b = t.GetParent and t:GetParent()
         local ic = b and T(b, "icon")
+        -- a mount you can't use yet: Blizzard paints its icon dark red; ours
+        -- is a light gray instead, easy to see (user, Nov 25 13:43)
+        if ic and ic.SetVertexColor and Once(ic, "mounticon") then
+            local busy
+            local function Lift(self, r, g, bb)
+                if busy or type(r) ~= "number" or type(g) ~= "number" then return end
+                if r > 0.6 and g < 0.45 then
+                    busy = true; self:SetVertexColor(0.78, 0.8, 0.84, 1)
+                    if self.SetDesaturated then self:SetDesaturated(true) end
+                    busy = false
+                elseif r > 0.9 and g > 0.9 and self.SetDesaturated then self:SetDesaturated(false) end
+            end
+            if hooksecurefunc then pcall(hooksecurefunc, ic, "SetVertexColor", Lift) end
+            local okc, r, g, bb = pcall(ic.GetVertexColor, ic)
+            if okc then Lift(ic, r, g, bb) end
+        end
         if o and ic then
             o:ClearAllPoints()
             o:SetPoint("TOPRIGHT", t, "TOPRIGHT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT"); o:SetPoint("LEFT", ic, "LEFT", -4, 0)
@@ -610,6 +638,9 @@ function P.ExtraRule(t, a)
         -- Repair item is never disabled by Blizzard, and repair all may
         -- not be refreshed after repairing, so the repair cost decides too.
         if o and b and b.HookScript and Once(b, "vendortip") then
+            -- a disabled button gets no mouse-over unless asked (user, 13:43:
+            -- the gray buttons still showed nothing)
+            if b.SetMotionScriptsWhileDisabled then pcall(b.SetMotionScriptsWhileDisabled, b, true) end
             -- Blizzard shows these tooltips only when there's something to
             -- do; a gray button now says why it's gray (user, Nov 25 12:46)
             b:HookScript("OnEnter", function(self)
@@ -671,7 +702,7 @@ function P.ExtraRule(t, a)
     end
     if a:find("^friends%-card%-") then
         local dim = a:find("disabled") or a:find("offline")
-        local c = dim and { 0.047, 0.055, 0.075, 0.97 } or { NAVY[1], NAVY[2], NAVY[3], 0.97 }
+        local c = dim and { 0.047, 0.055, 0.075, 1 } or { NAVY[1], NAVY[2], NAVY[3], 1 }
         local o = Ours(t, nil, c, nil, nil, WHITE)
         local card = t.GetParent and t:GetParent()
         if card then cardFill[card] = { o = o, c = c } ; FriendCardSel(card) end
@@ -784,8 +815,20 @@ end
 -- Wiring: after the second pass's walk of each window
 -- ------------------------------------------
 local afterWalk = W.AfterWalk
+-- Mounts and Pets: the list side on page blue like the model side (user,
+-- Nov 25 13:43: "navy or blue on the left"; rows stay navy on it)
+local function ListSides(root)
+    if root ~= _G.CollectionsJournal then return end
+    for _, inset in ipairs({ _G.MountJournal and T(_G.MountJournal, "LeftInset"), _G.PetJournalLeftInset }) do
+        if inset and inset.CreateTexture and Once(inset, "listside") then
+            local f = Tex(inset, "BACKGROUND", -5, WHITE, { PAGE[1], PAGE[2], PAGE[3], 1 })
+            f:SetPoint("TOPLEFT", inset, "TOPLEFT", 3, -3); f:SetPoint("BOTTOMRIGHT", inset, "BOTTOMRIGHT", -3, 3)
+        end
+    end
+end
 function W.AfterWalk(root)
     if afterWalk then pcall(afterWalk, root) end
+    pcall(ListSides, root)
     pcall(P3.Crest, root)
     pcall(P3.Grip, root)
     pcall(P3.MapPages, root)

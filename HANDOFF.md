@@ -1182,3 +1182,23 @@ trim), xpbar_render.py (XP bar).
   regions + Header art faded, Header.Text hidden, our title FontString
   (same words) at TOP -5; buttons get the panel-button style.
 - BUILD 4 SHIPPED 13:33 (main, merged build4): AetherSkins 1.5.1.
+- BUILD 5 (branch build5): talent arrows (user 13:37: gray arrow still
+  double-headed, heads ran into talents): no more our arrow_head/shaft
+  art, SetSize 20 or thickness 6 - Blizzard's own head + Line, Tint only
+  (gold / blue / gray .62,.65,.72). Primary/Secondary text OK (user).
+  TABS (user 13:39 Merchant/Buyback): like the Hub - picked tab text
+  GOLD, others light gray (.85); Blizzard's tab text hidden (alpha 0,
+  SetAlpha hook) and our own FontString copies its words (SetText hook),
+  centered in the box, so it no longer jumps up when picked.
+  SOLID WINDOWS (user 13:56): Skins window fills 0.95-0.97 -> 1 (PANEL,
+  navy boxes, inputs, friend cards, tints). HUD (chat, meter, tracker,
+  minimap) and AetherPack unchanged (user 13:57: keep the pack as is).
+  OPEN: page blue +20% (42,90,138) everywhere - recommended, not yet ok'd.
+  PAGE BLUE +20% (user 14:00): H.PAGE = 42,90,138. SWEEP 'no needless
+  black': styled insets fill page blue (h<60: navy, e.g. money bar), edge
+  .24,.43,.69; page-blue backgrounds: Profession overview + crafting,
+  Legacy tree/challenges/rewards, groupfinder-background, Character
+  stats (UI-Character-Info-Stat-BG); class art behind stats faded; Legacy
+  reward cards navy boxes; LFG roles strip navy. Not changed: talent class
+  art, model backdrops, title/bottom bars (frame tier).
+- BUILD 5 SHIPPED 14:02 (main, merged build5): AetherSkins 1.5.2.

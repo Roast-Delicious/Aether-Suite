@@ -23,11 +23,11 @@ local WHITE = "Interface\\Buttons\\WHITE8X8"
 local GOLD  = { 1, 0.69, 0 }
 local BLUE  = { 0.3, 0.65, 1 }
 local NAVY  = { 0.075, 0.157, 0.29 }
-local PANEL = { 0.047, 0.055, 0.075, 0.95 }
+local PANEL = { 0.047, 0.055, 0.075, 1 }   -- windows fully solid (user, Nov 25 13:56; HUD stays see-through)
 -- three background layers (user, Nov 25 12:05, mock/bg_tiers.py A):
 -- frame = PANEL (window body), box = NAVY (strips, panels, lists),
 -- page = PAGE (anything you read: quest text, gossip, map quest log)
-local PAGE  = { 35 / 255, 75 / 255, 115 / 255 }
+local PAGE  = { 42 / 255, 90 / 255, 138 / 255 }   -- 20% brighter (user, Nov 25 14:00)
 local TEXT  = { 0.92, 0.93, 0.96 }
 
 local function FontFile(weight)
@@ -259,7 +259,7 @@ end
 -- Widgets inside a window
 -- ------------------------------------------
 local function NavyBox(owner, l, r, t, b)   -- navy fill + blue edge on owner, inset by l/r/t/b
-    local fill = Tex(owner, "BACKGROUND", 1, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
+    local fill = Tex(owner, "BACKGROUND", 1, WHITE, { NAVY[1], NAVY[2], NAVY[3], 1 })
     fill:SetPoint("TOPLEFT", owner, "TOPLEFT", l, -t); fill:SetPoint("BOTTOMRIGHT", owner, "BOTTOMRIGHT", -r, b)
     local c = { BLUE[1], BLUE[2], BLUE[3], 0.9 }
     local e = {}
@@ -331,12 +331,18 @@ end
 
 -- Bottom tabs (PanelTabButtonTemplate) -> navy, blue edge; gold edge when selected.
 local tabEdges = setmetatable({}, { __mode = "k" })
+local tabText = setmetatable({}, { __mode = "k" })   -- tab -> our own label
 local function TabColor(tab)
     local e = tabEdges[tab]; if not e then return end
     local la = T(tab, "LeftActive")
     local sel = la and la:IsShown()
     local c = sel and GOLD or BLUE
     for _, t in ipairs(e) do t:SetVertexColor(c[1], c[2], c[3], sel and 1 or 0.9) end
+    -- text like the Hub's tabs: gold when picked, light gray otherwise
+    local own = tabText[tab]
+    if own then
+        if sel then own:SetTextColor(GOLD[1], GOLD[2], GOLD[3]) else own:SetTextColor(0.85, 0.85, 0.85) end
+    end
 end
 W.TabColor = TabColor
 local tabOffset = setmetatable({}, { __mode = "k" })   -- row of tabs -> text height
@@ -384,6 +390,25 @@ local function Tab(tab)
         fill:SetPoint("RIGHT", tab, "RIGHT", -4, 0)
         fill:SetPoint("TOP", tab, "CENTER", 0, dy + h / 2 + 7)
         fill:SetPoint("BOTTOM", tab, "CENTER", 0, dy - h / 2 - 7)
+        -- Blizzard lifts the picked tab's text a few pixels; ours stays put in
+        -- the middle of the box, so only the color says which one is open
+        -- (user, Nov 25 13:39). Blizzard's text turns invisible and ours
+        -- copies its words.
+        if not tabText[tab] and tab.CreateFontString then
+            local own = tab:CreateFontString(nil, "OVERLAY")
+            local okf, fo = pcall(text.GetFontObject, text)
+            if okf and fo then own:SetFontObject(fo) else own:SetFontObject(Fonts().button) end
+            own:SetPoint("LEFT", fill, "LEFT", 4, 0); own:SetPoint("RIGHT", fill, "RIGHT", -4, 0)
+            own:SetJustifyH("CENTER")
+            local okt, words = pcall(text.GetText, text)
+            own:SetText(okt and words or "")
+            text:SetAlpha(0)
+            if hooksecurefunc then
+                pcall(hooksecurefunc, text, "SetText", function(_, w) own:SetText(w or "") end)
+                pcall(hooksecurefunc, text, "SetAlpha", function(self, a) if a and a > 0 then self:SetAlpha(0) end end)
+            end
+            tabText[tab] = own
+        end
     end
     tabEdges[tab] = e
     TabColor(tab)
@@ -393,7 +418,7 @@ end
 local function Input(eb)
     W.done[eb] = "input"
     Fade(T(eb, "Left")); Fade(T(eb, "Middle")); Fade(T(eb, "Right"))
-    local fill = Tex(eb, "BACKGROUND", 1, WHITE, { 0.03, 0.047, 0.086, 0.95 })
+    local fill = Tex(eb, "BACKGROUND", 1, WHITE, { 0.03, 0.047, 0.086, 1 })
     fill:SetPoint("TOPLEFT", eb, "TOPLEFT", -4, 0); fill:SetPoint("BOTTOMRIGHT", eb, "BOTTOMRIGHT", 0, 0)
     local c = { BLUE[1], BLUE[2], BLUE[3], 0.8 }
     for _, s in ipairs({ { "TOPLEFT", "TOPRIGHT", "H" }, { "BOTTOMLEFT", "BOTTOMRIGHT", "H" },
@@ -407,9 +432,14 @@ end
 local function Inset(f)
     W.done[f] = "inset"
     Fade(T(f, "NineSlice")); Fade(T(f, "Bg"))
-    local fill = Tex(f, "BACKGROUND", -6, WHITE, { 0, 0, 0, 0.25 })
+    -- the content area: page blue (small ones, like the money bar: navy);
+    -- no more near-black (user, Nov 25 14:00: "black areas ... covered")
+    local okh, h = pcall(f.GetHeight, f)
+    local small = okh and type(h) == "number" and h > 0 and h < 60
+    local c = small and { NAVY[1], NAVY[2], NAVY[3], 1 } or { PAGE[1], PAGE[2], PAGE[3], 1 }
+    local fill = Tex(f, "BACKGROUND", -6, WHITE, c)
     fill:SetAllPoints(f)
-    Edge(f, "BORDER", -1, { BLUE[1], BLUE[2], BLUE[3], 0.22 }, 0)
+    Edge(f, "BORDER", -1, { 0.24, 0.43, 0.69, 0.9 }, 0)
 end
 
 -- What a widget is, from Blizzard's template keys.
