@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (16:45)
+Last updated: November 25, 2026 (16:15)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -15,7 +15,7 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.15.0    One window with every addon's settings
+  AetherHub          1.15.1    One window with every addon's settings
   AetherMeter        1.13.10   Damage and healing meter
   AetherBars         1.14.4    Clean action bars with a cooldown glow
   AetherCoords       1.3.16    Coordinates, plus your own map waypoints
@@ -88,8 +88,7 @@ the directions windows back to their starting spots) and Reload UI
   Your Character (/hub me): your name, level, race, class and faction,
     and your professions with their skill and when to train the next
     rank, read straight from the game. Under them, your character,
-    live and in your gear, dancing: click it for a wave, cheer, laugh
-    or bow, drag to turn it around (a switch turns it off).
+    live and in your gear, dancing (try clicking or dragging it).
   Action Bar Area (/hub bars): Panels (the Aether panel behind your
     bars and behind your chat, and how solid the panels, the meter and
     the directions window are in and out of combat, also without the
@@ -115,8 +114,10 @@ the directions windows back to their starting spots) and Reload UI
     Pick a zone (your three best zones, Go for directions), Quest
     tracker (on your zone, its Aether look, click a finished quest's
     icon for directions to turn in, tooltips beside the tracker, Sort
-    Tracker Now, Stop Directions), Quest log (Clean Up, Save to File)
-    and Mob names (quest and rare colors, rare alert, Rare Radar).
+    Tracker Now, Stop Directions), Quest log (Clean Up, Save to File),
+    Mob names (quest and rare colors, rare alert, Rare Radar), and at
+    the bottom Zone details (the picked zone's quests, rank-ups, class
+    and profession quests, and where to skin).
   Bags & Items (/hub bags): Bags (instead of Blizzard's, free slots on
     the backpack button, the "No swaps. Just drops." slot and when its
     number pulses, icons per row, window size, Open Bags) and Item
