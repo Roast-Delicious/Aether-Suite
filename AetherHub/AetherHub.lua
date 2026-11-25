@@ -519,7 +519,7 @@ AetherHub_Profile = {
 -- WINDOW
 -- ==========================================
 
-local WIN_W, WIN_H = 620, 500
+local WIN_W, WIN_H = 620, 525     -- 525: room for the Debug tab (Nov 25)
 local SIDE_W = 160
 local PAGE_W = WIN_W - SIDE_W - 24 - 30   -- page content width (room for the scroll bar); grows with the window
 local hub, pages, tabs = nil, {}, {}
@@ -979,7 +979,7 @@ end
 
 -- General pages first (settings shared across the addons), then one page per
 -- addon with what's unique to it.
-local GENERAL = { "Character", "Appearance", "Fading", "Layout" }
+local GENERAL = { "Character", "Appearance", "Fading", "Layout", "Debug" }
 local ADDONS = { "AetherMeter", "AetherBars", "AetherCoords", "AetherPathfinder", "AetherMarks", "AetherItemID", "AetherLedger", "AetherPack", "AetherChat", "AetherFrames", "AetherSkins" }
 local IS_GENERAL = {}
 for _, n in ipairs(GENERAL) do IS_GENERAL[n] = true end
@@ -993,6 +993,7 @@ local PAGE_INFO = {
     Appearance       = "Aether panels and sizes, for every addon",
     Fading           = "How solid things are in and out of combat",
     Layout           = "Moving, docking and lining things up",
+    Debug            = "Reports and tests for every addon, ready to copy",
     AetherMeter      = "DPS and HPS meter",
     AetherBars       = "Clean action bars and XP bar",
     AetherCoords     = "Coordinates and waypoints",
@@ -1663,6 +1664,156 @@ BUILDERS.AetherFrames = function(p)
         .. "Hunters see their pet's happiness as a face at 3 o'clock on the pet's crest, and its level at 6 o'clock.")
 end
 
+-- ------------------------------------------
+-- Debug (Nov 25): every addon's report and test in one place, with the
+-- output in a box you can copy (chat can't be copied), and one button that
+-- builds a full report to paste to whoever is helping.
+-- ------------------------------------------
+local DEBUGS = {     -- button label, addon, slash key, command
+    { "Debug Bars",        "AetherBars",       "AETHERBARS",       "debug" },
+    { "Debug Chat",        "AetherChat",       "AETHERCHAT",       "debug" },
+    { "Debug ItemID",      "AetherItemID",     "AETHERITEMID",     "debug" },
+    { "Debug Marks",       "AetherMarks",      "AETHERMARKS",      "debug" },
+    { "Debug Pathfinder",  "AetherPathfinder", "AETHERPATHFINDER", "debug" },
+    { "Debug Skins",       "AetherSkins",      "AETHERSKINS",      "debug" },
+    { "Show Ledger Status","AetherLedger",     "AETHERLEDGER",     "status" },
+}
+
+-- Lines the addons print while we run their command are caught here too.
+local capture
+if DEFAULT_CHAT_FRAME and hooksecurefunc then
+    hooksecurefunc(DEFAULT_CHAT_FRAME, "AddMessage", function(_, text)
+        if capture and type(text) == "string" then capture[#capture + 1] = text end
+    end)
+end
+local function Plain(text)            -- color codes and icons out: it's for pasting
+    text = tostring(text or "")
+    text = text:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", ""):gsub("|T.-|t", ""):gsub("|A.-|a", "")
+    text = text:gsub("|H.-|h(.-)|h", "%1")
+    return text
+end
+local function Capture(fn)
+    local lines = {}
+    capture = lines
+    local ok, err = pcall(fn)
+    capture = nil
+    if not ok then lines[#lines + 1] = "(error: " .. tostring(err) .. ")" end
+    for i, t in ipairs(lines) do lines[i] = Plain(t) end
+    return lines
+end
+
+local function MemoryLines()
+    local out, total = {}, 0
+    if collectgarbage then collectgarbage("collect") end
+    if UpdateAddOnMemoryUsage then pcall(UpdateAddOnMemoryUsage) end
+    local list = { "AetherHub" }
+    for _, n in ipairs(ADDONS) do list[#list + 1] = n end
+    for _, n in ipairs(list) do
+        if IsLoaded(n) and GetAddOnMemoryUsage then
+            local ok, kb = pcall(GetAddOnMemoryUsage, n)
+            if ok and kb then
+                total = total + kb
+                out[#out + 1] = string.format("%-18s %6d KB", n, math.floor(kb + 0.5))
+            end
+        end
+    end
+    out[#out + 1] = string.format("%-18s %6d KB", "Total", math.floor(total + 0.5))
+    return out
+end
+
+local function VersionLines()
+    local out = { "AetherHub " .. Version("AetherHub") }
+    for _, n in ipairs(ADDONS) do
+        out[#out + 1] = n .. " " .. (IsLoaded(n) and Version(n) or "not loaded")
+    end
+    return out
+end
+
+BUILDERS.Debug = function(p)
+    local box   -- the output box, made below
+    local function Show(title, lines)
+        local text = "== " .. title .. " ==\n" .. table.concat(lines, "\n")
+        box:SetText(text)
+        box:SetCursorPosition(0)
+        box.scroll:SetVerticalScroll(0)
+    end
+    local function RunOne(d)
+        if not IsLoaded(d[2]) then Show(d[1], { d[2] .. " isn't loaded." }); return end
+        Show(d[1], Capture(function() Run(d[3], d[4]) end))
+    end
+
+    AddHeader(p, "Reports")
+    local row = {}
+    for i, d in ipairs(DEBUGS) do
+        row[#row + 1] = { d[1], function() RunOne(d) end, "Runs /" .. d[4] .. " for " .. d[2] .. " and shows what it says below." }
+        if #row == 3 or i == #DEBUGS then AddButtons(p, row); row = {} end
+    end
+    AddButtons(p, {
+        { "Check Memory", function() Show("Memory", MemoryLines()) end,
+          "Cleans up first, then shows how much memory each Aether addon really uses." },
+        { "Preview Meter", function() Run("AETHERMETER", "test") end,
+          "Fills the meter with sample numbers so you can see how it looks." },
+    })
+
+    AddHeader(p, "Output")
+    AddNote(p, "Click in the box, press Ctrl+A, then Ctrl+C to copy.")
+    local frame = CreateFrame("Frame", nil, p, "BackdropTemplate")
+    frame:SetPoint("TOPLEFT", p, "TOPLEFT", 4, p.y)
+    frame:SetPoint("RIGHT", p, "RIGHT", -4, 0)
+    frame:SetHeight(190)
+    if frame.SetBackdrop then
+        frame:SetBackdrop({ bgFile = "Interface\\Buttons\\WHITE8x8", edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1 })
+        frame:SetBackdropColor(0.03, 0.045, 0.085, 0.95)
+        frame:SetBackdropBorderColor(0.3, 0.65, 1, 0.8)
+    end
+    local scroll = CreateFrame("ScrollFrame", nil, frame)
+    scroll:SetPoint("TOPLEFT", 6, -6)
+    scroll:SetPoint("BOTTOMRIGHT", -6, 6)
+    box = CreateFrame("EditBox", nil, scroll)
+    box:SetMultiLine(true)
+    box:SetAutoFocus(false)
+    box:SetFontObject("AetherFontHighlightSmall")
+    box:SetWidth(PAGE_W - 24)
+    box:SetText("Pick a report above, or Copy Full Report.")
+    box:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
+    box:SetScript("OnTextChanged", function(self) scroll:UpdateScrollChildRect() end)
+    scroll:SetScrollChild(box)
+    scroll:EnableMouseWheel(true)
+    scroll:SetScript("OnMouseWheel", function(self, delta)
+        local range = self:GetVerticalScrollRange() or 0
+        self:SetVerticalScroll(math.max(0, math.min(range, self:GetVerticalScroll() - delta * 30)))
+    end)
+    frame:EnableMouse(true)
+    frame:SetScript("OnMouseDown", function() box:SetFocus() end)
+    box.scroll = scroll
+    p.debugBox = box
+    p.y = p.y - 198
+
+    AddButtons(p, {
+        { "Copy Full Report", function()
+            local all = {}
+            local function Add(title, lines)
+                all[#all + 1] = "== " .. title .. " =="
+                for _, l in ipairs(lines) do all[#all + 1] = l end
+                all[#all + 1] = ""
+            end
+            local who = (UnitName and UnitName("player") or "?") .. ", level " .. (UnitLevel and UnitLevel("player") or "?")
+            Add("Aether report", { (date and date("%Y-%m-%d %H:%M") or "") .. "  " .. who })
+            Add("Versions", VersionLines())
+            Add("Memory", MemoryLines())
+            for _, d in ipairs(DEBUGS) do
+                if IsLoaded(d[2]) then Add(d[1], Capture(function() Run(d[3], d[4]) end)) end
+            end
+            box:SetText(table.concat(all, "\n"))
+            box:SetCursorPosition(0)
+            scroll:SetVerticalScroll(0)
+            box:SetFocus()
+            box:HighlightText()
+        end, "Versions, memory and every report above in one go, selected and ready to copy (Ctrl+C)." },
+        { "Clear", function() box:SetText("") end, "Empties the box." },
+    })
+end
+
 BUILDERS.AetherSkins = function(p)
     local function db() return AetherSkinsDB or {} end
     AddHeader(p, "Windows")
@@ -1676,10 +1827,7 @@ BUILDERS.AetherSkins = function(p)
         function(v) Run("AETHERSKINS", "windows " .. (v and "on" or "off")); NeedReload() end, nil, nil, nil,
         "Character, Reputation, Friends, Talents, Progress Track and the rest: the Aether frame, navy buttons, "
         .. "gold checks and Aether gold instead of Blizzard's yellow. Needs a reload.")
-    AddButtons(p, {
-        { "Run Debug", function() Run("AETHERSKINS", "debug") end,
-          "Prints what AetherSkins found and changed into your chat. Send it along if something looks off." },
-    })
+    AddLinks(p, { "Debug" }, "Its report (Debug Skins) is on:")
     AddNote(p, "If a Blizzard window wasn't restyled, point at it and type /skins this.")
 end
 
@@ -2062,6 +2210,7 @@ local SHORTCUTS = {
     chat = "AetherChat", achat = "AetherChat",
     frames = "AetherFrames", af = "AetherFrames",
     skins = "AetherSkins", askins = "AetherSkins",
+    debug = "Debug", report = "Debug",
 }
 
 SLASH_AETHERHUB1 = "/hub"
