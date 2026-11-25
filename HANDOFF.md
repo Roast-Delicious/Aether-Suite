@@ -1250,3 +1250,21 @@ trim), xpbar_render.py (XP bar).
 - Next: Release C (Hub cleanup), design-first, fresh session.
 - Nov 25, 2026 (14:55): session closed; AetherDev.zip made. Start
   Release C: inventory each Hub tab, mockups one at a time, then build.
+
+## Release C (Hub cleanup), Nov 25 session 2
+- 14:56 GitHub caught up (main b085875, releaseB pushed). Push works once
+  the repo is added with add_repo (push); user may install the Claude
+  GitHub App so access sticks.
+- 14:58 user: "Release C, whatever we agreed to before. Do not deviate
+  from plan" = inventory -> mockups one at a time -> user picks -> build.
+- INVENTORY (done): 16 tabs, ~58 controls + ~30 buttons; Bars settings on
+  4 pages, Frames/Chat/Meter on 3; Preview Meter twice; 5 Reset Position
+  buttons + Reset All; panel opacity slider lives in AetherMeterDB (gone
+  if Meter is off); naming mixed (Show/Use/nouns; Debug X vs Show Ledger
+  Status vs Check Memory); Restore Defaults on only 3 addons; versions
+  in 3 places; Bars cooldown glow label says orange, tip says red; Ledger
+  turn-in directions toggle missing.
+- MOCKUP 1, tab layout (mock/hub_layout.py, out_hub_A/B/C.png, B zoom):
+  A addon tabs each complete (14 tabs); B 8 tabs by what you see, addon
+  bands inside, Unlock to Move + Reset Positions... in the footer (my
+  pick); C groups folding in the sidebar. Asked the user to pick.
