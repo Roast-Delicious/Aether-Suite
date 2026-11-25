@@ -1176,5 +1176,8 @@ trim), xpbar_render.py (XP bar).
   UPDATE / PLAYER_ENTERING_WORLD / UNIT_MODEL_CHANGED / OnShow.
   MAP QUEST TITLES (user 13:02 yes, mock/maplog_red.py right): QuestTitle
   in W.Visit (WorldMapFrame rows with .Checkbox+.TagTexture): shadow
-  0,0,0,.9 1,-1; SetTextColor hook: red->(1,.345,.318) (+5% 13:02), orange->
+  0,0,0,.9 1,-1; SetTextColor hook: red->(1,.376,.345) (13:05 back from +5%), orange->
   (1,.588,.329), yellow->GOLD; green/gray kept.
+  GAME MENU (user 13:04 dump): IsWindow true for GameMenuFrame; Border
+  regions + Header art faded, Header.Text hidden, our title FontString
+  (same words) at TOP -5; buttons get the panel-button style.

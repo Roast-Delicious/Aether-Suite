@@ -470,6 +470,7 @@ end
 function W.IsWindow(f)
     if Forbidden(f) or type(f) ~= "table" or not f.GetObjectType then return false end
     if f.aetherTrim then return false end                    -- one of our own Aether windows
+    if f == _G.GameMenuFrame then return true end            -- diamond-metal frame, no NineSlice (Nov 25)
     if T(f, "NineSlice") and (T(f, "TitleContainer") or T(f, "PortraitContainer")) then return true end
     local bf = T(f, "BorderFrame")       -- WorldMapFrame keeps its window art one level down
     return (bf and T(bf, "NineSlice") and T(bf, "TitleContainer")) and true or false
@@ -485,6 +486,24 @@ function W.Skin(f)
         Fade(T(f, "Background")); Fade(T(chrome, "Underlay"))
         local nm = f.GetName and f:GetName()
         if nm and _G[nm .. "Bg"] then Fade(_G[nm .. "Bg"]) end
+        -- Game Menu: Blizzard's diamond-metal border and header go; our own
+        -- title in the strip shows the same words (user, Nov 25 13:04)
+        if f == _G.GameMenuFrame then
+            local bd = T(f, "Border")
+            if bd and bd.GetRegions then for _, r in ipairs({ bd:GetRegions() }) do Fade(r) end end
+            local hd = T(f, "Header")
+            if hd then
+                for _, k in ipairs({ "LeftBG", "RightBG", "CenterBG" }) do Fade(T(hd, k)) end
+                local ht = T(hd, "Text")
+                if ht and ht.SetAlpha then
+                    local ok, words = pcall(ht.GetText, ht)
+                    ht:SetAlpha(0)
+                    local tt = f:CreateFontString(nil, "OVERLAY")
+                    tt:SetFontObject(Fonts().title); tt:SetPoint("TOP", f, "TOP", 0, -5)
+                    tt:SetText((ok and words) or _G.MAINMENU_BUTTON or "Game Menu")
+                end
+            end
+        end
         Frame(f)
         Crest(chrome)
         local title = (T(chrome, "TitleContainer") and T(chrome.TitleContainer, "TitleText")) or T(f, "TitleText")
@@ -508,7 +527,7 @@ W.KNOWN = {
     "BankFrame", "AuctionHouseFrame", "ClassTrainerFrame", "TaxiFrame", "DressUpFrame", "ItemTextFrame",
     "PetStableFrame", "InspectFrame", "ChannelFrame", "MacroFrame", "KeyBindingFrame", "WardrobeFrame",
     "ItemSocketingFrame", "TradeSkillFrame", "LootFrame", "GuildBankFrame", "QuestLogPopupDetailFrame",
-    "WorldMapFrame", "CalendarFrame", "TimeManagerFrame", "HelpFrame", "PlayerChoiceFrame",
+    "WorldMapFrame", "CalendarFrame", "TimeManagerFrame", "HelpFrame", "PlayerChoiceFrame", "GameMenuFrame",
 }
 
 local hooked = setmetatable({}, { __mode = "k" })
