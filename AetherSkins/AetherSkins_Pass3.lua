@@ -207,9 +207,41 @@ local function CrestKind(win, name, portrait)
     end
     return CREST[name]
 end
+-- Character window: your own face, live (user, Nov 25 12:59, mock/char_crest.py A)
+local face
+local function FaceCrest(win)
+    local chrome = (not T(win, "NineSlice") and T(win, "BorderFrame")) or win
+    local pc = T(chrome, "PortraitContainer")
+    local portrait = (pc and (T(pc, "portrait") or T(pc, "Portrait"))) or _G.CharacterFramePortrait
+    if not portrait then return end
+    if not face then
+        local owner = pc or chrome
+        face = {}
+        face.disc = Tex(owner, "OVERLAY", 5, MEDIA .. "disc_plain", NAVY)
+        face.disc:SetSize(60, 60); face.disc:SetPoint("CENTER", portrait, "CENTER")
+        face.tex = owner:CreateTexture(nil, "OVERLAY", nil, 6)
+        face.tex:SetSize(56, 56); face.tex:SetPoint("CENTER", portrait, "CENTER")
+        if owner.CreateMaskTexture then
+            local m = owner:CreateMaskTexture()
+            m:SetTexture("Interface\\CharacterFrame\\TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+            m:SetAllPoints(face.tex); face.tex:AddMaskTexture(m)
+        end
+        local ev = CreateFrame("Frame")
+        for _, e in ipairs({ "UNIT_PORTRAIT_UPDATE", "PLAYER_ENTERING_WORLD", "UNIT_MODEL_CHANGED" }) do pcall(ev.RegisterEvent, ev, e) end
+        ev:SetScript("OnEvent", function(_, _, unit)
+            if (unit == nil or unit == "player") and SetPortraitTexture then pcall(SetPortraitTexture, face.tex, "player") end
+        end)
+        if win.HookScript then win:HookScript("OnShow", function() if SetPortraitTexture then pcall(SetPortraitTexture, face.tex, "player") end end) end
+    end
+    portrait:SetAlpha(0)
+    if SetPortraitTexture then pcall(SetPortraitTexture, face.tex, "player") end
+end
+P3.FaceCrest = FaceCrest
+
 function P3.Crest(win)
     local name = win.GetName and win:GetName()
     if not name then return end
+    if name == "CharacterFrame" then return FaceCrest(win) end
     local chrome = (not T(win, "NineSlice") and T(win, "BorderFrame")) or win
     local pc = T(chrome, "PortraitContainer")
     local portrait = (pc and (T(pc, "portrait") or T(pc, "Portrait"))) or (name and _G[name .. "Portrait"])
@@ -290,14 +322,23 @@ end
 -- The Aether page in place of the parchment, with a thin blue edge.
 local pageEdge = weak()
 local function Page(t)
-    Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE)   -- flat page (bg_tiers A)
-    if not pageEdge[t] then
-        local par = t.GetParent and t:GetParent()
-        if par then
-            local f = CreateFrame("Frame", nil, par)
-            f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
-            pageEdge[t] = Edge(f, "BORDER", 3, { 0.24, 0.43, 0.69, 0.9 }, 0)
-        end
+    local o = Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE)   -- flat page (bg_tiers A)
+    -- fill the whole inset, scroll bar included: Blizzard's parchment is
+    -- smaller and left dark bands around it (user, Nov 25 12:44)
+    local par = t.GetParent and t:GetParent()
+    local nm = par and par.GetName and par:GetName()
+    local inset = par and (T(par, "Inset") or (nm and _G[nm .. "Inset"]))
+    local area = t
+    if o and inset and inset.GetObjectType then
+        area = inset
+        o:ClearAllPoints()
+        o:SetPoint("TOPLEFT", inset, "TOPLEFT", 3, -3); o:SetPoint("BOTTOMRIGHT", inset, "BOTTOMRIGHT", -3, 3)
+    end
+    if not pageEdge[t] and par then
+        local f = CreateFrame("Frame", nil, par)
+        local d = (area == t) and 0 or 3
+        f:SetPoint("TOPLEFT", area, "TOPLEFT", d, -d); f:SetPoint("BOTTOMRIGHT", area, "BOTTOMRIGHT", -d, d)
+        pageEdge[t] = Edge(f, "BORDER", 3, { 0.24, 0.43, 0.69, 0.9 }, 0)
     end
 end
 
@@ -432,6 +473,15 @@ local function BoxEdge(t, col)
     local f = CreateFrame("Frame", nil, par)
     f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
     boxEdge[t] = Edge(f, "BORDER", 3, col or { 0.24, 0.43, 0.69, 0.9 }, 0)
+    -- the edge shows only while its texture does (Legacy cards keep hidden
+    -- tiled pieces: their edges drew extra lines across the card, Nov 25)
+    local function Sync() f:SetShown(Shown(t)) end
+    if hooksecurefunc then
+        for _, m in ipairs({ "Show", "Hide", "SetShown" }) do
+            if t[m] then pcall(hooksecurefunc, t, m, Sync) end
+        end
+    end
+    Sync()
 end
 local NAVYC = { NAVY[1], NAVY[2], NAVY[3], 1 }
 local TRACK = { 0.055, 0.1, 0.18, 1 }
@@ -440,6 +490,10 @@ local FADE3 = { ["Profession-Background-Overview"] = true, ["Profession-Backgrou
     ["Legacy-Challenge-Cards-Ribbon-Blue"] = true, ["Legacy-Challenge-Cards-Ribbon-Blue-Disable"] = true }
 function P3.MoreRule(t, a)
     if FADE3[a] or a:find("^Skillbar_Flare_") then t:SetAlpha(0); return true end
+    -- Spellbook pages: page blue, brighter than the frame (user, Nov 25 12:57)
+    if a == "spellbook-Page-Left-C60" or a == "spellbook-Page-Right-C60" then
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true
+    end
     -- boxes: navy with a blue edge
     if a:find("^Profession%-overview%-[Cc]ard") or a == "Legacy-Tree-Frame-Card" then
         Ours(t, nil, NAVYC, nil, nil, WHITE); BoxEdge(t); return true
@@ -475,7 +529,9 @@ function P3.MoreRule(t, a)
     if a == "Legacy-Challenge-Cards-Date-BG" then Tint(t, NAVY, 1); return true end
     if a:find("^Legacy%-Challenge%-Cards") then
         local off = a:lower():find("disable")
-        Ours(t, nil, off and { 0.047, 0.055, 0.075, 1 } or NAVYC, nil, nil, WHITE); BoxEdge(t); return true
+        Ours(t, nil, off and { 0.047, 0.055, 0.075, 1 } or NAVYC, nil, nil, WHITE)
+        if not a:find("tiled") then BoxEdge(t) end          -- one edge per card
+        return true
     end
     if a == "Legacy-Challenge-Left-Sub-Tab" then Tint(t, { 0.2, 0.36, 0.62 }, 0.95); return true end
     if a == "Legacy-Challenge-Left-Sub-Tab-selected" then Tint(t, BLUE, 0.45); return true end
@@ -513,7 +569,23 @@ local COLL_FADE = { ["collections-background-shadow-large"] = true, ["collection
 function P3.CollRule(t, a)
     if COLL_FADE[a] then t:SetAlpha(0); return true end
     if a == "collections-background-tile" then Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true end
-    if a == "PetList-ButtonBackground" then Ours(t, nil, NAVYC, nil, nil, WHITE); BoxEdge(t); return true end
+    if a == "PetList-ButtonBackground" then
+        -- one box around icon and name: Blizzard's row starts right of the
+        -- icon, so the icon looked outside it (user, Nov 25 12:57)
+        local o = Ours(t, nil, NAVYC, nil, nil, WHITE)
+        local b = t.GetParent and t:GetParent()
+        local ic = b and T(b, "icon")
+        if o and ic then
+            o:ClearAllPoints()
+            o:SetPoint("TOPRIGHT", t, "TOPRIGHT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT"); o:SetPoint("LEFT", ic, "LEFT", -4, 0)
+            if not boxEdge[t] and b then
+                local f = CreateFrame("Frame", nil, b)
+                f:SetPoint("TOPRIGHT", t, "TOPRIGHT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT"); f:SetPoint("LEFT", ic, "LEFT", -4, 0)
+                boxEdge[t] = Edge(f, "BORDER", 3, { 0.24, 0.43, 0.69, 0.9 }, 0)
+            end
+        else BoxEdge(t) end
+        return true
+    end
     if a == "PetList-ButtonSelect" then Tint(t, BLUE, 0.45); return true end
     if a == "PetList-ButtonHighlight" then Tint(t, BLUE, 0.2); return true end
     if a == "collections-itemborder-collected" or a == "transmog-wardrobe-border-collected" then Tint(t, BLUE, 0.9); return true end
@@ -537,6 +609,26 @@ function P.ExtraRule(t, a)
         -- gray when there's nothing to repair or sell (user, Nov 25).
         -- Repair item is never disabled by Blizzard, and repair all may
         -- not be refreshed after repairing, so the repair cost decides too.
+        if o and b and b.HookScript and Once(b, "vendortip") then
+            -- Blizzard shows these tooltips only when there's something to
+            -- do; a gray button now says why it's gray (user, Nov 25 12:46)
+            b:HookScript("OnEnter", function(self)
+                local tt = GameTooltip
+                if not tt or (tt.NumLines and tt:NumLines() > 0 and tt:IsShown()) then return end
+                local title, why
+                if nm == "MerchantSellAllJunkButton" then
+                    title, why = _G.SELL_ALL_JUNK_ITEMS or "Sell All Junk Items", "No junk to sell"
+                elseif nm == "MerchantGuildBankRepairButton" then
+                    title, why = _G.GUILDBANK_REPAIR or "Guild Repair", "Nothing needs repair"
+                else
+                    title, why = _G.REPAIR_ALL_ITEMS or "Repair All Items", "Nothing needs repair"
+                end
+                tt:SetOwner(self, "ANCHOR_RIGHT")
+                tt:SetText(title, GOLD[1], GOLD[2], GOLD[3])
+                tt:AddLine(why, 0.62, 0.65, 0.72)
+                tt:Show()
+            end)
+        end
         if o and b then
             local repair = nm and nm:find("Repair")
             Usable(b, o, function()
@@ -627,7 +719,7 @@ local function GossipChoice(f, root)
     if not (root and root.GetName and root:GetName() == "GossipFrame") then return end
     if not (T(f, "Icon") and f.GetFontString) then return end
     local ok, fs = pcall(f.GetFontString, f)
-    if ok and fs and fs.SetTextColor then P.KeepColor(fs, BLUE) end
+    if ok and fs and fs.SetTextColor then P.KeepColor(fs, GOLD) end   -- gold (user, Nov 25 12:44)
 end
 
 -- ------------------------------------------
@@ -699,8 +791,31 @@ function W.AfterWalk(root)
     pcall(P3.MapPages, root)
     pcall(P3.Headings)
 end
+-- Map quest log titles: Blizzard's difficulty colors, lifted for the blue
+-- page (user, Nov 25 13:02, mock/maplog_red.py right): red and orange a
+-- little lighter, yellow becomes Aether gold, all with a dark shadow
+local titleBusy = weak()
+local function LiftColor(fs, r, g, b)
+    if titleBusy[fs] or type(r) ~= "number" or type(g) ~= "number" or type(b) ~= "number" then return end
+    local nr, ng, nb
+    if r > 0.9 and g < 0.2 then nr, ng, nb = 1, 0.376, 0.345                 -- far above you (user kept the +10% version, 13:05)
+    elseif r > 0.9 and g > 0.4 and g < 0.6 and b < 0.4 then nr, ng, nb = 1, 0.588, 0.329   -- hard
+    elseif r > 0.9 and g > 0.75 and b < 0.2 then nr, ng, nb = GOLD[1], GOLD[2], GOLD[3]    -- your level
+    end
+    if nr then titleBusy[fs] = true; fs:SetTextColor(nr, ng, nb); titleBusy[fs] = nil end
+end
+local function QuestTitle(f, root)
+    if not (root and root == _G.WorldMapFrame) then return end
+    if not (T(f, "Checkbox") and T(f, "TagTexture")) then return end
+    local fs = T(f, "Text")
+    if not (fs and fs.SetTextColor) or not Once(fs, "questtitle") then return end
+    if fs.SetShadowColor then fs:SetShadowColor(0, 0, 0, 0.9); fs:SetShadowOffset(1, -1) end
+    if hooksecurefunc then pcall(hooksecurefunc, fs, "SetTextColor", LiftColor) end
+    local ok, r, g, b = pcall(fs.GetTextColor, fs)
+    if ok then LiftColor(fs, r, g, b) end
+end
 local visit = W.Visit
 function W.Visit(f, root)
     if visit then visit(f, root) end
-    if not Forbidden(f) then pcall(GossipChoice, f, root) end
+    if not Forbidden(f) then pcall(GossipChoice, f, root); pcall(QuestTitle, f, root) end
 end

@@ -1152,3 +1152,33 @@ trim), xpbar_render.py (XP bar).
 - BUILD 3 SHIPPED 12:35 (main, merged build3): AetherSkins 1.5.0. README
   stamp 12:35. Next: user testing -> fix build; tint sweep (screenshots);
   Hub cleanup pass (+ Ledger click-to-turn-in directions).
+- BUILD 4 (branch build4): title underline on its own frame (level +20)
+  so side panels don't cover it (user 12:40). Legacy Challenges (user
+  12:42 'broken'): BoxEdge was added to the hidden tiled card pieces too
+  -> extra lines across each card; now one edge per card (not on tiled)
+  and every BoxEdge follows its texture's shown state. OPEN: character
+  crest A face / B helmet (mock/char_crest.py), asked 12:40.
+  GOSSIP/QUEST PAGE (user 12:44): Page() overlay now fills the window's
+  Inset (3px in), scroll bar included, edge follows; gossip options GOLD
+  (was blue).
+  VENDOR TOOLTIPS (user 12:46 video): Blizzard shows Repair All / Sell
+  Junk tooltips only when there's something to do; P3 adds 'Nothing
+  needs repair' / 'No junk to sell' (HookScript OnEnter, only when the
+  tooltip came up empty).
+  USER 12:57 batch: talent ghost arrowhead keeps Blizzard art (ours
+  pointed the wrong way); LFG role off-glyph gray (was brown); mount/pet
+  rows: box spans icon+name (LEFT anchored to .icon -4); Spellbook pages
+  page blue (were faded to frame-dark). OPEN: map red quest text (mock
+  maplog_red.py), Primary/Secondary text looks centered to me - asked;
+  need dumps: Game Menu, talents (if arrows still wrong).
+  CHARACTER CREST (user 12:59 'A'): P3.FaceCrest - navy disc + live
+  SetPortraitTexture('player') masked round, refreshed on UNIT_PORTRAIT_
+  UPDATE / PLAYER_ENTERING_WORLD / UNIT_MODEL_CHANGED / OnShow.
+  MAP QUEST TITLES (user 13:02 yes, mock/maplog_red.py right): QuestTitle
+  in W.Visit (WorldMapFrame rows with .Checkbox+.TagTexture): shadow
+  0,0,0,.9 1,-1; SetTextColor hook: red->(1,.376,.345) (13:05 back from +5%), orange->
+  (1,.588,.329), yellow->GOLD; green/gray kept.
+  GAME MENU (user 13:04 dump): IsWindow true for GameMenuFrame; Border
+  regions + Header art faded, Header.Text hidden, our title FontString
+  (same words) at TOP -5; buttons get the panel-button style.
+- BUILD 4 SHIPPED 13:33 (main, merged build4): AetherSkins 1.5.1.

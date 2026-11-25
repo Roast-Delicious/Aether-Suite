@@ -1,0 +1,416 @@
+== Window dump: MerchantFrame ==
+Frame MerchantFrame 336x444
+  Texture MerchantFrameBg 332x421 tex=374155
+  Texture .TopTileStreaks 328x43 atlas=_UI-Frame-TopTileStreaks
+  Texture MerchantFramePortrait 60x60
+  Texture BuybackBG 322x358 hidden
+  FontString MerchantPageText 104x12
+  Texture MerchantFrameBottomLeftBorder 334x61 atlas=UI-Merchant-BotFrame
+  Frame .NineSlice 336x444
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 161x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 161x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x273 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x273 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture MerchantFramePortrait 62x62 tex=RTPortrait1
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 370x482 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 254x20
+    FontString MerchantFrameTitleText 254x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button MerchantFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame MerchantFrameInset 326x358 [styled inset]
+    Texture .Bg 326x358 tex=374154
+    Frame .NineSlice 326x358
+      Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+      Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+      Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+      Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+      Texture .TopEdge 314x3 atlas=_UI-Frame-InnerTopTile
+      Texture .BottomEdge 314x3 atlas=_UI-Frame-InnerBotTile
+      Texture .LeftEdge 3x347 atlas=!UI-Frame-InnerLeftTile
+      Texture .RightEdge 3x347 atlas=!UI-Frame-InnerRightTile
+  Frame MerchantItem1 153x44
+    Texture MerchantItem1SlotTexture 64x64 tex=130766
+    Texture MerchantItem1NameFrame 128x78 tex=136423
+    FontString MerchantItem1Name 100x30
+    Button MerchantItem1ItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantItem1ItemButtonIconTexture 37x37 tex=135274
+      FontString MerchantItem1ItemButtonCount 1x1 hidden
+      FontString MerchantItem1ItemButtonStock 1x1 hidden
+      Texture MerchantItem1ItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantItem1ItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .IconQuestTexture 37x38 hidden
+    Frame MerchantItem1MoneyFrame 42x13
+      Texture MerchantItem1MoneyFrameTrialErrorButton 13x13 hidden tex=374216
+      Button MerchantItem1MoneyFrameCopperButton 29x13
+        Texture .NormalTexture 13x13 atlas=Coin-Copper
+        FontString MerchantItem1MoneyFrameCopperButtonText 16x14
+      Button MerchantItem1MoneyFrameSilverButton 22x13 hidden (2 parts inside, skipped)
+      Button MerchantItem1MoneyFrameGoldButton 22x13 hidden (2 parts inside, skipped)
+    Frame MerchantItem1AltCurrencyFrame 128x13 hidden (3 parts inside, skipped)
+  Frame MerchantItem2 153x44
+    Texture MerchantItem2SlotTexture 64x64 tex=130766
+    Texture MerchantItem2NameFrame 128x78 tex=136423
+    FontString MerchantItem2Name 100x30
+    Button MerchantItem2ItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantItem2ItemButtonIconTexture 37x37 tex=135276
+      FontString MerchantItem2ItemButtonCount 1x1 hidden
+      FontString MerchantItem2ItemButtonStock 1x1 hidden
+      Texture MerchantItem2ItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantItem2ItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .IconQuestTexture 37x38 hidden
+    Frame MerchantItem2MoneyFrame 42x13
+      Texture MerchantItem2MoneyFrameTrialErrorButton 13x13 hidden tex=374216
+      Button MerchantItem2MoneyFrameCopperButton 29x13
+        Texture .NormalTexture 13x13 atlas=Coin-Copper
+        FontString MerchantItem2MoneyFrameCopperButtonText 16x14
+      Button MerchantItem2MoneyFrameSilverButton 22x13 hidden (2 parts inside, skipped)
+      Button MerchantItem2MoneyFrameGoldButton 22x13 hidden (2 parts inside, skipped)
+    Frame MerchantItem2AltCurrencyFrame 128x13 hidden (3 parts inside, skipped)
+  Frame MerchantItem3 153x44
+    Texture MerchantItem3SlotTexture 64x64 tex=130766
+    Texture MerchantItem3NameFrame 128x78 tex=136423
+    FontString MerchantItem3Name 100x30
+    Button MerchantItem3ItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantItem3ItemButtonIconTexture 37x37 tex=132410
+      FontString MerchantItem3ItemButtonCount 1x1 hidden
+      FontString MerchantItem3ItemButtonStock 1x1 hidden
+      Texture MerchantItem3ItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantItem3ItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .IconQuestTexture 37x38 hidden
+    Frame MerchantItem3MoneyFrame 42x13
+      Texture MerchantItem3MoneyFrameTrialErrorButton 13x13 hidden tex=374216
+      Button MerchantItem3MoneyFrameCopperButton 29x13
+        Texture .NormalTexture 13x13 atlas=Coin-Copper
+        FontString MerchantItem3MoneyFrameCopperButtonText 16x14
+      Button MerchantItem3MoneyFrameSilverButton 22x13 hidden (2 parts inside, skipped)
+      Button MerchantItem3MoneyFrameGoldButton 22x13 hidden (2 parts inside, skipped)
+    Frame MerchantItem3AltCurrencyFrame 128x13 hidden (3 parts inside, skipped)
+  Frame MerchantItem4 153x44
+    Texture MerchantItem4SlotTexture 64x64 tex=130766
+    Texture MerchantItem4NameFrame 128x78 tex=136423
+    FontString MerchantItem4Name 100x30
+    Button MerchantItem4ItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantItem4ItemButtonIconTexture 37x37 tex=132402
+      FontString MerchantItem4ItemButtonCount 1x1 hidden
+      FontString MerchantItem4ItemButtonStock 1x1 hidden
+      Texture MerchantItem4ItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantItem4ItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .IconQuestTexture 37x38 hidden
+    Frame MerchantItem4MoneyFrame 42x13
+      Texture MerchantItem4MoneyFrameTrialErrorButton 13x13 hidden tex=374216
+      Button MerchantItem4MoneyFrameCopperButton 29x13
+        Texture .NormalTexture 13x13 atlas=Coin-Copper
+        FontString MerchantItem4MoneyFrameCopperButtonText 16x14
+      Button MerchantItem4MoneyFrameSilverButton 22x13 hidden (2 parts inside, skipped)
+      Button MerchantItem4MoneyFrameGoldButton 22x13 hidden (2 parts inside, skipped)
+    Frame MerchantItem4AltCurrencyFrame 128x13 hidden (3 parts inside, skipped)
+  Frame MerchantItem5 153x44
+    Texture MerchantItem5SlotTexture 64x64 tex=130766
+    Texture MerchantItem5NameFrame 128x78 tex=136423
+    FontString MerchantItem5Name 100x30
+    Button MerchantItem5ItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantItem5ItemButtonIconTexture 37x37 tex=133485
+      FontString MerchantItem5ItemButtonCount 1x1 hidden
+      FontString MerchantItem5ItemButtonStock 1x1 hidden
+      Texture MerchantItem5ItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantItem5ItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .IconQuestTexture 37x38 hidden
+    Frame MerchantItem5MoneyFrame 42x13
+      Texture MerchantItem5MoneyFrameTrialErrorButton 13x13 hidden tex=374216
+      Button MerchantItem5MoneyFrameCopperButton 29x13
+        Texture .NormalTexture 13x13 atlas=Coin-Copper
+        FontString MerchantItem5MoneyFrameCopperButtonText 16x14
+      Button MerchantItem5MoneyFrameSilverButton 22x13 hidden (2 parts inside, skipped)
+      Button MerchantItem5MoneyFrameGoldButton 22x13 hidden (2 parts inside, skipped)
+    Frame MerchantItem5AltCurrencyFrame 128x13 hidden (3 parts inside, skipped)
+  Frame MerchantItem6 153x44
+    Texture MerchantItem6SlotTexture 64x64 tex=130766
+    Texture MerchantItem6NameFrame 128x78 tex=136423
+    FontString MerchantItem6Name 100x30
+    Button MerchantItem6ItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantItem6ItemButtonIconTexture 37x37 tex=133481
+      FontString MerchantItem6ItemButtonCount 1x1 hidden
+      FontString MerchantItem6ItemButtonStock 1x1 hidden
+      Texture MerchantItem6ItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantItem6ItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .IconQuestTexture 37x38 hidden
+    Frame MerchantItem6MoneyFrame 42x13
+      Texture MerchantItem6MoneyFrameTrialErrorButton 13x13 hidden tex=374216
+      Button MerchantItem6MoneyFrameCopperButton 29x13
+        Texture .NormalTexture 13x13 atlas=Coin-Copper
+        FontString MerchantItem6MoneyFrameCopperButtonText 16x14
+      Button MerchantItem6MoneyFrameSilverButton 22x13 hidden (2 parts inside, skipped)
+      Button MerchantItem6MoneyFrameGoldButton 22x13 hidden (2 parts inside, skipped)
+    Frame MerchantItem6AltCurrencyFrame 128x13 hidden (3 parts inside, skipped)
+  Frame MerchantItem7 153x44
+    Texture MerchantItem7SlotTexture 64x64 tex=130766
+    Texture MerchantItem7NameFrame 128x78 tex=136423
+    FontString MerchantItem7Name 100x30
+    Button MerchantItem7ItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantItem7ItemButtonIconTexture 37x37 tex=135650
+      FontString MerchantItem7ItemButtonCount 1x1 hidden
+      FontString MerchantItem7ItemButtonStock 1x1 hidden
+      Texture MerchantItem7ItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantItem7ItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .IconQuestTexture 37x38 hidden
+    Frame MerchantItem7MoneyFrame 42x13
+      Texture MerchantItem7MoneyFrameTrialErrorButton 13x13 hidden tex=374216
+      Button MerchantItem7MoneyFrameCopperButton 29x13
+        Texture .NormalTexture 13x13 atlas=Coin-Copper
+        FontString MerchantItem7MoneyFrameCopperButtonText 16x14
+      Button MerchantItem7MoneyFrameSilverButton 22x13 hidden (2 parts inside, skipped)
+      Button MerchantItem7MoneyFrameGoldButton 22x13 hidden (2 parts inside, skipped)
+    Frame MerchantItem7AltCurrencyFrame 128x13 hidden (3 parts inside, skipped)
+  Frame MerchantItem8 153x44
+    Texture MerchantItem8SlotTexture 64x64 tex=130766
+    Texture MerchantItem8NameFrame 128x78 tex=136423
+    FontString MerchantItem8Name 100x30
+    Button MerchantItem8ItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantItem8ItemButtonIconTexture 37x37 tex=135139
+      FontString MerchantItem8ItemButtonCount 1x1 hidden
+      FontString MerchantItem8ItemButtonStock 1x1 hidden
+      Texture MerchantItem8ItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantItem8ItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .IconQuestTexture 37x38 hidden
+    Frame MerchantItem8MoneyFrame 42x13
+      Texture MerchantItem8MoneyFrameTrialErrorButton 13x13 hidden tex=374216
+      Button MerchantItem8MoneyFrameCopperButton 29x13
+        Texture .NormalTexture 13x13 atlas=Coin-Copper
+        FontString MerchantItem8MoneyFrameCopperButtonText 16x14
+      Button MerchantItem8MoneyFrameSilverButton 22x13 hidden (2 parts inside, skipped)
+      Button MerchantItem8MoneyFrameGoldButton 22x13 hidden (2 parts inside, skipped)
+    Frame MerchantItem8AltCurrencyFrame 128x13 hidden (3 parts inside, skipped)
+  Frame MerchantItem9 153x44
+    Texture MerchantItem9SlotTexture 64x64 tex=130766
+    Texture MerchantItem9NameFrame 128x78 tex=136423
+    FontString MerchantItem9Name 100x30
+    Button MerchantItem9ItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantItem9ItemButtonIconTexture 37x37 tex=135321
+      FontString MerchantItem9ItemButtonCount 1x1 hidden
+      FontString MerchantItem9ItemButtonStock 1x1 hidden
+      Texture MerchantItem9ItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantItem9ItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .IconQuestTexture 37x38 hidden
+    Frame MerchantItem9MoneyFrame 68x13
+      Texture MerchantItem9MoneyFrameTrialErrorButton 13x13 hidden tex=374216
+      Button MerchantItem9MoneyFrameCopperButton 29x13
+        Texture .NormalTexture 13x13 atlas=Coin-Copper
+        FontString MerchantItem9MoneyFrameCopperButtonText 16x14
+      Button MerchantItem9MoneyFrameSilverButton 22x13
+        Texture .? 13x13 atlas=Coin-Silver
+        FontString MerchantItem9MoneyFrameSilverButtonText 9x14
+      Button MerchantItem9MoneyFrameGoldButton 22x13 hidden (2 parts inside, skipped)
+    Frame MerchantItem9AltCurrencyFrame 128x13 hidden (3 parts inside, skipped)
+  Frame MerchantItem10 153x44
+    Texture MerchantItem10SlotTexture 64x64 tex=130766
+    Texture MerchantItem10NameFrame 128x78 tex=136423
+    FontString MerchantItem10Name 100x30
+    Button MerchantItem10ItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantItem10ItemButtonIconTexture 37x37 tex=135312
+      FontString MerchantItem10ItemButtonCount 1x1 hidden
+      FontString MerchantItem10ItemButtonStock 1x1 hidden
+      Texture MerchantItem10ItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantItem10ItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .IconQuestTexture 37x38 hidden
+    Frame MerchantItem10MoneyFrame 62x13
+      Texture MerchantItem10MoneyFrameTrialErrorButton 13x13 hidden tex=374216
+      Button MerchantItem10MoneyFrameCopperButton 22x13
+        Texture .NormalTexture 13x13 atlas=Coin-Copper
+        FontString MerchantItem10MoneyFrameCopperButtonText 9x14
+      Button MerchantItem10MoneyFrameSilverButton 22x13
+        Texture .? 13x13 atlas=Coin-Silver
+        FontString MerchantItem10MoneyFrameSilverButtonText 9x14
+      Button MerchantItem10MoneyFrameGoldButton 22x13 hidden (2 parts inside, skipped)
+    Frame MerchantItem10AltCurrencyFrame 128x13 hidden (3 parts inside, skipped)
+  Frame MerchantItem11 153x44 hidden (11 parts inside, skipped)
+  Frame MerchantItem12 153x44 hidden (11 parts inside, skipped)
+  Button MerchantPageTurnIndicatorLeft 24x24 hidden (1 parts inside, skipped)
+  Button MerchantPageTurnIndicatorRight 24x24 hidden (1 parts inside, skipped)
+  Button MerchantSellAllJunkButton 36x36
+    Texture .? 64x64 tex=130766
+    Texture .Icon 36x36 atlas=SpellIcon-256x256-SellJunk
+    Texture .? 36x36 hidden tex=130839
+    Texture .? 36x36 tex=130718
+  Button MerchantRepairAllButton 36x36
+    Texture .? 64x64 tex=130766
+    Texture .Icon 36x36 atlas=SpellIcon-256x256-RepairAll
+    Texture .? 36x36 hidden tex=130839
+    Texture .? 36x36 tex=130718
+  Button MerchantRepairItemButton 36x36
+    Texture .? 64x64 tex=130766
+    Texture .Icon 36x36 atlas=SpellIcon-256x256-Repair
+    Texture .? 36x36 hidden tex=130839
+    Texture .? 36x36 tex=130718
+  Button MerchantGuildBankRepairButton 36x36 hidden (9 parts inside, skipped)
+  Frame MerchantBuyBackItem 115x37
+    Texture MerchantBuyBackItemSlotTexture 64x64 tex=130766
+    Texture MerchantBuyBackItemNameFrame 90x64 hidden tex=136423
+    FontString MerchantBuyBackItemName 70x35
+    Button MerchantBuyBackItemItemButton 37x37
+      MaskTexture .Mask 37x37
+      Texture MerchantBuyBackItemItemButtonIconTexture 37x37 tex=134844
+      FontString MerchantBuyBackItemItemButtonCount 1x1 hidden
+      FontString MerchantBuyBackItemItemButtonStock 1x1 hidden
+      Texture MerchantBuyBackItemItemButtonSearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture MerchantBuyBackItemItemButtonNormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Frame .UndoFrame 37x37
+        Texture .Arrow 20x20 atlas=common-icon-undo
+    Frame MerchantBuyBackItemMoneyFrame 35x13 hidden (4 parts inside, skipped)
+  Frame MerchantExtraCurrencyInset 165x23 hidden [styled inset] (7 parts inside, skipped)
+  Frame MerchantExtraCurrencyBg 159x19 hidden (3 parts inside, skipped)
+  Frame MerchantMoneyInset 166x23 [styled inset]
+    Texture .Bg 166x23 tex=374154
+    Frame .NineSlice 166x23
+      Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+      Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+      Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+      Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+      Texture .TopEdge 154x3 atlas=_UI-Frame-InnerTopTile
+      Texture .BottomEdge 154x3 atlas=_UI-Frame-InnerBotTile
+      Texture .LeftEdge 3x12 atlas=!UI-Frame-InnerLeftTile
+      Texture .RightEdge 3x12 atlas=!UI-Frame-InnerRightTile
+  Frame MerchantMoneyBg 159x19
+    Texture MerchantMoneyBgLeft 7x19 tex=525911
+    Texture MerchantMoneyBgRight 7x19 tex=525911
+    Texture MerchantMoneyBgMiddle 145x19 tex=525911
+  Frame MerchantMoneyFrame 108x13
+    Texture MerchantMoneyFrameTrialErrorButton 13x13 hidden tex=374216
+    Button MerchantMoneyFrameCopperButton 29x13
+      Texture .NormalTexture 13x13 atlas=Coin-Copper
+      FontString MerchantMoneyFrameCopperButtonText 16x14
+    Button MerchantMoneyFrameSilverButton 29x13
+      Texture .? 13x13 atlas=Coin-Silver
+      FontString MerchantMoneyFrameSilverButtonText 16x14
+    Button MerchantMoneyFrameGoldButton 29x13
+      Texture .? 13x13 atlas=Coin-Gold
+      FontString MerchantMoneyFrameGoldButtonText 16x14
+  Button MerchantPrevPageButton 32x32
+    FontString .? 28x12
+    Texture .? 32x32 tex=130822
+    Texture .? 32x32 hidden tex=130869
+    Texture .? 32x32 hidden tex=130868
+    Texture .? 32x32 tex=130867
+    Texture .? 32x32 tex=130757
+    Frame .? 26x26
+  Button MerchantNextPageButton 32x32
+    FontString .? 30x12
+    Texture .? 32x32 tex=130822
+    Texture .? 32x32 tex=130866
+    Texture .? 32x32 hidden tex=130865
+    Texture .? 32x32 hidden tex=130864
+    Texture .? 32x32 tex=130757
+    Frame .? 26x26
+  Button MerchantFrameTab1 72x32 [styled tab]
+    Texture .LeftActive 35x42 atlas=uiframe-activetab-left
+    Texture .RightActive 37x42 atlas=uiframe-activetab-right
+    Texture .MiddleActive 9x42 atlas=_uiframe-activetab-center
+    Texture .Left 35x36 hidden atlas=uiframe-tab-left
+    Texture .Right 37x36 hidden atlas=uiframe-tab-right
+    Texture .Middle 10x36 hidden atlas=_uiframe-tab-center
+    Texture .LeftHighlight 35x36 atlas=uiframe-tab-left
+    Texture .MiddleHighlight 10x36 atlas=_uiframe-tab-center
+    Texture .RightHighlight 37x36 atlas=uiframe-tab-right
+    FontString .Text 52x10
+  Button MerchantFrameTab2 72x32 [styled tab]
+    Texture .LeftActive 35x42 hidden atlas=uiframe-activetab-left
+    Texture .RightActive 37x42 hidden atlas=uiframe-activetab-right
+    Texture .MiddleActive 9x42 hidden atlas=_uiframe-activetab-center
+    Texture .Left 35x36 atlas=uiframe-tab-left
+    Texture .Right 37x36 atlas=uiframe-tab-right
+    Texture .Middle 10x36 atlas=_uiframe-tab-center
+    Texture .LeftHighlight 35x36 atlas=uiframe-tab-left
+    Texture .MiddleHighlight 10x36 atlas=_uiframe-tab-center
+    Texture .RightHighlight 37x36 atlas=uiframe-tab-right
+    FontString .Text 52x10
+  Button .FilterDropdown 152x25 hidden (3 parts inside, skipped)
+  Frame MerchantFrameTabIndicators 0x0 hidden (2 parts inside, skipped)
+  Button .? 14x14

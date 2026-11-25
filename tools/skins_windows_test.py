@@ -147,6 +147,11 @@ expect("Blizzard's yellow font turned Aether gold", tuple(round(x, 2) for x in E
 expect("...and the small yellow one", round(E('(select(2, GameFontNormalSmall:GetTextColor()))'), 2), 0.69)
 expect("white fonts untouched", E('(select(2, GameFontHighlight:GetTextColor()))'), 1)
 expect("our own Aether fonts untouched", round(E('(select(2, AetherFontNormal:GetTextColor()))'), 2), 0.82)
+L.execute("""GM = CreateFrame('Frame', 'GameMenuFrame', UIParent); _G.GameMenuFrame = GM; GM.shown = true
+GM.Border = CreateFrame('Frame', nil, GM); GM.Border.Bg = GM.Border:CreateTexture(); GM.Border.TopEdge = GM.Border:CreateTexture()
+GM.Header = CreateFrame('Frame', nil, GM); GM.Header.CenterBG = GM.Header:CreateTexture(); GM.Header.Text = GM.Header:CreateFontString(); GM.Header.Text:SetText('Game Menu')""")
+L.execute(W + '.Skin(GM)')
+expect("Game Menu: diamond-metal border and header art gone, our frame and title instead", E('GM.Border.Bg.alpha == 0 and GM.Border.TopEdge.alpha == 0 and GM.Header.CenterBG.alpha == 0 and GM.Header.Text.alpha == 0 and #GM.regs > 20'), True)
 expect("Friends not skinned while closed", E(W + '.skinned[FRIENDS] == nil'), True)
 L.execute('FRIENDS.shown = true; FRIENDS.scripts.OnShow(FRIENDS)')
 expect("Friends skinned when it opens", E(W + '.skinned[FRIENDS] == true and FBTN.Left.alpha == 0'), True)

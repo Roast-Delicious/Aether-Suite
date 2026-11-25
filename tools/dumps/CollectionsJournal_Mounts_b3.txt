@@ -1,0 +1,203 @@
+== Window dump: CollectionsJournal ==
+Frame CollectionsJournal 703x606
+  Texture CollectionsJournalBg 699x583 tex=374155
+  Texture .TopTileStreaks 695x43 atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 703x606
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 528x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 528x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x435 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x435 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture CollectionsJournalPortrait 62x62 tex=631718
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 737x644 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 621x20
+    FontString CollectionsJournalTitleText 621x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button CollectionsJournalCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .TabContainer 55x606
+    Frame CollectionsJournalTab1 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=2143124
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab2 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=5279604
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab3 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197120
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab4 55x55 hidden (16 parts inside, skipped)
+    Frame CollectionsJournalTab5 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=7539422
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+  Frame MountJournal 703x606
+    Frame .SummonRandomFavoriteSpellFrame 206x33 hidden (2 parts inside, skipped)
+    Button .ToggleDynamicFlightFlyoutButton 33x33 hidden (8 parts inside, skipped)
+    Frame .DynamicFlightFlyoutPopup 0x0 hidden (3 parts inside, skipped)
+    Frame .LeftInset 260x520 [styled inset]
+      Texture .Bg 260x520 tex=374154
+      Frame .NineSlice 260x520
+        Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+        Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+        Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+        Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+        Texture .TopEdge 248x3 atlas=_UI-Frame-InnerTopTile
+        Texture .BottomEdge 248x3 atlas=_UI-Frame-InnerBotTile
+        Texture .LeftEdge 3x509 atlas=!UI-Frame-InnerLeftTile
+        Texture .RightEdge 3x509 atlas=!UI-Frame-InnerRightTile
+    Frame .BottomLeftInset 279x0 hidden [styled inset] (14 parts inside, skipped)
+    Frame .RightInset 413x520 [styled inset]
+      Texture .Bg 413x520 tex=374154
+      Frame .NineSlice 413x520
+        Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+        Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+        Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+        Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+        Texture .TopEdge 401x3 atlas=_UI-Frame-InnerTopTile
+        Texture .BottomEdge 401x3 atlas=_UI-Frame-InnerBotTile
+        Texture .LeftEdge 3x509 atlas=!UI-Frame-InnerLeftTile
+        Texture .RightEdge 3x509 atlas=!UI-Frame-InnerRightTile
+    Button .FilterDropdown 135x18 hidden (3 parts inside, skipped)
+    EditBox MountJournalSearchBox 235x20 [styled input]
+      FontString .? 199x20
+      Texture .? 2x10 hidden
+      Texture .Left 8x20 atlas=common-search-border-left
+      Texture .Right 8x20 atlas=common-search-border-right
+      Texture .Middle 224x20 atlas=common-search-border-middle
+      FontString .Instructions 199x20
+      Texture MountJournalSearchBoxSearchIcon 10x10 atlas=common-search-magnifyingglass
+      Button MountJournalSearchBoxClearButton 17x17 hidden (1 parts inside, skipped)
+    Frame .MountCount 130x20
+      Texture .BorderTopRight 8x8 tex=130975
+      Texture .BorderBottomRight 8x8 tex=130975
+      Texture .BorderRightMiddle 8x4 tex=130975
+      Texture .BorderTopLeft 8x8 tex=130975
+      Texture .BorderBottomLeft 8x8 tex=130975
+      Texture .BorderLeftMiddle 8x4 tex=130975
+      Texture .BorderTopMiddle 114x8 tex=130975
+      Texture .BorderBottomMiddle 114x8 tex=130975
+      Texture .Bg 114x4 tex=130975
+      FontString .Count 7x10
+      FontString .Label 100x10
+    Frame .MountDisplay 407x514
+      Texture .YesMountsTex 407x514 tex=651761
+      Texture .NoMountsTex 407x514 hidden tex=651762
+      FontString .NoMounts 280x80 hidden
+      Frame .ShadowOverlay 407x514
+        Texture MountJournalTopLeft 64x64 tex=423810
+        Texture MountJournalTopRight 64x64 tex=423810
+        Texture MountJournalBottomLeft 64x64 tex=423810
+        Texture MountJournalBottomRight 64x64 tex=423810
+        Texture MountJournalTop 279x64 tex=423813
+        Texture MountJournalBottom 279x64 tex=423809
+        Texture MountJournalLeft 64x386 tex=423811
+        Texture MountJournalRight 64x386 tex=423812
+      Button .InfoButton 208x46
+        Texture MountJournalIcon 38x38 tex=7749904
+        FontString MountJournalName 270x35
+        FontString MountJournalSource 345x1
+        FontString MountJournalLore 345x1
+        FontString .New 29x12 hidden
+        Texture .NewGlow 69x32 hidden atlas=collections-newglow
+      ModelScene .ModelScene 407x514
+        Frame .ControlFrame 132x32 hidden (5 parts inside, skipped)
+        CheckButton .TogglePlayer 32x32 [styled check]
+          Texture .? 32x32 tex=130755
+          Texture .? 32x32 hidden tex=130752
+          Texture .? 32x32 tex=130753
+          Texture .? 32x32 hidden tex=130751
+          Texture .? 32x32 hidden tex=130750
+          FontString MountJournalText 1x1
+          FontString .TogglePlayerText 80x10
+      Frame .? 407x514
+      Frame .? 407x514
+    Frame .ScrollBox 255x481
+      Frame .DragDelegate 0x0
+      Frame .ScrollTarget 211x1
+        Button .? 211x46
+          Texture .background 211x46 atlas=PetList-ButtonBackground
+          Texture .icon 38x38 tex=7749904
+          Texture .factionIcon 90x44 hidden
+          Texture .iconBorder 38x38 hidden tex=651080
+          FontString .name 147x12
+          FontString .SteadyFlightLabel 147x10 hidden
+          Texture .favorite 25x25 hidden atlas=PetJournal-FavoritesIcon
+          Texture .selectedTexture 211x46 atlas=PetList-ButtonSelect
+          FontString .new 29x12 hidden
+          Texture .newGlow 69x32 hidden atlas=collections-newglow
+          Texture .? 211x46 atlas=PetList-ButtonHighlight
+          Button .DragButton 40x40
+            Texture .ActiveTexture 40x40 hidden tex=130724
+            Texture MountJournalHighlight 40x40 tex=130718
+          Frame .? 211x46
+        Button .? 211x46
+          Texture .background 211x46 atlas=PetList-ButtonBackground
+          Texture .icon 38x38 tex=7931167
+          Texture .factionIcon 90x44 hidden
+          Texture .iconBorder 38x38 hidden tex=651080
+          FontString .name 147x24
+          FontString .SteadyFlightLabel 147x10 hidden
+          Texture .favorite 25x25 hidden atlas=PetJournal-FavoritesIcon
+          Texture .selectedTexture 211x46 hidden atlas=PetList-ButtonSelect
+          FontString .new 29x12 hidden
+          Texture .newGlow 69x32 hidden atlas=collections-newglow
+          Texture .? 211x46 atlas=PetList-ButtonHighlight
+          Button .DragButton 40x40
+            Texture .ActiveTexture 40x40 hidden tex=130724
+            Texture MountJournalHighlight 40x40 tex=130718
+          Frame .? 211x46
+      Frame .Shadows 255x481
+        Texture .Lower 0x0 hidden
+        Texture .Upper 0x0 hidden
+    Frame .ScrollBar 8x513 [styled scroll]
+      Frame .Track 8x475
+        Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+        Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+        Texture .Middle 8x459 atlas=!minimal-scrollbar-track-middle
+        Button .Thumb 8x475 hidden (6 parts inside, skipped)
+      Button .Back 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+      Button .Forward 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+    Button MountJournalMountButton 160x22 [styled button]
+      Texture .Left 12x22 tex=130824
+      Texture .Right 12x22 tex=130824
+      Texture .Middle 136x22 tex=130824
+      FontString MountJournalMountButtonText 38x12
+      Texture .? 160x22 tex=130826
+  Frame PetJournal 703x606 hidden (10 parts inside, skipped)
+  Frame ToyBox 703x606 hidden (5 parts inside, skipped)
+  Frame HeirloomsJournal 703x606 hidden (6 parts inside, skipped)
+  Frame WardrobeCollectionFrame 703x606 hidden (9 parts inside, skipped)
+  Frame WarbandSceneJournal 703x606 hidden (1 parts inside, skipped)
+  Button .? 14x14
