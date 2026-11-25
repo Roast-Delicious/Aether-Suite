@@ -311,6 +311,18 @@ local function ZonesOf(q)
     return home, turnIn
 end
 
+-- Where a finished quest is handed in. The game knows (the turn-in
+-- waypoint): ask it first. Our data misses Forever's own quests and zones
+-- (Lost Shipping Crate -> Powderfuse Port in the Riverglades: user, Nov 25).
+local function TurnInOf(q)
+    if q.complete and Q.GetNextWaypoint then
+        local ok, wmap = pcall(Q.GetNextWaypoint, q.id)
+        if ok and type(wmap) == "number" and wmap > 0 then return wmap end
+    end
+    local _, turnIn = ZonesOf(q)
+    return turnIn
+end
+
 -- The maps you're in right now: the most detailed one and every one above it
 -- up to the zone (a city, a dungeon and its zone all count).
 local function Here()
@@ -363,8 +375,8 @@ local function Apply()
     -- the zone you're traveling to, or else the one with most of your quests.
     local here, hereZone = Here()
     local function Fits(q, set)
-        local home, turnIn = ZonesOf(q)
-        if q.complete then return turnIn and set[turnIn] end   -- ready: shown where you hand it in
+        local home = ZonesOf(q)
+        if q.complete then local turnIn = TurnInOf(q); return turnIn and set[turnIn] end   -- ready: shown where you hand it in
         return home and set[home] and Difficulty(q.level) ~= "red"
     end
     local count = 0
@@ -411,7 +423,8 @@ local function Apply()
     for k in pairs(elsewhereZone) do elsewhereZone[k] = nil end
     for _, q in ipairs(quests) do
         if q.complete and not inWant[q.id] and not manual.hide[q.id] then
-            local home, turnIn = ZonesOf(q)
+            local home = ZonesOf(q)
+            local turnIn = TurnInOf(q)
             if home and (here[home] or focus[home]) and turnIn and not here[turnIn] then
                 elsewhere[#elsewhere + 1] = q
                 elsewhereZone[q.id] = MapName(turnIn)
@@ -685,7 +698,8 @@ function AetherLedger_Tracker.Explain()
     local here, hereZone = Here()
     print(PREFIX .. "quest tracker, you're level " .. (UnitLevel("player") or "?") .. " in " .. tostring(MapName(hereZone)) .. ":")
     for _, q in ipairs(LogQuests()) do
-        local home, turnIn = ZonesOf(q)
+        local home = ZonesOf(q)
+        local turnIn = TurnInOf(q)
         local why = {}
         why[#why + 1] = Difficulty(q.level)
         if q.complete then why[#why + 1] = "ready, hand in: " .. tostring(MapName(turnIn) or "?") end

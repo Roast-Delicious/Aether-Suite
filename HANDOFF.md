@@ -115,6 +115,31 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     (approved capsule bars, Neutral gold / Friendly+ #22e650), rows and
     section headers (tracker-style), world map specifics: phase 2, from
     the user's screenshots + /skins debug.
+- READY, NOT SHIPPED (branch fix-handin-unknown-zone): AetherLedger 1.8.2.
+  Checklist 5.9/5.10 fail (06:08): "Lost Shipping Crate" [38] (Forever-only
+  quest, hand-in Powderfuse Port, the Riverglades: NOT in our data) was
+  treated as handed in where it came from (ZonesOf falls back to the log
+  header), so no bottom spot, no zone, no divider. Fix: TurnInOf(q) asks
+  C_QuestLog.GetNextWaypoint(questID) for finished quests first, our data
+  second; used in Fits, the hand-in list and /ledger tracker.
+  tracker_handin_test (+2). Delivery quests show Blizzard's description
+  (it names the place) instead of "Ready for turn-in", so no zone suffix
+  there; the divider still marks them.
+- CHECKLIST RESULTS (Nov 25 06:13): 5.1-5.7 pass (errors fixed, Check
+  Zones), 5.8 not tested, 5.9/5.10 fail (above), 5.11/5.12 can't test (no
+  finished-here or red quests; "Can't test now" option added to the doc's
+  Result list), 5.13 pass, 5.14 partial (only CharacterFrame dumped:
+  saved tools/dumps/CharacterFrame_2026-11-25.txt; need Reputation,
+  Friends, Talents, Progress Track), 5.15 pass (tools/dumps/FullReport_
+  2026-11-25.txt; memory 10.2 MB, Coords 81 KB, Pathfinder 1.58 MB).
+  Character dump: stat headers atlas UI-Character-Info-Title, rows
+  UI-Character-Info-Line-Bounce2, CharacterFrameRightPaneHost StoneBg
+  UI-Character-Info-Stat-StoneBG3, CharacterStatsPaneScrollBox .Border
+  common-insideframe + .ClassBackground UI-Character-Info-Hunter-BG, side
+  tabs CharacterFrameModeTab1-6 (.TabGlow common-sidetab-selected), scroll
+  bar IS MinimalScrollBar (styled; tint just too faint).
+  OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
+  only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 05:50; user 05:33 "go ahead with all the fixes and
   recommendations"): AetherLedger 1.8.1, AetherSkins 1.2.1, AetherHub 1.14.8.
   * Errors fixed: Ledger GiverText order (Hub Ledger tab / moving givers),
