@@ -421,7 +421,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   title+headers, light body text, navy tiles) - my pick B; B needs the
   quest font objects (QuestFont, QuestTitleFont, QuestFontNormalSmall...)
   recolored light, which also changes the map quest log detail page
-  (fade its parchment too). Awaiting pick.
+  (fade its parchment too). CHOSEN 08:36: option 3, new Aether page
+  (mock/pass2_parch.py build(3)) for quest, gossip and map quest details.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
