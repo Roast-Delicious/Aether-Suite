@@ -443,6 +443,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   the window. Flat buttons: anvil+hammer=repair all, hammer=repair item,
   shield+hammer=guild repair, coin sack=sell junk (mock/vendor.py,
   glyph_img -> gen art at 4x then reduce).
+  TALENT VISIBILITY (09:12): Proposed. none = icon ramp (24,48,92)->
+  (120,160,220), frame (110,150,210), navy backing plate (30,58,104,a150)
+  4px around; lock = gray*0.85+25, frame (125,129,140), arrows
+  (150,154,164); hide DisabledOverlay (mock/talent_full.py VIS=1).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
