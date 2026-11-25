@@ -85,13 +85,15 @@ function P.PageArrow(t, id)
     if not dir or not b or not b.CreateTexture then return false end
     t:SetAlpha(0)
     if not Once(b, "pagearrow") then return true end
+    local okw, bw = pcall(b.GetWidth, b)
+    local q = math.min(26, math.max(14, ((okw and bw) or 32) - 6))
     local s = Tex(b, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
-    s:SetSize(26, 26); s:SetPoint("CENTER", b, "CENTER")
+    s:SetSize(q, q); s:SetPoint("CENTER", b, "CENTER")
     local f = CreateFrame("Frame", nil, b)
-    f:SetSize(26, 26); f:SetPoint("CENTER", b, "CENTER")
+    f:SetSize(q, q); f:SetPoint("CENTER", b, "CENTER")
     local e = Edge(f, "BORDER", 1, { BLUE[1], BLUE[2], BLUE[3], 1 }, 0)
     local c = Tex(b, "ARTWORK", 7, MEDIA .. "chev3d_" .. dir, { 1, 1, 1, 1 })
-    c:SetSize(20, 20); c:SetPoint("CENTER", b, "CENTER")
+    c:SetSize(q - 6, q - 6); c:SetPoint("CENTER", b, "CENTER")
     local u = Usable(b, c)
     u.onLook = function(on)
         local k = on and BLUE or { 0.24, 0.27, 0.35 }
@@ -112,7 +114,16 @@ local TAB_BY_ICON = {
     ["8197103"] = "tab_rep", ["2447783"] = "tab_skills", ["8197098"] = "tab_pvp",
     ["8197078"] = "tab_coin", ["8197104"] = "tab_stats", ["8197096"] = "gl_eyeball",
     ["2056011"] = "gl_track", ["413584"] = "tab_pvp", ["442272"] = "gl_talents",
+    -- professions (flat set approved Nov 25 12:22, mock/profs_flat.py)
+    ["8197101"] = "pr_overview", ["136247"] = "pr_leather", ["134366"] = "pr_skinning", ["135966"] = "pr_firstaid",
+    ["136245"] = "pr_fishing", ["133971"] = "pr_cooking", ["136241"] = "pr_blacksmith", ["136248"] = "pr_mining",
+    ["136246"] = "pr_herbalism", ["136240"] = "pr_alchemy", ["136249"] = "pr_tailoring", ["136244"] = "pr_enchanting",
+    ["136243"] = "pr_engineering", ["134071"] = "pr_jewel", ["237171"] = "pr_inscription",
+    -- Collections (mock/coll_flat.py)
+    ["2143124"] = "cl_mount", ["5279604"] = "cl_pet", ["8197120"] = "cl_toy", ["7539422"] = "cl_appearance",
 }
+local TAB_BY_NAME = { CollectionsJournalTab1 = "cl_mount", CollectionsJournalTab2 = "cl_pet", CollectionsJournalTab3 = "cl_toy",
+    CollectionsJournalTab4 = "cl_heirloom", CollectionsJournalTab5 = "cl_appearance" }
 local TAB_BY_ATLAS = { { "^friends%-icon%-tab%-friends", "gl_friends" }, { "^friends%-icon%-tab%-recentAllies", "gl_clock" },
     { "^friends%-icon%-tab%-friendRequest", "gl_request" }, { "^friends%-icon%-tab%-raid", "gl_people" } }
 local TAB_BY_KEY = { { "Listing", "gl_eyeball" }, { "Browse", "gl_eye" }, { "Who", "gl_people" },
@@ -127,6 +138,8 @@ function P3.TabGlyph(tab)
     local ic = T(tab, "Icon")
     local a = ic and Atlas(ic)
     if a then for _, m in ipairs(TAB_BY_ATLAS) do if a:find(m[1]) then return m[2] end end end
+    local nm = tab.GetName and tab:GetName()
+    if nm and TAB_BY_NAME[nm] then return TAB_BY_NAME[nm] end
     local id = ic and FileID(ic)
     if id and TAB_BY_ICON[id] then return TAB_BY_ICON[id] end
     local key = TabKey(tab)
@@ -172,7 +185,22 @@ local CREST = { WorldMapFrame = "gl_map", SocialUIFrame = "gl_friends", FriendsF
     LegacySystemFrame = "gl_track", LFGListingFrame = "gl_eyeball", LFGBrowseFrame = "gl_eyeball",
     LFGWhoListFrame = "gl_eyeball", PlayerSpellsFrame = "gl_book" }
 local crestParts = weak()
-local function CrestKind(win, name)
+local COLL_PAGES = { { "MountJournal", "cl_mount" }, { "PetJournal", "cl_pet" }, { "ToyBox", "cl_toy" },
+    { "HeirloomsJournal", "cl_heirloom" }, { "WardrobeCollectionFrame", "cl_appearance" } }
+local function CrestKind(win, name, portrait)
+    -- Professions: the portrait shows the open profession's icon
+    if name == "ProfessionsFrame" then
+        local id = portrait and FileID(portrait)
+        local k = id and TAB_BY_ICON[id]
+        return (k and k:find("^pr_")) and k or "pr_overview"
+    end
+    if name == "CollectionsJournal" then
+        for _, pg in ipairs(COLL_PAGES) do
+            local f = _G[pg[1]]
+            if f and f.IsShown and f:IsShown() then return pg[2] end
+        end
+        return "cl_mount"
+    end
     if name == "PlayerSpellsFrame" then
         local tf = T(win, "TalentsFrame")
         if tf and tf.IsShown and tf:IsShown() then return "gl_talents" end
@@ -181,12 +209,12 @@ local function CrestKind(win, name)
 end
 function P3.Crest(win)
     local name = win.GetName and win:GetName()
-    local kind = name and CrestKind(win, name)
-    if not kind then return end
+    if not name then return end
     local chrome = (not T(win, "NineSlice") and T(win, "BorderFrame")) or win
     local pc = T(chrome, "PortraitContainer")
     local portrait = (pc and (T(pc, "portrait") or T(pc, "Portrait"))) or (name and _G[name .. "Portrait"])
-    if not portrait then return end
+    local kind = CrestKind(win, name, portrait)
+    if not kind or not portrait then return end
     local c = crestParts[win]
     if not c then
         local owner = pc or chrome
@@ -196,6 +224,15 @@ function P3.Crest(win)
         c.glyph = Tex(owner, "OVERLAY", 6, MEDIA .. kind, GOLD)
         c.glyph:SetSize(36, 36); c.glyph:SetPoint("CENTER", portrait, "CENTER")
         crestParts[win] = c
+        if name == "ProfessionsFrame" and hooksecurefunc and portrait.SetTexture then
+            pcall(hooksecurefunc, portrait, "SetTexture", function() pcall(P3.Crest, win) end)
+        end
+        if name == "CollectionsJournal" then
+            for _, pg in ipairs(COLL_PAGES) do
+                local f = _G[pg[1]]
+                if f and f.HookScript then f:HookScript("OnShow", function() pcall(P3.Crest, win) end) end
+            end
+        end
         if name == "PlayerSpellsFrame" then
             for _, k in ipairs({ "TalentsFrame", "SpellBookFrame", "SpecFrame" }) do
                 local sub = T(win, k)
@@ -384,8 +421,73 @@ function P3.MapLogRule(t, a)
     return false
 end
 
+-- ------------------------------------------
+-- Professions and Legacy Tree on the three layers (user Nov 25 12:11-12:21,
+-- mock/profs_flat.py; dumps ProfessionsFrame_*, LegacySystemFrame_Tree)
+-- ------------------------------------------
+local boxEdge = weak()
+local function BoxEdge(t, col)
+    local par = t.GetParent and t:GetParent()
+    if not par or boxEdge[t] then return end
+    local f = CreateFrame("Frame", nil, par)
+    f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
+    boxEdge[t] = Edge(f, "BORDER", 3, col or { 0.24, 0.43, 0.69, 0.9 }, 0)
+end
+local NAVYC = { NAVY[1], NAVY[2], NAVY[3], 1 }
+local TRACK = { 0.055, 0.1, 0.18, 1 }
+local FADE3 = { ["Profession-Background-Overview"] = true, ["Profession-Background-Template2"] = true,
+    ["Legacy-Tree-Frame-background"] = true, ["spec-background"] = true, ["Legacy-Challenge-BG"] = true,
+    ["Legacy-Challenge-Cards-Ribbon-Blue"] = true, ["Legacy-Challenge-Cards-Ribbon-Blue-Disable"] = true }
+function P3.MoreRule(t, a)
+    if FADE3[a] or a:find("^Skillbar_Flare_") then t:SetAlpha(0); return true end
+    -- boxes: navy with a blue edge
+    if a:find("^Profession%-overview%-[Cc]ard") or a == "Legacy-Tree-Frame-Card" then
+        Ours(t, nil, NAVYC, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    if a == "Professions-background-summarylist" or a == "Legacy-Tree-Frame-Points-Bar" then
+        Ours(t, nil, NAVYC, nil, nil, WHITE); return true
+    end
+    -- the recipe you read: page blue
+    if a:find("^Profession%-background%-card%-") then
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    -- skill bars: dark track, gold fill, blue frame
+    if a == "Profession-ProgressBar-BG" or a == "Professions-skillbar-bg" then
+        Ours(t, nil, TRACK, nil, nil, WHITE); return true
+    end
+    if a:find("^Skillbar_Fill_Flipbook_") then Tint(t, GOLD); return true end
+    if a == "Profession-ProgressBar-frame" or a == "Professions-skillbar-frame" or a == "Professions-Slot-Frame"
+       or a == "auctionhouse-itemicon-border-white" or a == "Legacy-Tree-Frame-divider-Vertical" then
+        Tint(t, BLUE, 0.9); return true
+    end
+    if a == "Professions-Slot-bg" or a == "Legacy-Tree-Frame-level-circle" then Tint(t, NAVY, 1); return true end
+    -- recipe list: picked row blue, hover softer
+    if a == "Professions_Recipe_Active" then Tint(t, BLUE, 0.45); return true end
+    if a == "Professions_Recipe_Hover" then Tint(t, BLUE, 0.2); return true end
+    -- Legacy Tree: gold rings round the tree pictures, blue glow on the open one
+    if a == "Legacy-Tree-Frame-Card-Ring" or a == "Legacy-Tree-Frame-Ring-big" or a == "charactercreate-ring-select" then
+        Tint(t, GOLD); return true
+    end
+    if a == "Legacy-Tree-Frame-Card-Glow" then Tint(t, BLUE, 0.5); return true end
+    -- Legacy Challenges: navy cards (not yet earned: frame-dark), picked
+    -- card blue; category rows navy, the open one blue
+    if a == "Legacy-Challenge-Cards-selected" then Tint(t, BLUE, 0.3); return true end
+    if a == "Legacy-Challenge-Cards-Date-BG" then Tint(t, NAVY, 1); return true end
+    if a:find("^Legacy%-Challenge%-Cards") then
+        local off = a:lower():find("disable")
+        Ours(t, nil, off and { 0.047, 0.055, 0.075, 1 } or NAVYC, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    if a == "Legacy-Challenge-Left-Sub-Tab" then Tint(t, { 0.2, 0.36, 0.62 }, 0.95); return true end
+    if a == "Legacy-Challenge-Left-Sub-Tab-selected" then Tint(t, BLUE, 0.45); return true end
+    if a == "Legacy-Tree-Frame-icon-frame" then Tint(t, BLUE, 0.9); return true end
+    if a == "worldquest-tracker-checkmark" then Tint(t, GOLD); return true end
+    if a == "Legacy-Tree-Frame-icon-frame-disable" then Tint(t, { 0.43, 0.59, 0.82 }, 1); return true end
+    return false
+end
+
 function P.ExtraRule(t, a)
     if P3.MapLogRule(t, a) then return true end
+    if P3.MoreRule(t, a) then return true end
     -- vendor buttons
     local v = VENDOR[a]
     if v then

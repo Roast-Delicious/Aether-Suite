@@ -412,7 +412,10 @@ local function Kind(o)
     if not ok then return end
     if t == "CheckButton" then
         local n = o.GetNormalTexture and o:GetNormalTexture()
-        if n and o.GetCheckedTexture and o:GetCheckedTexture() then return "check" end
+        -- only real checkboxes: big picture buttons (Legacy Tree cards,
+        -- 67-110px) are CheckButtons too and lost their art to our box
+        local okw, w = pcall(o.GetWidth, o)
+        if n and o.GetCheckedTexture and o:GetCheckedTexture() and not T(o, "Ring") and not (okw and w and w > 34) then return "check" end
     elseif t == "Button" then
         if T(o, "LeftActive") and T(o, "MiddleActive") then return "tab" end
         if T(o, "Left") and T(o, "Right") and (T(o, "Middle") or T(o, "Center")) and o.GetFontString and o:GetFontString() then return "button" end

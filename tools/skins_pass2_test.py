@@ -317,6 +317,13 @@ expect("daily quest icon: same navy disc", (E('RQ.NormalTexture.alpha == 0 and R
 L.execute('''QDB = tex(WIN, "QuestDetailsBackgrounds"); QRB = tex(WIN, "QuestLog-reward-bottom"); AetherSkins_Windows.Contents(WIN)''')
 expect("map quest details: Blizzard's parchment and brown rewards hidden", E('QDB.alpha == 0 and QRB.alpha == 0'), True)
 expect("map quest details: Aether blue page", E('(function() local n = 0; for _, r in ipairs(WIN.regs) do if r.vc and math.abs(r.vc[1] - 35/255) < 0.01 then n = n + 1 end end return n end)()') >= 2, True)
+L.execute('''BIG = kid(WIN, "CheckButton"); BIG.w = 67; BIG.h = 67; BIG.Ring = tex(BIG, "Legacy-Tree-Frame-Card-Ring"); BIG.nt = tex(BIG, "UI-Legacy-Tree-Professions")
+BIG.GetNormalTexture = function(s) return s.nt end; BIG.ck = tex(BIG, "charactercreate-ring-select"); BIG.GetCheckedTexture = function(s) return s.ck end
+AetherSkins_Windows.Contents(WIN)''')
+expect("Legacy Tree picture buttons are not checkboxes: the picture stays", E('BIG.nt.alpha ~= 0 and AetherSkins_Windows.done[BIG] ~= "check"'), True)
+L.execute('''PC = tex(WIN, "Profession-overview-Card-Leatherworking"); PF = tex(WIN, "Skillbar_Fill_Flipbook_Leatherworking"); LC = tex(WIN, "Legacy-Challenge-Cards-Disable"); AetherSkins_Windows.Contents(WIN)''')
+expect("profession card and legacy card: Blizzard art hidden", E('PC.alpha == 0 and LC.alpha == 0'), True)
+expect("profession skill bar: gold fill", round(E('PF.vc[2]'), 2), 0.69)
 # switch off
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

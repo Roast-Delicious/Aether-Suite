@@ -1122,3 +1122,21 @@ trim), xpbar_render.py (XP bar).
   STILL TO DO: per-window sweep of in-between tints (NAVYF {0.16,0.3,
   0.52} on textured Blizzard boxes, NAVYID, spellbook backplate, talent
   plate) -> needs in-game screenshots, after this build.
+  PROFESSIONS / LEGACY / COLLECTIONS ICONS (user 12:11-12:23; dumps
+  ProfessionsFrame_Overview/_Crafting, LegacySystemFrame_Tree/
+  _Challenges, CollectionsJournal_Appearances):
+  - BUG FIXED: Windows Kind() styled the Legacy Tree picture buttons
+    (67/110px CheckButtons with .Ring) as checkboxes -> blue squares,
+    pictures faded. Now only CheckButtons <= 34px without .Ring.
+  - P3.MoreRule: overview/legacy cards navy + blue edge; recipe details
+    page blue; recipe list navy; skill bars dark track + gold fill (Tint
+    of the flipbook) + blue frame, flare faded; picked recipe blue 0.45,
+    hover 0.2; Legacy rings gold, card glow blue; challenge cards navy
+    (not earned: frame-dark), ribbons faded, sub-tab rows navy/blue.
+  - Page arrows size to the button (Create amount arrows 23px).
+  - Flat icons APPROVED 12:22 (mock/profs_flat.py, coll_flat.py): baked
+    pr_*.tga (15) + cl_*.tga (5) by tools/gen_skins_art4.py; tabs by
+    icon ID / CollectionsJournalTabN name; crest: ProfessionsFrame by
+    portrait file ID (hooks SetTexture), CollectionsJournal by shown page.
+  - NOT YET: Collections pages (Mounts/Pets/Toys/Appearances
+    backgrounds) - have only the Appearances dump; need Mounts, Pets, Toys.

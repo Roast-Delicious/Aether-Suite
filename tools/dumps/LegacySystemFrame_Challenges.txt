@@ -1,0 +1,283 @@
+== Window dump: LegacySystemFrame ==
+Frame LegacySystemFrame 920x575
+  Texture LegacySystemFrameBg 916x552 tex=374155
+  Texture .TopTileStreaks 912x43 atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 920x575
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 745x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 745x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x404 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x404 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture LegacySystemFramePortrait 45x62 atlas=Legacy-up-c60
+    MaskTexture .CircleMask 41x58
+  Frame .FrameGlow 954x613 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 838x20
+    FontString LegacySystemFrameTitleText 838x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button LegacySystemFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .LegacyRewardTrackTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=2056011
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .LegacyChallengeTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=413584
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .LegacyTreeTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=442272
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame LegacySystemFrameTabIndicators 0x0 hidden (2 parts inside, skipped)
+  Frame .RewardTrackPage 910x569 hidden (7 parts inside, skipped)
+  Frame .ChallengesPage 920x575
+    Texture .Background 917x561 atlas=Legacy-Challenge-BG
+    Frame .CategoryList 330x487
+      FontString .NoResultsText 200x24 hidden
+      Button .FilterDropdown 91x18
+        Texture .Background 99x26 atlas=common-dropdown-b-button
+        FontString .Text 31x20
+        Button .ResetButton 23x23 hidden (2 parts inside, skipped)
+        Frame .GamepadFocusIcon 28x28 hidden (11 parts inside, skipped)
+      EditBox .SearchBox 214x20 [styled input]
+        FontString .? 178x20
+        Texture .? 2x10 hidden
+        Texture .Left 8x20 atlas=common-search-border-left
+        Texture .Right 8x20 atlas=common-search-border-right
+        Texture .Middle 203x20 atlas=common-search-border-middle
+        FontString .Instructions 178x20
+        Texture LegacySystemFrameSearchIcon 10x10 atlas=common-search-magnifyingglass
+        Button LegacySystemFrameClearButton 17x17 hidden (1 parts inside, skipped)
+        Frame .GamepadFocusIcon 28x28 hidden (11 parts inside, skipped)
+      Frame .ScrollBox 302x447
+        Frame .DragDelegate 0x0
+        Frame .ScrollTarget 297x1
+          Button .? 297x25
+            FontString .ButtonText 259x15
+            Texture .? 297x25 atlas=common-button-list-collapseExpand
+            Texture .? 297x25 atlas=common-button-list-collapseExpand
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20
+              Texture .Icon 13x4 atlas=common-button-list-minus
+              Texture .? 13x4 atlas=common-button-list-minus
+          Button .? 287x25
+            FontString .ButtonText 249x15
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+          Button .? 287x25
+            FontString .ButtonText 249x15
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+          Button .? 297x25
+            FontString .ButtonText 259x15
+            Texture .? 297x25 atlas=common-button-list-collapseExpand
+            Texture .? 297x25 atlas=common-button-list-collapseExpand
+            Texture .NotificationIcon 14x14 atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 297x25
+            FontString .ButtonText 259x15
+            Texture .? 297x25 atlas=common-button-list-collapseExpand
+            Texture .? 297x25 atlas=common-button-list-collapseExpand
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 297x25
+            FontString .ButtonText 259x15
+            Texture .? 297x25 atlas=common-button-list-collapseExpand
+            Texture .? 297x25 atlas=common-button-list-collapseExpand
+            Texture .NotificationIcon 14x14 atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 297x25
+            FontString .ButtonText 259x15
+            Texture .? 297x25 atlas=Legacy-Challenge-Left-Sub-Tab
+            Texture .? 297x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+          Button .? 297x25
+            FontString .ButtonText 259x15
+            Texture .? 297x25 atlas=Legacy-Challenge-Left-Sub-Tab
+            Texture .? 297x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+          Button .? 287x25
+            FontString .ButtonText 249x15
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+          Button .? 287x25
+            FontString .ButtonText 249x15
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+          Button .? 287x25
+            FontString .ButtonText 249x15
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+          Button .? 287x25
+            FontString .ButtonText 249x15
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+          Button .? 287x25
+            FontString .ButtonText 249x15
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+          Button .? 287x25
+            FontString .ButtonText 249x15
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+          Button .? 287x25
+            FontString .ButtonText 249x15
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab
+            Texture .? 287x25 atlas=Legacy-Challenge-Left-Sub-Tab-selected
+            Texture .NotificationIcon 14x14 hidden atlas=UI-HUD-MicroMenu-Communities-Icon-Notification
+            Button .CollapseButton 20x20 hidden (2 parts inside, skipped)
+        Frame .Shadows 302x447
+          Texture .Lower 0x0 hidden
+          Texture .Upper 0x0 hidden
+      Frame .ScrollBar 8x447 [styled scroll]
+        Frame .Track 8x409
+          Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+          Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+          Texture .Middle 8x393 atlas=!minimal-scrollbar-track-middle
+          Button .Thumb 8x409 hidden (6 parts inside, skipped)
+        Button .Back 17x11
+          Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+        Button .Forward 17x11
+          Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+    Frame .DetailPane 560x490
+      Frame .ScrollBox 556x482
+        Frame .DragDelegate 0x0
+        Frame .ScrollTarget 552x1
+          Button .? 552x122
+            Texture .BackgroundMiddle 552x102 hidden atlas=Legacy-Challenge-Cards-tiled-vertical
+            Texture .Background 552x122 atlas=Legacy-Challenge-Cards
+            Texture .BackgroundTop 552x34 hidden atlas=Legacy-Challenge-Cards-tiled-top
+            Texture .BackgroundBottom 552x83 hidden atlas=Legacy-Challenge-Cards-tiled-bottom
+            Texture .SelectedOverlay 552x122 hidden atlas=Legacy-Challenge-Cards-selected
+            Texture .TitleBar 467x46 atlas=Legacy-Challenge-Cards-Ribbon-Blue
+            FontString .Label 119x16
+            FontString .Description 400x36
+            FontString .HiddenDescription 400x12 hidden
+            Texture .PlusMinus 20x20 hidden atlas=128-RedButton-Plus
+            Frame .Icon 60x60
+              Texture .texture 50x50 tex=626000
+              MaskTexture .TextureMask 50x50
+              Texture .frame 60x60 atlas=Legacy-Tree-Frame-icon-frame
+            Button .Shield 64x64
+              Texture .Icon 35x51 atlas=Legacy-Tree-Frame-Points-icon
+              FontString .Points 9x16
+              Texture .CheckBackground 124x21 atlas=Legacy-Challenge-Cards-Date-BG
+              Texture .Check 40x35 atlas=worldquest-tracker-checkmark
+              FontString .DateCompleted 62x12
+            CheckButton .Tracked 15x15 hidden [styled check] (12 parts inside, skipped)
+          Button .? 552x122
+            Texture .BackgroundMiddle 552x102 hidden atlas=Legacy-Challenge-Cards-tiled-vertical-Disable
+            Texture .Background 552x122 atlas=Legacy-Challenge-Cards-Disable
+            Texture .BackgroundTop 552x34 hidden atlas=Legacy-Challenge-Cards-tiled-top-Disable
+            Texture .BackgroundBottom 552x83 hidden atlas=Legacy-Challenge-Cards-tiled-bottom-disable
+            Texture .SelectedOverlay 552x122 hidden atlas=Legacy-Challenge-Cards-selected
+            Texture .TitleBar 467x46 atlas=Legacy-Challenge-Cards-Ribbon-Blue-Disable
+            FontString .Label 161x16
+            FontString .Description 400x36
+            FontString .HiddenDescription 400x12 hidden
+            Texture .PlusMinus 20x20 hidden atlas=128-RedButton-Plus
+            Frame .Icon 60x60
+              Texture .texture 50x50 tex=626000
+              MaskTexture .TextureMask 50x50
+              Texture .frame 60x60 atlas=Legacy-Tree-Frame-icon-frame
+            Button .Shield 64x64
+              Texture .Icon 35x51 atlas=Legacy-Tree-Frame-Points-icon
+              FontString .Points 9x16
+              Texture .CheckBackground 124x21 hidden atlas=Legacy-Challenge-Cards-Date-BG
+              Texture .Check 40x35 hidden atlas=worldquest-tracker-checkmark
+              FontString .DateCompleted 1x1 hidden
+            CheckButton .Tracked 15x15 hidden [styled check] (12 parts inside, skipped)
+          Button .? 552x122
+            Texture .BackgroundMiddle 552x102 hidden atlas=Legacy-Challenge-Cards-tiled-vertical-Disable
+            Texture .Background 552x122 atlas=Legacy-Challenge-Cards-Disable
+            Texture .BackgroundTop 552x34 hidden atlas=Legacy-Challenge-Cards-tiled-top-Disable
+            Texture .BackgroundBottom 552x83 hidden atlas=Legacy-Challenge-Cards-tiled-bottom-disable
+            Texture .SelectedOverlay 552x122 hidden atlas=Legacy-Challenge-Cards-selected
+            Texture .TitleBar 467x46 atlas=Legacy-Challenge-Cards-Ribbon-Blue-Disable
+            FontString .Label 119x16
+            FontString .Description 400x36
+            FontString .HiddenDescription 400x12 hidden
+            Texture .PlusMinus 20x20 hidden atlas=128-RedButton-Plus
+            Frame .Icon 60x60
+              Texture .texture 50x50 tex=626000
+              MaskTexture .TextureMask 50x50
+              Texture .frame 60x60 atlas=Legacy-Tree-Frame-icon-frame
+            Button .Shield 64x64
+              Texture .Icon 35x51 atlas=Legacy-Tree-Frame-Points-icon
+              FontString .Points 9x16
+              Texture .CheckBackground 124x21 hidden atlas=Legacy-Challenge-Cards-Date-BG
+              Texture .Check 40x35 hidden atlas=worldquest-tracker-checkmark
+              FontString .DateCompleted 1x1 hidden
+            CheckButton .Tracked 15x15 hidden [styled check] (12 parts inside, skipped)
+        Frame .Shadows 556x482
+          Texture .Lower 0x0
+          Texture .Upper 0x0
+      Frame .ScrollBar 8x476 [styled scroll]
+        Frame .Track 8x438
+          Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+          Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+          Texture .Middle 8x422 atlas=!minimal-scrollbar-track-middle
+          Button .Thumb 8x438 hidden (6 parts inside, skipped)
+        Button .Back 17x11
+          Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+        Button .Forward 17x11
+          Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+    Frame .LegacyChallengePointSummary 520x36
+      Texture .ProgressBarBackground 526x16 atlas=Legacy-Progressbar-BG
+      StatusBar .PointsBar 526x13
+        Texture .ProgressBarFrame 542x30 atlas=Legacy-Progressbar-Frame
+        FontString .Text 111x14
+        Texture .? 16x13 atlas=Legacy-Progressbar-Fill
+      Button .Shield 46x64
+        Texture .Icon 46x66 atlas=UI-Legacy-Points-icon-c60
+        FontString .Points 42x16
+    Frame .VerticalDivider 12x503
+      Texture .? 12x503 atlas=Legacy-Tree-Frame-divider-Vertical
+  Frame .TreePage 920x575 hidden (5 parts inside, skipped)
+  Button .? 16x16

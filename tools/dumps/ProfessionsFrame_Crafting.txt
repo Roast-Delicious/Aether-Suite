@@ -1,0 +1,431 @@
+== Window dump: ProfessionsFrame ==
+Frame ProfessionsFrame 673x594
+  Texture ProfessionsFrameBg 669x571 atlas=Profession-Background-Overview
+  Texture .TopTileStreaks 665x43 hidden atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 673x594
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 498x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 498x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x423 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x423 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture ProfessionsFramePortrait 62x62 tex=136247
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 707x632 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 591x20
+    FontString ProfessionsFrameTitleText 591x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button ProfessionsFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .ProfessionsOverviewTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=8197101
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions1Tab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=136247
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions2Tab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=134366
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions3Tab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=135966
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions4Tab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=136245
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions5Tab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=133971
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions6Tab 55x55 hidden (15 parts inside, skipped)
+  Frame .Professions7Tab 55x55 hidden (15 parts inside, skipped)
+  Frame .TabIndicators 0x0 hidden (2 parts inside, skipped)
+  Frame .CraftingPage 673x594
+    Texture .? 665x570 atlas=Profession-Background-Template2
+    Frame .ConcentrationDisplay 110x32 hidden (2 parts inside, skipped)
+    Button .TutorialButton 64x64 hidden (5 parts inside, skipped)
+    Frame .RecipeList 304x517
+      Texture .Background 304x517 atlas=Professions-background-summarylist
+      FontString .NoResultsText 200x24 hidden
+      Frame .BackgroundNineSlice 304x517 hidden (8 parts inside, skipped)
+      Button .FilterDropdown 91x18
+        Texture .Background 99x26 atlas=common-dropdown-b-button
+        FontString .Text 30x20
+        Button .ResetButton 23x23 hidden (2 parts inside, skipped)
+        Frame .GamepadFocusIcon 28x28 hidden (11 parts inside, skipped)
+      EditBox .SearchBox 188x20 [styled input]
+        FontString .? 152x20
+        Texture .? 2x10 hidden
+        Texture .Left 8x20 atlas=common-search-border-left
+        Texture .Right 8x20 atlas=common-search-border-right
+        Texture .Middle 177x20 atlas=common-search-border-middle
+        FontString .Instructions 152x20
+        Texture ProfessionsFrameSearchIcon 10x10 atlas=common-search-magnifyingglass
+        Button ProfessionsFrameClearButton 17x17 hidden (1 parts inside, skipped)
+        Frame .GamepadFocusIcon 28x28 hidden (11 parts inside, skipped)
+      Frame .ScrollBox 276x477
+        Frame .DragDelegate 0x0
+        Frame .ScrollTarget 271x1
+          Button .? 271x25
+            FontString .ButtonText 233x15
+            Texture .? 271x25 atlas=common-button-list-collapseExpand
+            Texture .? 271x25 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x4 atlas=common-button-list-minus
+              Texture .? 13x4 atlas=common-button-list-minus
+            StatusBar .RankBar 58x14 hidden (5 parts inside, skipped)
+          Frame .? 261x1
+          Button .? 261x20
+            FontString .Label 65x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 hidden atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Frame .? 261x10
+          Button .? 271x25
+            FontString .ButtonText 233x15
+            Texture .? 271x25 atlas=common-button-list-collapseExpand
+            Texture .? 271x25 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x4 atlas=common-button-list-minus
+              Texture .? 13x4 atlas=common-button-list-minus
+            StatusBar .RankBar 58x14 hidden (5 parts inside, skipped)
+          Frame .? 261x1
+          Button .? 261x20
+            FontString .Label 111x12
+            FontString .Count 32x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Button .? 261x20
+            FontString .Label 89x12
+            FontString .Count 32x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Button .? 261x20
+            FontString .Label 122x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Button .? 261x20
+            FontString .Label 101x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Button .? 261x20
+            FontString .Label 102x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Button .? 261x20
+            FontString .Label 80x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Frame .? 261x10
+          Button .? 271x25
+            FontString .ButtonText 233x15
+            Texture .? 271x25 atlas=common-button-list-collapseExpand
+            Texture .? 271x25 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x4 atlas=common-button-list-minus
+              Texture .? 13x4 atlas=common-button-list-minus
+            StatusBar .RankBar 58x14 hidden (5 parts inside, skipped)
+          Frame .? 261x1
+          Button .? 261x20
+            FontString .Label 161x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Frame .? 261x10
+          Button .? 271x25
+            FontString .ButtonText 233x15
+            Texture .? 271x25 atlas=common-button-list-collapseExpand
+            Texture .? 271x25 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x4 atlas=common-button-list-minus
+              Texture .? 13x4 atlas=common-button-list-minus
+            StatusBar .RankBar 58x14 hidden (5 parts inside, skipped)
+          Frame .? 261x1
+          Button .? 261x20
+            FontString .Label 95x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Button .? 261x20
+            FontString .Label 115x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Button .? 261x20
+            FontString .Label 111x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Button .? 261x20
+            FontString .Label 148x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Button .? 261x20
+            FontString .Label 167x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15 hidden (2 parts inside, skipped)
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Frame .? 261x10
+          Button .? 271x25
+            FontString .ButtonText 233x15
+            Texture .? 271x25 atlas=common-button-list-collapseExpand
+            Texture .? 271x25 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x4 atlas=common-button-list-minus
+              Texture .? 13x4 atlas=common-button-list-minus
+            StatusBar .RankBar 58x14 hidden (5 parts inside, skipped)
+          Frame .? 261x1
+          Button .? 261x20
+            FontString .Label 113x12
+            FontString .Count 1x12 hidden
+            Texture .SelectedOverlay 267x19 hidden atlas=Professions_Recipe_Active
+            Texture .HighlightOverlay 309x21 atlas=Professions_Recipe_Hover
+            Button .SkillUps 26x15
+              Texture .Icon 13x15 atlas=Professions-Icon-Skill-High
+              FontString .Text 1x13 hidden
+            Button .LockedIcon 17x16 hidden (1 parts inside, skipped)
+          Frame .? 0x10 hidden (0 parts inside, skipped)
+          Button .? 0x25 hidden (7 parts inside, skipped)
+          Frame .? 0x1 hidden (0 parts inside, skipped)
+          Frame .? 0x10 hidden (0 parts inside, skipped)
+          Button .? 0x25 hidden (7 parts inside, skipped)
+          Frame .? 0x1 hidden (0 parts inside, skipped)
+        Frame .Shadows 276x477
+          Texture .Lower 0x0
+          Texture .Upper 0x0 hidden
+      Frame .ScrollBar 8x477 [styled scroll]
+        Frame .Track 8x439
+          Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+          Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+          Texture .Middle 8x423 atlas=!minimal-scrollbar-track-middle
+          Button .Thumb 8x122
+            Texture .Begin 8x8 atlas=minimal-scrollbar-small-thumb-top
+            Texture .End 8x8 atlas=minimal-scrollbar-small-thumb-bottom
+            Texture .Middle 8x106 atlas=minimal-scrollbar-small-thumb-middle
+        Button .Back 17x11
+          Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+        Button .Forward 17x11
+          Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+    Frame .SchematicForm 360x484 [styled inset]
+      FontString .OutputText 225x14
+      FontString .RecraftingOutputText 400x1 hidden
+      FontString .RecraftingDescription 280x200 hidden
+      FontString .OutputSubText 300x20 hidden
+      FontString .RequiredTools 250x11 hidden
+      FontString .RecraftingRequiredTools 400x20 hidden
+      FontString .Cooldown 400x1 hidden
+      FontString .MinimizedCooldown 250x1 hidden
+      FontString .Description 305x12
+      Texture .? 360x484 atlas=common-insideframe
+      Texture .Background 360x484 atlas=Profession-background-card-leatherworking
+      Texture .MinimalBackground 0x0 hidden
+      Button .OutputIcon 47x47
+        Texture .Icon 53x53 tex=134250
+        MaskTexture .CircleMask 49x49
+        Texture .IconBorder 68x68 atlas=auctionhouse-itemicon-border-white
+        Texture .IconOverlay 47x47 hidden
+        Texture .IconOverlay2 47x47 hidden
+        FontString .? 1x1 hidden
+        Texture .? 66x66 atlas=auctionhouse-itemicon-border-white
+        FontString .Count 1x1
+        Texture .CountShadow 21x21 hidden atlas=BattleBar-SwapPetShadow
+      CheckButton .FavoriteButton 20x18
+        Texture .NormalTexture 20x18 atlas=auctionhouse-icon-favorite-off
+        Texture .HighlightTexture 20x18 atlas=auctionhouse-icon-favorite-off
+      Frame .QualityDialog 329x207 hidden (14 parts inside, skipped)
+      CheckButton .TrackRecipeCheckbox 26x26 [styled check]
+        Texture .NormalTexture 26x26 atlas=checkbox-minimal
+        Texture .PushedTexture 26x26 hidden atlas=checkbox-minimal
+        Texture .HighlightTexture 26x26 atlas=checkbox-minimal
+        Texture .CheckedTexture 26x26 hidden atlas=checkmark-minimal
+        Texture .DisabledCheckedTexture 26x26 hidden atlas=checkmark-minimal-disabled
+        FontString .Text 66x10
+      CheckButton .AllocateBestQualityCheckbox 26x26 hidden [styled check] (12 parts inside, skipped)
+      Frame .Reagents 180x70
+        FontString .Label 180x20
+        Frame .? 160x50 hidden (5 parts inside, skipped)
+        Frame .? 160x50
+          Texture .CustomerState 10x10 hidden
+          FontString .Name 108x36
+          Button .Button 39x39
+            MaskTexture .Mask 39x39
+            Texture ProfessionsFrameIconTexture 39x39
+            FontString ProfessionsFrameCount 1x1 hidden
+            FontString ProfessionsFrameStock 1x1 hidden
+            Texture ProfessionsFrameSearchOverlay 39x39 hidden
+            Texture .ItemContextOverlay 39x39 hidden
+            Texture .? 37x37 hidden tex=651080
+            Texture .? 37x37 hidden
+            Texture .? 37x37 hidden
+            Texture ProfessionsFrameNormalTexture 64x64 tex=130841
+            Texture .PushedTexture 39x39 hidden tex=130839
+            Texture .? 39x39 tex=130718
+            Texture .SlotBackground 39x39 atlas=Professions-Slot-bg
+            Texture .Icon 39x39 tex=134252
+            Texture .IconBorder 40x40 atlas=Professions-Slot-Frame
+            Texture .IconOverlay 39x39 hidden
+            Texture .IconOverlay2 39x39 hidden
+            FontString .Count 1x1 hidden
+            Texture .ColorOverlay 33x33 hidden
+            Texture .CropFrame 100x100 hidden atlas=Professions-ChoiceReagent-Frame
+            Texture .HighlightTexture 48x48 hidden atlas=bags-newitem
+            Texture .QualityOverlay 0x0
+            Texture .AddIcon 39x39 hidden atlas=tradeskills-icon-add
+            Frame .InputOverlay 39x39
+              Texture .AddIcon 15x16 hidden atlas=Professions-Slot-Plus
+              Texture .AddIconHighlight 15x16 hidden atlas=Professions-Slot-Plus-Over
+              Texture .LockedIcon 16x21 hidden atlas=AdventureMapIcon-Lock
+          CheckButton .Checkbox 23x23 hidden [styled check] (12 parts inside, skipped)
+          Frame .Checkmark 23x23 hidden (1 parts inside, skipped)
+      Frame .OptionalReagents 1x1 hidden (1 parts inside, skipped)
+      Frame .FinishingReagents 1x1 hidden (1 parts inside, skipped)
+      Frame .Concentrate 90x108 hidden (2 parts inside, skipped)
+      Frame .Stars 52x16 hidden (3 parts inside, skipped)
+      StatusBar .RecipeLevelBar 80x14 hidden (5 parts inside, skipped)
+      Button .RecipeLevelDropdown 110x22 hidden (3 parts inside, skipped)
+      Frame .Details 0x0 hidden (10 parts inside, skipped)
+      Button .RecipeSourceButton 150x16 hidden (3 parts inside, skipped)
+      Frame .FirstCraftBonus 0x0 hidden (2 parts inside, skipped)
+      Frame .recraftSlot 260x105 hidden (5 parts inside, skipped)
+      Frame .NineSlice 0x0
+        Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+        Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+        Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+        Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+        Texture .TopEdge 256x3 atlas=_UI-Frame-InnerTopTile
+        Texture .BottomEdge 256x3 atlas=_UI-Frame-InnerBotTile
+        Texture .LeftEdge 3x256 atlas=!UI-Frame-InnerLeftTile
+        Texture .RightEdge 3x256 atlas=!UI-Frame-InnerRightTile
+    EditBox .MinimizedSearchBox 210x20 hidden [styled input] (21 parts inside, skipped)
+    Frame .MinimizedSearchResults 410x595 hidden (13 parts inside, skipped)
+    Frame .RankBar 453x18
+      Texture .Background 451x29 atlas=Professions-skillbar-bg
+      Texture .Fill 441x18 atlas=Skillbar_Fill_Flipbook_Leatherworking
+      Texture .Flare 53x16 atlas=Skillbar_Flare_Leatherworking
+      MaskTexture .Mask 332x512
+      Texture .Border 451x29 atlas=Professions-skillbar-frame
+      Frame .Rank 453x18
+        FontString .Text 117x9
+      Button .ExpansionDropdownButton 19x19 hidden (1 parts inside, skipped)
+    EditBox .CreateMultipleInputBox 31x20 [styled input]
+      FontString .? 31x20
+      Texture .? 2x14 hidden
+      Texture .? 8x20 atlas=common-search-border-left
+      Texture .? 8x20 atlas=common-search-border-right
+      Texture .? 20x20 atlas=common-search-border-middle
+      Texture .Left 8x20 tex=130975
+      Texture .Right 8x20 tex=130975
+      Texture .Middle 20x20 tex=130975
+      Button .IncrementButton 23x22
+        Texture .? 23x22 hidden tex=130866
+        Texture .? 23x22 hidden tex=130865
+        Texture .? 23x22 tex=130864
+        Texture .? 23x22 tex=130757
+      Button .DecrementButton 23x22
+        Texture .? 23x22 hidden tex=130869
+        Texture .? 23x22 hidden tex=130868
+        Texture .? 23x22 tex=130867
+        Texture .? 23x22 tex=130757
+      Frame .MouseWheelCatcher 83x22
+    Frame .GamepadCreateMultiple 100x24 hidden (2 parts inside, skipped)
+    Button .ViewGuildCraftersButton 120x22 hidden [styled button] (11 parts inside, skipped)
+    Frame .GuildFrame 260x353 hidden (11 parts inside, skipped)
+    Frame .CraftingOutputLog 76x290 hidden (10 parts inside, skipped)
+    Button .Prof0ToolSlot 37x37 hidden (20 parts inside, skipped)
+    Button .Prof0Gear0Slot 37x37 hidden (20 parts inside, skipped)
+    Button .Prof0Gear1Slot 37x37 hidden (20 parts inside, skipped)
+    Button .Prof1ToolSlot 37x37 hidden (20 parts inside, skipped)
+    Button .Prof1Gear0Slot 37x37 hidden (20 parts inside, skipped)
+    Button .Prof1Gear1Slot 37x37 hidden (20 parts inside, skipped)
+    Button .CookingToolSlot 37x37 hidden (20 parts inside, skipped)
+    Button .CookingGear0Slot 37x37 hidden (20 parts inside, skipped)
+    Button .FishingToolSlot 37x37 hidden (20 parts inside, skipped)
+    Frame .GearSlotDivider 5x37 hidden (1 parts inside, skipped)
+    Button .LinkButton 23x23
+      Texture .Background 23x23 atlas=common-button-tertiary-square-normal
+      Texture .Icon 25x25 atlas=common-icon-chatlink
+    Frame .OverlayCastBarAnchor 1x1
+    Button .CreateButton 80x28 [styled button]
+      Texture .Left 114x128 atlas=128-RedButton-Left-Disabled
+      Texture .Right 252x128 atlas=128-RedButton-Right-Disabled
+      Texture .Center 0x28 atlas=_128-RedButton-Center-Disabled
+      Texture .? 80x28 atlas=128-RedButton-Highlight
+      FontString .? 39x12
+      Frame .Controller 0x0
+    Button .CreateAllButton 109x28 [styled button]
+      Texture .Left 114x128 atlas=128-RedButton-Left-Disabled
+      Texture .Right 292x128 atlas=128-RedButton-Right-Disabled
+      Texture .Center 20x28 atlas=_128-RedButton-Center-Disabled
+      Texture .? 109x28 atlas=128-RedButton-Highlight
+      FontString .? 78x12
+      Frame .Controller 0x0
+  Frame .BookPage 673x594 hidden (1 parts inside, skipped)
+  Button .? 16x16
