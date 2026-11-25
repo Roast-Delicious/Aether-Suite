@@ -115,6 +115,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     (approved capsule bars, Neutral gold / Friendly+ #22e650), rows and
     section headers (tracker-style), world map specifics: phase 2, from
     the user's screenshots + /skins debug.
+- QUEUED for the next build (user, Nov 25 04:31, "queue it"): Check Zones
+  Now popup includes YOUR zone (it filtered option.map ~= report.current):
+  first line "Here, <zone>: N quests (lo-hi), M in your log", then the
+  other zones ranked with Go; if none beats here: "<zone> is still your
+  best zone."; if here has run dry (no available quests at this level, or
+  all done): say so. Ledger.Suggest(force) / ZoneRows.
 - READY, NOT SHIPPED (branch fix-ledger-skins-errors, includes the tab fix):
   AetherLedger 1.8.1 + AetherSkins 1.2.1. Two errors from the user's
   checklist (04:15, 04:16): (1) Ledger.lua:248 concat nil: GiverText was
