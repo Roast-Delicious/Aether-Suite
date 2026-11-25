@@ -455,6 +455,20 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   skinned window except quest windows; drag = SetScale (clamp 0.7-1.5),
   saved per window name in AetherSkinsDB.scale; right-click = reset.
   Character right-panel section pills -> navy (user, checklist).
+  CHARACTER SLOTS DUMP (08:59, tools/dumps/CharacterFrame_Slots_2026-11-
+  25.txt): each Character<X>Slot has NormalTexture 130841 (64x64, ours
+  already), .BorderFrame child texture atlas UI-Character-Info-GearSlot
+  55x55 = the BRONZE frame with corner studs -> fade; .IconBorder tex
+  651080 = Blizzard quality edge (green etc.) -> fade, colour our frame by
+  GetInventoryItemQuality("player", slot:GetID()) >=2 else blue (same as
+  bags; refresh via hooksecurefunc PaperDollItemSlotButton_Update).
+  Ammo: UI-Character-Info-GearSlotSmall (fade -> our frame) and
+  UI-Character-Info-GearSlot-Arrow (orange arrow -> tint gold).
+  PaperDollSidebarTab1-4 (top of right panel): UI-Character-Info-StatTab
+  (+ -Selected) -> W.SquareTab style (navy box, gold frame when selected).
+  Model buttons: common-button-square-gray-up/-down -> NavyBox, icon gold.
+  SPELLBOOK BROWN = spellbook-item-iconframe-passive (blue = iconframe);
+  fade both (+ -hover, -shadow) and draw our blue frame.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in

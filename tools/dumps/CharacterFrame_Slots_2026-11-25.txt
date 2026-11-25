@@ -1,0 +1,717 @@
+== Window dump: CharacterFrame ==
+Frame CharacterFrame 631x484
+  Frame .NineSlice 631x484
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 456x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 456x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x313 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x313 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture CharacterFramePortrait 62x62 tex=626000
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 665x522 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 549x20
+    FontString CharacterFrameTitleText 549x13
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button CharacterFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame CharacterFrameLeftPaneHost 398x464
+    Texture .? 398x464 atlas=UI-Character-Info-General-BG
+  Frame CharacterFrameRightPaneHost 233x464
+    Texture .? 233x464 atlas=UI-Character-Info-Stat-BG
+    Texture CharacterFrameRightPaneHostStoneBg 233x60 atlas=UI-Character-Info-Stat-StoneBG3
+    Frame .? 11x463
+      Texture .? 11x463 atlas=common-framedivider
+  Frame CharacterStatsPaneScrollBox 233x404
+    Texture .Border 228x403 atlas=common-insideframe
+    Texture .? 210x7 atlas=UI-Character-Info-ScrollLine
+    Texture .ClassBackground 233x383 atlas=UI-Character-Info-Hunter-BG
+    Frame .ScrollBox 193x366
+      Frame .DragDelegate 0x0
+      Frame .ScrollTarget 193x1
+        Frame .? 193x40
+          Texture .Background 193x40 atlas=UI-Character-Info-Title
+          FontString .Title 50x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 29x12
+          FontString .Label 83x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 59x12
+          FontString .Label 53x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 36x12
+          FontString .Label 39x12
+        Frame .? 193x40
+          Texture .Background 193x40 atlas=UI-Character-Info-Title
+          FontString .Title 70x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 35x12
+          FontString .Label 42x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 37x12
+          FontString .Label 45x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 29x12
+          FontString .Label 35x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 53x12
+          FontString .Label 49x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 17x12
+          FontString .Label 35x12
+        Frame .? 193x40
+          Texture .Background 193x40 atlas=UI-Character-Info-Title
+          FontString .Title 59x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 24x12
+          FontString .Label 84x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 53x12
+          FontString .Label 69x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 24x12
+          FontString .Label 133x12
+        Frame .? 187x23 hidden (3 parts inside, skipped)
+        Frame .? 187x23 hidden (4 parts inside, skipped)
+        Frame .? 187x23 hidden (4 parts inside, skipped)
+        Frame .? 187x23 hidden (4 parts inside, skipped)
+        Frame .? 187x23 hidden (4 parts inside, skipped)
+        Frame .? 187x23 hidden (4 parts inside, skipped)
+        Frame .? 193x40
+          Texture .Background 193x40 atlas=UI-Character-Info-Title
+          FontString .Title 57x12
+      Frame .Shadows 193x366
+        Texture .Lower 0x0
+        Texture .Upper 0x0
+    Frame .ScrollBar 8x354 [styled scroll]
+      Frame .Track 8x316
+        Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+        Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+        Texture .Middle 8x300 atlas=!minimal-scrollbar-track-middle
+        Button .Thumb 8x149
+          Texture .Begin 8x8 atlas=minimal-scrollbar-small-thumb-top
+          Texture .End 8x8 atlas=minimal-scrollbar-small-thumb-bottom
+          Texture .Middle 8x133 atlas=minimal-scrollbar-small-thumb-middle
+      Button .Back 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+      Button .Forward 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+  Frame CharacterStatsPanePetScrollBox 233x404 hidden (4 parts inside, skipped)
+  Frame CharacterStatsPane 233x404 hidden (5 parts inside, skipped)
+  Button CharacterFrameRightPaneToggleButton 28x28
+    Texture .? 28x28 tex=130869
+    Texture .? 28x28 hidden tex=130868
+    Texture .? 28x28 tex=130757
+  Frame CharacterFrameModeTabs 64x384
+    Frame CharacterFrameModeTab1 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=RTPortrait1
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame CharacterFrameModeTab2 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197103
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame CharacterFrameModeTab3 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=2447783
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame CharacterFrameModeTab4 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197098
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame CharacterFrameModeTab5 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197078
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame CharacterFrameModeTab6 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197104
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+  Frame CharacterFrameTabIndicators 0x0 hidden (2 parts inside, skipped)
+  Frame PaperDollFrame 631x484
+    Frame PaperDollTabIndicators 0x0 hidden (2 parts inside, skipped)
+    Frame .TitleManagerPane 233x404 hidden (3 parts inside, skipped)
+    Frame .EquipmentManagerPane 233x404 hidden (7 parts inside, skipped)
+    Frame .TopBackgroundStripHost 398x36
+      Texture .TopBackgroundStrip 398x36 tex=374155
+      Texture .TopBackgroundStripBottomEdge 398x3 atlas=_UI-Frame-InnerTopTile
+    Frame PaperDollLevelInfo 220x20
+      FontString CharacterLevelText 116x20
+    Frame PaperDollPetLevelInfo 220x20 hidden (1 parts inside, skipped)
+    ModelScene CharacterModelScene 398x428
+      Texture CharacterModelFrameBackgroundTopLeft 319x299 tex=456006
+      Texture CharacterModelFrameBackgroundTopRight 80x299 tex=456007
+      Texture CharacterModelFrameBackgroundBotLeft 319x130 tex=456008
+      Texture CharacterModelFrameBackgroundBotRight 80x130 tex=456009
+      Texture .BackgroundOverlay 398x428 atlas=UI-Character-Info-RaceBG-Overlay
+      Frame .ControlFrame 132x32
+        Button .zoomInButton 32x32
+          Texture .Icon 16x16 atlas=common-icon-zoomin
+          Texture .NormalTexture 32x32 atlas=common-button-square-gray-up
+          Texture .HighlightTexture 16x16
+          Texture .PushedTexture 32x32 hidden atlas=common-button-square-gray-down
+        Button .zoomOutButton 32x32
+          Texture .Icon 16x16 atlas=common-icon-zoomout
+          Texture .NormalTexture 32x32 atlas=common-button-square-gray-up
+          Texture .HighlightTexture 16x16
+          Texture .PushedTexture 32x32 hidden atlas=common-button-square-gray-down
+        Button .rotateLeftButton 32x32
+          Texture .Icon 16x16 atlas=common-icon-rotateleft
+          Texture .NormalTexture 32x32 atlas=common-button-square-gray-up
+          Texture .HighlightTexture 16x16
+          Texture .PushedTexture 32x32 hidden atlas=common-button-square-gray-down
+        Button .rotateRightButton 32x32
+          Texture .Icon 16x16 atlas=common-icon-rotateright
+          Texture .NormalTexture 32x32 atlas=common-button-square-gray-up
+          Texture .HighlightTexture 16x16
+          Texture .PushedTexture 32x32 hidden atlas=common-button-square-gray-down
+        Button .resetButton 32x32
+          Texture .Icon 16x16 atlas=common-icon-undo
+          Texture .NormalTexture 32x32 atlas=common-button-square-gray-up
+          Texture .HighlightTexture 16x16
+          Texture .PushedTexture 32x32 hidden atlas=common-button-square-gray-down
+      Frame .GearEnchantAnimation 128x128 hidden (2 parts inside, skipped)
+      Frame PetPaperDollPetHappinessInfo 24x23
+        Texture .Texture 24x23 atlas=UI-PetHappiness
+      Frame PetPaperDollFrameExpBar 257x29 hidden (13 parts inside, skipped)
+      Frame .GamepadFocusIndicator 0x0 hidden (1 parts inside, skipped)
+    Frame PaperDollItemsFrame 631x484
+      Button CharacterHeadSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterHeadSlotIconTexture 37x37 tex=133117
+        FontString CharacterHeadSlotCount 1x1 hidden
+        FontString CharacterHeadSlotStock 1x1 hidden
+        Texture CharacterHeadSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterHeadSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterHeadSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterHeadSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterNeckSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterNeckSlotIconTexture 37x37 tex=136519
+        FontString CharacterNeckSlotCount 1x1 hidden
+        FontString CharacterNeckSlotStock 1x1 hidden
+        Texture CharacterNeckSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 hidden tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterNeckSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterNeckSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterNeckSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterShoulderSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterShoulderSlotIconTexture 37x37 tex=135039
+        FontString CharacterShoulderSlotCount 1x1 hidden
+        FontString CharacterShoulderSlotStock 1x1 hidden
+        Texture CharacterShoulderSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterShoulderSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterShoulderSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterShoulderSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterBackSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterBackSlotIconTexture 37x37 tex=133765
+        FontString CharacterBackSlotCount 1x1 hidden
+        FontString CharacterBackSlotStock 1x1 hidden
+        Texture CharacterBackSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterBackSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterBackSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterBackSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterChestSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterChestSlotIconTexture 37x37 tex=132718
+        FontString CharacterChestSlotCount 1x1 hidden
+        FontString CharacterChestSlotStock 1x1 hidden
+        Texture CharacterChestSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterChestSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterChestSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterChestSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterShirtSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterShirtSlotIconTexture 37x37 tex=135016
+        FontString CharacterShirtSlotCount 1x1 hidden
+        FontString CharacterShirtSlotStock 1x1 hidden
+        Texture CharacterShirtSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterShirtSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterShirtSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterShirtSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterTabardSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterTabardSlotIconTexture 37x37 tex=136527
+        FontString CharacterTabardSlotCount 1x1 hidden
+        FontString CharacterTabardSlotStock 1x1 hidden
+        Texture CharacterTabardSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 hidden tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterTabardSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterTabardSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterTabardSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterWristSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterWristSlotIconTexture 37x37 tex=132606
+        FontString CharacterWristSlotCount 1x1 hidden
+        FontString CharacterWristSlotStock 1x1 hidden
+        Texture CharacterWristSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterWristSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterWristSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterWristSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterHandsSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterHandsSlotIconTexture 37x37 tex=132938
+        FontString CharacterHandsSlotCount 1x1 hidden
+        FontString CharacterHandsSlotStock 1x1 hidden
+        Texture CharacterHandsSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterHandsSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterHandsSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterHandsSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterWaistSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterWaistSlotIconTexture 37x37 tex=236896
+        FontString CharacterWaistSlotCount 1x1 hidden
+        FontString CharacterWaistSlotStock 1x1 hidden
+        Texture CharacterWaistSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterWaistSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterWaistSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterWaistSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterLegsSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterLegsSlotIconTexture 37x37 tex=134582
+        FontString CharacterLegsSlotCount 1x1 hidden
+        FontString CharacterLegsSlotStock 1x1 hidden
+        Texture CharacterLegsSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterLegsSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterLegsSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterLegsSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterFeetSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterFeetSlotIconTexture 37x37 tex=132537
+        FontString CharacterFeetSlotCount 1x1 hidden
+        FontString CharacterFeetSlotStock 1x1 hidden
+        Texture CharacterFeetSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterFeetSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterFeetSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterFeetSlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterFinger0Slot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterFinger0SlotIconTexture 37x37 tex=133722
+        FontString CharacterFinger0SlotCount 1x1 hidden
+        FontString CharacterFinger0SlotStock 1x1 hidden
+        Texture CharacterFinger0SlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterFinger0SlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterFinger0SlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterFinger0SlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterFinger1Slot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterFinger1SlotIconTexture 37x37 tex=133347
+        FontString CharacterFinger1SlotCount 1x1 hidden
+        FontString CharacterFinger1SlotStock 1x1 hidden
+        Texture CharacterFinger1SlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterFinger1SlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterFinger1SlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterFinger1SlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterTrinket0Slot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterTrinket0SlotIconTexture 37x37 tex=136528
+        FontString CharacterTrinket0SlotCount 1x1 hidden
+        FontString CharacterTrinket0SlotStock 1x1 hidden
+        Texture CharacterTrinket0SlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 hidden tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterTrinket0SlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterTrinket0SlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterTrinket0SlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterTrinket1Slot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterTrinket1SlotIconTexture 37x37 tex=136528
+        FontString CharacterTrinket1SlotCount 1x1 hidden
+        FontString CharacterTrinket1SlotStock 1x1 hidden
+        Texture CharacterTrinket1SlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 hidden tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterTrinket1SlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterTrinket1SlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterTrinket1SlotPopoutButton 20x43 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterMainHandSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterMainHandSlotIconTexture 37x37 tex=135357
+        FontString CharacterMainHandSlotCount 1x1 hidden
+        FontString CharacterMainHandSlotStock 1x1 hidden
+        Texture CharacterMainHandSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterMainHandSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterMainHandSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterMainHandSlotPopoutButton 43x20 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterSecondaryHandSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterSecondaryHandSlotIconTexture 37x37 tex=136524
+        FontString CharacterSecondaryHandSlotCount 1x1 hidden
+        FontString CharacterSecondaryHandSlotStock 1x1 hidden
+        Texture CharacterSecondaryHandSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 hidden tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterSecondaryHandSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterSecondaryHandSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterSecondaryHandSlotPopoutButton 43x20 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterRangedSlot 37x37
+        MaskTexture .Mask 37x37
+        Texture CharacterRangedSlotIconTexture 37x37 tex=135499
+        FontString CharacterRangedSlotCount 1x1 hidden
+        FontString CharacterRangedSlotStock 1x1 hidden
+        Texture CharacterRangedSlotSearchOverlay 37x37 hidden
+        Texture .ItemContextOverlay 37x37 hidden
+        Texture .IconBorder 37x37 tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterRangedSlotNormalTexture 64x64 tex=130841
+        Texture .PushedTexture 37x37 hidden tex=130839
+        Texture .HighlightTexture 37x37 tex=130718
+        Texture .CorruptedHighlightTexture 66x66 hidden atlas=Nzoth-charactersheet-item-glow
+        Texture .AzeriteTexture 0x0 hidden
+        Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+        Texture .ignoreTexture 40x40 hidden tex=255353
+        Frame .RankFrame 31x21 hidden (2 parts inside, skipped)
+        Frame .AvailableTraitFrame 37x37 hidden (18 parts inside, skipped)
+        Cooldown CharacterRangedSlotCooldown 37x37 hidden (1 parts inside, skipped)
+        Button CharacterRangedSlotPopoutButton 43x20 hidden (3 parts inside, skipped)
+        Frame .BorderFrame 1x1
+          Texture .? 55x55 atlas=UI-Character-Info-GearSlot
+        Frame .SocketDisplay 0x0 hidden (3 parts inside, skipped)
+      Button CharacterAmmoSlot 27x27
+        MaskTexture .Mask 27x27
+        Texture CharacterAmmoSlotIconTexture 27x27 tex=132382
+        FontString CharacterAmmoSlotCount 1x1 hidden
+        FontString CharacterAmmoSlotStock 1x1 hidden
+        Texture CharacterAmmoSlotSearchOverlay 27x27 hidden
+        Texture .ItemContextOverlay 27x27 hidden
+        Texture .IconBorder 37x37 hidden tex=651080
+        Texture .IconOverlay 37x37 hidden
+        Texture .IconOverlay2 37x37 hidden
+        Texture CharacterAmmoSlotNormalTexture 64x64 hidden tex=130841
+        Texture .PushedTexture 27x27 hidden tex=130839
+        Texture .HighlightTexture 27x27 hidden tex=130718
+        Texture .? 44x44 atlas=UI-Character-Info-GearSlotSmall
+        Texture CharacterAmmoSlotIconTexture 27x27
+        FontString CharacterAmmoSlotCount 8x14
+        Texture CharacterAmmoSlotNormalTexture 47x47 tex=130841
+        Texture .? 27x27 hidden tex=130839
+        Texture .? 27x27 tex=130718
+        Cooldown CharacterAmmoSlotCooldown 27x27 hidden (1 parts inside, skipped)
+        Frame .? 1x1
+          Texture .? 33x23 atlas=UI-Character-Info-GearSlot-Arrow
+    Frame GearManagerPopupFrame 525x495 hidden (3 parts inside, skipped)
+  Frame PaperDollSidebarTabs 233x85
+    CheckButton PaperDollSidebarTab2 42x42
+      Texture .Icon 42x42 tex=514608
+      Texture .? 42x42 atlas=UI-Character-Info-StatTab
+      Texture .? 42x42 hidden atlas=UI-Character-Info-StatTab-Selected
+    CheckButton PaperDollSidebarTab3 42x42
+      Texture .Icon 36x33 tex=514608
+      Texture .? 42x42 atlas=UI-Character-Info-StatTab
+      Texture .? 42x42 hidden atlas=UI-Character-Info-StatTab-Selected
+    CheckButton PaperDollSidebarTab1 42x42
+      Texture .Icon 36x33 tex=RTPortrait1
+      Texture .? 42x42 atlas=UI-Character-Info-StatTab
+      Texture .? 42x42 atlas=UI-Character-Info-StatTab-Selected
+    CheckButton PaperDollSidebarTab4 42x42
+      Texture .Icon 29x31 tex=RTPortrait1
+      Texture .? 42x42 atlas=UI-Character-Info-StatTab
+      Texture .? 42x42 hidden atlas=UI-Character-Info-StatTab-Selected
+  Frame ReputationFrame 631x484 hidden (4 parts inside, skipped)
+  Frame SkillsFrame 631x484 hidden (3 parts inside, skipped)
+  Frame PVPRankFrame 631x484 hidden (3 parts inside, skipped)
+  Frame StatisticsFrame 631x484 hidden (2 parts inside, skipped)
+  Frame TokenFrame 631x484 hidden (5 parts inside, skipped)
