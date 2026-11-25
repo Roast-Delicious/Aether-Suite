@@ -38,7 +38,7 @@ function M.GetFont(s) return s.file, s.size, s.flags end
 function M.SetFont(s, f, z, fl) s.file, s.size, s.flags = f, z, fl; return true end
 function M.SetFontObject() end
 function M.RegisterEvent() end
-CreateFrame = function() local f = new("frame"); FRAMES = FRAMES or {}; FRAMES[#FRAMES+1] = f; return f end
+CreateFrame = function(kind, name, parent) local f = new("frame"); f.parent = parent; f.GetParent = function(self) return self.parent end; FRAMES = FRAMES or {}; FRAMES[#FRAMES+1] = f; return f end
 hooksecurefunc = function(obj, name, fn)
   if type(obj) == "string" then return end
   local orig = obj[name]
@@ -108,10 +108,12 @@ expect("orange title unchanged", col('B2.HeaderText.color'), (1, 0.5, 0.25))
 expect("yellow color code in title -> gold", L.eval('B3.HeaderText.text'), "|cffffb000[35]|r Bloodscalp Ears")
 expect("Ready for turn-in -> Aether Blue", col('B1.usedLines[1].Text.color'), (0.3, 0.65, 1))
 expect("objective line stays light gray", col('B2.usedLines[1].Text.color'), (0.8, 0.8, 0.8))
-expect("complete quest icon shows ?", (L.eval('B1.poiButton.aetherIcon.mark.shown'), L.eval('B1.poiButton.aetherIcon.dots.shown')), (True, False))
-expect("in-progress icon shows dots", (L.eval('B2.poiButton.aetherIcon.mark.shown'), L.eval('B2.poiButton.aetherIcon.dots.shown')), (False, True))
-expect("followed quest's icon glows", (L.eval('B2.poiButton.aetherIcon.glow.shown'), L.eval('B1.poiButton.aetherIcon.glow.shown')), (True, False))
-expect("icon overlay takes no clicks", L.eval('B1.poiButton.aetherIcon.mouse'), False)
+expect("complete quest icon shows ?", (L.eval('AetherLedger_TrackerIconFor(B1.poiButton).mark.shown'), L.eval('AetherLedger_TrackerIconFor(B1.poiButton).dots.shown')), (True, False))
+expect("in-progress icon shows dots", (L.eval('AetherLedger_TrackerIconFor(B2.poiButton).mark.shown'), L.eval('AetherLedger_TrackerIconFor(B2.poiButton).dots.shown')), (False, True))
+expect("followed quest's icon glows", (L.eval('AetherLedger_TrackerIconFor(B2.poiButton).glow.shown'), L.eval('AetherLedger_TrackerIconFor(B1.poiButton).glow.shown')), (True, False))
+expect("icon overlay takes no clicks", L.eval('AetherLedger_TrackerIconFor(B1.poiButton).mouse'), False)
+expect("icon overlay hangs off the block, not the animated button (no giant pop)",
+       L.eval('AetherLedger_TrackerIconFor(B1.poiButton):GetParent() == B1 and AetherLedger_TrackerIconFor(B1.poiButton):GetParent() ~= B1.poiButton'), True)
 L.execute('B1.isHighlighted = true; B1:UpdateHighlight()')
 expect("hover: blue band shown", L.eval('B1.aetherHover.shown'), True)
 expect("hover: title bright gold", col('B1.HeaderText.color'), (1, 0.69, 0))

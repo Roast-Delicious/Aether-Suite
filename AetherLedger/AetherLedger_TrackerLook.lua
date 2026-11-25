@@ -131,14 +131,22 @@ end
 -- ------------------------------------------
 -- An overlay on Blizzard's button: it covers the old art, takes no clicks
 -- (the button underneath still handles them), and follows the quest's state.
+-- It's a child of the BLOCK, only anchored to the button: Blizzard's "pop"
+-- animation when a quest is added or handed in scales the button itself, and
+-- as the button's child our disc was scaled with it until it filled the
+-- screen (user's video, Nov 25). Anchors follow the button's real size and
+-- place, not the animation, so the Aether icon just stays put.
+local overlays = setmetatable({}, { __mode = "k" })   -- button -> overlay
+function AetherLedger_TrackerIconFor(button) return overlays[button] end   -- for tests and /ledger debug
 local function StyleIcon(block)
     local button = block.poiButton
     if not button then return end
-    local o = button.aetherIcon
+    local o = overlays[button]
+    if o and o:GetParent() ~= block then o:Hide(); o = nil end   -- pooled button moved to another block
     if not o then
-        o = CreateFrame("Frame", nil, button)
-        o:SetPoint("TOPLEFT", -1, 1)
-        o:SetPoint("BOTTOMRIGHT", 1, -1)
+        o = CreateFrame("Frame", nil, block)
+        o:SetPoint("TOPLEFT", button, "TOPLEFT", -1, 1)
+        o:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 1, -1)
         o:SetFrameLevel(button:GetFrameLevel() + 5)
         o:EnableMouse(false)
         local function Tex(file, layer, sub, c, a)
@@ -161,8 +169,11 @@ local function StyleIcon(block)
         o.mark:SetPoint("CENTER", 0.5, 0)
         o.mark:SetText("?")
         o.mark:SetTextColor(GOLD[1], GOLD[2], GOLD[3])
-        button.aetherIcon = o
+        overlays[button] = o
+        -- hide with the button (it's no longer our parent)
+        if button.HookScript then button:HookScript("OnHide", function(b) local x = overlays[b]; if x then x:Hide() end end) end
     end
+    o:SetFrameLevel(button:GetFrameLevel() + 5)
     local done = block.poiIsComplete and true or false
     o.dots:SetShown(not done)
     o.mark:SetShown(done)
