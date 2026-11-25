@@ -154,7 +154,7 @@ L.execute('NPART.StateBorder:SetAtlas("talents-node-square-yellow")')
 expect("Blizzard re-sets the frame (maxed now): restyled gold", border('NPART'), (1, 0.69, 0))
 expect("arrow: Blizzard's own head and shaft, tinted gold, size untouched", (round(E('ARR.ArrowHead.vc[2]'), 2), round(E('ARR.Line.vc[2]'), 2), E('ARR.Line.thick')), (0.69, 0.69, None))
 L.execute('ARR.ArrowHead:SetAtlas("talents-arrow-head-locked")')
-expect("arrow into a locked talent turns gray", (round(E('ARR.ArrowHead.vc[2]'), 2), round(E('ARR.Line.vc[2]'), 2)), (0.65, 0.65))
+expect("arrow into a locked talent: Blizzard's own light gray (untinted)", (round(E('ARR.ArrowHead.vc[2]'), 2), round(E('ARR.Line.vc[2]'), 2)), (1, 1))
 expect("spec icon: gold on navy (desaturated, gold, added)", E('SPEC.icon.desat == true and SPEC.icon.vc[2] == 0.69 and SPEC.icon.blend == "ADD"'), True)
 expect("spec ring blue, box navy", E('SPEC.MainRing.vc[3] == 1 and SPEC.TextBackground.vc[3] == 0.52'), True)
 # spellbook

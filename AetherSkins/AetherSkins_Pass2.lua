@@ -388,7 +388,9 @@ function Rule(t, a)
         -- heads and thicker shafts ran into the talents, and one shaft showed
         -- a head at both ends (user, Nov 25 13:37)
         local col = ARROW[state] or "gray"
-        local c = (col == "gold" and GOLD) or (col == "blue" and BLUE) or { 0.62, 0.65, 0.72 }
+        -- gray stays Blizzard's own light gray (a gray tint made it near
+        -- invisible on the dark tree, user 14:12)
+        local c = (col == "gold" and GOLD) or (col == "blue" and BLUE) or { 1, 1, 1 }
         Tint(t, c, 1)
         local par = t.GetParent and t:GetParent()
         local line = par and T(par, "Line")

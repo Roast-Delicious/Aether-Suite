@@ -1202,3 +1202,10 @@ trim), xpbar_render.py (XP bar).
   reward cards navy boxes; LFG roles strip navy. Not changed: talent class
   art, model backdrops, title/bottom bars (frame tier).
 - BUILD 5 SHIPPED 14:02 (main, merged build5): AetherSkins 1.5.2.
+- BUILD 6 (branch build6). User 14:12: HATES the page blue; asked for all
+  screens in navy (mock: tools-free recolor /home/claude/navy/recolor.py,
+  page->navy, navy boxes->31,60,100; sheets navy_screens_1/2.png).
+  Gray talent arrows untinted (Blizzard light gray). Group Finder tabs:
+  TabKey falls back to GetDebugName, keys checked before icon IDs;
+  Browse -> new gl_search (magnifier, gen_skins_art4.py), Who ->
+  gl_people (crest too). OPEN: navy vs blue decision.
