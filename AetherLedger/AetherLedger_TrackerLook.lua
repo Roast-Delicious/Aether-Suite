@@ -136,6 +136,105 @@ end
 -- as the button's child our disc was scaled with it until it filled the
 -- screen (user's video, Nov 25). Anchors follow the button's real size and
 -- place, not the animation, so the Aether icon just stays put.
+-- ------------------------------------------
+-- Quest zoom (user's pick b, Nov 25): a quest you accept flies onto the list
+-- (the icon starts about a third of the screen across, faint, and shrinks
+-- into its spot as it turns solid); a quest you hand in swells and fades
+-- off. 0.6 s each. Ours, on our own icon: Blizzard's pop scaled the real
+-- button so far on Forever that it covered the screen.
+-- ------------------------------------------
+local ZOOM, ZOOM_TIME = 25, 0.6
+local justAccepted = {}                  -- questID -> time accepted
+local byQuest = {}                       -- questID -> overlay on screen now
+
+local function ScaleAnim(ag, from, to, smoothing)
+    local a = ag:CreateAnimation("Scale")
+    if not a then return end
+    a:SetDuration(ZOOM_TIME)
+    if a.SetScaleFrom then a:SetScaleFrom(from, from); a:SetScaleTo(to, to)
+    elseif a.SetFromScale then a:SetFromScale(from, from); a:SetToScale(to, to) end
+    if a.SetOrigin then a:SetOrigin("CENTER", 0, 0) end
+    if smoothing and a.SetSmoothing then a:SetSmoothing(smoothing) end
+    return a
+end
+local function AlphaAnim(ag, from, to, dur, smoothing)
+    local a = ag:CreateAnimation("Alpha")
+    if not a then return end
+    a:SetDuration(dur)
+    if a.SetFromAlpha then a:SetFromAlpha(from); a:SetToAlpha(to) end
+    if smoothing and a.SetSmoothing then a:SetSmoothing(smoothing) end
+    return a
+end
+
+local function ZoomIn(o)
+    if not o.CreateAnimationGroup then return end
+    if not o.zoomIn then
+        local ag = o:CreateAnimationGroup()
+        if not ag then return end
+        ScaleAnim(ag, ZOOM, 1, "OUT")
+        AlphaAnim(ag, 0, 1, ZOOM_TIME * 0.35, nil)
+        o.zoomIn = ag
+    end
+    o.zoomIn:Stop()
+    o.zoomIn:Play()
+    o.zoomedAt = GetTime and GetTime() or 0
+end
+
+-- The handed-in quest's row goes at once, so a copy of its icon plays the
+-- swell above everything, then hides.
+local ghost
+local function ZoomOut(o)
+    if not (o and o.GetCenter and UIParent) then return end
+    local x, y = o:GetCenter()
+    local w = o:GetWidth()
+    if not (x and y and w and w > 0) then return end
+    local k = (o:GetEffectiveScale() or 1) / (UIParent:GetEffectiveScale() or 1)
+    if not ghost then
+        ghost = CreateFrame("Frame", nil, UIParent)
+        ghost:SetFrameStrata("HIGH")
+        ghost:EnableMouse(false)
+        local function Tex(file, layer, sub, c, a)
+            local t = ghost:CreateTexture(nil, layer, nil, sub)
+            t:SetAllPoints(); t:SetTexture(MEDIA .. file); t:SetVertexColor(c[1], c[2], c[3], a or 1)
+            return t
+        end
+        Tex("trk_disc", "ARTWORK", 0, NAVY, 0.96)
+        Tex("trk_ring", "ARTWORK", 1, GOLD)
+        ghost.mark = ghost:CreateFontString(nil, "OVERLAY")
+        if not pcall(ghost.mark.SetFont, ghost.mark, FontFile("Bold"), 13, "") then ghost.mark:SetFontObject("GameFontNormal") end
+        ghost.mark:SetPoint("CENTER", 0.5, 0); ghost.mark:SetText("?"); ghost.mark:SetTextColor(GOLD[1], GOLD[2], GOLD[3])
+        local ag = ghost.CreateAnimationGroup and ghost:CreateAnimationGroup()
+        if ag then
+            ScaleAnim(ag, 1, ZOOM, "IN")
+            AlphaAnim(ag, 1, 0, ZOOM_TIME, "IN")
+            ag:SetScript("OnFinished", function() ghost:Hide() end)
+            ghost.anim = ag
+        end
+    end
+    ghost:ClearAllPoints()
+    ghost:SetSize(w * k, w * k)
+    ghost:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x * k, y * k)
+    ghost:Show()
+    if ghost.anim then ghost.anim:Stop(); ghost.anim:Play() else ghost:Hide() end
+end
+
+local zev = CreateFrame("Frame")
+zev:RegisterEvent("QUEST_ACCEPTED")
+zev:RegisterEvent("QUEST_TURNED_IN")
+zev:SetScript("OnEvent", function(_, event, a1, a2)
+    if not Wants() then return end
+    -- QUEST_ACCEPTED is (questID) on newer clients, (logIndex, questID) on older ones
+    local id = (event == "QUEST_ACCEPTED" and a2) or a1
+    if event == "QUEST_ACCEPTED" then
+        id = tonumber(a2) or tonumber(a1)
+        if id then justAccepted[id] = GetTime and GetTime() or 0 end
+    elseif tonumber(id) then
+        pcall(ZoomOut, byQuest[tonumber(id)])
+    end
+end)
+
+AetherLedger_TrackerZoom = { ZoomIn = ZoomIn, ZoomOut = ZoomOut, accepted = justAccepted, byQuest = byQuest }
+
 local overlays = setmetatable({}, { __mode = "k" })   -- button -> overlay
 function AetherLedger_TrackerIconFor(button) return overlays[button] end   -- for tests and /ledger debug
 local function StyleIcon(block)
@@ -174,6 +273,24 @@ local function StyleIcon(block)
         if button.HookScript then button:HookScript("OnHide", function(b) local x = overlays[b]; if x then x:Hide() end end) end
     end
     o:SetFrameLevel(button:GetFrameLevel() + 5)
+    -- Blizzard's own icon art turns invisible: our icon is the one you see,
+    -- and their pop animation then has nothing to balloon.
+    if not o.fadedArt and button.GetRegions then
+        for _, r in ipairs({ button:GetRegions() }) do if type(r) == "table" and r.SetAlpha then r:SetAlpha(0) end end
+        if button.GetChildren then
+            for _, c in ipairs({ button:GetChildren() }) do if type(c) == "table" and c.SetAlpha then c:SetAlpha(0) end end
+        end
+        o.fadedArt = true
+    end
+    local qid = tonumber(block.id)
+    if qid then
+        byQuest[qid] = o
+        local t = justAccepted[qid]
+        if t and (GetTime and GetTime() or 0) - t < 6 then
+            justAccepted[qid] = nil
+            pcall(ZoomIn, o)
+        end
+    end
     local done = block.poiIsComplete and true or false
     o.dots:SetShown(not done)
     o.mark:SetShown(done)

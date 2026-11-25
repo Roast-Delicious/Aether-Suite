@@ -46,6 +46,30 @@ hooksecurefunc = function(obj, name, fn)
 end
 print = function(...) OUT = (OUT or "") .. table.concat({...}, " ") .. "\n" end
 QUEST_WATCH_QUEST_READY = "Ready for turn-in"
+NOW = 100; GetTime = function() return NOW end
+PLAYS = {}
+function M.CreateAnimationGroup(s)
+  local ag = { owner = s, anims = {}, scripts = {} }
+  function ag:CreateAnimation(kind) local a = { kind = kind }
+    function a:SetDuration(d) self.dur = d end
+    function a:SetScaleFrom(x) self.from = x end
+    function a:SetScaleTo(x) self.to = x end
+    function a:SetFromAlpha(x) self.afrom = x end
+    function a:SetToAlpha(x) self.ato = x end
+    function a:SetOrigin() end
+    function a:SetSmoothing(v) self.smooth = v end
+    self.anims[#self.anims+1] = a; return a end
+  function ag:Play() PLAYS[#PLAYS+1] = self end
+  function ag:Stop() end
+  function ag:SetScript(k, f) self.scripts[k] = f end
+  return ag
+end
+function M.GetCenter(s) return 1882, 493 end
+function M.GetWidth(s) return 32 end
+function M.GetEffectiveScale(s) return 1 end
+function M.GetRegions(s) s.r1 = s.r1 or new("tex"); s.r2 = s.r2 or new("tex"); return s.r1, s.r2 end
+function M.GetChildren(s) return end
+UIParent = new("frame")
 ObjectiveTrackerLineFont = new("font"); ObjectiveTrackerLineFont.file = "Fonts\\FRIZQT__.TTF"; ObjectiveTrackerLineFont.size = 12
 ObjectiveTrackerHeaderFont = new("font"); ObjectiveTrackerHeaderFont.file = "Fonts\\FRIZQT__.TTF"; ObjectiveTrackerHeaderFont.size = 14
 
@@ -122,5 +146,27 @@ expect("leave: band hidden, title dim gold", (L.eval('B1.aetherHover.shown'), co
 expect("fonts: Fira Sans", (L.eval('ObjectiveTrackerLineFont.file'), L.eval('ObjectiveTrackerHeaderFont.file')),
        ("Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-Regular.ttf", "Interface\\AddOns\\AetherHub\\Media\\Fonts\\FiraSans-SemiBold.ttf"))
 expect("fonts keep the game's size", (L.eval('ObjectiveTrackerLineFont.size'), L.eval('ObjectiveTrackerHeaderFont.size')), (12, 14))
+expect("Blizzard's own icon art is invisible (nothing to balloon)", (L.eval('B1.poiButton.r1.alpha'), L.eval('B1.poiButton.r2.alpha')), (0, 0))
+expect("no zoom on a normal tracker refresh", L.eval('#PLAYS'), 0)
+def fire(ev, a1, a2='nil'):
+    L.execute('for _, f in ipairs(FRAMES) do if f.scripts.OnEvent then f.scripts.OnEvent(f, "%s", %s, %s) end end' % (ev, a1, a2))
+fire("QUEST_ACCEPTED", 2)
+L.execute('QuestObjectiveTracker:Update()')
+expect("accepted quest: its icon zooms in once", L.eval('#PLAYS'), 1)
+expect("zoom in: from 25x to its spot, fading in, 0.6 s",
+       (L.eval('PLAYS[1].owner == AetherLedger_TrackerIconFor(B2.poiButton)'), L.eval('PLAYS[1].anims[1].from'), L.eval('PLAYS[1].anims[1].to'),
+        L.eval('PLAYS[1].anims[1].dur'), L.eval('PLAYS[1].anims[2].afrom'), L.eval('PLAYS[1].anims[2].ato')), (True, 25, 1, 0.6, 0, 1))
+L.execute('QuestObjectiveTracker:Update()')
+expect("...and only once (later refreshes don't replay it)", L.eval('#PLAYS'), 1)
+fire("QUEST_ACCEPTED", 7, 3)          # older clients: (logIndex, questID)
+NOWSET = L.execute('NOW = 110'); L.execute('QuestObjectiveTracker:Update()')
+expect("too long after accepting: no zoom", L.eval('#PLAYS'), 1)
+fire("QUEST_TURNED_IN", 1)
+expect("handed in: a copy of its icon swells and fades", L.eval('#PLAYS'), 2)
+expect("hand-in copy: above everything on UIParent, 1x -> 25x, fades out",
+       (L.eval('PLAYS[2].owner.parent == UIParent'), L.eval('PLAYS[2].anims[1].from'), L.eval('PLAYS[2].anims[1].to'),
+        L.eval('PLAYS[2].anims[2].afrom'), L.eval('PLAYS[2].anims[2].ato'), L.eval('PLAYS[2].owner.mouse')), (True, 1, 25, 1, 0, False))
+fire("QUEST_TURNED_IN", 999)
+expect("hand-in of an untracked quest: nothing", L.eval('#PLAYS'), 2)
 expect("no errors printed", L.eval('OUT'), None)
 print("PASS" if ok else "FAIL"); sys.exit(0 if ok else 1)
