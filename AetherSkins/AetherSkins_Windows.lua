@@ -24,6 +24,10 @@ local GOLD  = { 1, 0.69, 0 }
 local BLUE  = { 0.3, 0.65, 1 }
 local NAVY  = { 0.075, 0.157, 0.29 }
 local PANEL = { 0.047, 0.055, 0.075, 0.95 }
+-- three background layers (user, Nov 25 12:05, mock/bg_tiers.py A):
+-- frame = PANEL (window body), box = NAVY (strips, panels, lists),
+-- page = PAGE (anything you read: quest text, gossip, map quest log)
+local PAGE  = { 35 / 255, 75 / 255, 115 / 255 }
 local TEXT  = { 0.92, 0.93, 0.96 }
 
 local function FontFile(weight)
@@ -537,7 +541,7 @@ end
 
 -- Helpers shared with AetherSkins_Pass2.lua
 W.H = { Tex = Tex, Fade = Fade, T = T, Edge = Edge, NavyBox = NavyBox, Fonts = Fonts, Forbidden = Forbidden,
-        MEDIA = MEDIA, WHITE = WHITE, GOLD = GOLD, BLUE = BLUE, NAVY = NAVY, TEXT = TEXT, FontFile = FontFile,
+        MEDIA = MEDIA, WHITE = WHITE, GOLD = GOLD, BLUE = BLUE, NAVY = NAVY, PAGE = PAGE, PANEL = PANEL, TEXT = TEXT, FontFile = FontFile,
         Close = Close }
 
 -- The window under the mouse (or its window), for /skins this.

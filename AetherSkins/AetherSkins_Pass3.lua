@@ -24,6 +24,7 @@ if not (P and P.H and W.H) then return end
 local H, PH = W.H, P.H
 local Tex, Fade, T, Edge, NavyBox, Forbidden = H.Tex, H.Fade, H.T, H.Edge, H.NavyBox, H.Forbidden
 local MEDIA, WHITE, GOLD, BLUE, NAVY, TEXT = H.MEDIA, H.WHITE, H.GOLD, H.BLUE, H.NAVY, H.TEXT
+local PAGE = H.PAGE or { 35 / 255, 75 / 255, 115 / 255 }
 local Tint, Atlas, FileID, Shown, Once, HookShow = PH.Tint, PH.Atlas, PH.FileID, PH.Shown, PH.Once, PH.HookShow
 local weak = PH.weak
 local P3 = {}
@@ -252,7 +253,7 @@ end
 -- The Aether page in place of the parchment, with a thin blue edge.
 local pageEdge = weak()
 local function Page(t)
-    Ours(t, "page_aether", { 1, 1, 1, 1 })
+    Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE)   -- flat page (bg_tiers A)
     if not pageEdge[t] then
         local par = t.GetParent and t:GetParent()
         if par then
@@ -267,7 +268,7 @@ local cardFill, cardSel = weak(), weak()
 local function FriendCardSel(card)
     local f = cardFill[card]; if not f then return end
     local sel = cardSel[card] or false
-    local c = sel and { 0.19, 0.34, 0.58, 0.97 } or f.c
+    local c = sel and { PAGE[1], PAGE[2], PAGE[3], 0.97 } or f.c
     f.o:SetVertexColor(c[1], c[2], c[3], c[4])
     local x = card.aetherSel
     if x then x.notch:SetShown(sel); for _, e in ipairs(x.edge) do e:SetShown(sel) end end
@@ -362,7 +363,7 @@ function P3.MapLogRule(t, a)
     -- quest details page (B, user Nov 25 11:58, mock/maplog_details.py):
     -- flat Aether blue like the list, navy strips and rewards box
     if a == "QuestDetailsBackgrounds" then
-        Ours(t, nil, { 35 / 255, 75 / 255, 115 / 255, 1 }, nil, nil, WHITE)
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE)
         local par = t.GetParent and t:GetParent()
         if par and Once(t, "detailsedge") then
             local f = CreateFrame("Frame", nil, par)
@@ -377,7 +378,7 @@ function P3.MapLogRule(t, a)
         return true
     end
     if a == "QuestLog-main-background" then
-        Ours(t, nil, { 35 / 255, 75 / 255, 115 / 255, 1 }, nil, nil, WHITE)
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE)
         return true
     end
     return false
@@ -437,7 +438,7 @@ function P.ExtraRule(t, a)
     end
     if a:find("^friends%-card%-") then
         local dim = a:find("disabled") or a:find("offline")
-        local c = dim and { 0.07, 0.11, 0.18, 0.97 } or { 0.12, 0.22, 0.38, 0.97 }
+        local c = dim and { 0.047, 0.055, 0.075, 0.97 } or { NAVY[1], NAVY[2], NAVY[3], 0.97 }
         local o = Ours(t, nil, c, nil, nil, WHITE)
         local card = t.GetParent and t:GetParent()
         if card then cardFill[card] = { o = o, c = c } ; FriendCardSel(card) end

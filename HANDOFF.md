@@ -1114,3 +1114,11 @@ trim), xpbar_render.py (XP bar).
   MapPages hooks OnShow of DetailsFrame/QuestScrollFrame/MapLegend/
   EventsFrame -> rewalk the map (hidden pages are skipped by the walk).
   Daily quests: UI-QuestPoiRecurring-* get the same disc.
+  BACKGROUND TIERS (user 12:02 "different backgrounds?", 12:05 "A it
+  is", mock/bg_tiers.py A): frame = PANEL (12,14,19), box = NAVY
+  (19,40,74), page = H.PAGE (35,75,115) for every reading page. Page()
+  (NPC quest/gossip parchment) now flat PAGE (page_aether no longer
+  used). Friends cards: card NAVY, picked PAGE, offline frame-dark.
+  STILL TO DO: per-window sweep of in-between tints (NAVYF {0.16,0.3,
+  0.52} on textured Blizzard boxes, NAVYID, spellbook backplate, talent
+  plate) -> needs in-game screenshots, after this build.
