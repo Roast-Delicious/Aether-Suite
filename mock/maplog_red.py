@@ -10,7 +10,7 @@ def panel(mode):
         y=14+i*38; col=c
         if mode=='B' and c==RED: col=(255,112,104)
         if mode=='B' and c==ORG: col=(255,160,96)
-        if mode=='D' and c==RED: col=(255,96,88)
+        if mode=='D' and c==RED: col=(255,88,81)
         if mode=='D' and c==ORG: col=(255,150,84)
         if mode=='D' and c==YEL: col=GOLD
         if mode in('A','C','D'):
