@@ -137,5 +137,5 @@ def frame_rgb(name):
     return L.eval('(function() local b=_G["%s"]; if not b or type(b.aetherFrame)~="table" then return nil end; local t=b.aetherFrame[1][1]; local c=rawget(t,"colortex"); if not c then return "nocolor" end; return string.format("%%.2f,%%.2f,%%.2f", c[1], c[2], c[3]) end)()' % name)
 got = (frame_rgb("AetherPackItem1_4"), frame_rgb("AetherPackItem1_8"), frame_rgb("AetherPackItem1_1"))
 print("uncommon / rare / common:", got)
-assert got == ("0.12,1.00,0.00", "0.00,0.44,0.87", "0.30,0.65,1.00"), got
+assert got == ("0.12,1.00,0.00", "0.00,0.44,0.87", "0.78,0.80,0.84"), got
 print("PASS quality frames")

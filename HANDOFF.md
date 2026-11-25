@@ -601,6 +601,26 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   kept. Code: AetherLedger_TrackerLook ghost icon (trk_ring + "?" font
   string, ~line 200) -> when ElsewhereZone(id): ring BLUE, mark = check
   (draw a check glyph texture, not a font "?") -> Build 2.
+  BUILD 2 CODED (10:55, branch build2 = fixes-build1-feedback + designs,
+  NOT BUILT): Skins 1.4.0, Pack 1.6.4, Ledger 1.8.5. New file
+  AetherSkins_Pass3.lua (toc after Pass2): P.SideTabExtra (glyph by
+  icon file ID / friends atlas / parent key; 2 extra gold rings + gold
+  glow_sq when open), P3.Crest (portrait faded, disc_plain navy + gl_*
+  gold; PlayerSpellsFrame switches book/talents), P.ExtraRule (vendor
+  SpellIcon-256x256-* -> btn_*; minimal-scrollbar thumb -> sb_thumb_*,
+  track navy, arrows chev3d_up/down 14px; QuestBG-Parchment ->
+  page_aether + blue edge; friends-card-selected -> notch + edge, hover
+  edge in HIGHLIGHT), P3.Headings (gold QuestInfo headers), gossip
+  choices blue (GossipFrame buttons with .Icon), P3.Grip (not Quest/
+  Gossip/QuestLogPopupDetail; SetScale 0.7-1.5, AetherSkinsDB.scale[name],
+  right-click reset). Pass2: P.ExtraRule hook, P.SideTabExtra hook, P.H
+  helpers, silver/slate item frames, NPF -> role_newcomer, chat sprout
+  icon faded, 136796 reward plaques navy. Art: tools/gen_skins_art3.py
+  (run from mock/). Pack: AmmoHeading (Arrows/Bullets/Soul shards, buy N
+  stacks / quiver full / room for N), silver/slate frames; test
+  pack_ammo_heading_test.py. Ledger: trk_check.tga, blue ring + check on
+  hand-ins (tracker_look_test +2). NOT DONE: map quest DETAILS page
+  (no dump yet), map dimness, talents brown background.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
