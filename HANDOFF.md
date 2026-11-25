@@ -1248,3 +1248,5 @@ trim), xpbar_render.py (XP bar).
   user 14:48 said gray was "out of whack" (fat shafts).
 - Untested in game: turn-in click, thin gray shafts.
 - Next: Release C (Hub cleanup), design-first, fresh session.
+- Nov 25, 2026 (14:55): session closed; AetherDev.zip made. Start
+  Release C: inventory each Hub tab, mockups one at a time, then build.
