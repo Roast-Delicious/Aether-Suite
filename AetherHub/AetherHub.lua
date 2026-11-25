@@ -980,7 +980,7 @@ end
 -- General pages first (settings shared across the addons), then one page per
 -- addon with what's unique to it.
 local GENERAL = { "Character", "Appearance", "Fading", "Layout" }
-local ADDONS = { "AetherMeter", "AetherBars", "AetherCoords", "AetherPathfinder", "AetherMarks", "AetherItemID", "AetherLedger", "AetherPack", "AetherChat", "AetherFrames" }
+local ADDONS = { "AetherMeter", "AetherBars", "AetherCoords", "AetherPathfinder", "AetherMarks", "AetherItemID", "AetherLedger", "AetherPack", "AetherChat", "AetherFrames", "AetherSkins" }
 local IS_GENERAL = {}
 for _, n in ipairs(GENERAL) do IS_GENERAL[n] = true end
 local PAGE_ORDER = {}
@@ -1003,6 +1003,7 @@ local PAGE_INFO = {
     AetherPack       = "Your bags, sorted into sections",
     AetherChat       = "Chat fitted beside your bars",
     AetherFrames     = "Your, your pet's, your target's and party frames",
+    AetherSkins      = "The Aether look for Blizzard's windows",
 }
 
 local BUILDERS = {}
@@ -1662,6 +1663,22 @@ BUILDERS.AetherFrames = function(p)
         .. "Hunters see their pet's happiness as a face at 3 o'clock on the pet's crest, and its level at 6 o'clock.")
 end
 
+BUILDERS.AetherSkins = function(p)
+    local function db() return AetherSkinsDB or {} end
+    AddHeader(p, "Windows")
+    AddCheck(p, "Minimap in the Aether look",
+        function() return db().minimap ~= false end,
+        function(v) Run("AETHERSKINS", "minimap " .. (v and "on" or "off")); NeedReload() end, nil, nil, nil,
+        "A navy ring with gold chevrons, the sun or moon and the tracking button on the ring, and the zone "
+        .. "and clock in a pill underneath. Off brings Blizzard's minimap back. Needs a reload.")
+    AddButtons(p, {
+        { "Run Debug", function() Run("AETHERSKINS", "debug") end,
+          "Prints what AetherSkins found and changed into your chat. Send it along if something looks off." },
+    })
+    AddNote(p, "More of Blizzard's windows (world map, reputation, friends and so on) get their own switch "
+        .. "here as they're restyled.")
+end
+
 SelectPage = function(name)
     if not pages[name] then name = PAGE_ORDER[1] end
     for n, page in pairs(pages) do page:SetShown(n == name) end
@@ -2040,6 +2057,7 @@ local SHORTCUTS = {
     pack = "AetherPack", bags = "AetherPack",
     chat = "AetherChat", achat = "AetherChat",
     frames = "AetherFrames", af = "AetherFrames",
+    skins = "AetherSkins", askins = "AetherSkins",
 }
 
 SLASH_AETHERHUB1 = "/hub"

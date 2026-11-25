@@ -88,14 +88,18 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
-- QUEUED for the next build (user, Nov 24 19:54): an AetherSkins tab in
-  AetherHub (today it's slash only; the user looked for it in the Hub).
-  Contents: minimap skin on/off (needs /reload: say so), "Run Debug"
-  button (prints /skins debug), room for one switch per skinned window
-  as the world map etc. arrive. Hub button rules apply (verb first,
-  Title Case, "..." if it asks first). Bump Hub + Skins, README.
-  Not built; wait for the go-ahead.
-- READY, NOT SHIPPED (branch fix-coords-memory): AetherCoords 1.3.15.
+- LAST BUILD (Nov 24, 20:20; go-ahead 20:10): Hub 1.14.5, Coords 1.3.15,
+  Pathfinder 1.9.6 (Skins 1.1.1 and the rest unchanged from 16:15).
+  * AetherSkins tab in AetherHub (user, 19:54): "Minimap in the Aether
+    look" switch (sends /skins minimap on|off, NeedReload), "Run Debug"
+    (/skins debug), note that more windows get switches here. /hub skins.
+    Sidebar now 15 tabs: fits the 500-tall default with ~6 px spare; the
+    NEXT tab needs more room (taller window or tighter tabs). Test:
+    skins_hub_test (new; runs without the user's SavedVariables).
+  * Memory fixes below. NOT yet confirmed in game: rerun the memory line
+    after a few minutes of play (should stay low for Coords/Pathfinder).
+  * Still open: AetherChat copy button (user hasn't said yes/no).
+- SHIPPED 20:20 (branch fix-memory, merged): AetherCoords 1.3.15.
   User's memory readout (20:02, after ~play): Coords 8858 KB, Pathfinder
   7284 KB, Ledger 3152, Bars ~2670 (inferred from total 25736), ItemID
   2064, rest 139-405. Coords has ~44 KB of code, so the number is mostly
@@ -354,6 +358,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 24, 2026 (20:20): built Hub 1.14.5 (AetherSkins tab), Coords
+  1.3.15 and Pathfinder 1.9.6 (minimap loops 30/s; memory 25.7 MB ->
+  9.7 MB after GC showed it was garbage). Memory /run line must stay
+  under 255 chars (chat box limit).
 - Nov 24, 2026 (16:15): built AetherSkins 1.1.1 (debug fix + plain navy
   ring, no light source).
 - Nov 24, 2026 (16:00): session closed; AetherDev.zip made. GITHUB IS

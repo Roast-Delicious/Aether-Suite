@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 24, 2026 (16:15)
+Last updated: November 24, 2026 (20:20)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -15,7 +15,7 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.14.4    One window with every addon's settings
+  AetherHub          1.14.5    One window with every addon's settings
   AetherMeter        1.13.9    Damage and healing meter
   AetherBars         1.14.3    Clean action bars with a cooldown glow
   AetherCoords       1.3.15    Coordinates, plus your own map waypoints
@@ -80,10 +80,10 @@ each tab, and wider lets the text spread out. The size is remembered;
 right-click the minimap button and pick Reset window size (or type /hub
 resetsize) to go back. You can jump straight to a tab with /hub meter,
 /hub bars, /hub coords, /hub map, /hub marks, /hub itemid, /hub ledger,
-/hub pack, /hub chat, /hub frames, /hub me (Your character), /hub look
-(Appearance), /hub fade (Fading) or /hub layout (Layout). The
-Reload UI button turns gold when a change needs a reload, and anything
-that can't be undone asks first.
+/hub pack, /hub chat, /hub frames, /hub skins, /hub me (Your
+character), /hub look (Appearance), /hub fade (Fading) or /hub layout
+(Layout). The Reload UI button turns gold when a change needs a reload,
+and anything that can't be undone asks first.
 
   Appearance: Aether panels behind your action bars and behind your
     chat, and sizes (unit frames, the bag window, chat text).
@@ -135,6 +135,9 @@ that can't be undone asks first.
   AetherFrames tab: use them instead of Blizzard's, buff and debuff
     rows, threat glow, party frames, numbers on the pet's resource
     bar, and Reset Pet Frame Position.
+  AetherSkins tab: the minimap's Aether look on or off (needs a
+    reload) and Run Debug. More windows get a switch here as they're
+    restyled.
 
   Button names follow one pattern: what it does, then what it does it
   to ("Reset Meter Position", "Clear All Waypoints..."). A name ending
@@ -874,7 +877,8 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
   - Commands: /skins minimap (on or off, then /reload), /skins day and
     /skins night to preview the sun or moon (/skins auto follows the
     game again), /skins debug (what it found and changed: send this if
-    something on the minimap looks off).
+    something on the minimap looks off). The minimap switch and Run
+    Debug are also on the AetherSkins tab in AetherHub (/hub skins).
 
 
 AUTOMATIC NPC DATA REFRESH (optional, Windows only)
