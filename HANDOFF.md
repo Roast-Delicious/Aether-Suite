@@ -294,6 +294,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   = art + medium blue glow; not taken (no points) = navy duotone (deep
   #081226 -> #3C64A0, border #3C5A8C); locked = gray (lum x 0.55, border
   #464A54), arrows into locked gray. TALENT DESIGN SETTLED.
+  07:17: user "go ahead with the mockups" = mockups 3-5 OK (not a build
+  go); Spellbook to follow the talent scheme -> new mock (pass2_book.py).
   GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
   LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
   (no [styled] marks anywhere): the skinner never caught it -> added
