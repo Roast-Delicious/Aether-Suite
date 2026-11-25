@@ -515,6 +515,15 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   the tabs showing); map "dim" (need a skins on/off screenshot pair);
   talents brown background (unknown art). Vendor repair icons -> Build 2
   flat buttons.
+  GROUP FINDER DUMPS (09:35): the three side tabs are three WINDOWS:
+  LFGListingFrame (I, skinned), LFGBrowseFrame (magnifier) and
+  LFGWhoListFrame (people) - the last two were never in W.KNOWN, hence
+  Blizzard look + red close. Added to KNOWN; new art: groupfinder-Stat-
+  StoneBG (fade), groupfinder-ScrollLine (blue line), common-dropdown-a-
+  button-disabled / OptionsIcon-Brown / common-icon-search (light). The
+  side tabs themselves are in none of the three dumps (a separate frame):
+  need /skins tree pointing at a tab. NPF button also has atlas
+  newplayerchat-chaticon-newcomer (20x20, the little sprout) - Build 2.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in

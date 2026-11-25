@@ -222,7 +222,7 @@ for _, a in ipairs({ "UI-Character-Info-General-BG", "UI-Character-Info-Stat-BG"
     "RedButton-Condense", "RedButton-Condense-Pressed", "RedButton-Condense-disabled", "RedButton-Highlight",
     "spellbook-item-iconframe", "spellbook-item-iconframe-passive", "spellbook-item-iconframe-shadow",
     "UI-Character-Info-GearSlot", "UI-Character-Info-GearSlotSmall", "RedButton-Exit", "RedButton-Exit-Disabled",
-    "RedButton-exit-pressed", "UI-Character-Info-Title" }) do FADE[a] = true end
+    "RedButton-exit-pressed", "UI-Character-Info-Title", "groupfinder-Stat-StoneBG" }) do FADE[a] = true end
 local BLUEL, NAVYF, BLUEH, GOLDT, LIGHTT = {}, {}, {}, {}, {}
 for _, a in ipairs({ "common-framedivider", "UI-Character-Info-ScrollLine-Long", "UI-Character-Info-ScrollLine",
     "perks-divider-short", "Talents-divider-left-c60", "Talents-divider-right-c60", "Talents-divider-vertical-c60",
@@ -231,7 +231,7 @@ for _, a in ipairs({ "common-framedivider", "UI-Character-Info-ScrollLine-Long",
     "Legacy-Progressbar-Frame", "Talents-Main-Ring-c60", "talents-node-circle-gray",
     "QuestLog-icon-ticksquare", "common-insideframe", "_UI-Frame-InnerTopTile", "_UI-Frame-InnerBotTile",
     "!UI-Frame-InnerLeftTile", "!UI-Frame-InnerRightTile", "UI-Frame-InnerBotLeftCorner", "UI-Frame-InnerBotRight",
-    "UI-Frame-InnerTopLeft", "UI-Frame-InnerTopRight" }) do BLUEL[a] = true end
+    "UI-Frame-InnerTopLeft", "UI-Frame-InnerTopRight", "groupfinder-ScrollLine" }) do BLUEL[a] = true end
 for _, a in ipairs({ "Talents-Main-Ring-Box-c60", "Talents-Square-Box-c60",
     "UI-Character-Info-ItemLevel-Bounce", "common-dropdown-textholder", "common-dropdown-b-button",
     "common-button-tertiary-square-normal", "common-button-tertiary-square-pressed", "Legacy-Progressbar-BG",
@@ -246,7 +246,8 @@ for _, a in ipairs({ "Legacy-Progressbar-Fill", "Legacy-Rewards-Tracker-Diamond"
     "UI-Character-Info-GearSlot-Arrow", "UI-Character-Info-StatTab-Selected", "common-icon-zoomin", "common-icon-zoomout",
     "common-icon-rotateleft", "common-icon-rotateright", "common-icon-undo" }) do GOLDT[a] = true end
 for _, a in ipairs({ "common-dropdown-a-button", "QuestLog-icon-setting", "QuestCollapse-Hide-Up", "QuestCollapse-Hide-Down",
-    "QuestCollapse-Show-Up", "QuestCollapse-Show-Down", "friends-icon-menu", "common-search-clearbutton" }) do LIGHTT[a] = true end
+    "QuestCollapse-Show-Up", "QuestCollapse-Show-Down", "friends-icon-menu", "common-search-clearbutton",
+    "common-dropdown-a-button-disabled", "OptionsIcon-Brown", "common-icon-search" }) do LIGHTT[a] = true end
 -- old art by file ID
 local FADEID = { ["130766"] = "slot", ["136423"] = true, ["525911"] = true, ["130841"] = "itemframe",
                  ["651080"] = "quality" }

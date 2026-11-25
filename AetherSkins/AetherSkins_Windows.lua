@@ -488,7 +488,7 @@ end
 
 -- Blizzard windows by name (some load later, with their Blizzard_ addon).
 W.KNOWN = {
-    "CharacterFrame", "FriendsFrame", "SocialUIFrame", "LegacySystemFrame", "LFGListingFrame", "PVEFrame", "PlayerSpellsFrame", "SpellBookFrame", "PlayerTalentFrame",
+    "CharacterFrame", "FriendsFrame", "SocialUIFrame", "LegacySystemFrame", "LFGListingFrame", "LFGBrowseFrame", "LFGWhoListFrame", "PVEFrame", "PlayerSpellsFrame", "SpellBookFrame", "PlayerTalentFrame",
     "ProfessionsFrame", "CollectionsJournal", "EncounterJournal", "AchievementFrame", "CommunitiesFrame",
     "GuildFrame", "MerchantFrame", "GossipFrame", "QuestFrame", "MailFrame", "OpenMailFrame", "TradeFrame",
     "BankFrame", "AuctionHouseFrame", "ClassTrainerFrame", "TaxiFrame", "DressUpFrame", "ItemTextFrame",
