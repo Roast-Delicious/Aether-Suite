@@ -610,6 +610,30 @@ local function BuildCoinCapsule(parent, anchor)
 end
 local layoutPending, searchText = false, ""
 
+-- Blizzard's old quickslot frame (the light-gray rounded edge around each
+-- slot) fades out; a thin Aether-blue frame takes its place, under the
+-- quality border, which stays on top (user, Nov 25 07:26).
+local function SlotFrame(b)
+    local nt = b.GetNormalTexture and b:GetNormalTexture()
+    if nt then nt:SetAlpha(0) end
+    if b.aetherFrame then return end
+    b.aetherFrame = true
+    for i, a in ipairs({ 1, 0.55 }) do
+        local inset = i - 1
+        for _, side in ipairs({ "TOP", "BOTTOM", "LEFT", "RIGHT" }) do
+            local t = b:CreateTexture(nil, "ARTWORK", nil, 7)
+            t:SetColorTexture(0.3, 0.65, 1, a)
+            if side == "TOP" or side == "BOTTOM" then
+                local dy = side == "TOP" and -inset or inset
+                t:SetPoint(side .. "LEFT", b, side .. "LEFT", inset, dy); t:SetPoint(side .. "RIGHT", b, side .. "RIGHT", -inset, dy); t:SetHeight(1)
+            else
+                local dx = side == "LEFT" and inset or -inset
+                t:SetPoint("TOP" .. side, b, "TOP" .. side, dx, -inset); t:SetPoint("BOTTOM" .. side, b, "BOTTOM" .. side, dx, inset); t:SetWidth(1)
+            end
+        end
+    end
+end
+
 local function ButtonFor(bag, slot)
     buttons[bag] = buttons[bag] or {}
     local b = buttons[bag][slot]
@@ -626,6 +650,7 @@ local function ButtonFor(bag, slot)
     b:SetID(slot)
     if b.SetBagID then b:SetBagID(bag) end
     b:SetSize(BUTTON, BUTTON)
+    SlotFrame(b)
     buttons[bag][slot] = b
     return b
 end
@@ -1318,6 +1343,7 @@ local function LayoutBagWindow(w)
             b:SetID(slot)
             if b.SetBagID then b:SetBagID(w.bag) end
             b:SetSize(BUTTON, BUTTON)
+            SlotFrame(b)
             w.buttons[slot] = b
         end
         local col, row = (slot - 1) % cols, math.floor((slot - 1) / cols)

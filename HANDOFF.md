@@ -400,7 +400,17 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   page) -> dump with a quest clicked. AetherPathfinderButton (ours) ok.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
-- READY, NOT SHIPPED (branch skins-second-pass): AetherLedger 1.8.3 -
+- LAST BUILD (Nov 25, 08:30; user 07:27 "go ahead with the build"):
+  AetherSkins 1.3.0 (second pass, new AetherSkins_Pass2.lua: atlas/file-ID
+  rules + SetAtlas post-hooks; side tabs, headers, capsule bars, talents,
+  spellbook, roles, merchant tiles, world map via BorderFrame, max/min
+  buttons; new media from tools/gen_skins_art2.py; test skins_pass2_test),
+  AetherLedger 1.8.3, AetherPack 1.6.2 (quickslot frame faded, blue slot
+  frame). UNVERIFIED IN GAME: talent 'can take' detection (Glow /
+  SelectableGlow / SelectableIcon shown), GetNodeInfo ranks, Line
+  texture orientation of the 3D shafts, spell item RequiredLevel text.
+  NEXT: Hub cleanup (inventory -> mockups), quest dialog dump.
+- SHIPPED 08:30 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
   Desolace: Supply and Demand, a Stranglethorn quest, missing). Answers
