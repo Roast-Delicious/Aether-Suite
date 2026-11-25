@@ -336,6 +336,7 @@ function P.Texture(t)
     if a then return Rule(t, a) end
     local id = FileID(t)
     if not id then return end
+    if P.ExtraID and P.ExtraID(t, id) then return end   -- Pass3 rules by file ID
     if FADEID[id] then
         t:SetAlpha(0)
         local par = t.GetParent and t:GetParent()

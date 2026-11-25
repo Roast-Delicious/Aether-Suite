@@ -324,6 +324,8 @@ expect("Legacy Tree picture buttons are not checkboxes: the picture stays", E('B
 L.execute('''PC = tex(WIN, "Profession-overview-Card-Leatherworking"); PF = tex(WIN, "Skillbar_Fill_Flipbook_Leatherworking"); LC = tex(WIN, "Legacy-Challenge-Cards-Disable"); AetherSkins_Windows.Contents(WIN)''')
 expect("profession card and legacy card: Blizzard art hidden", E('PC.alpha == 0 and LC.alpha == 0'), True)
 expect("profession skill bar: gold fill", round(E('PF.vc[2]'), 2), 0.69)
+L.execute('''MBG = tex(WIN, nil, 651761); CT = tex(WIN, "collections-background-tile"); CC = tex(WIN, "collections-background-corner"); PL = tex(WIN, "PetList-ButtonBackground"); AetherSkins_Windows.Contents(WIN)''')
+expect("collections: model backdrop, page tile and list rows replaced, corners gone", E('MBG.alpha == 0 and CT.alpha == 0 and CC.alpha == 0 and PL.alpha == 0'), True)
 # switch off
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

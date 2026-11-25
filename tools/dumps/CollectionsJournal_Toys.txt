@@ -1,0 +1,169 @@
+== Window dump: CollectionsJournal ==
+Frame CollectionsJournal 703x606
+  Texture CollectionsJournalBg 699x583 tex=374155
+  Texture .TopTileStreaks 695x43 atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 703x606
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 528x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 528x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x435 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x435 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture CollectionsJournalPortrait 62x62 tex=454046
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 737x644 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 621x20
+    FontString CollectionsJournalTitleText 621x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button CollectionsJournalCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .TabContainer 55x606
+    Frame CollectionsJournalTab1 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=2143124
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab2 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=5279604
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab3 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197120
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab4 55x55 hidden (15 parts inside, skipped)
+    Frame CollectionsJournalTab5 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=7539422
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+  Frame MountJournal 703x606 hidden (13 parts inside, skipped)
+  Frame PetJournal 703x606 hidden (10 parts inside, skipped)
+  Frame ToyBox 703x606
+    StatusBar .ProgressTracker 130x20
+      Texture .BorderTopRight 8x8 tex=130975
+      Texture .BorderBottomRight 8x8 tex=130975
+      Texture .BorderRightMiddle 8x4 tex=130975
+      Texture .BorderTopLeft 8x8 tex=130975
+      Texture .BorderBottomLeft 8x8 tex=130975
+      Texture .BorderLeftMiddle 8x4 tex=130975
+      Texture .BorderTopMiddle 114x8 tex=130975
+      Texture .BorderBottomMiddle 114x8 tex=130975
+      Texture .Bg 114x4 tex=130975
+      FontString .Count 6x10
+      FontString .Label 101x10
+    EditBox .searchBox 115x20 [styled input]
+      FontString .? 79x20
+      Texture .? 2x10 hidden
+      Texture .Left 8x20 atlas=common-search-border-left
+      Texture .Right 8x20 atlas=common-search-border-right
+      Texture .Middle 104x20 atlas=common-search-border-middle
+      FontString .Instructions 79x20
+      Texture ToyBoxSearchIcon 10x10 atlas=common-search-magnifyingglass
+      Button ToyBoxClearButton 17x17 hidden (1 parts inside, skipped)
+    Button .FilterDropdown 135x18 hidden (3 parts inside, skipped)
+    Frame .iconsFrame 693x541 [styled inset]
+      Texture .Bg 693x541 tex=374154
+      Texture .BackgroundTile 685x533 atlas=collections-background-tile
+      Texture .ShadowCornerTopLeft 145x147 atlas=collections-background-shadow-large
+      Texture .ShadowCornerTopRight 145x147 atlas=collections-background-shadow-large
+      Texture .ShadowCornerBottomLeft 145x147 atlas=collections-background-shadow-large
+      Texture .ShadowCornerBottomRight 145x147 atlas=collections-background-shadow-large
+      Texture .ShadowCornerTop 395x147 atlas=collections-background-shadow-large
+      Texture .ShadowCornerLeft 145x239 atlas=collections-background-shadow-large
+      Texture .ShadowCornerRight 145x239 atlas=collections-background-shadow-large
+      Texture .ShadowCornerBottom 395x147 atlas=collections-background-shadow-large
+      Texture .OverlayShadowTopLeft 13x13 atlas=collections-background-shadow-small
+      Texture .OverlayShadowTopRight 13x13 atlas=collections-background-shadow-small
+      Texture .OverlayShadowBottomLeft 13x13 atlas=collections-background-shadow-small
+      Texture .OverlayShadowBottomRight 13x13 atlas=collections-background-shadow-small
+      Texture .OverlayShadowTop 659x13 atlas=collections-background-shadow-small
+      Texture .OverlayShadowLeft 13x507 atlas=collections-background-shadow-small
+      Texture .OverlayShadowRight 13x507 atlas=collections-background-shadow-small
+      Texture .OverlayShadowBottom 659x13 atlas=collections-background-shadow-small
+      Texture .BGCornerTopLeft 90x67 atlas=collections-background-corner
+      Texture .BGCornerTopRight 90x67 atlas=collections-background-corner
+      Texture .BGCornerBottomLeft 90x67 atlas=collections-background-corner
+      Texture .BGCornerBottomRight 90x67 atlas=collections-background-corner
+      Frame .NineSlice 693x541
+        Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+        Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+        Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+        Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+        Texture .TopEdge 681x3 atlas=_UI-Frame-InnerTopTile
+        Texture .BottomEdge 681x3 atlas=_UI-Frame-InnerBotTile
+        Texture .LeftEdge 3x530 atlas=!UI-Frame-InnerLeftTile
+        Texture .RightEdge 3x530 atlas=!UI-Frame-InnerRightTile
+      CheckButton .spellButton1 50x50
+        Texture .iconTexture 42x42 tex=1029585
+        Texture .iconTextureUncollected 42x41 hidden tex=1029585
+        Texture .slotFrameUncollectedInnerGlow 42x41 hidden atlas=collections-itemborder-uncollected-innerglow
+        FontString .name 135x12
+        FontString .new 29x12 hidden
+        Texture .newGlow 69x32 hidden atlas=collections-newglow
+        Texture .slotFrameCollected 56x56 atlas=collections-itemborder-collected
+        Texture .slotFrameUncollected 50x50 hidden atlas=collections-itemborder-uncollected
+        Texture .? 42x42 hidden tex=130839
+        Texture .HighlightTexture 48x48 tex=130718
+        Texture .? 42x42 hidden tex=130724
+        Cooldown .cooldown 40x39 hidden (1 parts inside, skipped)
+        Frame .cooldownWrapper 50x50
+          Texture .slotFavorite 31x33 hidden atlas=collections-icon-favorites
+      CheckButton .spellButton2 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton3 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton4 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton5 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton6 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton7 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton8 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton9 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton10 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton11 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton12 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton13 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton14 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton15 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton16 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton17 50x50 hidden (13 parts inside, skipped)
+      CheckButton .spellButton18 50x50 hidden (13 parts inside, skipped)
+    Frame .PagingFrame 33x32
+      FontString .PageText 59x12
+      Button .PrevPageButton 32x32
+        Texture .? 32x32 hidden tex=130869
+        Texture .? 32x32 hidden tex=130868
+        Texture .? 32x32 tex=130867
+        Texture .? 32x32 tex=130757
+      Button .NextPageButton 32x32
+        Texture .? 32x32 hidden tex=130866
+        Texture .? 32x32 hidden tex=130865
+        Texture .? 32x32 tex=130864
+        Texture .? 32x32 tex=130757
+    Frame .? 226x67 hidden (21 parts inside, skipped)
+    Frame .? 226x67 hidden (21 parts inside, skipped)
+  Frame HeirloomsJournal 703x606 hidden (6 parts inside, skipped)
+  Frame WardrobeCollectionFrame 703x606 hidden (9 parts inside, skipped)
+  Frame WarbandSceneJournal 703x606 hidden (1 parts inside, skipped)
+  Button .? 16x16

@@ -1140,3 +1140,12 @@ trim), xpbar_render.py (XP bar).
     portrait file ID (hooks SetTexture), CollectionsJournal by shown page.
   - NOT YET: Collections pages (Mounts/Pets/Toys/Appearances
     backgrounds) - have only the Appearances dump; need Mounts, Pets, Toys.
+  COLLECTIONS PAGES (user 12:27, dumps CollectionsJournal_Mounts/Pets/
+  Toys): P.ExtraID hook (Pass2 file-ID branch, before FADEID): model
+  backdrop 651761/651762 -> page blue + edge; ShadowOverlay 423809-13
+  faded (only under .ShadowOverlay - 423811 is also the map home button);
+  130975 count pill -> blue. P3.CollRule: collections-background-tile
+  page blue, shadows/corners faded, PetList rows navy (select blue .45,
+  hover .2), item/wardrobe borders blue, uncollected slate, selected gold.
+  Dump workflow (user video 12:27) is right: open tab, /skins tree, Hub
+  Debug > Show Window Dump, copy.

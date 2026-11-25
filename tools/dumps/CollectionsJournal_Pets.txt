@@ -1,0 +1,232 @@
+== Window dump: CollectionsJournal ==
+Frame CollectionsJournal 703x606
+  Texture CollectionsJournalBg 699x583 tex=374155
+  Texture .TopTileStreaks 695x43 atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 703x606
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 528x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 528x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x435 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x435 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture CollectionsJournalPortrait 62x62 tex=135996
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 737x644 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 621x20
+    FontString CollectionsJournalTitleText 621x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button CollectionsJournalCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .TabContainer 55x606
+    Frame CollectionsJournalTab1 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=2143124
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab2 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=5279604
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab3 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197120
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab4 55x55 hidden (15 parts inside, skipped)
+    Frame CollectionsJournalTab5 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=7539422
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+  Frame MountJournal 703x606 hidden (13 parts inside, skipped)
+  Frame PetJournal 703x606
+    Frame .PetCount 130x20
+      Texture .BorderTopRight 8x8 tex=130975
+      Texture .BorderBottomRight 8x8 tex=130975
+      Texture .BorderRightMiddle 8x4 tex=130975
+      Texture .BorderTopLeft 8x8 tex=130975
+      Texture .BorderBottomLeft 8x8 tex=130975
+      Texture .BorderLeftMiddle 8x4 tex=130975
+      Texture .BorderTopMiddle 114x8 tex=130975
+      Texture .BorderBottomMiddle 114x8 tex=130975
+      Texture .Bg 114x4 tex=130975
+      FontString .Count 8x10
+      FontString .Label 99x10
+    Frame .SummonRandomPetSpellFrame 166x33 hidden (2 parts inside, skipped)
+    Frame PetJournalLeftInset 260x520 [styled inset]
+      Texture .Bg 260x520 tex=374154
+      Frame .NineSlice 260x520
+        Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+        Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+        Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+        Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+        Texture .TopEdge 248x3 atlas=_UI-Frame-InnerTopTile
+        Texture .BottomEdge 248x3 atlas=_UI-Frame-InnerBotTile
+        Texture .LeftEdge 3x509 atlas=!UI-Frame-InnerLeftTile
+        Texture .RightEdge 3x509 atlas=!UI-Frame-InnerRightTile
+    Frame PetJournalRightInset 413x520 [styled inset]
+      Texture .Bg 413x520 tex=374154
+      Frame .NineSlice 413x520
+        Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+        Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+        Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+        Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+        Texture .TopEdge 401x3 atlas=_UI-Frame-InnerTopTile
+        Texture .BottomEdge 401x3 atlas=_UI-Frame-InnerBotTile
+        Texture .LeftEdge 3x509 atlas=!UI-Frame-InnerLeftTile
+        Texture .RightEdge 3x509 atlas=!UI-Frame-InnerRightTile
+    EditBox PetJournalSearchBox 235x20 [styled input]
+      FontString .? 199x20
+      Texture .? 2x10 hidden
+      Texture .Left 8x20 atlas=common-search-border-left
+      Texture .Right 8x20 atlas=common-search-border-right
+      Texture .Middle 224x20 atlas=common-search-border-middle
+      FontString .Instructions 199x20
+      Texture PetJournalSearchBoxSearchIcon 10x10 atlas=common-search-magnifyingglass
+      Button PetJournalSearchBoxClearButton 17x17 hidden (1 parts inside, skipped)
+    Button .FilterDropdown 90x18 hidden (3 parts inside, skipped)
+    Frame .ScrollBox 255x481
+      Frame .DragDelegate 0x0
+      Frame .ScrollTarget 211x1
+        Button .? 211x46
+          Texture .background 211x46 atlas=PetList-ButtonBackground
+          Texture .icon 38x38 tex=7831523
+          Texture .petTypeIcon 90x44
+          Texture .iconBorder 38x38 tex=651080
+          FontString .name 147x30
+          FontString .subName 147x12
+          Texture .isDead 38x38 hidden tex=629739
+          Texture .selectedTexture 211x46 atlas=PetList-ButtonSelect
+          FontString .new 29x12 hidden
+          Texture .newGlow 69x32 hidden atlas=collections-newglow
+          Texture .? 211x46 atlas=PetList-ButtonHighlight
+          Button .dragButton 40x40
+            Texture .ActiveTexture 40x40 hidden tex=130724
+            Texture PetJournalFavorite 25x25 hidden atlas=PetJournal-FavoritesIcon
+            Texture PetJournalHighlight 40x40 tex=130718
+            Cooldown .Cooldown 40x40 hidden (1 parts inside, skipped)
+        Button .? 211x46
+          Texture .background 211x46 atlas=PetList-ButtonBackground
+          Texture .icon 38x38 tex=7741132
+          Texture .petTypeIcon 90x44
+          Texture .iconBorder 38x38 tex=651080
+          FontString .name 147x30
+          FontString .subName 147x12
+          Texture .isDead 38x38 hidden tex=629739
+          Texture .selectedTexture 211x46 hidden atlas=PetList-ButtonSelect
+          FontString .new 29x12 hidden
+          Texture .newGlow 69x32 hidden atlas=collections-newglow
+          Texture .? 211x46 atlas=PetList-ButtonHighlight
+          Button .dragButton 40x40
+            Texture .ActiveTexture 40x40 hidden tex=130724
+            Texture PetJournalFavorite 25x25 hidden atlas=PetJournal-FavoritesIcon
+            Texture PetJournalHighlight 40x40 tex=130718
+            Cooldown .Cooldown 40x40 hidden (1 parts inside, skipped)
+        Button .? 211x46
+          Texture .background 211x46 atlas=PetList-ButtonBackground
+          Texture .icon 38x38 tex=7831521
+          Texture .petTypeIcon 90x44
+          Texture .iconBorder 38x38 tex=651080
+          FontString .name 147x30
+          FontString .subName 147x12
+          Texture .isDead 38x38 hidden tex=629739
+          Texture .selectedTexture 211x46 hidden atlas=PetList-ButtonSelect
+          FontString .new 29x12 hidden
+          Texture .newGlow 69x32 hidden atlas=collections-newglow
+          Texture .? 211x46 atlas=PetList-ButtonHighlight
+          Button .dragButton 40x40
+            Texture .ActiveTexture 40x40 hidden tex=130724
+            Texture PetJournalFavorite 25x25 hidden atlas=PetJournal-FavoritesIcon
+            Texture PetJournalHighlight 40x40 tex=130718
+            Cooldown .Cooldown 40x40 hidden (1 parts inside, skipped)
+        Button .? 211x46
+          Texture .background 211x46 atlas=PetList-ButtonBackground
+          Texture .icon 38x38 tex=7831522
+          Texture .petTypeIcon 90x44
+          Texture .iconBorder 38x38 tex=651080
+          FontString .name 147x30
+          FontString .subName 147x12
+          Texture .isDead 38x38 hidden tex=629739
+          Texture .selectedTexture 211x46 hidden atlas=PetList-ButtonSelect
+          FontString .new 29x12 hidden
+          Texture .newGlow 69x32 hidden atlas=collections-newglow
+          Texture .? 211x46 atlas=PetList-ButtonHighlight
+          Button .dragButton 40x40
+            Texture .ActiveTexture 40x40 hidden tex=130724
+            Texture PetJournalFavorite 25x25 hidden atlas=PetJournal-FavoritesIcon
+            Texture PetJournalHighlight 40x40 tex=130718
+            Cooldown .Cooldown 40x40 hidden (1 parts inside, skipped)
+      Frame .Shadows 255x481
+        Texture .Lower 0x0 hidden
+        Texture .Upper 0x0 hidden
+    Frame .ScrollBar 8x513 [styled scroll]
+      Frame .Track 8x475
+        Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+        Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+        Texture .Middle 8x459 atlas=!minimal-scrollbar-track-middle
+        Button .Thumb 8x475 hidden (6 parts inside, skipped)
+      Button .Back 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+      Button .Forward 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+    Frame PetJournalPetCard 407x514
+      Texture .PetBackground 407x514 tex=651761
+      Frame .ShadowOverlay 407x514
+        Texture PetJournalPetCardTopLeft 64x64 tex=423810
+        Texture PetJournalPetCardTopRight 64x64 tex=423810
+        Texture PetJournalPetCardBottomLeft 64x64 tex=423810
+        Texture PetJournalPetCardBottomRight 64x64 tex=423810
+        Texture PetJournalPetCardTop 279x64 tex=423813
+        Texture PetJournalPetCardBottom 279x64 tex=423809
+        Texture PetJournalPetCardLeft 64x386 tex=423811
+        Texture PetJournalPetCardRight 64x386 tex=423812
+      Button PetJournalPetCardPetInfo 208x46
+        Texture PetJournalPetCardPetInfoIcon 38x38 tex=7831523
+        FontString PetJournalPetCardPetInfoName 270x32
+        FontString PetJournalPetCardPetInfoSubName 1x1 hidden
+        Texture .isDead 38x38 hidden tex=629739
+        Texture PetJournalPetCardPetInfoFavorite 25x25 hidden atlas=PetJournal-FavoritesIcon
+        FontString .new 29x12 hidden
+        Texture .newGlow 69x32 hidden atlas=collections-newglow
+      ModelScene .modelScene 407x514
+        Button .RotateLeftButton 35x35
+          Texture .? 35x35 tex=130845
+          Texture .? 35x35 hidden tex=130844
+          Texture .? 35x35 tex=130717
+        Button .RotateRightButton 35x35
+          Texture .? 35x35 tex=130847
+          Texture .? 35x35 hidden tex=130846
+          Texture .? 35x35 tex=130717
+    Button PetJournalSummonButton 160x22 [styled button]
+      Texture .Left 12x22 tex=130828
+      Texture .Right 12x22 tex=130828
+      Texture .Middle 136x22 tex=130828
+      FontString PetJournalSummonButtonText 51x12
+      Texture .? 160x22 tex=130826
+  Frame ToyBox 703x606 hidden (7 parts inside, skipped)
+  Frame HeirloomsJournal 703x606 hidden (6 parts inside, skipped)
+  Frame WardrobeCollectionFrame 703x606 hidden (9 parts inside, skipped)
+  Frame WarbandSceneJournal 703x606 hidden (1 parts inside, skipped)
+  Button .? 16x16

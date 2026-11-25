@@ -485,7 +485,46 @@ function P3.MoreRule(t, a)
     return false
 end
 
+-- ------------------------------------------
+-- Collections (dumps CollectionsJournal_Mounts/Pets/Toys/Appearances,
+-- user Nov 25 12:27): model backdrops and item pages page blue, list rows
+-- navy, Blizzard's shadows and corner flourishes gone
+-- ------------------------------------------
+local SHADOW_IDS = { ["423809"] = true, ["423810"] = true, ["423811"] = true, ["423812"] = true, ["423813"] = true }
+function P.ExtraID(t, id)
+    if id == "651761" or id == "651762" then            -- mount / pet model backdrop
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    if SHADOW_IDS[id] then                              -- only inside the model's shadow frame
+        local par = t.GetParent and t:GetParent()
+        local gp = par and par.GetParent and par:GetParent()
+        if gp and T(gp, "ShadowOverlay") == par then t:SetAlpha(0); return true end
+        return false
+    end
+    if id == "130975" then                              -- the "Total Mounts" count pill
+        local par = t.GetParent and t:GetParent()
+        if par and (T(par, "Count") or T(par, "Label")) then Tint(t, { 0.24, 0.43, 0.69 }, 1); return true end
+        return false
+    end
+    return false
+end
+local COLL_FADE = { ["collections-background-shadow-large"] = true, ["collections-background-shadow-small"] = true,
+    ["collections-background-corner"] = true }
+function P3.CollRule(t, a)
+    if COLL_FADE[a] then t:SetAlpha(0); return true end
+    if a == "collections-background-tile" then Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true end
+    if a == "PetList-ButtonBackground" then Ours(t, nil, NAVYC, nil, nil, WHITE); BoxEdge(t); return true end
+    if a == "PetList-ButtonSelect" then Tint(t, BLUE, 0.45); return true end
+    if a == "PetList-ButtonHighlight" then Tint(t, BLUE, 0.2); return true end
+    if a == "collections-itemborder-collected" or a == "transmog-wardrobe-border-collected" then Tint(t, BLUE, 0.9); return true end
+    if a == "collections-itemborder-uncollected" then Tint(t, { 0.3, 0.33, 0.4 }, 1); return true end
+    if a == "transmog-wardrobe-border-highlighted" then Tint(t, BLUE, 0.5); return true end
+    if a == "transmog-wardrobe-border-selected" or a == "transmog-nav-slot-selected" then Tint(t, GOLD); return true end
+    return false
+end
+
 function P.ExtraRule(t, a)
+    if P3.CollRule(t, a) then return true end
     if P3.MapLogRule(t, a) then return true end
     if P3.MoreRule(t, a) then return true end
     -- vendor buttons
