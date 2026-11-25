@@ -95,6 +95,16 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   as the world map etc. arrive. Hub button rules apply (verb first,
   Title Case, "..." if it asks first). Bump Hub + Skins, README.
   Not built; wait for the go-ahead.
+- READY, NOT SHIPPED (branch fix-coords-memory): AetherCoords 1.3.15.
+  User's memory readout (20:02, after ~play): Coords 8858 KB, Pathfinder
+  7284 KB, Ledger 3152, Bars ~2670 (inferred from total 25736), ItemID
+  2064, rest 139-405. Coords has ~44 KB of code, so the number is mostly
+  uncollected garbage: the minimap pin loop ran EVERY FRAME and made new
+  Vector2D tables per waypoint. Fix: waypoint world positions cached
+  (weak-keyed wpWorld), loop throttled to 30/s. Asked the user to rerun
+  the readout after collectgarbage() to split real use from garbage.
+  Pathfinder's 7 MB is likely the daily-refreshed NPC data (Raw) built
+  into tables: not investigated yet.
 - LAST BUILD (Nov 24, 16:15; go-ahead 16:12): AetherSkins 1.1.1 only
   (others unchanged from 15:44). What's in it:
   * /skins debug fix (user, 15:52): scans skip forbidden frames

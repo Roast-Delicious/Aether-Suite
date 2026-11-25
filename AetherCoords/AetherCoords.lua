@@ -325,6 +325,18 @@ local function WorldOf(mapID, x, y)
     if ok and instance and pos then return instance, pos.x, pos.y end
 end
 
+-- A waypoint never moves, so its world position is worked out once and kept
+-- (weak keys: forgotten with the waypoint). Saves two new tables per waypoint
+-- per frame in the minimap pin loop.
+local wpWorld = setmetatable({}, { __mode = "k" })
+local function WaypointWorld(wp)
+    local c = wpWorld[wp]
+    if c and c.map == wp.map and c.x == wp.x and c.y == wp.y then return c.inst, c.wx, c.wy end
+    local inst, wx, wy = WorldOf(wp.map, wp.x, wp.y)
+    if inst then wpWorld[wp] = { map = wp.map, x = wp.x, y = wp.y, inst = inst, wx = wx, wy = wy } end
+    return inst, wx, wy
+end
+
 -- Where a waypoint falls on another map (0 to 1), or nil if it isn't on it.
 local function OnMap(wp, mapID)
     if wp.map == mapID then return wp.x, wp.y end
@@ -766,7 +778,7 @@ local function LayoutMiniPins()
             end
         end
         for _, wp in ipairs(list) do
-            local winst, wx, wy = WorldOf(wp.map, wp.x, wp.y)
+            local winst, wx, wy = WaypointWorld(wp)
             if winst == inst then
                 -- World x points north and world y points west.
                 local east, north = (py - wy) * perYard, (wx - px) * perYard
@@ -800,8 +812,12 @@ local function LayoutMiniPins()
     for i = used + 1, #miniPins do miniPins[i]:Hide() end
 end
 
-local miniDriver = CreateFrame("Frame")
-miniDriver:SetScript("OnUpdate", function()
+-- 30 times a second is smooth on the minimap and far lighter than every frame.
+local miniDriver, miniT = CreateFrame("Frame"), 0
+miniDriver:SetScript("OnUpdate", function(_, dt)
+    miniT = miniT + (dt or 0)
+    if miniT < 0.033 then return end
+    miniT = 0
     if db then LayoutMiniPins() end
 end)
 

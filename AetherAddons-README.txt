@@ -18,7 +18,7 @@ window, so you rarely need to type a command.
   AetherHub          1.14.4    One window with every addon's settings
   AetherMeter        1.13.9    Damage and healing meter
   AetherBars         1.14.3    Clean action bars with a cooldown glow
-  AetherCoords       1.3.14    Coordinates, plus your own map waypoints
+  AetherCoords       1.3.15    Coordinates, plus your own map waypoints
   AetherPathfinder   1.9.5     Trainers, vendors, flight masters and
                                mailboxes on the world map and minimap
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
