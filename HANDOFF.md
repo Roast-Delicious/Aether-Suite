@@ -258,6 +258,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   (only shown with more cards). Hidden pages: .ChallengesPage, .TreePage
   -> dump with those side tabs open. How to open: user found it (ask
   how, for the README/checklist 1.14).
+  USER REQUEST (06:33): when reskinning, role-selection icons (tank,
+  healer, damage: Group Finder / role check) become FLAT GOLD (#FFB000)
+  ON BLUE. Mockup AFTER all the remaining dumps are in.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
