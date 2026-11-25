@@ -1,0 +1,1297 @@
+== Window dump: PlayerSpellsFrame ==
+Frame PlayerSpellsFrame 1218x708
+  Texture PlayerSpellsFrameBg 1214x685 tex=374155
+  Texture .TopTileStreaks 1210x43 atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 1218x708
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 1043x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 1043x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x537 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x537 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture PlayerSpellsFramePortrait 62x62 tex=237669
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 1252x746 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 1136x20
+    FontString PlayerSpellsFrameTitleText 1136x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button PlayerSpellsFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .MaximizeMinimizeButton 28x28 hidden (2 parts inside, skipped)
+  Frame .tabSystem 302x32 hidden (3 parts inside, skipped)
+  Frame .SpecFrame 1612x856 hidden (0 parts inside, skipped)
+  Frame .TalentsFrame 1212x681
+    Texture .BackgroundFlash 1212x641 atlas=talent-background-hunter
+    Texture .Background 1212x701 atlas=Talents-Background-c60
+    Texture .ClassBackground 1212x595 atlas=talent-background-hunter
+    Texture .OverlayBackgroundRight 1212x595 atlas=talent-background-hunter
+    MaskTexture .OverlayBackgroundRightMask 1212x595
+    Texture .OverlayBackgroundMid 1212x595 atlas=talent-background-hunter
+    MaskTexture .OverlayBackgroundMidMask 1212x595
+    Texture .Clouds1 1612x774 atlas=talents-animations-clouds
+    Texture .Clouds2 1612x774 atlas=talents-animations-clouds
+    Texture .AirParticlesClose 1308x774 atlas=talents-animations-particles
+    Texture .AirParticlesFar 800x473 atlas=talents-animations-particles
+    Texture .ActivationExpandFx 320x320 hidden atlas=talents-animations-gridburst
+    MaskTexture .ActivationExpandFxMask 2048x1024
+    Texture .ActivationClassFx 461x461 hidden atlas=talents-animations-class-hunter
+    Texture .ActivationClassFx2 461x461 hidden atlas=talents-animations-class-hunter
+    Texture .ActivationClassFx3 461x461 hidden atlas=talents-animations-class-hunter
+    Texture .ActivationClassFx4 461x461 hidden atlas=talents-animations-class-hunter
+    Texture .ActivationTitansFX 972x810 hidden atlas=talents-animations-titans
+    MaskTexture .FullMask 1212x595
+    Texture .BackgroundBorder 1216x603 atlas=Talents-inner-frame-c60
+    Texture .DividerHorizontalLeft 591x56 atlas=Talents-divider-left-c60
+    Texture .DividerHorizontalRight 595x56 atlas=Talents-divider-right-c60
+    Texture .DividerVerticalLeft 2x468 atlas=Talents-divider-vertical-c60
+    Texture .DividerVerticalRight 2x468 atlas=Talents-divider-vertical-c60
+    Frame .AnimationHolder 0x0
+    Frame .ButtonsParent 1212x641
+      Button Deadly Aspects 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=136076
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-yellow
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-yellow
+        FontString .SpendText 13x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 13x16
+        FontString .SpendTextShadow2 13x16
+        FontString .SpendTextShadow3 13x16
+        FontString .SpendTextShadow4 13x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 27x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Bestial Wrath 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132127
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Frenzy 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=134296
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-green
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-green
+        FontString .SpendText 13x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 13x16
+        FontString .SpendTextShadow2 13x16
+        FontString .SpendTextShadow3 13x16
+        FontString .SpendTextShadow4 13x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 27x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Bestial Discipline 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=136006
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-yellow
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-yellow
+        FontString .SpendText 13x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 13x16
+        FontString .SpendTextShadow2 13x16
+        FontString .SpendTextShadow3 13x16
+        FontString .SpendTextShadow4 13x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 27x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Intimidation 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132111
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-yellow
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-yellow
+        FontString .SpendText 11x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 11x16
+        FontString .SpendTextShadow2 11x16
+        FontString .SpendTextShadow3 11x16
+        FontString .SpendTextShadow4 11x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 25x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Spirit Bond 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132121
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-gray
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-gray
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Summon Hawk 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132158
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-yellow
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-yellow
+        FontString .SpendText 11x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 11x16
+        FontString .SpendTextShadow2 11x16
+        FontString .SpendTextShadow3 11x16
+        FontString .SpendTextShadow4 11x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 25x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Ferocity 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=134297
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-yellow
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-yellow
+        FontString .SpendText 13x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 13x16
+        FontString .SpendTextShadow2 13x16
+        FontString .SpendTextShadow3 13x16
+        FontString .SpendTextShadow4 13x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 27x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Improved Mend Pet 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132179
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-gray
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-gray
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Unleashed Fury 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132091
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-yellow
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-yellow
+        FontString .SpendText 13x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 13x16
+        FontString .SpendTextShadow2 13x16
+        FontString .SpendTextShadow3 13x16
+        FontString .SpendTextShadow4 13x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 27x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Bestial Swiftness 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132120
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-yellow
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-yellow
+        FontString .SpendText 11x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 11x16
+        FontString .SpendTextShadow2 11x16
+        FontString .SpendTextShadow3 11x16
+        FontString .SpendTextShadow4 11x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 25x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Improved Revive Pet 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132163
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-yellow
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-yellow
+        FontString .SpendText 13x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 13x16
+        FontString .SpendTextShadow2 13x16
+        FontString .SpendTextShadow3 13x16
+        FontString .SpendTextShadow4 13x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 27x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Pathfinding 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132242
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-gray
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-gray
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Improved Aspect of the Monkey 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132159
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-gray
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-gray
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Focused Fire 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=135539
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-yellow
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-yellow
+        FontString .SpendText 13x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 13x16
+        FontString .SpendTextShadow2 13x16
+        FontString .SpendTextShadow3 13x16
+        FontString .SpendTextShadow4 13x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 27x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Endurance Training 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=136080
+        Texture .DisabledOverlay 36x36 hidden
+        Texture .StateBorder 40x40 atlas=talents-node-square-green
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-green
+        FontString .SpendText 11x16
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 11x16
+        FontString .SpendTextShadow2 11x16
+        FontString .SpendTextShadow3 11x16
+        FontString .SpendTextShadow4 11x16
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 26x10
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Strider Kick 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132198
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Lightning Reflexes 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=136047
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Resourcefulness 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132207
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Lacerating Strikes 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132155
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Expose Prey 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132215
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Deterrence 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132369
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Surefooted 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132219
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Survival Tactics 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132149
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Counterattack 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132336
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Improved Wing Clip 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132309
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Clever Traps 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=136106
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Survivalist 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=136223
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Savage Strikes 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132277
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Entrapment 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=136100
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Deflection 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132269
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-gray
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-gray
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Improved Tracking 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=134154
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-gray
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-gray
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Sniper Shot 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=1412205
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Ranged Weapon Specialization 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=135615
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Rapid Recuperation 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=236201
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Scatter Shot 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132153
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Barrage 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132330
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Mortal Shots 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132271
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Improved Serpent Sting 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132204
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Trueshot Aura 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132329
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Rapid Killing 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132205
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Improved Arcane Shot 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132218
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Lone Wolf 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132266
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Careful Aim 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132217
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Efficiency 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=135865
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Lethal Attacks 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132312
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-gray
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-gray
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Improved Concussive Shot 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=135860
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-gray
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-gray
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Hawk Eye 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132327
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-gray
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-gray
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Lightning Reflexes 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=136047
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Survivalist's Discipline 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132178
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Predator's Edge 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132147
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Button Improved Stings 40x40
+        Texture .Shadow 78x78 atlas=talents-node-square-shadow
+        Texture .Icon 36x36 tex=132204
+        Texture .DisabledOverlay 36x36
+        Texture .StateBorder 40x40 atlas=talents-node-square-locked
+        Texture .StateBorderHover 40x40 hidden atlas=talents-node-square-locked
+        FontString .SpendText 1x1
+        Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+        FontString .SpendTextShadow1 1x1
+        FontString .SpendTextShadow2 1x1
+        FontString .SpendTextShadow3 1x1
+        FontString .SpendTextShadow4 1x1
+        MaskTexture .IconMask 36x36 hidden
+        MaskTexture .DisabledOverlayMask 36x36 hidden
+        Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+        Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+        Texture .BorderSheen 87x138 hidden atlas=talents-sheen-node
+        MaskTexture .BorderSheenMask 64x64
+        Texture .SelectableGlow 61x61 hidden atlas=talents-node-square-greenglow
+        FontString .? 1x1 hidden
+        Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+      Frame .? 0x0
+        Line .Line 0x96
+        Texture .ArrowHead 14x12 tex=-606
+        Texture .GhostArrowHead 14x12 hidden tex=-606
+        Line .GhostLine 0x96 hidden
+      Frame .? 0x0
+        Line .Line 0x96
+        Texture .ArrowHead 14x12 tex=-606
+        Texture .GhostArrowHead 14x12 hidden tex=-606
+        Line .GhostLine 0x96 hidden
+      Frame .? 0x0
+        Line .Line 0x96
+        Texture .ArrowHead 14x12 tex=-606
+        Texture .GhostArrowHead 14x12 hidden tex=-606
+        Line .GhostLine 0x96 hidden
+      Frame .? 0x0
+        Line .Line 0x96
+        Texture .ArrowHead 14x12 tex=-606
+        Texture .GhostArrowHead 14x12 hidden tex=-606
+        Line .GhostLine 0x96 hidden
+      Frame .? 0x0
+        Line .Line 0x96
+        Texture .ArrowHead 14x12 tex=-606
+        Texture .GhostArrowHead 14x12 hidden tex=-606
+        Line .GhostLine 0x96 hidden
+      Frame .? 0x0
+        Line .Line 0x156
+        Texture .ArrowHead 14x12 tex=-606
+        Texture .GhostArrowHead 14x12 hidden tex=-606
+        Line .GhostLine 0x156 hidden
+      Frame .? 0x0
+        Line .Line 0x96
+        Texture .ArrowHead 14x12 tex=-606
+        Texture .GhostArrowHead 14x12 hidden tex=-606
+        Line .GhostLine 0x96 hidden
+      Frame .? 0x0
+        Line .Line 0x96
+        Texture .ArrowHead 14x12 tex=-606
+        Texture .GhostArrowHead 14x12 hidden tex=-606
+        Line .GhostLine 0x96 hidden
+      Frame .? 0x0
+        Line .Line 0x36
+        Texture .ArrowHead 14x12 tex=-606
+        Texture .GhostArrowHead 14x12 hidden tex=-606
+        Line .GhostLine 0x36 hidden
+    Frame .SelectionChoiceFrame 1x1
+    Frame .DisabledOverlay 1212x595 hidden (1 parts inside, skipped)
+    Frame .CommitSpinner 110x110 hidden (2 parts inside, skipped)
+    Frame .TabSystem 301x32
+      Button .? 150x32 [styled tab]
+        Texture .LeftActive 35x32 atlas=uiframe-activetab-left
+        Texture .RightActive 37x32 atlas=uiframe-activetab-right
+        Texture .MiddleActive 85x32 atlas=_uiframe-activetab-center
+        Texture .Left 35x32 hidden atlas=uiframe-tab-left
+        Texture .Right 37x32 hidden atlas=uiframe-tab-right
+        Texture .Middle 84x32 hidden atlas=_uiframe-tab-center
+        Texture .Icon 36x35 hidden
+        MaskTexture .IconMask 34x33 hidden
+        Texture .SquareBackground 0x0 hidden
+        Texture .SquareBackgroundActive 0x0 hidden
+        Texture .SquareBackgroundActiveGlow 0x0 hidden
+        Texture .LeftHighlight 35x32 atlas=uiframe-tab-left
+        Texture .MiddleHighlight 84x32 atlas=_uiframe-tab-center
+        Texture .RightHighlight 37x32 atlas=uiframe-tab-right
+        FontString .Text 140x10
+        FontString .? 134x15
+      Button .? 150x32 [styled tab]
+        Texture .LeftActive 35x32 hidden atlas=uiframe-activetab-left
+        Texture .RightActive 37x32 hidden atlas=uiframe-activetab-right
+        Texture .MiddleActive 85x32 hidden atlas=_uiframe-activetab-center
+        Texture .Left 35x32 atlas=uiframe-tab-left
+        Texture .Right 37x32 atlas=uiframe-tab-right
+        Texture .Middle 84x32 atlas=_uiframe-tab-center
+        Texture .Icon 36x35 hidden
+        MaskTexture .IconMask 34x33 hidden
+        Texture .SquareBackground 0x0 hidden
+        Texture .SquareBackgroundActive 0x0 hidden
+        Texture .SquareBackgroundActiveGlow 0x0 hidden
+        Texture .LeftHighlight 35x32 atlas=uiframe-tab-left
+        Texture .MiddleHighlight 84x32 atlas=_uiframe-tab-center
+        Texture .RightHighlight 37x32 atlas=uiframe-tab-right
+        FontString .Text 140x10
+        FontString .? 134x14
+    Frame .GamepadPrimaryTabIcon 30x30 hidden (11 parts inside, skipped)
+    Frame .GamepadSecondaryTabIcon 30x30 hidden (11 parts inside, skipped)
+    Frame .HeroTalentsContainer 200x800 hidden (12 parts inside, skipped)
+    Frame .ClassCurrencyDisplay 160x45
+      Texture .Border 125x45 atlas=Talents-Square-Box-c60
+      FontString .UnspentLabel 95x12
+      Frame .CurrentAmountContainer 48x36
+        FontString .CurrencyAmount 21x32
+    Frame .ActiveSpec 164x24 hidden (2 parts inside, skipped)
+    Frame .LoadSystem 200x30 hidden (1 parts inside, skipped)
+    EditBox .SearchBox 184x30 [styled input]
+      FontString .? 148x30
+      Texture .? 2x10 hidden
+      Texture .Left 8x20 atlas=common-search-border-left
+      Texture .Right 8x20 atlas=common-search-border-right
+      Texture .Middle 173x20 atlas=common-search-border-middle
+      FontString .Instructions 148x30
+      Texture PlayerSpellsFrameSearchIcon 10x10 atlas=common-search-magnifyingglass
+      Button PlayerSpellsFrameClearButton 17x17 hidden (1 parts inside, skipped)
+    Frame .SearchBoxIcon 22x22 hidden (11 parts inside, skipped)
+    Frame .SearchPreviewContainer 176x0 hidden (8 parts inside, skipped)
+    Button .SearchOptionsDropdown 25x25
+      Texture .Arrow 27x27 atlas=common-dropdown-a-button
+    Frame .SettingsTopFaceIcon 22x22 hidden (11 parts inside, skipped)
+    Button .ApplyButton 164x22 [styled button]
+      Texture .Left 12x22 tex=130824
+      Texture .Right 12x22 tex=130824
+      Texture .Middle 140x22 tex=130824
+      FontString PlayerSpellsFrameText 85x12
+      Texture .? 164x22 tex=130826
+      Frame .Controller 0x0
+      Frame .YellowGlow 188x1 hidden (3 parts inside, skipped)
+    Button .InspectCopyButton 220x22 hidden [styled button] (29 parts inside, skipped)
+    Button .ResetButton 25x25 hidden (3 parts inside, skipped)
+    Frame .GamepadUndoButton 30x30 hidden (11 parts inside, skipped)
+    Button .UndoButton 25x25 hidden (3 parts inside, skipped)
+    ModelScene .FxModelScene 1212x641
+    Frame .? 48x48
+      Texture PlayerSpellsFrameIcon 36x36 tex=132164
+      MaskTexture .? 40x40
+      FontString .Name 114x16
+      Texture .MainRing 55x55 atlas=Talents-Main-Ring-c60
+      Texture .TextBackground 24x20 atlas=Talents-Main-Ring-Box-c60
+      FontString .Text 16x12
+      Texture .Divider 355x64 atlas=Talents-small-divider-c60
+    Frame .? 48x48
+      Texture PlayerSpellsFrameIcon 36x36 tex=132222
+      MaskTexture .? 40x40
+      FontString .Name 117x16
+      Texture .MainRing 55x55 atlas=Talents-Main-Ring-c60
+      Texture .TextBackground 24x20 atlas=Talents-Main-Ring-Box-c60
+      FontString .Text 9x12
+      Texture .Divider 355x64 atlas=Talents-small-divider-c60
+    Frame .? 48x48
+      Texture PlayerSpellsFrameIcon 36x36 tex=132215
+      MaskTexture .? 40x40
+      FontString .Name 63x16
+      Texture .MainRing 55x55 atlas=Talents-Main-Ring-c60
+      Texture .TextBackground 24x20 atlas=Talents-Main-Ring-Box-c60
+      FontString .Text 9x12
+      Texture .Divider 355x64 atlas=Talents-small-divider-c60
+  Frame .SpellBookFrame 1148x702 hidden (20 parts inside, skipped)
+  Frame .? 1210x1
+  Button .? 14x14

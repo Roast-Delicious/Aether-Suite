@@ -1501,3 +1501,25 @@ trim), xpbar_render.py (XP bar).
 - 16:32 talent detail: a 2nd arrowhead pointing UP under the '1 of 1' pill
   (base visible, ~13 units wide) on the gray arrow below a maxed node =
   double-headed arrow. Asked the user for a fresh Talents /skins tree.
+- RELEASE C FIX 2 SHIPPED 16:44 (main, merged dancer2; user 16:43 "go").
+  Versions: Skins 1.6.1, Hub 1.15.2, Ledger 1.8.9.
+  * Talent arrows: P.Arrow skips .GhostArrowHead (its SetAtlas was
+    painting the real .Line blue .55, order changed per reload); shaft
+    re-applied on Line SetAtlas/SetTexture/SetColorTexture/
+    SetVertexColor/SetThickness (busy guard). Gold/blue/gray by state.
+  * Dance window: square, 85% of page width, border = background, model
+    4 px inset, SetCamDistanceScale 1.65 (15% closer).
+  * Character gold line: underline lifted above the window's highest
+    child level (4 deep, min +20), on OnShow and again 0.3 s later.
+  * BelowTitle retries on the window's OnShow when GetTop is nil.
+  * Turn-in click: GetNextWaypoint -> map marker (current map + parents)
+    -> names the hand-in zone.
+  * Tracker red/orange re-applied after Blizzard's SetTextColor.
+  Talent dump saved: tools/dumps/PlayerSpellsFrame_Talents_b160.txt.
+  WATCH IN GAME: trapezoid under BM row-5 "1 of 1" (thought to be the
+  ghost-head bug; if still there, new talent dump), dancer camera, gold
+  line left side, arrows stable across reloads.
+  Tests: run from tools/ after sh setup.sh; dancer2 = main = 27 failing
+  scripts by the strict FAIL/Traceback check (no new failures).
+  Parked, not queued: key stats in item tooltips; AetherChat copy
+  button; directions from an in-progress quest's tracker icon (asked).
