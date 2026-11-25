@@ -437,6 +437,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   book, talent tree, magnifier, friends, progress track; character windows
   keep the portrait) and flat side tabs on Friends, Group Finder and
   Progress Track in the same B style (mock/crests_flat.py).
+  VENDOR (09:05): A, cards. Keep Blizzard's 2x5 grid; navy cards with
+  edge, quality frame (>=2) else blue, light names/prices, gold page
+  chevrons, empty tiles hidden, Merchant/Buyback as aligned pills under
+  the window. Flat buttons: anvil+hammer=repair all, hammer=repair item,
+  shield+hammer=guild repair, coin sack=sell junk (mock/vendor.py,
+  glyph_img -> gen art at 4x then reduce).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
