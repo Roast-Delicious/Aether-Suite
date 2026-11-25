@@ -327,3 +327,31 @@ def _zones(self, rows, sel=0):
         self.y += 26
     self.y += 4
 Page.zones = _zones
+def _rowbuttons(self, label, labels, lw=96):
+    if not self.room(30): return
+    T(self.c, PX + 4, self.y + 11, label, 15, (175, 180, 192), 'Regular', 'lm')
+    x = PX + 4 + lw
+    for s in labels:
+        w = self.c.d.textlength(s, font=K.F(15, 'SemiBold')) / SS / U + 22
+        if x + w > PR - 4: self.y += 28; x = PX + 4 + lw
+        rect(self.c, x, self.y, x + w, self.y + 22, fill=NAVY, outline=BLUE, r=5)
+        T(self.c, x + w / 2, self.y + 11, s, 15, WHITE, 'SemiBold', 'mm')
+        x += w + 6
+    self.y += 30
+def _lines(self, rows, cols=1, gold_right=True):
+    n = (len(rows) + cols - 1) // cols
+    if not self.room(20 * n + 4): return
+    cw = (PR - PX - 8) / cols
+    for i, (a, b) in enumerate(rows):
+        col, row = divmod(i, n)
+        x, y = PX + 6 + col * cw, self.y + row * 20 + 10
+        T(self.c, x, y, a, 15, WHITE, 'Regular', 'lm')
+        if b: T(self.c, x + cw - 24, y, b, 15, GOLD if gold_right else (150, 156, 170), 'Regular', 'rm')
+    self.y += 20 * n + 8
+def _box(self, text_lines, h=120):
+    if not self.room(h + 8): return
+    rect(self.c, PX + 4, self.y, PR - 4, self.y + h, fill=(8, 12, 22), outline=BLUE, r=5)
+    for i, l in enumerate(text_lines):
+        T(self.c, PX + 12, self.y + 12 + i * 18, l, 14, (200, 205, 215), 'Regular', 'lm')
+    self.y += h + 8
+Page.rowbuttons = _rowbuttons; Page.lines = _lines; Page.box = _box

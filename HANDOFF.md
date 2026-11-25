@@ -1380,3 +1380,13 @@ trim), xpbar_render.py (XP bar).
   NEW Sun or moon: Follow the game/Day/Night (= /skins auto|day|night),
   AetherHub minimap button MOVED here from the footer; Restore Defaults.
   /skins debug + tree stay on Help & Debug.
+- 15:43 user "kk" = Window Look approved.
+- MOCKUPS 8 + 9 (mock/hub_last.py): Your Character (out_hub_me): name,
+  level, race, class, faction; professions with rank + next-rank hint;
+  versions gone from here. Help & Debug (out_hub_debug(_full)): Versions
+  (2 cols), Reports as rows of addon-name buttons (Report: Bars Chat ItemID
+  Marks Pathfinder Skins Ledger; Ledger: Zones Tracker = /ledger zones|
+  tracker; Pathfinder: NPC Counts Flight Paths = /pfm stats|flights),
+  Check Memory, Show Window Dump, NEW ItemID hover-explain switch
+  (/itemid debug), tree note, Output box, Copy Full Report, Clear.
+  Preview Meter left Debug (on Action Bar Area). ALL 9 PAGES MOCKED.
