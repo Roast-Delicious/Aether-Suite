@@ -114,6 +114,7 @@ local TAB_BY_ICON = {
     ["8197103"] = "tab_rep", ["2447783"] = "tab_skills", ["8197098"] = "tab_pvp",
     ["8197078"] = "tab_coin", ["8197104"] = "tab_stats", ["8197096"] = "gl_eyeball",
     ["2056011"] = "gl_track", ["413584"] = "tab_pvp", ["442272"] = "gl_talents",
+    ["8197095"] = "gl_search", ["8197123"] = "gl_people",          -- Group Finder browse / who
     -- professions (flat set approved Nov 25 12:22, mock/profs_flat.py)
     ["8197101"] = "pr_overview", ["136247"] = "pr_leather", ["134366"] = "pr_skinning", ["135966"] = "pr_firstaid",
     ["136245"] = "pr_fishing", ["133971"] = "pr_cooking", ["136241"] = "pr_blacksmith", ["136248"] = "pr_mining",
@@ -126,7 +127,10 @@ local TAB_BY_NAME = { CollectionsJournalTab1 = "cl_mount", CollectionsJournalTab
     CollectionsJournalTab4 = "cl_heirloom", CollectionsJournalTab5 = "cl_appearance" }
 local TAB_BY_ATLAS = { { "^friends%-icon%-tab%-friends", "gl_friends" }, { "^friends%-icon%-tab%-recentAllies", "gl_clock" },
     { "^friends%-icon%-tab%-friendRequest", "gl_request" }, { "^friends%-icon%-tab%-raid", "gl_people" } }
-local TAB_BY_KEY = { { "Listing", "gl_eyeball" }, { "Browse", "gl_search" }, { "Who", "gl_people" },
+-- Group Finder keys (dumps 14:36): ListingTab, BrowsingTab, WhoListingTab.
+-- "WhoListingTab" contains "Listing", so Who goes first (it showed the eye).
+local TAB_BY_KEY = { { "^WhoListing", "gl_people" }, { "^Who", "gl_people" }, { "^Brows", "gl_search" },
+    { "^Listing", "gl_eyeball" },
     { "RewardTrack", "gl_track" }, { "Challenge", "tab_pvp" }, { "Tree", "gl_talents" } }
 
 local function TabKey(tab)
@@ -627,6 +631,37 @@ function P3.CollRule(t, a)
     if a == "transmog-wardrobe-border-highlighted" then Tint(t, BLUE, 0.5); return true end
     if a == "transmog-wardrobe-border-selected" or a == "transmog-nav-slot-selected" then Tint(t, GOLD); return true end
     return false
+end
+
+-- The Group Finder's three windows sit inside a parent that owns the side
+-- tabs, the round portrait and the red close button (user, Nov 25 14:35:
+-- Blizzard's eye and red X were still showing).
+local GF_PAGES = { { "LFGWhoListFrame", "gl_people" }, { "LFGBrowseFrame", "gl_search" }, { "LFGListingFrame", "gl_eyeball" } }
+local gfCrest = weak()
+function P.LooseParent(c)
+    if not c or Forbidden(c) then return end
+    local pc = T(c, "PortraitContainer")
+    local portrait = pc and (T(pc, "portrait") or T(pc, "Portrait"))
+    if portrait then
+        local x = gfCrest[c]
+        if not x then
+            x = {}
+            x.disc = Tex(pc, "OVERLAY", 5, MEDIA .. "disc_plain", NAVY); x.disc:SetSize(60, 60); x.disc:SetPoint("CENTER", portrait, "CENTER")
+            x.glyph = Tex(pc, "OVERLAY", 6, MEDIA .. "gl_eyeball", GOLD); x.glyph:SetSize(36, 36); x.glyph:SetPoint("CENTER", portrait, "CENTER")
+            gfCrest[c] = x
+            for _, pg in ipairs(GF_PAGES) do
+                local f = _G[pg[1]]
+                if f and f.HookScript then f:HookScript("OnShow", function() pcall(P.LooseParent, c) end) end
+            end
+        end
+        portrait:SetAlpha(0)
+        for _, pg in ipairs(GF_PAGES) do
+            local f = _G[pg[1]]
+            if f and f.IsShown and f:IsShown() then x.glyph:SetTexture(MEDIA .. pg[2]); break end
+        end
+    end
+    local cb = T(c, "CloseButton")
+    if cb and W.H and W.H.Close and not W.done[cb] then pcall(W.H.Close, cb) end
 end
 
 function P.ExtraRule(t, a)

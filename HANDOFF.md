@@ -1224,3 +1224,9 @@ trim), xpbar_render.py (XP bar).
   default) + tracker quest names lighter red (1,.376,.345) + orange (1,
   .588,.329) + yellow->gold like the map (user 14:32 'go with ours').
   C = Hub cleanup (design-first, moves the directions toggle into Hub).
+  GROUP FINDER TABS (user dumps 14:36): keys ListingTab / BrowsingTab /
+  WhoListingTab; icons 8197096 / 8197095 / 8197123. Bug: 'WhoListingTab'
+  matched 'Listing' first, 'Browse' never matched 'Browsing'. Fixed: Who
+  keys first, anchored patterns, icon IDs added. P.LooseParent: the tabs'
+  parent owns the portrait + red close -> our crest (glyph of the shown
+  LFG page) + Close(). Not seen in game yet.
