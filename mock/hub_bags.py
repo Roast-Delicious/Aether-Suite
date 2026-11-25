@@ -1,0 +1,20 @@
+# Release C, mockup 6: Bags & Items page in layout B.
+import hub_layout as L
+def page(p):
+    p.title('Bags & Items', 'Your bags and item details')
+    p.band('Bags', 'AetherPack')
+    p.check('Open AetherPack instead of Blizzard\'s bags (B, bag buttons)')
+    p.check('Free bag slots on the backpack button')
+    p.check('"No swaps. Just drops." slot', new=True)
+    p.choice('Its number pulses', ['While holding an item', 'Always', 'Never'], 'While holding an item', new=True)
+    p.slider('Icons per row', 0.4, '10')
+    p.slider('Bag window size', 0.44, '100%')
+    p.buttons(['Open Bags'])
+    p.band('Item details', 'AetherItemID')
+    p.check('Item window when you hover bag and bank items')
+    p.slider('Hover time before it opens', 0.27, '1s')
+    p.note('Open each profession window once so it learns your recipes.')
+    p.buttons(['!Clear Learned Recipes...'])
+    p.gap(4)
+    p.buttons(['!Restore Defaults...'])
+L.render_b('Bags & Items', page, 'out_hub_bags')

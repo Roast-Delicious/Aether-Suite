@@ -1360,3 +1360,16 @@ trim), xpbar_render.py (XP bar).
   names slider). Restore Defaults... needs new Ledger + Marks commands.
   To Help & Debug: /ledger zones, /ledger tracker (status already).
   /ledger resetwindows -> footer Reset Positions... (asks first).
+- 15:36 user: Quests & Mobs approved ("looks great"). ROUNDED BUTTONS
+  (user): "really like the button shape in the hub [mockups], apply it
+  across the board" = soft 5-unit corners (choice C, 05:31, never built).
+  Today AetherButton (Hub, Coords, Frames, Ledger x3, Meter, Pack,
+  Pathfinder) and Skins NavyBox/Button are square backdrops. RELEASE C:
+  shared rounded navy box (fill + blue edge, radius 5; checkboxes ~3) for
+  every Aether button and Skins buttons/tabs/search boxes.
+- MOCKUP 6, Bags & Items (mock/hub_bags.py, out_hub_bags(_full)): Bags
+  (replace, backpack count, NEW deposit slot = /pack deposit, NEW pulse
+  choice item/always/off = /pack pulse, icons per row, window size moved
+  here, Open Bags), Item details (ItemID on, hover time, Clear Learned
+  Recipes...), Restore Defaults... (Pack needs a new defaults command;
+  ItemID has /itemid reset). /itemid debug -> Help & Debug.
