@@ -127,6 +127,13 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 - READY, NOT SHIPPED (branch fix-skins-tab-center): AetherSkins 1.2.1. Tab
   boxes centered on the tab's Text (TOP/BOTTOM of the text +-7), not the
   whole button: Talents' Primary/Secondary text sat low (user 1.12 note).
+- DESIGN, NOT QUEUED (user, Nov 25 ~04:20, checklist 2.6): "our Addons
+  option list is getting long and out of control. we need to review the
+  menus, combine like options, normalize button naming conventions,
+  etc." -> a Hub review: inventory every tab's controls, propose a
+  regrouped layout (mockups) before any change. Also open: rounded
+  corners on buttons/tabs/search boxes (suite-wide recommended, 4 px;
+  checkboxes 2 px) from 1.13.
 - SKINS SECOND PASS, INVENTORY (from the user's checklist + screenshots,
   Nov 25 ~04:00-04:10; not queued yet, waiting on 2 decisions: right
   chevron (c) move past Forever's side tabs?; crest = player portrait on
