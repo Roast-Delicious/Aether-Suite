@@ -1268,3 +1268,12 @@ trim), xpbar_render.py (XP bar).
   A addon tabs each complete (14 tabs); B 8 tabs by what you see, addon
   bands inside, Unlock to Move + Reset Positions... in the footer (my
   pick); C groups folding in the sidebar. Asked the user to pick.
+- 15:12 CHOSEN: layout B (8 tabs by what you see; Unlock to Move +
+  Reset Positions... in the footer).
+- MOCKUP 2, Unit Frames page (mock/hub_frames.py, out_hub_frames.png +
+  _full.png): bands Frames / Portraits / Fading / Buffs. Slash-only
+  AetherFrames options added to the Hub, tagged NEW: tot, portraits
+  3d/2d, classglow, levelglow, hits, hitnumbers, aggro, combatalpha.
+  Dropped: Reset Pet Frame Position (Line Up + footer reset cover it).
+  Restore AetherFrames Defaults... needs a new /af defaults command.
+  Waiting on the user's verdict.

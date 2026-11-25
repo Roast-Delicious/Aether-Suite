@@ -85,16 +85,19 @@ class Page:
         self.c.header((X(PX - 4), Y(self.y), X(PR), Y(self.y + 20)), s, minus=False)
         if addons: T(self.c, PR - 4, self.y + 10, addons, 12.5, (150, 156, 170), 'Regular', 'rm')
         self.y += 27
-    def check(self, s, on=True, ux=0, row_end=True):
+    def check(self, s, on=True, ux=0, row_end=True, new=False):
         if not self.room(26): return
         x, y = PX + 4 + ux, self.y + 4
         rect(self.c, x, y, x + 16, y + 16, fill=(18, 43, 82), outline=GOLD if on else BLUE, r=2)
         if on: rect(self.c, x + 4, y + 4, x + 12, y + 12, fill=GOLD, r=1)
         T(self.c, x + 22, y + 8, s, 15.5, WHITE if on else (215, 218, 225), 'Regular', 'lm')
+        if new: self.newtag(x + 22 + self.c.d.textlength(s, font=K.F(15.5)) / SS / U + 6, y + 8)
         if row_end: self.y += 26
-    def slider(self, s, frac, val):
+    def slider(self, s, frac, val, new=False):
         if not self.room(52): return
-        T(self.c, PX + 4, self.y, s, 15.5, WHITE); self.y += 20
+        T(self.c, PX + 4, self.y, s, 15.5, WHITE)
+        if new: self.newtag(PX + 10 + self.c.d.textlength(s, font=K.F(15.5)) / SS / U, self.y + 9)
+        self.y += 20
         x0, x1, yy = PX + 8, PX + 248, self.y + 8
         rect(self.c, x0, yy - 2, x1, yy + 2, fill=(31, 71, 128), r=1)
         tx = x0 + (x1 - x0) * frac
@@ -102,9 +105,11 @@ class Page:
         rect(self.c, x1 + 12, yy - 10, x1 + 66, yy + 10, fill=(8, 12, 22), outline=BLUE, r=3)
         T(self.c, x1 + 39, yy, val, 15, WHITE, 'Regular', 'mm')
         self.y += 32
-    def choice(self, s, opts, sel):
+    def choice(self, s, opts, sel, new=False):
         if not self.room(48): return
-        T(self.c, PX + 4, self.y, s, 15.5, WHITE); self.y += 20
+        T(self.c, PX + 4, self.y, s, 15.5, WHITE)
+        if new: self.newtag(PX + 10 + self.c.d.textlength(s, font=K.F(15.5)) / SS / U, self.y + 9)
+        self.y += 20
         x = PX + 6
         for o in opts:
             w = max(80, self.c.d.textlength(o, font=K.F(15, 'SemiBold')) / SS / U + 20)
@@ -123,6 +128,9 @@ class Page:
             T(self.c, x + w / 2, self.y + 11, s, 15, WHITE, 'SemiBold', 'mm')
             x += w + 8
         self.y += 30
+    def newtag(self, ux, uy):
+        rect(self.c, ux, uy - 7, ux + 30, uy + 7, fill=NAVY, outline=BLUE, r=7)
+        T(self.c, ux + 15, uy, 'NEW', 11, BLUE, 'Bold', 'mm')
     def gap(self, h=6): self.y += h
     def scrollbar(self, frac_shown=0.55):
         x = PR + 8; top, bot = 40, PB
