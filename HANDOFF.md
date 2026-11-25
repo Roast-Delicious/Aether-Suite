@@ -144,6 +144,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     the zone/clock pill). Nothing of ours moves the tracker (Edit Mode
     does); moving ObjectiveTrackerFrame from addon code taints Edit Mode,
     so suggested a one-time Edit Mode drag (Hub Layout: Open Edit Mode).
+    RESOLVED (06:03): user moved it in Edit Mode; layout and action-bar
+    alignment were unaffected. Pills stay where they are.
 - DESIGN, NOT QUEUED (user, Nov 25 ~04:20, checklist 2.6): "our Addons
   option list is getting long and out of control. we need to review the
   menus, combine like options, normalize button naming conventions,
