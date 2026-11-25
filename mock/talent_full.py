@@ -10,7 +10,8 @@ import math, numpy as np, cv2
 from PIL import Image, ImageDraw, ImageFilter
 from skins_lib import Canvas, U, SS, GOLD, BLUE, NAVY, PANEL, WHITE, DIM, F as LF, label
 from talent_details import arrow, F
-import talent_states as TS
+import talent_states as TS, os
+UNSPENT = int(os.environ.get('UNSPENT', '2')); LOCKED = os.environ.get('LOCKED', 'gray'); OUTN = os.environ.get('OUTN', 'out_talent_full.png')
 
 SHOT = Image.open('/mnt/user-data/uploads/330e1911-image.png').convert('RGB')
 FULL = np.array(SHOT).astype(float)
@@ -34,13 +35,14 @@ for (x, y, st, n, m) in [(162, 212, 'max', 5, 5), (207, 212, 'part', 1, 5), (117
                          (207, 257, 'max', 2, 2), (117, 302, 'can', 0, 0), (162, 302, 'max', 1, 1), (207, 302, 'max', 5, 5),
                          (117, 347, 'can', 0, 0), (207, 347, 'max', 5, 5), (252, 347, 'max', 1, 1), (117, 392, 'can', 0, 0),
                          (162, 392, 'max', 1, 1), (252, 392, 'max', 2, 2), (207, 437, 'part', 2, 3), (162, 482, 'lock', 0, 0)]:
+    if st == 'can' and UNSPENT == 0: st = 'none'
     nodes.append((H(x, y), st, n, m))
 MM = [(418, 212), (463, 212), (508, 212), (418, 257), (463, 257), (508, 257), (418, 302), (463, 302), (553, 302),
       (463, 347), (508, 347), (418, 392), (508, 392), (553, 392), (508, 437), (463, 482)]
 SV = [(767, 212), (812, 212), (722, 257), (767, 257), (812, 257), (857, 257), (722, 302), (767, 302), (812, 302),
       (722, 347), (767, 347), (812, 347), (722, 392), (767, 392), (812, 392), (857, 392), (812, 437), (767, 482)]
 for (x, y) in MM + SV:
-    nodes.append((H(x, y), 'can' if y == 212 else 'lock', 0, 0))
+    nodes.append((H(x, y), ('can' if UNSPENT else 'none') if y == 212 else 'lock', 0, 0))
 ARROWS = [((162, 302), (162, 392), 'max'), ((207, 347), (207, 437), 'max'), ((162, 392), (162, 482), 'lock'),
           ((508, 257), (508, 347), 'lock'), ((418, 302), (418, 392), 'lock'), ((463, 347), (463, 482), 'lock'),
           ((812, 302), (812, 347), 'lock'), ((767, 392), (767, 482), 'lock')]
@@ -84,7 +86,7 @@ L, d = c.layer(); d.rectangle(c.P(80, 242, 1880, 1062), outline=BLUE + (255,), w
 c.d.line(c.P(80, 242, 1880, 242), fill=BLUE + (255,), width=SS)
 # unspent box
 c.d.rounded_rectangle(c.P(1556, 180, 1852, 232), int(5 * U * SS), fill=NAVY + (240,), outline=BLUE + (255,), width=SS)
-c.text((1576, 206), "Unspent Talents", 19, WHITE, 'Regular', 'lm'); c.text((1832, 206), "2", 32, GOLD, 'Bold', 'rm')
+c.text((1576, 206), "Unspent Talents", 19, WHITE, 'Regular', 'lm'); c.text((1832, 206), str(UNSPENT), 32, GOLD, 'Bold', 'rm')
 # Apply Changes
 c.button((852, 1072, 1100, 1106), "Apply Changes", size=18)
 base = c.done().convert('RGBA')
@@ -105,7 +107,7 @@ for (cx, cy), pts in SPEC:
     bd.text((cx + 24, cy + 26), pts, font=f, fill=WHITE + (255,), anchor='mm')
 
 # ---- 4. arrows, then nodes, then pills -------------------------------------
-ACOL = {'max': GOLD, 'part': BLUE, 'lock': (130, 134, 144)}
+ACOL = {'max': GOLD, 'part': BLUE, 'lock': (BLUE if LOCKED == 'blue' else (110, 114, 124))}
 S = 78; half = S // 2
 for (a, b, kind) in ARROWS:
     (x0, y0), (x1, y1) = H(*a), H(*b)
@@ -133,10 +135,18 @@ for (cx, cy), st, n, m in nodes:
         # empty talents in the screenshot are already gray; show them in color where we can
         im = TS.tile(ic, border=(210, 214, 222), S=S)
         gl, pad = glow_layer(S); base.alpha_composite(gl, (cx - half - pad, cy - half - pad))
-    else:
+    elif st == 'none':     # open, but no points left: navy
         g = lum(ic); g = g / max(g.max(), 1e-3)
         a = DEEP + g[..., None] * (MID - DEEP) * 1.15
-        im = TS.tile(a, border=(40, 60, 92), S=S)
+        im = TS.tile(a, border=(60, 90, 140), S=S)
+    elif LOCKED == 'blue':
+        g = lum(ic); g = g / max(g.max(), 1e-3)
+        a = np.array([14, 40, 80.]) + g[..., None] * (np.array([77, 166, 255.]) - np.array([14, 40, 80.])) * 0.9
+        im = TS.tile(a, border=BLUE, S=S)
+    else:                  # locked: gray
+        g = lum(ic); g = g / max(g.max(), 1e-3)
+        a = g[..., None] * np.array([150, 152, 160.]) * 0.55
+        im = TS.tile(a, border=(70, 74, 84), S=S)
     base.alpha_composite(im, (cx - half, cy - half))
     if st in ('max', 'part'): pills.append((cx, cy + half - 8, f"{n} of {m}", GOLD if st == 'max' else BLUE))
 d = ImageDraw.Draw(base)
@@ -145,5 +155,6 @@ for cx, y, txt, col in pills:
     d.rounded_rectangle([cx - w / 2, y - h / 2, cx + w / 2, y + h / 2], 11, fill=(8, 12, 22, 255), outline=col + (255,), width=2)
     d.text((cx, y), txt, font=f, fill=col + (255,), anchor='mm')
 
-out = label(base.convert('RGB'), "Talents, full window, all picks so far (on your screenshot)")
-out.save('/home/claude/aether-repo/mock/out_talent_full.png'); print(out.size)
+TITLE = os.environ.get('TITLE', 'Talents, full window')
+out = label(base.convert('RGB'), TITLE)
+out.save('/home/claude/aether-repo/mock/' + OUTN); print(out.size)
