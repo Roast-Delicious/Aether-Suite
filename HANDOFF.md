@@ -1329,3 +1329,9 @@ trim), xpbar_render.py (XP bar).
   BookBGLeft/Right 574x702 (spellbook-Page-*-C60) reaching ~18 units from
   the top, i.e. into the 22-unit strip; our underline frame is there
   ('Frame .? 1146x1'), just drawn under the book. Fix stands.
+- 15:27 user: Professions = A ("I like A. Let's roll" = build go).
+- BUILD 9 SHIPPED 15:30 (main, merged build9 = fix-talent-arrows +
+  fix-vendor-tips + fix-spellbook-title + Professions cards black):
+  AetherSkins 1.5.7. README stamp 15:30. Untested in game: flat arrows
+  across reloads, gold vendor notes on all three buttons, Buyback label,
+  Spellbook strip + gold line, black Professions cards.

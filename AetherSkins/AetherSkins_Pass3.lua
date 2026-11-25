@@ -558,7 +558,12 @@ function P3.MoreRule(t, a)
         Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true
     end
     -- boxes: navy with a blue edge
-    if a:find("^Profession%-overview%-[Cc]ard") or a == "Legacy-Tree-Frame-Card" then
+    -- Professions overview cards: black like the pages, blue edges kept
+    -- (user, Nov 25 15:27, option A of mock/prof_black.py)
+    if a:find("^Profession%-overview%-[Cc]ard") then
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    if a == "Legacy-Tree-Frame-Card" then
         Ours(t, nil, NAVYC, nil, nil, WHITE); BoxEdge(t); return true
     end
     if a == "Professions-background-summarylist" or a == "Legacy-Tree-Frame-Points-Bar" then
