@@ -1201,3 +1201,4 @@ trim), xpbar_render.py (XP bar).
   stats (UI-Character-Info-Stat-BG); class art behind stats faded; Legacy
   reward cards navy boxes; LFG roles strip navy. Not changed: talent class
   art, model backdrops, title/bottom bars (frame tier).
+- BUILD 5 SHIPPED 14:02 (main, merged build5): AetherSkins 1.5.2.
