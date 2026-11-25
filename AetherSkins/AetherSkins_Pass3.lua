@@ -296,7 +296,77 @@ local function FriendSelected(t)
     end
 end
 
+
+-- ------------------------------------------
+-- Map quest log: tracker-style quest icons, navy track boxes, Aether
+-- blue background (decided Nov 25 10:55 / 11:10, mock/maplog_icons.py,
+-- mock/maplog_bg2.py)
+-- ------------------------------------------
+local poi = weak()
+local function PoiLook(b)
+    local o = poi[b]
+    if o then return o end
+    o = {}
+    o.disc = Tex(b, "ARTWORK", 6, MEDIA .. "trk_disc", { NAVY[1], NAVY[2], NAVY[3], 0.96 })
+    o.ring = Tex(b, "ARTWORK", 7, MEDIA .. "trk_ring", GOLD)
+    o.dots = Tex(b, "OVERLAY", 6, MEDIA .. "trk_dots", GOLD)
+    o.mark = b:CreateFontString(nil, "OVERLAY")
+    if not (H.FontFile and pcall(o.mark.SetFont, o.mark, H.FontFile("Bold"), 11, "")) then o.mark:SetFontObject("GameFontNormal") end
+    o.mark:SetPoint("CENTER", b, "CENTER", 0.5, 0); o.mark:SetText("?")
+    o.mark:SetTextColor(GOLD[1], GOLD[2], GOLD[3])
+    for _, k in ipairs({ "disc", "ring", "dots" }) do
+        o[k]:ClearAllPoints(); o[k]:SetSize(18, 18); o[k]:SetPoint("CENTER", b, "CENTER")
+    end
+    o.mark:Hide()
+    poi[b] = o
+    return o
+end
+local function PoiButton(t)     -- the icon sits in .Display inside the button
+    local d = t.GetParent and t:GetParent()
+    local b = d and d.GetParent and d:GetParent()
+    return b and b.CreateTexture and b or nil
+end
+function P3.MapLogRule(t, a)
+    if a == "UI-QuestPoi-QuestNumber" or a == "UI-QuestPoi-QuestNumber-Pressed" then
+        t:SetAlpha(0)
+        local b = t.GetParent and t:GetParent()
+        if b and b.CreateTexture then PoiLook(b) end
+        return true
+    end
+    if a == "UI-QuestPoi-InnerGlow" or a == "UI-QuestPoi-OuterGlow" then
+        Tint(t, BLUE, 0.5); return true
+    end
+    if a == "Quest-In-Progress-Icon-yellow" or a == "UI-QuestIcon-TurnIn-Normal" then
+        t:SetAlpha(0)
+        local b = PoiButton(t)
+        if b then
+            local o = PoiLook(b)
+            local turnIn = (a == "UI-QuestIcon-TurnIn-Normal")
+            o.dots:SetShown(not turnIn); o.mark:SetShown(turnIn)
+        end
+        return true
+    end
+    if a == "QuestLog-icon-ticksquare" then
+        t:SetAlpha(0)
+        local cb = t.GetParent and t:GetParent()
+        if cb and cb.CreateTexture and Once(cb, "tickbox") then
+            local f = Tex(cb, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
+            f:SetSize(12, 12); f:SetPoint("CENTER", cb, "CENTER")
+            local e = CreateFrame("Frame", nil, cb)
+            e:SetSize(12, 12); e:SetPoint("CENTER", cb, "CENTER")
+            Edge(e, "BORDER", 1, { BLUE[1], BLUE[2], BLUE[3], 1 }, 0)
+        end
+        return true
+    end
+    if a == "QuestLog-main-background" then
+        Ours(t, nil, { 35 / 255, 75 / 255, 115 / 255, 1 }, nil, nil, WHITE)
+        return true
+    end
+    return false
+end
+
 function P.ExtraRule(t, a)
+    if P3.MapLogRule(t, a) then return true end
     -- vendor buttons
     local v = VENDOR[a]
     if v then

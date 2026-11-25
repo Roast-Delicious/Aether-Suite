@@ -1088,3 +1088,22 @@ Run from /home/claude/tools, e.g.:
 
 Renderers: frames_render.py (unit frames), decor_render.py (window
 trim), xpbar_render.py (XP bar).
+- BUILD 3 (branch build3, NOT BUILT; user 11:36 + 11:44):
+  Reputation thumb white -> Windows.Scroll no longer tints thumb, Ours()
+  mirrors desaturation only when o.mirrorDesat. Selected side tab: old
+  notch hidden. PvP: honor bar glow faded, LevelBG blue, bar BGs navy.
+  Friends: own navy card fill; picked friend (Blizzard LockHighlight)
+  brighter blue + gold notch + blue edge. Grip 14px at BOTTOMRIGHT +6,-6.
+  ARROWS (user 11:44 "an enthusiastic yes", mock/arrows_vendor.py): P3
+  Usable(b, o, extra) = gold when b:IsEnabled() (+extra), gray desat
+  otherwise; hooks Enable/Disable/SetEnabled; events MERCHANT_*, durab.,
+  money, bags refresh. Scroll arrows chev3d gold/gray. Page arrows
+  (file IDs 130864-6 next, 130867-9 prev; vendor+Spellbook): Blizzard's
+  faded, our chevron in a 26px navy square, blue edge (dim when off).
+  VENDOR: repair buttons also need GetRepairAllCost() > 0 (repair item
+  is never disabled by Blizzard). User 11:44: repair stayed gold - was
+  testing the 11:05 build, which lacked this.
+  MAP LOG (queued since 10:55/11:10): POI number -> trk disc/ring/dots
+  (Media copied from Ledger), turn-in gold "?"; glows blue; ticksquare
+  -> 12px navy box with blue edge; QuestLog-main-background -> (35,75,
+  115) overlay. Tests: skins_pass2 ALL OK; suite = baseline 15.
