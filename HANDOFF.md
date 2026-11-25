@@ -1349,3 +1349,14 @@ trim), xpbar_render.py (XP bar).
   Clear...; Restore Defaults... (settings only; keeps waypoints + learned
   NPCs). Moved: /pfm stats + /pfm flights reports -> Help & Debug.
   Dropped: Reset Coordinates Position (footer Reset Positions...).
+- 15:35 user "proceed" after re-seeing Action Bar Area = approved; Map &
+  Waypoints taken as approved too.
+- MOCKUP 5, Quests & Mobs (mock/hub_quests.py, out_hub_quests(_full)):
+  Suggestions (zone suggest + 4 interests in 2 cols, Check Zones Now),
+  Pick a zone (3 rows + Go, status line), Quest tracker (manage, look,
+  NEW turnInDirections, NEW tooltipSpot = /ledger tooltip; NEW buttons
+  Sort Tracker Now = /ledger sort, Stop Directions = /ledger stop), Quest
+  log (Clean Up, Save to File), Mob names (Marks quest/rare/sound/radar +
+  names slider). Restore Defaults... needs new Ledger + Marks commands.
+  To Help & Debug: /ledger zones, /ledger tracker (status already).
+  /ledger resetwindows -> footer Reset Positions... (asks first).

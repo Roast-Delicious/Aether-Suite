@@ -313,3 +313,15 @@ def _note(self, s, size=14.5):
     if not self.room(20): return
     T(self.c, PX + 4, self.y + 2, s, size, (175, 180, 192)); self.y += 22
 Page.dropdown = _dropdown; Page.wplist = _wplist; Page.note = _note
+def _zones(self, rows, sel=0):
+    if not self.room(26 * len(rows) + 4): return
+    for i, (z, here) in enumerate(rows):
+        on = i == sel; w = PR - PX - 76
+        rect(self.c, PX + 4, self.y, PX + 4 + w, self.y + 22, fill=NAVY, outline=GOLD if on else BLUE, r=5)
+        T(self.c, PX + 12, self.y + 11, f'{i + 1}. {z}' + ('  (you\'re here)' if here else ''), 15, GOLD if on else WHITE, 'SemiBold', 'lm')
+        if not here:
+            rect(self.c, PX + 10 + w, self.y, PX + 70 + w, self.y + 22, fill=NAVY, outline=BLUE, r=5)
+            T(self.c, PX + 40 + w, self.y + 11, 'Go', 15, WHITE, 'SemiBold', 'mm')
+        self.y += 26
+    self.y += 4
+Page.zones = _zones
