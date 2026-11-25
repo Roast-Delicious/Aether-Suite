@@ -1149,3 +1149,6 @@ trim), xpbar_render.py (XP bar).
   hover .2), item/wardrobe borders blue, uncollected slate, selected gold.
   Dump workflow (user video 12:27) is right: open tab, /skins tree, Hub
   Debug > Show Window Dump, copy.
+- BUILD 3 SHIPPED 12:35 (main, merged build3): AetherSkins 1.5.0. README
+  stamp 12:35. Next: user testing -> fix build; tint sweep (screenshots);
+  Hub cleanup pass (+ Ledger click-to-turn-in directions).
