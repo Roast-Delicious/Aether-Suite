@@ -551,6 +551,20 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   in GreetingPanel.ScrollBox rows with .Icon + a FontString (tex 136810
   highlight); P.KeepColor(fs, BLUE) on those. Dark background confirmed
   intended until Build 2's Aether page (option 3).
+  BUILD 1 TEST (10:18, user): 1 pass (gold slider = Build 2). 2 Friends
+  too dark, hover = selection (mock/friends_sel.py, asking). 3 pass, but
+  rare blue vs empty/plain blue alike (asking). 4 pass, locked still
+  dark. 5 page arrows enabled ~ disabled; brown frames remain on
+  unlearned spells (Multi-Shot) with dark names (need /skins tree on
+  one). 6 pass. 7 map quest log headers still brown/white (rows made on
+  log update, old ScrollFrame). 8 pass; gossip text -> Build 2 blue;
+  vendor page arrows too dark/alike. 9 pass. 10 divider barely better.
+  FIXED on branch fixes-build1-feedback (from main + fix-ledger-landing):
+  page arrows (LIGHTID: GetDisabledTexture -> dim .3, else .86/.93/1),
+  talents (P.UnspentPoints via UnitCharacterPoints/GetUnspentTalent
+  Points: 0 -> not "can"; Icon SetVertexColor hook; lock icon .92,
+  frame .62/.65/.7), map quest log (hook QuestLogQuests_Update /
+  QuestMapFrame_UpdateAll -> Again(WorldMapFrame)). Tests +4.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in

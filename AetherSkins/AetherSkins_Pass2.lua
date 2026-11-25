@@ -122,7 +122,7 @@ local LIGHT = { 0.82, 0.84, 0.87 }
 local NAVYB = { 0.43, 0.59, 0.82 }        -- frame of a talent not taken (lighter, Nov 25)
 local NAVYI = { 0.36, 0.52, 0.85 }        -- navy tint for icons (multiplies the gray)
 local NAVYT = { 0.47, 0.63, 0.86 }        -- icon of a talent not taken (lighter, Nov 25)
-local LOCKB = { 0.49, 0.51, 0.55 }        -- frame of a locked talent (lighter, Nov 25)
+local LOCKB = { 0.62, 0.65, 0.7 }         -- frame of a locked talent (lighter again, Nov 25 test)
 
 -- A capsule pill around a font string: dark fill, colored edge.
 local function PillOn(owner, fs, c, layer)
@@ -332,7 +332,13 @@ function P.Texture(t)
             if ok and kind == "Button" and Once(par, "slotbox") then NavyBox(par, -1, -1, -1, -1) end
         end
     elseif NAVYID[id] then Tint(t, { 0.2, 0.36, 0.62 }, 0.95)
-    elseif LIGHTID[id] then Tint(t, { 0.6, 0.78, 1 }) end
+    elseif LIGHTID[id] then
+        -- page arrows: bright when you can click them, dim when you can't
+        -- (user, Nov 25: both looked alike, and too dark)
+        local par = t.GetParent and t:GetParent()
+        local dis = par and par.GetDisabledTexture and par:GetDisabledTexture()
+        if dis == t then Tint(t, { 0.3, 0.33, 0.4 }) else Tint(t, { 0.86, 0.93, 1 }) end
+    end
 end
 
 local ARROW = { yellow = "gold", gold = "gold", green = "blue" }
@@ -453,6 +459,17 @@ end
 -- Talent nodes: see the header. State comes from the frame atlas Blizzard
 -- sets (yellow = maxed, green = some points, gray = no points, locked).
 local nodeParts = weak()
+-- Talent points left to spend, or nil when the game doesn't say.
+function P.UnspentPoints()
+    for _, fn in ipairs({ "UnitCharacterPoints", "GetUnspentTalentPoints" }) do
+        local f = _G[fn]
+        if type(f) == "function" then
+            local ok, n = pcall(f, "player")
+            if ok and type(n) == "number" and not (issecretvalue and issecretvalue(n)) then return n end
+        end
+    end
+    return nil
+end
 local function NodeInfo(node)
     if not node.GetNodeInfo then return nil end
     local ok, info = pcall(node.GetNodeInfo, node)
@@ -496,7 +513,11 @@ function P.Node(node)
             for _, k in ipairs({ "Glow", "SelectableGlow", "SelectableIcon" }) do
                 local r = T(node, k); if r then r:SetAlpha(0); HookShow(r, function() P.Node(node) end) end
             end
-            if ic and hooksecurefunc then pcall(hooksecurefunc, ic, "SetDesaturated", function() P.Node(node) end) end
+            if ic and hooksecurefunc then
+                pcall(hooksecurefunc, ic, "SetDesaturated", function() P.Node(node) end)
+                -- Blizzard darkens locked icons with a vertex color after us
+                pcall(hooksecurefunc, ic, "SetVertexColor", function() P.Node(node) end)
+            end
         end
         local a = Atlas(sb) or ""
         local state = a:find("yellow") and "max" or a:find("green") and "part" or a:find("locked") and "lock"
@@ -506,9 +527,12 @@ function P.Node(node)
             -- glow parts alone never showed it in game, Nov 25).
             local info = NodeInfo(node)
             local can = info and (info.canPurchaseRank == true)
-            if can == nil or can == false then
+            if not can then
                 can = Shown(T(node, "SelectableIcon")) or Shown(T(node, "Glow")) or Shown(T(node, "SelectableGlow"))
             end
+            -- Forever says a talent can be bought even with no points left
+            -- (Nov 25: every tree's first row looked takeable at 0 points)
+            if can and P.UnspentPoints() == 0 then can = false end
             state = can and "can" or "none"
         end
         p.glow:SetShown(state == "can")
@@ -519,7 +543,7 @@ function P.Node(node)
             if state == "max" then ic:SetDesaturated(true); ic:SetVertexColor(GOLD[1], GOLD[2], GOLD[3], 1)
             elseif state == "part" or state == "can" then ic:SetDesaturated(false); ic:SetVertexColor(1, 1, 1, 1)
             elseif state == "none" then ic:SetDesaturated(true); ic:SetVertexColor(NAVYT[1], NAVYT[2], NAVYT[3], 1)
-            elseif state == "lock" then ic:SetDesaturated(true); ic:SetVertexColor(0.78, 0.78, 0.8, 1) end
+            elseif state == "lock" then ic:SetDesaturated(true); ic:SetVertexColor(0.92, 0.92, 0.94, 1) end
         end
         -- Blizzard's dark overlay made locked and empty talents nearly black
         -- in the other trees (Nov 25): hidden in every state; ours carry it.
@@ -638,6 +662,18 @@ local function Again(root)
     if C_Timer and C_Timer.After then C_Timer.After(0, run) else run() end
 end
 W.Again = Again
+-- The map's quest log is an old-style scroll frame (no new-row callbacks):
+-- its headers and rows are made each time the log updates (Nov 25: they
+-- kept Blizzard's brown bars). Walk the map again after each update.
+function P.HookQuestLog()
+    if P.questLogHooked or not hooksecurefunc then return end
+    for _, fn in ipairs({ "QuestLogQuests_Update", "QuestMapFrame_UpdateAll" }) do
+        if type(_G[fn]) == "function" then
+            P.questLogHooked = true
+            pcall(hooksecurefunc, fn, function() if W.Enabled() and WorldMapFrame then Again(WorldMapFrame) end end)
+        end
+    end
+end
 local function WatchList(sb, root)
     if listOf[sb] then return end
     listOf[sb] = root
@@ -715,6 +751,7 @@ end
 -- After a window's walk: windows with side tabs drop the right chevron.
 function W.AfterWalk(root)
     pcall(LooseSideTabs, root)
+    pcall(P.HookQuestLog)
     if sidetabsIn[root] and W.chev[root] and W.chev[root].right then
         for _, t in ipairs(W.chev[root].right) do t:Hide() end
     end
