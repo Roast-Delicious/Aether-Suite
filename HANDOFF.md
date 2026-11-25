@@ -282,6 +282,27 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   pve (picture banners, keep), .Cover groupfinder-button-cover (+-down,
   -hover) -> navy rounded frame, blue hover, .Label. Hidden views:
   ActivityView, LockedView -> dump after clicking a category.
+  SPELLBOOK = PlayerSpellsFrame.SpellBookFrame (dump 06:35, tools/dumps/
+  PlayerSpellsFrame_Spellbook_2026-11-25.txt, complete). Book art:
+  .BookBGLeft spellbook-Page-Left-C60, .BookBGRight spellbook-Page-
+  Right-C60 (parchment pages) -> dark navy pages (decide: keep a hint of
+  book? default navy panel + thin blue center line). Category tabs on
+  .SpellBookFrame.tabSystem: square icon tabs, .SquareBackground
+  spellbook-Tab-Frame-C60, active spellbook-Tab-Frame-Glow-C60 +
+  -glow-gradient-C60 -> navy square, gold edge when active (our tab
+  styler draws a box on .Text which is 1x10 here: special-case square
+  tabs, style around .Icon instead). Section header: Frame 448x60 with
+  .Text, .Border spellbook-divider, .Backplate spellbook-list-backplate
+  -> gold header text + blue line. Spell entries (216x60, named by
+  spell): .Backplate spellbook-item-backplate -> faint navy row; .Button
+  .Border spellbook-item-iconframe (active) / talents-node-circle-gray
+  (passive, round) -> blue square frame / blue ring; hover
+  spellbook-item-iconframe-hover / -passive-hover -> blue glow; keep
+  .Icon, Cooldown, glows. .SettingsDropdown common-dropdown-a-button,
+  .SearchBox (bronze common-search-border-*: fade, same as Talents).
+  .PagingControls Prev/Next tex 130864-130869 (old round page arrows)
+  -> our chevrons. .MaximizeMinimizeButton (RedButton-Condense) shown
+  here -> navy box (queued).
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
