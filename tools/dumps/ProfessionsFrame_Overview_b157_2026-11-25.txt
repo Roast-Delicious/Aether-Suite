@@ -1,0 +1,276 @@
+== Window dump: ProfessionsFrame ==
+Frame ProfessionsFrame 673x594
+  Texture ProfessionsFrameBg 669x571 atlas=Profession-Background-Overview
+  Texture .TopTileStreaks 665x43 hidden atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 673x594
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 498x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 498x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x423 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x423 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture ProfessionsFramePortrait 62x62 tex=8197101
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 707x632 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 591x20
+    FontString ProfessionsFrameTitleText 591x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button ProfessionsFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .ProfessionsOverviewTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=8197101
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions1Tab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=136247
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions2Tab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=134366
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions3Tab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=135966
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions4Tab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=136245
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions5Tab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=133971
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .Professions6Tab 55x55 hidden (15 parts inside, skipped)
+  Frame .Professions7Tab 55x55 hidden (15 parts inside, skipped)
+  Frame .TabIndicators 0x0 hidden (2 parts inside, skipped)
+  Frame .CraftingPage 673x594 hidden (28 parts inside, skipped)
+  Frame .BookPage 673x594
+    Frame .ProfessionsContentFrame 673x594
+      Frame .PrimaryProfession1 664x142
+        Texture .Background 664x142 atlas=Profession-overview-Card-Leatherworking
+        FontString .ProfessionName 95x12
+        FontString ProfessionsFrameSpecialization 1x1
+        FontString .missingHeader 89x12 hidden
+        FontString .missingText 485x22 hidden
+        CheckButton .SpellButton1 40x40
+          Texture .BorderShadow 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+          Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+          Texture .IconTexture 40x40 tex=133611
+          MaskTexture .OutlineMask 34x34
+          FontString .spellString 100x12
+          FontString .subSpellString 95x28
+          Texture .IconTextureOverlay 0x0
+          Texture .Flash 71x71 hidden tex=130723
+          Texture .? 40x40 hidden tex=130839
+          Texture ProfessionsFrameHighlight 40x40 tex=130718
+          Texture .? 40x40 hidden tex=130724
+          Texture .IconBorder 40x40 atlas=Professions-Slot-Frame
+          Cooldown ProfessionsFrameCooldown 40x40 hidden (1 parts inside, skipped)
+        CheckButton .SpellButton2 40x40 hidden (13 parts inside, skipped)
+        Frame .StatusBar 441x18
+          Texture .Background 441x23 atlas=Profession-ProgressBar-BG
+          Texture .Fill 441x18 atlas=Skillbar_Fill_Flipbook_Leatherworking
+          Texture .Flare 53x16 atlas=Skillbar_Flare_Leatherworking
+          MaskTexture .Mask 316x512
+          Texture .Border 441x23 atlas=Profession-ProgressBar-frame
+          Frame .Rank 441x18
+            FontString .Text 117x9
+          Button .ExpansionDropdownButton 19x19 hidden (1 parts inside, skipped)
+        Button .UnlearnButton 20x20
+          Texture .Icon 22x22 atlas=Profession-button-red-crossmark
+          Texture .Overlay 22x22 hidden atlas=Profession-button-red-crossmark-pressed
+        Frame .GamepadUnlearnButton 22x22 hidden (11 parts inside, skipped)
+        Frame .? 664x142
+      Frame .PrimaryProfession2 664x142
+        Texture .Background 664x142 atlas=Profession-overview-Card-Skinning
+        FontString .ProfessionName 53x12
+        FontString ProfessionsFrameSpecialization 1x1
+        FontString .missingHeader 110x12 hidden
+        FontString .missingText 485x22 hidden
+        CheckButton .SpellButton1 40x40
+          Texture .BorderShadow 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+          Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+          Texture .IconTexture 40x40 tex=4777838
+          MaskTexture .OutlineMask 34x34
+          FontString .spellString 100x12
+          FontString .subSpellString 95x28
+          Texture .IconTextureOverlay 0x0
+          Texture .Flash 71x71 hidden tex=130723
+          Texture .? 40x40 hidden tex=130839
+          Texture ProfessionsFrameHighlight 40x40 tex=130718
+          Texture .? 40x40 hidden tex=130724
+          Texture .IconBorder 40x40 atlas=Professions-Slot-Frame
+          Cooldown ProfessionsFrameCooldown 40x40 hidden (1 parts inside, skipped)
+        CheckButton .SpellButton2 40x40
+          Texture .BorderShadow 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+          Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+          Texture .IconTexture 40x40 tex=134366
+          MaskTexture .OutlineMask 34x34
+          FontString .spellString 100x12
+          FontString .subSpellString 95x28
+          Texture .IconTextureOverlay 0x0
+          Texture .Flash 71x71 hidden tex=130723
+          Texture .? 40x40 hidden tex=130839
+          Texture ProfessionsFrameHighlight 40x40 tex=130718
+          Texture .? 40x40 hidden tex=130724
+          Texture .IconBorder 40x40 atlas=Professions-Slot-Frame
+          Cooldown ProfessionsFrameCooldown 40x40 hidden (1 parts inside, skipped)
+        Frame .StatusBar 441x18
+          Texture .Background 441x23 atlas=Profession-ProgressBar-BG
+          Texture .Fill 441x18 atlas=Skillbar_Fill_Flipbook_Skinning
+          Texture .Flare 53x16 atlas=Skillbar_Flare_Skinning
+          MaskTexture .Mask 356x512
+          Texture .Border 441x23 atlas=Profession-ProgressBar-frame
+          Frame .Rank 441x18
+            FontString .Text 84x9
+          Button .ExpansionDropdownButton 19x19 hidden (1 parts inside, skipped)
+        Button .UnlearnButton 20x20
+          Texture .Icon 22x22 atlas=Profession-button-red-crossmark
+          Texture .Overlay 22x22 hidden atlas=Profession-button-red-crossmark-pressed
+        Frame .GamepadUnlearnButton 22x22 hidden (11 parts inside, skipped)
+        Frame .? 664x142
+      Frame .SecondaryProfession1 225x275
+        Texture .Background 225x275 atlas=Profession-overview-card-generic-Cooking
+        FontString ProfessionsFrameProfessionName 51x12
+        FontString ProfessionsFrameMissing 51x12 hidden
+        FontString .missingText 175x54 hidden
+        CheckButton .SpellButton1 40x40
+          Texture .BorderShadow 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+          Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+          Texture .IconTexture 40x40 tex=133971
+          MaskTexture .OutlineMask 34x34
+          FontString .spellString 100x12
+          FontString .subSpellString 95x28
+          Texture .IconTextureOverlay 0x0
+          Texture .Flash 71x71 hidden tex=130723
+          Texture .? 40x40 hidden tex=130839
+          Texture ProfessionsFrameHighlight 40x40 tex=130718
+          Texture .? 40x40 hidden tex=130724
+          Texture .IconBorder 40x40 atlas=Professions-Slot-Frame
+          Cooldown ProfessionsFrameCooldown 40x40 hidden (1 parts inside, skipped)
+        CheckButton .SpellButton2 40x40 hidden (13 parts inside, skipped)
+        CheckButton .SpellButton3 40x40 hidden (13 parts inside, skipped)
+        CheckButton .SpellButton4 40x40 hidden (13 parts inside, skipped)
+        Frame .StatusBar 190x18
+          Texture .Background 190x23 atlas=Profession-ProgressBar-BG
+          Texture .Fill 441x18 atlas=Skillbar_Fill_Flipbook_Cooking
+          Texture .Flare 53x16 atlas=Skillbar_Flare_Cooking
+          MaskTexture .Mask 120x512
+          Texture .Border 190x23 atlas=Profession-ProgressBar-frame
+          Frame .Rank 190x18
+            FontString .Text 76x9
+          Button .ExpansionDropdownButton 19x19 hidden (1 parts inside, skipped)
+        Frame .? 225x275
+      Frame .SecondaryProfession2 225x275
+        Texture .Background 225x275 atlas=Profession-overview-card-generic-Fishing
+        FontString ProfessionsFrameProfessionName 42x12
+        FontString ProfessionsFrameMissing 42x12 hidden
+        FontString .missingText 175x65 hidden
+        CheckButton .SpellButton1 40x40
+          Texture .BorderShadow 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+          Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+          Texture .IconTexture 40x40 tex=466035
+          MaskTexture .OutlineMask 34x34
+          FontString .spellString 100x12
+          FontString .subSpellString 95x28
+          Texture .IconTextureOverlay 0x0
+          Texture .Flash 71x71 hidden tex=130723
+          Texture .? 40x40 hidden tex=130839
+          Texture ProfessionsFrameHighlight 40x40 tex=130718
+          Texture .? 40x40 hidden tex=130724
+          Texture .IconBorder 40x40 atlas=Professions-Slot-Frame
+          Cooldown ProfessionsFrameCooldown 40x40 hidden (1 parts inside, skipped)
+        CheckButton .SpellButton2 40x40
+          Texture .BorderShadow 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+          Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+          Texture .IconTexture 40x40 tex=136245
+          MaskTexture .OutlineMask 34x34
+          FontString .spellString 100x12
+          FontString .subSpellString 95x28
+          Texture .IconTextureOverlay 0x0
+          Texture .Flash 71x71 hidden tex=130723
+          Texture .? 40x40 hidden tex=130839
+          Texture ProfessionsFrameHighlight 40x40 tex=130718
+          Texture .? 40x40 hidden tex=130724
+          Texture .IconBorder 40x40 atlas=Professions-Slot-Frame
+          Cooldown ProfessionsFrameCooldown 40x40 hidden (1 parts inside, skipped)
+        CheckButton .SpellButton3 40x40 hidden (13 parts inside, skipped)
+        CheckButton .SpellButton4 40x40 hidden (13 parts inside, skipped)
+        Frame .StatusBar 190x18
+          Texture .Background 190x23 atlas=Profession-ProgressBar-BG
+          Texture .Fill 441x18 atlas=Skillbar_Fill_Flipbook_Fishing
+          Texture .Flare 53x16 atlas=Skillbar_Flare_Fishing
+          MaskTexture .Mask 46x512
+          Texture .Border 190x23 atlas=Profession-ProgressBar-frame
+          Frame .Rank 190x18
+            FontString .Text 67x9
+          Button .ExpansionDropdownButton 19x19 hidden (1 parts inside, skipped)
+        Frame .? 225x275
+      Frame .SecondaryProfession3 225x275
+        Texture .Background 225x275 atlas=Profession-overview-card-generic-FirstAid
+        FontString ProfessionsFrameProfessionName 49x12
+        FontString ProfessionsFrameMissing 49x12 hidden
+        FontString .missingText 175x44 hidden
+        CheckButton .SpellButton1 40x40
+          Texture .BorderShadow 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+          Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+          Texture .IconTexture 40x40 tex=135966
+          MaskTexture .OutlineMask 34x34
+          FontString .spellString 100x12
+          FontString .subSpellString 95x28
+          Texture .IconTextureOverlay 0x0
+          Texture .Flash 71x71 hidden tex=130723
+          Texture .? 40x40 hidden tex=130839
+          Texture ProfessionsFrameHighlight 40x40 tex=130718
+          Texture .? 40x40 hidden tex=130724
+          Texture .IconBorder 40x40 atlas=Professions-Slot-Frame
+          Cooldown ProfessionsFrameCooldown 40x40 hidden (1 parts inside, skipped)
+        CheckButton .SpellButton2 40x40 hidden (13 parts inside, skipped)
+        CheckButton .SpellButton3 40x40 hidden (13 parts inside, skipped)
+        CheckButton .SpellButton4 40x40 hidden (13 parts inside, skipped)
+        Frame .StatusBar 190x18
+          Texture .Background 190x23 atlas=Profession-ProgressBar-BG
+          Texture .Fill 441x18 atlas=Skillbar_Fill_Flipbook_FirstAid
+          Texture .Flare 53x16 atlas=Skillbar_Flare_FirstAid
+          MaskTexture .Mask 185x512
+          Texture .Border 190x23 atlas=Profession-ProgressBar-frame
+          Frame .Rank 190x18
+            FontString .Text 84x9
+          Button .ExpansionDropdownButton 19x19 hidden (1 parts inside, skipped)
+        Frame .? 225x275
+  Frame .? 665x1
+  Button .? 14x14

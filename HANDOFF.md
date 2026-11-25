@@ -1289,3 +1289,8 @@ trim), xpbar_render.py (XP bar).
   'red-to-green'). Page Restore Defaults... = this page's addons, asks
   first. Plan: panel opacity stops living only in AetherMeterDB so it
   works without the Meter (shared Hub setting the addons read).
+- PROFESSIONS CARDS (user 15:24, screenshot refs/prof_overview_2026-11-25
+  .png + dump): 'backgrounds here should be black'. Cards = Pass3
+  MoreRule Profession-overview-Card* -> NAVYC + BoxEdge. Mock
+  mock/prof_black.py (on the screenshot): A black (10,11,14) + blue edges
+  (my pick), B black + faint navy edges, C charcoal (24,27,34). Asked.
