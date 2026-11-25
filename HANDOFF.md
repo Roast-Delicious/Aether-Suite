@@ -423,6 +423,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   recolored light, which also changes the map quest log detail page
   (fade its parchment too). CHOSEN 08:36: option 3, new Aether page
   (mock/pass2_parch.py build(3)) for quest, gossip and map quest details.
+  SLIDER (08:45): every skinned window's scroll bar -> BEVELED gold thumb
+  (sharp center ridge, dark left facet, lit right facet, thin dark rim;
+  mock/slider3d.py thumb 'bev'), thickness as in the quest mock (~6 UI
+  units), dark navy track, arrows = our 3D gold chevrons (chev3d_up/down
+  + win_chev_dark backing).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
