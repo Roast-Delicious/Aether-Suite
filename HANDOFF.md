@@ -1324,3 +1324,8 @@ trim), xpbar_render.py (XP bar).
   P3.BelowTitle: any flat fill (Ours with no art file) whose texture
   starts above win top - 23 is re-anchored TOP to the window at -23.
   skins_pass2_test (+2).
+  DUMP 15:26 (tools/dumps/PlayerSpellsFrame_Spellbook_b157_2026-11-25.txt)
+  confirms: PlayerSpellsFrame 1154x720, SpellBookFrame 1148x702 with
+  BookBGLeft/Right 574x702 (spellbook-Page-*-C60) reaching ~18 units from
+  the top, i.e. into the 22-unit strip; our underline frame is there
+  ('Frame .? 1146x1'), just drawn under the book. Fix stands.
