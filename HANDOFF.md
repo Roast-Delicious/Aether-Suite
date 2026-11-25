@@ -447,6 +447,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   (120,160,220), frame (110,150,210), navy backing plate (30,58,104,a150)
   4px around; lock = gray*0.85+25, frame (125,129,140), arrows
   (150,154,164); hide DisabledOverlay (mock/talent_full.py VIS=1).
+  NEW PLAYER FRIENDLY (09:18): B, sprout glyph (role_newcomer) on the
+  4th Group Finder button; clamp it to the 64 size (mock/npf.py).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
