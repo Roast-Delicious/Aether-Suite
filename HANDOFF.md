@@ -167,6 +167,20 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   popups use UI-Frame-DiamondMetal-* borders. Nested IgnoreListFrame is
   its own PortraitFrame: its close button was NOT styled -> skin nested
   portrait frames too. Tabs, the friends list rows: still need 1.2.2.
+  Talents dump (06:24, tools/dumps/PlayerSpellsFrame_Talents_2026-11-25
+  .txt, cut at 400 inside the nodes): PlayerSpellsFrame 1218x708, tabs
+  at .tabSystem (uiframe-tab-*/uiframe-activetab-*, already styled).
+  NOT styled: .MaximizeMinimizeButton (RedButton-Expand/-Condense) ->
+  needs our navy box like the close button. TalentsFrame art:
+  .Background Talents-Background-c60, class art talent-background-
+  hunter (+BackgroundFlash, Overlay*), .BackgroundBorder Talents-inner-
+  frame-c60 (bronze), dividers Talents-divider-left/right/vertical-c60,
+  clouds/particles animations. Nodes: StateBorder atlases talents-node-
+  square-gray/-yellow/-locked, green glow talents-node-square-
+  greenglow, sheen talents-sheen-node. Plan: keep class art + nodes
+  (game info), restyle bronze border/dividers blue, decide on the
+  yellow node border (Blizzard's "has points" color) vs Aether gold.
+  Each node is ~23 lines, so 1.2.2 should fold node insides.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 05:50; user 05:33 "go ahead with all the fixes and
