@@ -1216,5 +1216,5 @@ trim), xpbar_render.py (XP bar).
 - BUILD 7 SHIPPED 14:26 (user 14:25 'like it a lot' black_screens mock):
   H.PAGE = 10,11,14 (near-black pages), H.NAVY back to 19,40,74 boxes.
   AetherSkins 1.5.4.
-- BUILD 8 (branch build8): map red quest names back to Blizzard red (user
+- BUILD 8 (branch build8): red quest names tried Blizzard red, user kept the LIGHTER red (14:30).
   14:28, mock/red_default.py), shadow kept; orange lifted, yellow->gold.
