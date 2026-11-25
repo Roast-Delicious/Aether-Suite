@@ -58,3 +58,41 @@ W = sum(p.width for p in panels) + 40
 sheet = Image.new('RGBA', (W, panels[0].height + 20), (16, 18, 24, 255)); x = 10
 for p in panels: sheet.alpha_composite(p, (x, 10)); x += p.width + 10
 sheet.convert('RGB').save('/home/claude/aether-repo/mock/out_slider.png'); print(sheet.size)
+
+# --- v2 (user, Nov 25 08:41): thin 3D gold slider, as wide as today's, and
+# the arrows replaced by our 3D gold chevron accents (up / down), shown on
+# the new quest page and on the Reputation list.
+from PIL import Image as _I
+MED = '/home/claude/aether-repo/AetherSkins/Media/'
+def chev(name, size):
+    from gen_skins_art import write_rgba
+    im = _I.open(MED + 'chev3d_' + name + '.tga').convert('RGBA')
+    dark = _I.open(MED + 'win_chev_dark.tga').convert('RGBA')
+    a = np.array(dark); a[..., :3] = (10, 11, 14); dark = _I.fromarray(a)
+    if name == 'down': dark = dark.rotate(180)
+    out = _I.new('RGBA', im.size, (0, 0, 0, 0)); out.alpha_composite(dark.resize(im.size)); out.alpha_composite(im)
+    return out.resize((size, size), _I.LANCZOS)
+def track2(img, x, y0, y1, ty0, ty1, w=8, cs=22):
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([x - w // 2, y0, x + w // 2, y1], w // 2, fill=(14, 28, 52, 255))
+    t = thumb(w, ty1 - ty0, 'rim'); img.alpha_composite(t, (x - t.width // 2, ty0))
+    up, dn = chev('up', cs), chev('down', cs)
+    img.alpha_composite(up, (x - cs // 2, y0 - cs - 2)); img.alpha_composite(dn, (x - cs // 2, y1 + 2))
+import sys; sys.path.insert(0, '/home/claude/aether-repo/tools')
+import pass2_parch as PP
+q = PP.build(3)
+ImageDraw.Draw(q).rectangle([438, 125, 466, 672], fill=(12, 14, 19, 255))
+track2(q, 452, 152, 648, 160, 330)
+rep = base.copy(); ImageDraw.Draw(rep).rectangle([544, 0, 580, 590], fill=(12, 14, 19, 255))
+track2(rep, 555, 34, 556, 40, 300)
+z = _I.new('RGBA', (160, 590), (16, 18, 24, 255)); zd = ImageDraw.Draw(z)
+zz = _I.new('RGBA', (40, 140), (16, 18, 24, 255)); track2(zz, 20, 28, 112, 32, 80, w=8, cs=22)
+zz = zz.resize((160, 560), _I.LANCZOS); z.alpha_composite(zz, (0, 10))
+def L2(im, t):
+    p = _I.new('RGBA', (im.width, im.height + 44), (16, 18, 24, 255))
+    ImageDraw.Draw(p).text((8, 10), t, font=F(20, 'SemiBold'), fill=GOLD + (255,)); p.alpha_composite(im, (0, 44)); return p
+parts = [L2(q, "Quest page"), L2(rep, "Reputation"), L2(z, "4x")]
+W = sum(p.width for p in parts) + 40; H = max(p.height for p in parts) + 20
+sh = _I.new('RGBA', (W, H), (16, 18, 24, 255)); x = 10
+for p in parts: sh.alpha_composite(p, (x, 10)); x += p.width + 10
+sh.convert('RGB').save('/home/claude/aether-repo/mock/out_slider2.png'); print(sh.size)
