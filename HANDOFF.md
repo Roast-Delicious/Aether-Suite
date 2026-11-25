@@ -1107,3 +1107,10 @@ trim), xpbar_render.py (XP bar).
   (Media copied from Ledger), turn-in gold "?"; glows blue; ticksquare
   -> 12px navy box with blue edge; QuestLog-main-background -> (35,75,
   115) overlay. Tests: skins_pass2 ALL OK; suite = baseline 15.
+  MAP QUEST DETAILS (user 11:58 "b it is", mock/maplog_details.py B;
+  dump tools/dumps/WorldMapFrame_QuestDetails.txt): QuestDetailsBack-
+  grounds -> (35,75,115) + blue edge; QuestLog-reward-top-frame/-bottom/
+  -header-top/-tile-vertical -> navy; RewardsFrame.Label gold. P3.
+  MapPages hooks OnShow of DetailsFrame/QuestScrollFrame/MapLegend/
+  EventsFrame -> rewalk the map (hidden pages are skipped by the walk).
+  Daily quests: UI-QuestPoiRecurring-* get the same disc.

@@ -359,6 +359,23 @@ function P3.MapLogRule(t, a)
         end
         return true
     end
+    -- quest details page (B, user Nov 25 11:58, mock/maplog_details.py):
+    -- flat Aether blue like the list, navy strips and rewards box
+    if a == "QuestDetailsBackgrounds" then
+        Ours(t, nil, { 35 / 255, 75 / 255, 115 / 255, 1 }, nil, nil, WHITE)
+        local par = t.GetParent and t:GetParent()
+        if par and Once(t, "detailsedge") then
+            local f = CreateFrame("Frame", nil, par)
+            f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
+            Edge(f, "BORDER", 3, { 0.24, 0.43, 0.69, 0.9 }, 0)
+        end
+        return true
+    end
+    if a == "QuestLog-reward-top-frame" or a == "QuestLog-reward-bottom" or a == "QuestLog-reward-header-top"
+       or a == "QuestLog-reward-tile-vertical" then
+        Ours(t, nil, { NAVY[1], NAVY[2], NAVY[3], 1 }, nil, nil, WHITE)
+        return true
+    end
     if a == "QuestLog-main-background" then
         Ours(t, nil, { 35 / 255, 75 / 255, 115 / 255, 1 }, nil, nil, WHITE)
         return true
@@ -442,6 +459,26 @@ function P3.Headings()
     end
     local rf = _G.QuestInfoRewardsFrame
     if rf and T(rf, "Header") then P.KeepColor(rf.Header, GOLD) end
+    -- map quest details: "Rewards" label
+    local qm = _G.QuestMapFrame
+    local qf = qm and T(qm, "QuestsFrame")
+    local d = (qf and T(qf, "DetailsFrame")) or (qm and T(qm, "DetailsFrame"))
+    local c = d and T(d, "RewardsFrameContainer")
+    local r = c and T(c, "RewardsFrame")
+    if r and T(r, "Label") then P.KeepColor(r.Label, GOLD) end
+end
+
+-- the map's quest list and details page take turns; whichever was hidden
+-- when the map was walked gets styled when it first shows
+function P3.MapPages(root)
+    if not (root and root == _G.WorldMapFrame) then return end
+    local qm = _G.QuestMapFrame
+    local qf = qm and T(qm, "QuestsFrame")
+    for _, f in ipairs({ qf and T(qf, "DetailsFrame"), _G.QuestScrollFrame, qm and T(qm, "MapLegend"), qm and T(qm, "EventsFrame") }) do
+        if f and f.HookScript and Once(f, "mappage") then
+            f:HookScript("OnShow", function() pcall(W.Contents, root); pcall(P3.Headings) end)
+        end
+    end
 end
 
 local function GossipChoice(f, root)
@@ -517,6 +554,7 @@ function W.AfterWalk(root)
     if afterWalk then pcall(afterWalk, root) end
     pcall(P3.Crest, root)
     pcall(P3.Grip, root)
+    pcall(P3.MapPages, root)
     pcall(P3.Headings)
 end
 local visit = W.Visit

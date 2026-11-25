@@ -314,6 +314,9 @@ expect("map log background: Aether blue (35,75,115)", E('(function() for _, r in
 L.execute('''RQ = kid(WIN, "Button"); RQ.NormalTexture = tex(RQ, "UI-QuestPoiRecurring-QuestNumber"); RQ.Display = kid(RQ, "Frame")
 RQ.Display.Icon = tex(RQ.Display, "UI-QuestPoiRecurring-QuestBangTurnIn"); AetherSkins_Windows.Contents(WIN)''')
 expect("daily quest icon: same navy disc", (E('RQ.NormalTexture.alpha == 0 and RQ.Display.Icon.alpha == 0'), has_tex('RQ', 'trk_disc')), (True, True))
+L.execute('''QDB = tex(WIN, "QuestDetailsBackgrounds"); QRB = tex(WIN, "QuestLog-reward-bottom"); AetherSkins_Windows.Contents(WIN)''')
+expect("map quest details: Blizzard's parchment and brown rewards hidden", E('QDB.alpha == 0 and QRB.alpha == 0'), True)
+expect("map quest details: Aether blue page", E('(function() local n = 0; for _, r in ipairs(WIN.regs) do if r.vc and math.abs(r.vc[1] - 35/255) < 0.01 then n = n + 1 end end return n end)()') >= 2, True)
 # switch off
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)
