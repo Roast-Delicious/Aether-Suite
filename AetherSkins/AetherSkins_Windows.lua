@@ -200,8 +200,14 @@ local function Frame(f)
     t:SetPoint("TOPLEFT", f, "TOPLEFT", R, -S); t:SetPoint("TOPRIGHT", f, "TOPRIGHT", -R, -S); t:SetHeight(R - S)
     t = Tex(f, "BORDER", 0, WHITE, NAVY)
     t:SetPoint("TOPLEFT", f, "TOPLEFT", S, -R); t:SetPoint("TOPRIGHT", f, "TOPRIGHT", -S, -R); t:SetHeight(TITLE_H - R)
-    t = Tex(f, "BORDER", 2, WHITE, { GOLD[1], GOLD[2], GOLD[3], 0.7 })
-    t:SetPoint("TOPLEFT", f, "TOPLEFT", S, -TITLE_H); t:SetPoint("TOPRIGHT", f, "TOPRIGHT", -S, -TITLE_H); t:SetHeight(1)
+    -- the underline sits on its own frame above the window's contents: a
+    -- side panel that starts at the title (Character stats) used to cover
+    -- its right half (user, Nov 25 12:40)
+    local ul = CreateFrame("Frame", nil, f)
+    ul:SetPoint("TOPLEFT", f, "TOPLEFT", S, -TITLE_H); ul:SetPoint("TOPRIGHT", f, "TOPRIGHT", -S, -TITLE_H); ul:SetHeight(1)
+    if ul.SetFrameLevel and f.GetFrameLevel then ul:SetFrameLevel((f:GetFrameLevel() or 0) + 20) end
+    t = Tex(ul, "OVERLAY", 2, WHITE, { GOLD[1], GOLD[2], GOLD[3], 0.7 })
+    t:SetPoint("TOPLEFT", ul, "TOPLEFT"); t:SetPoint("BOTTOMRIGHT", ul, "BOTTOMRIGHT")
     -- the four 3D gold chevrons (gold baked per direction; dark backing turns)
     W.chev[f] = {}
     for _, c in ipairs({ { "up", "TOP", 0, 3, 0, 26 }, { "down", "BOTTOM", 0, -3, math.pi, 26 },
