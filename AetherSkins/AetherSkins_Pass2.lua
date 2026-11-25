@@ -388,10 +388,21 @@ function Rule(t, a)
         -- heads and thicker shafts ran into the talents, and one shaft showed
         -- a head at both ends (user, Nov 25 13:37)
         local col = ARROW[state] or "gray"
-        local c = (col == "gold" and GOLD) or (col == "blue" and BLUE) or { 0.62, 0.65, 0.72 }
-        Tint(t, c, 1)
+        -- gray stays Blizzard's own light gray (a gray tint made it near
+        -- invisible on the dark tree, user 14:12)
         local par = t.GetParent and t:GetParent()
         local line = par and T(par, "Line")
+        if col == "gray" then
+            -- Blizzard's gray is dark on our pages: a light gray head (our
+            -- art, Blizzard's size) and a solid light gray line (user 14:19)
+            t:SetTexture(MEDIA .. "arrow_head_gray"); t:SetVertexColor(1, 1, 1, 1)
+            if t.SetDesaturated then t:SetDesaturated(false) end
+            if line and line.SetColorTexture then line:SetColorTexture(0.78, 0.8, 0.86, 1)
+            elseif line then Tint(line, { 1, 1, 1 }, 1) end
+            return
+        end
+        local c = (col == "gold" and GOLD) or BLUE
+        Tint(t, c, 1)
         if line then Tint(line, c, 1) end
         return
     end

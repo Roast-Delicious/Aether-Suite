@@ -22,12 +22,12 @@ local MEDIA = "Interface\\AddOns\\AetherSkins\\Media\\"
 local WHITE = "Interface\\Buttons\\WHITE8X8"
 local GOLD  = { 1, 0.69, 0 }
 local BLUE  = { 0.3, 0.65, 1 }
-local NAVY  = { 0.075, 0.157, 0.29 }
+local NAVY  = { 31 / 255, 60 / 255, 100 / 255 }   -- boxes, strips, rows: a lighter navy (user, Nov 25 14:19)
 local PANEL = { 0.047, 0.055, 0.075, 1 }   -- windows fully solid (user, Nov 25 13:56; HUD stays see-through)
 -- three background layers (user, Nov 25 12:05, mock/bg_tiers.py A):
 -- frame = PANEL (window body), box = NAVY (strips, panels, lists),
 -- page = PAGE (anything you read: quest text, gossip, map quest log)
-local PAGE  = { 42 / 255, 90 / 255, 138 / 255 }   -- 20% brighter (user, Nov 25 14:00)
+local PAGE  = { 19 / 255, 40 / 255, 74 / 255 }   -- pages navy (user, Nov 25 14:19: no more blue pages)
 local TEXT  = { 0.92, 0.93, 0.96 }
 
 local function FontFile(weight)

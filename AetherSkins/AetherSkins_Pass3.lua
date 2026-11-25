@@ -24,7 +24,7 @@ if not (P and P.H and W.H) then return end
 local H, PH = W.H, P.H
 local Tex, Fade, T, Edge, NavyBox, Forbidden = H.Tex, H.Fade, H.T, H.Edge, H.NavyBox, H.Forbidden
 local MEDIA, WHITE, GOLD, BLUE, NAVY, TEXT = H.MEDIA, H.WHITE, H.GOLD, H.BLUE, H.NAVY, H.TEXT
-local PAGE = H.PAGE or { 42 / 255, 90 / 255, 138 / 255 }
+local PAGE = H.PAGE or { 19 / 255, 40 / 255, 74 / 255 }
 local Tint, Atlas, FileID, Shown, Once, HookShow = PH.Tint, PH.Atlas, PH.FileID, PH.Shown, PH.Once, PH.HookShow
 local weak = PH.weak
 local P3 = {}
@@ -126,13 +126,17 @@ local TAB_BY_NAME = { CollectionsJournalTab1 = "cl_mount", CollectionsJournalTab
     CollectionsJournalTab4 = "cl_heirloom", CollectionsJournalTab5 = "cl_appearance" }
 local TAB_BY_ATLAS = { { "^friends%-icon%-tab%-friends", "gl_friends" }, { "^friends%-icon%-tab%-recentAllies", "gl_clock" },
     { "^friends%-icon%-tab%-friendRequest", "gl_request" }, { "^friends%-icon%-tab%-raid", "gl_people" } }
-local TAB_BY_KEY = { { "Listing", "gl_eyeball" }, { "Browse", "gl_eye" }, { "Who", "gl_people" },
+local TAB_BY_KEY = { { "Listing", "gl_eyeball" }, { "Browse", "gl_search" }, { "Who", "gl_people" },
     { "RewardTrack", "gl_track" }, { "Challenge", "tab_pvp" }, { "Tree", "gl_talents" } }
 
 local function TabKey(tab)
     local par = tab.GetParent and tab:GetParent()
-    if type(par) ~= "table" then return nil end
-    for k, v in pairs(par) do if v == tab and type(k) == "string" then return k end end
+    if type(par) == "table" then
+        for k, v in pairs(par) do if v == tab and type(k) == "string" then return k end end
+    end
+    -- loose tabs (Group Finder): the debug path still names them
+    local ok, dn = pcall(function() return tab.GetDebugName and tab:GetDebugName() end)
+    if ok and type(dn) == "string" then return dn:match("([%w_]+)$") or dn end
 end
 function P3.TabGlyph(tab)
     local ic = T(tab, "Icon")
@@ -140,10 +144,12 @@ function P3.TabGlyph(tab)
     if a then for _, m in ipairs(TAB_BY_ATLAS) do if a:find(m[1]) then return m[2] end end end
     local nm = tab.GetName and tab:GetName()
     if nm and TAB_BY_NAME[nm] then return TAB_BY_NAME[nm] end
+    -- by key first: Group Finder's Listing and Who tabs share one icon
+    -- (user, Nov 25 14:12: both showed the eye; Browse kept Blizzard's)
+    local key = TabKey(tab) or nm
+    if key then for _, m in ipairs(TAB_BY_KEY) do if key:find(m[1]) then return m[2] end end end
     local id = ic and FileID(ic)
     if id and TAB_BY_ICON[id] then return TAB_BY_ICON[id] end
-    local key = TabKey(tab)
-    if key then for _, m in ipairs(TAB_BY_KEY) do if key:find(m[1]) then return m[2] end end end
     return nil     -- the portrait tab, or one we don't know: Blizzard's icon stays
 end
 
@@ -182,8 +188,8 @@ end
 -- Window crests
 -- ------------------------------------------
 local CREST = { WorldMapFrame = "gl_map", SocialUIFrame = "gl_friends", FriendsFrame = "gl_friends",
-    LegacySystemFrame = "gl_track", LFGListingFrame = "gl_eyeball", LFGBrowseFrame = "gl_eyeball",
-    LFGWhoListFrame = "gl_eyeball", PlayerSpellsFrame = "gl_book" }
+    LegacySystemFrame = "gl_track", LFGListingFrame = "gl_eyeball", LFGBrowseFrame = "gl_search",
+    LFGWhoListFrame = "gl_people", PlayerSpellsFrame = "gl_book" }
 local crestParts = weak()
 local COLL_PAGES = { { "MountJournal", "cl_mount" }, { "PetJournal", "cl_pet" }, { "ToyBox", "cl_toy" },
     { "HeirloomsJournal", "cl_heirloom" }, { "WardrobeCollectionFrame", "cl_appearance" } }

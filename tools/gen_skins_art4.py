@@ -13,3 +13,16 @@ for k, _ in PF.KINDS:
 for k, _ in CF.KINDS:
     write_rgba(OUT + '/cl_' + k + '.tga', mono(lambda d, n: CF.glyph(d, k, n / 2, n / 2, n * .40, W, BG=(0, 0, 0))))
 print("ok")
+# Group Finder browse tab: a magnifying glass (user Nov 25 14:12)
+import math
+def search(d, n):
+    cx, cy, r = n * .43, n * .43, n * .24
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], outline=W, width=int(n * .09))
+    a = math.radians(45); w = n * .065; L0, L1 = r * 1.05, r * 2.15
+    pts = [(cx + math.cos(a) * L0 - math.sin(a) * w, cy + math.sin(a) * L0 + math.cos(a) * w),
+           (cx + math.cos(a) * L1 - math.sin(a) * w, cy + math.sin(a) * L1 + math.cos(a) * w),
+           (cx + math.cos(a) * L1 + math.sin(a) * w, cy + math.sin(a) * L1 - math.cos(a) * w),
+           (cx + math.cos(a) * L0 + math.sin(a) * w, cy + math.sin(a) * L0 - math.cos(a) * w)]
+    d.polygon(pts, fill=W)
+write_rgba(OUT + '/gl_search.tga', mono(search))
+print("search ok")
