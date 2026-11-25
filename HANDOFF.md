@@ -155,6 +155,18 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   .EnhancementsCategory (UI-Character-Info-Title), .ItemLevelFrame
   UI-Character-Info-ItemLevel-Bounce. Need the 1.2.2 dump for the
   Reputation page itself.
+  Friends dump (06:22, tools/dumps/SocialUIFrame_2026-11-25.txt, cut at
+  400): Forever's Friends window is SocialUIFrame (added to W.KNOWN on
+  branch). Parts: .TopFade friends-frame-topTexBG, .BottomFade friends-
+  frame-bottomTexBG, BattleNetBar .Background friends-frame-infoBG,
+  status dropdown common-dropdown-textholder + common-dropdown-a-button,
+  menu button common-button-tertiary-square-normal/pressed + friends-
+  icon-menu, filter dropdown common-dropdown-b-button, search box
+  common-searchbar-a + common-searchbar-icon-a + common-search-
+  clearbutton, list dividers perks-divider-short, broadcast and notice
+  popups use UI-Frame-DiamondMetal-* borders. Nested IgnoreListFrame is
+  its own PortraitFrame: its close button was NOT styled -> skin nested
+  portrait frames too. Tabs, the friends list rows: still need 1.2.2.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 05:50; user 05:33 "go ahead with all the fixes and

@@ -1,0 +1,402 @@
+== Window dump: SocialUIFrame ==
+Frame SocialUIFrame 410x675
+  Texture SocialUIFrameBg 406x652
+  Texture .TopTileStreaks 402x43 hidden atlas=_UI-Frame-TopTileStreaks
+  Texture .TopFade 408x71 atlas=friends-frame-topTexBG
+  Texture .BottomFade 406x91 atlas=friends-frame-bottomTexBG
+  Texture .? 8x8 tex=-528
+  Texture .? 8x8 tex=-528
+  Texture .? 8x8 tex=-528
+  Texture .? 8x8 tex=-528
+  Texture .? 394x675 tex=130871
+  Texture .? 8x659 tex=130871
+  Texture .? 8x659 tex=130871
+  Texture .? 8x8 tex=-530
+  Texture .? 8x8 tex=-530
+  Texture .? 8x8 tex=-530
+  Texture .? 8x8 tex=-530
+  Texture .? 394x1 tex=130871
+  Texture .? 394x1 tex=130871
+  Texture .? 1x659 tex=130871
+  Texture .? 1x659 tex=130871
+  Texture .? 8x8 tex=-529
+  Texture .? 8x8 tex=-529
+  Texture .? 8x8 tex=-529
+  Texture .? 8x8 tex=-529
+  Texture .? 394x1 tex=130871
+  Texture .? 394x1 tex=130871
+  Texture .? 1x659 tex=130871
+  Texture .? 1x659 tex=130871
+  Texture .? 394x7 tex=-526
+  Texture .? 394x7 tex=-526
+  Texture .? 7x659 tex=-525
+  Texture .? 7x659 tex=-525
+  Texture .? 15x15 tex=-527
+  Texture .? 15x15 tex=-527
+  Texture .? 15x15 tex=-527
+  Texture .? 15x15 tex=-527
+  Texture .? 8x8 tex=-531
+  Texture .? 8x8 tex=-531
+  Texture .? 394x4 tex=130871
+  Texture .? 402x14 tex=130871
+  Texture .? 402x1 tex=130871
+  Texture .? 26x26 tex=-300
+  Texture .? 26x26 tex=-291
+  Texture .? 26x26 tex=-300
+  Texture .? 26x26 tex=-288
+  Texture .? 34x34 tex=-300
+  Texture .? 34x34 tex=-289
+  Texture .? 34x34 tex=-300
+  Texture .? 34x34 tex=-290
+  Frame .NineSlice 410x675
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 235x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 235x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x504 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x504 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture SocialUIFramePortrait 62x62 tex=526421
+    MaskTexture .CircleMask 58x58
+    Texture .? 66x66 tex=-287
+  Frame .FrameGlow 444x713 hidden
+    Texture .GlowTexture 888x1426 atlas=gamepad-uiframemetal-largeportrait-focus
+  Frame .TitleContainer 328x20
+    FontString SocialUIFrameTitleText 328x12
+  Frame .LeftJumpHint 32x32 hidden
+    Texture .NormalTexture 42x42 atlas=Gamepad-Xbox1-Trigger-LT-Normal
+    Texture .HoverTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Over
+    Texture .PressedTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Down
+    Texture .ActiveTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Focus
+    Texture .DisabledTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Disabled
+    Texture .LoadBar 42x42 hidden atlas=gamepad-press&hold-loadBar
+    Texture .HoldIndicatorBG 42x42 hidden atlas=gamepad-press&hold-indicator-BG
+    Texture .LoadBarBG 42x42 hidden atlas=gamepad-press&hold-loadBar-BG
+    Texture .LoadBarGlow 42x42 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+    Texture .HoldIndicator 42x42 hidden atlas=gamepad-press&hold-indicator
+    Texture .SpinnerTip 42x42 hidden atlas=gamepad-press&hold-spinnerTip
+  Frame .RightJumpHint 32x32 hidden
+    Texture .NormalTexture 42x42 atlas=Gamepad-Xbox1-Trigger-RT-Normal
+    Texture .HoverTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Over
+    Texture .PressedTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Down
+    Texture .ActiveTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Focus
+    Texture .DisabledTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Disabled
+    Texture .LoadBar 42x42 hidden atlas=gamepad-press&hold-loadBar
+    Texture .HoldIndicatorBG 42x42 hidden atlas=gamepad-press&hold-indicator-BG
+    Texture .LoadBarBG 42x42 hidden atlas=gamepad-press&hold-loadBar-BG
+    Texture .LoadBarGlow 42x42 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+    Texture .HoldIndicator 42x42 hidden atlas=gamepad-press&hold-indicator
+    Texture .SpinnerTip 42x42 hidden atlas=gamepad-press&hold-spinnerTip
+  Frame .FocusJumpHint 32x32 hidden
+    Texture .NormalTexture 42x42 atlas=Gamepad-Xbox1-View-Normal
+    Texture .HoverTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Over
+    Texture .PressedTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Down
+    Texture .ActiveTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Focus
+    Texture .DisabledTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Disabled
+    Texture .LoadBar 42x42 hidden atlas=gamepad-press&hold-loadBar
+    Texture .HoldIndicatorBG 42x42 hidden atlas=gamepad-press&hold-indicator-BG
+    Texture .LoadBarBG 42x42 hidden atlas=gamepad-press&hold-loadBar-BG
+    Texture .LoadBarGlow 42x42 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+    Texture .HoldIndicator 42x42 hidden atlas=gamepad-press&hold-indicator
+    Texture .SpinnerTip 42x42 hidden atlas=gamepad-press&hold-spinnerTip
+  Button SocialUIFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+    Texture .? 20x20 tex=130871
+    Texture .? 20x1 tex=130871
+    Texture .? 20x1 tex=130871
+    Texture .? 1x20 tex=130871
+    Texture .? 1x20 tex=130871
+    Texture .? 2x12 tex=130871
+    Texture .? 2x12 tex=130871
+    Texture .? 20x20 tex=130871
+  Frame .BattleNetBar 413x50
+    Texture .Background 413x50 atlas=friends-frame-infoBG
+    Frame .ControlsContainer 413x32
+      Texture .BattleNetBackground 299x29 tex=632259
+      Button .OnlineStatusDropdown 54x25
+        Texture .Background 70x41 atlas=common-dropdown-textholder
+        Texture .Arrow 27x27 atlas=common-dropdown-a-button
+        FontString .Text 60x10
+      Button .BattleNetMenuButton 34x34
+        Texture .Icon 11x12 atlas=friends-icon-menu
+        Texture .NormalTexture 34x34 atlas=common-button-tertiary-square-normal
+        Texture .PushedTexture 34x34 hidden atlas=common-button-tertiary-square-pressed
+        Texture .HighlightTexture 34x34 atlas=common-button-tertiary-square-normal
+      Frame .PersonalBattleTagDisplay 245x29
+        FontString .DisplayText 82x14
+        Button .CopyBattleTagToClipboardButton 13x13
+          Texture .Icon 12x12 atlas=friends-icon-battlenet-copy
+          Texture .HighlightTexture 13x13 atlas=friends-icon-battlenet-copy
+        Button .BattleNetUnavailableNoticeButton 16x16 hidden
+          Texture SocialUIFrameTexture 0x0 tex=374216
+          Texture .HighlightTexture 0x0 tex=374215
+  Frame .BattleNetUnavailableNoticeFrame 1x1 hidden
+    FontString .Text 0x1
+    Frame .Border 1x1
+      Texture .Bg 0x0 tex=131071
+      Texture .TopLeftCorner 32x32 atlas=UI-Frame-DiamondMetal-CornerTopLeft
+      Texture .TopRightCorner 32x32 atlas=UI-Frame-DiamondMetal-CornerTopRight
+      Texture .BottomLeftCorner 32x32 atlas=UI-Frame-DiamondMetal-CornerBottomLeft
+      Texture .BottomRightCorner 32x32 atlas=UI-Frame-DiamondMetal-CornerBottomRight
+      Texture .TopEdge 0x32 atlas=_UI-Frame-DiamondMetal-EdgeTop
+      Texture .BottomEdge 0x32 atlas=_UI-Frame-DiamondMetal-EdgeBottom
+      Texture .LeftEdge 32x0 atlas=!UI-Frame-DiamondMetal-EdgeLeft
+      Texture .RightEdge 32x0 atlas=!UI-Frame-DiamondMetal-EdgeRight
+    Frame .Header 1x1
+      FontString .HeaderText 223x14
+      Frame .IconHolder 32x32
+        Texture .Icon 32x32 tex=374218
+  Frame .BattleNetBroadcastFrame 1x1 hidden
+    FontString .Title 70x14
+    Frame .Border 1x1
+      Texture .Bg 0x0
+      Texture .TopLeftCorner 32x32 atlas=UI-Frame-DiamondMetal-CornerTopLeft
+      Texture .TopRightCorner 32x32 atlas=UI-Frame-DiamondMetal-CornerTopRight
+      Texture .BottomLeftCorner 32x32 atlas=UI-Frame-DiamondMetal-CornerBottomLeft
+      Texture .BottomRightCorner 32x32 atlas=UI-Frame-DiamondMetal-CornerBottomRight
+      Texture .TopEdge 0x32 atlas=_UI-Frame-DiamondMetal-EdgeTop
+      Texture .BottomEdge 0x32 atlas=_UI-Frame-DiamondMetal-EdgeBottom
+      Texture .LeftEdge 32x0 atlas=!UI-Frame-DiamondMetal-EdgeLeft
+      Texture .RightEdge 32x0 atlas=!UI-Frame-DiamondMetal-EdgeRight
+    EditBox .EditBox 256x30
+      FontString .? 256x30
+      Texture .? 2x10 hidden
+      Texture .TopLeftBorder 8x8 tex=374208
+      Texture .TopRightBorder 8x8 tex=374209
+      Texture .TopBorder 248x8 tex=374207
+      Texture .BottomLeftBorder 8x8 tex=374202
+      Texture .BottomRightBorder 8x8 tex=374203
+      Texture .BottomBorder 248x8 tex=374201
+      Texture .LeftBorder 8x21 tex=374204
+      Texture .RightBorder 8x21 tex=374206
+      Texture .MiddleBorder 248x21 tex=374205
+      FontString .PromptText 175x10
+    Button .UpdateButton 128x22 [styled button]
+      Texture .Left 12x22 tex=130828
+      Texture .Right 12x22 tex=130828
+      Texture .Middle 104x22 tex=130828
+      FontString SocialUIFrameText 42x12
+      Texture .? 128x22 tex=130826
+      Texture .? 126x20 tex=130871
+      Texture .? 126x1 tex=130871
+      Texture .? 126x1 tex=130871
+      Texture .? 1x20 tex=130871
+      Texture .? 1x20 tex=130871
+      Texture .? 126x20 tex=130871
+    Button .CancelButton 128x22 [styled button]
+      Texture .Left 12x22 tex=130828
+      Texture .Right 12x22 tex=130828
+      Texture .Middle 104x22 tex=130828
+      FontString SocialUIFrameText 39x12
+      Texture .? 128x22 tex=130826
+      Texture .? 126x20 tex=130871
+      Texture .? 126x1 tex=130871
+      Texture .? 126x1 tex=130871
+      Texture .? 1x20 tex=130871
+      Texture .? 1x20 tex=130871
+      Texture .? 126x20 tex=130871
+  Frame .IgnoreListFrame 320x292 hidden
+    Texture SocialUIFrameBg 311x269 tex=374155
+    Texture .TopTileStreaks 312x43 hidden atlas=_UI-Frame-TopTileStreaks
+    Frame .NineSlice 320x292
+      Texture .TopLeftCorner 95x95 atlas=UI-Frame-Metal-CornerTopLeft
+      Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+      Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+      Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+      Texture .TopEdge 140x95 atlas=_UI-Frame-Metal-EdgeTop
+      Texture .BottomEdge 140x100 atlas=_UI-Frame-Metal-EdgeBottom
+      Texture .LeftEdge 95x121 atlas=!UI-Frame-Metal-EdgeLeft
+      Texture .RightEdge 95x121 atlas=!UI-Frame-Metal-EdgeRight
+      Texture .Center 0x0
+    Frame .PortraitContainer 1x1
+      Texture SocialUIFramePortrait 62x62 hidden
+      MaskTexture .CircleMask 58x58
+    Frame .FrameGlow 354x330 hidden
+      Texture .GlowTexture 708x660 atlas=gamepad-uiframemetal-largeportrait-focus
+    Frame .TitleContainer 320x20
+      FontString SocialUIFrameTitleText 320x12
+    Frame .LeftJumpHint 32x32 hidden
+      Texture .NormalTexture 42x42 atlas=Gamepad-Xbox1-Trigger-LT-Normal
+      Texture .HoverTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Over
+      Texture .PressedTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Down
+      Texture .ActiveTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Focus
+      Texture .DisabledTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Disabled
+      Texture .LoadBar 42x42 hidden atlas=gamepad-press&hold-loadBar
+      Texture .HoldIndicatorBG 42x42 hidden atlas=gamepad-press&hold-indicator-BG
+      Texture .LoadBarBG 42x42 hidden atlas=gamepad-press&hold-loadBar-BG
+      Texture .LoadBarGlow 42x42 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+      Texture .HoldIndicator 42x42 hidden atlas=gamepad-press&hold-indicator
+      Texture .SpinnerTip 42x42 hidden atlas=gamepad-press&hold-spinnerTip
+    Frame .RightJumpHint 32x32 hidden
+      Texture .NormalTexture 42x42 atlas=Gamepad-Xbox1-Trigger-RT-Normal
+      Texture .HoverTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Over
+      Texture .PressedTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Down
+      Texture .ActiveTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Focus
+      Texture .DisabledTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Disabled
+      Texture .LoadBar 42x42 hidden atlas=gamepad-press&hold-loadBar
+      Texture .HoldIndicatorBG 42x42 hidden atlas=gamepad-press&hold-indicator-BG
+      Texture .LoadBarBG 42x42 hidden atlas=gamepad-press&hold-loadBar-BG
+      Texture .LoadBarGlow 42x42 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+      Texture .HoldIndicator 42x42 hidden atlas=gamepad-press&hold-indicator
+      Texture .SpinnerTip 42x42 hidden atlas=gamepad-press&hold-spinnerTip
+    Frame .FocusJumpHint 32x32 hidden
+      Texture .NormalTexture 42x42 atlas=Gamepad-Xbox1-View-Normal
+      Texture .HoverTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Over
+      Texture .PressedTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Down
+      Texture .ActiveTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Focus
+      Texture .DisabledTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Disabled
+      Texture .LoadBar 42x42 hidden atlas=gamepad-press&hold-loadBar
+      Texture .HoldIndicatorBG 42x42 hidden atlas=gamepad-press&hold-indicator-BG
+      Texture .LoadBarBG 42x42 hidden atlas=gamepad-press&hold-loadBar-BG
+      Texture .LoadBarGlow 42x42 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+      Texture .HoldIndicator 42x42 hidden atlas=gamepad-press&hold-indicator
+      Texture .SpinnerTip 42x42 hidden atlas=gamepad-press&hold-spinnerTip
+    Button SocialUIFrameCloseButton 28x28
+      Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+      Texture .? 28x28 atlas=RedButton-Exit
+      Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+      Texture .? 28x28 atlas=RedButton-Highlight
+    Frame SocialUIFrameInset 303x226 [styled inset]
+      Texture .Bg 303x226 tex=374154
+      Texture .? 303x226 tex=130871
+      Texture .? 303x1 tex=130871
+      Texture .? 303x1 tex=130871
+      Texture .? 1x226 tex=130871
+      Texture .? 1x226 tex=130871
+      Frame .NineSlice 303x226
+        Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+        Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+        Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+        Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+        Texture .TopEdge 291x3 atlas=_UI-Frame-InnerTopTile
+        Texture .BottomEdge 291x3 atlas=_UI-Frame-InnerBotTile
+        Texture .LeftEdge 3x215 atlas=!UI-Frame-InnerLeftTile
+        Texture .RightEdge 3x215 atlas=!UI-Frame-InnerRightTile
+    Button .BlockButton 128x22 [styled button]
+      Texture .Left 12x22 tex=130828
+      Texture .Right 12x22 tex=130828
+      Texture .Middle 104x22 tex=130828
+      FontString SocialUIFrameText 79x12
+      Texture .? 128x22 tex=130826
+      Texture .? 126x20 tex=130871
+      Texture .? 126x1 tex=130871
+      Texture .? 126x1 tex=130871
+      Texture .? 1x20 tex=130871
+      Texture .? 1x20 tex=130871
+      Texture .? 126x20 tex=130871
+    Button .UnblockButton 128x22 [styled button]
+      Texture .Left 12x22 tex=130828
+      Texture .Right 12x22 tex=130828
+      Texture .Middle 104x22 tex=130828
+      FontString SocialUIFrameText 101x12
+      Texture .? 128x22 tex=130826
+      Texture .? 126x20 tex=130871
+      Texture .? 126x1 tex=130871
+      Texture .? 126x1 tex=130871
+      Texture .? 1x20 tex=130871
+      Texture .? 1x20 tex=130871
+      Texture .? 126x20 tex=130871
+    Frame .ScrollBox 276x219
+      Frame .DragDelegate 0x0
+      Frame .ScrollTarget 276x1
+      Frame .Shadows 276x219
+        Texture .Lower 0x0 hidden
+        Texture .Upper 0x0 hidden
+    Frame .ScrollBar 8x213 [styled scroll]
+      Frame .Track 8x175
+        Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+        Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+        Texture .Middle 8x159 atlas=!minimal-scrollbar-track-middle
+        Button .Thumb 8x23 hidden
+          Texture .Begin 8x8 atlas=minimal-scrollbar-small-thumb-top
+          Texture .End 8x8 atlas=minimal-scrollbar-small-thumb-bottom
+          Texture .Middle 8x7 atlas=minimal-scrollbar-small-thumb-middle
+      Button .Back 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+      Button .Forward 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+  Frame .RecentAlliesList 410x606 hidden
+    Texture .TopDivider 399x3 atlas=perks-divider-short
+    Texture .BottomDivider 400x3 atlas=perks-divider-short
+    FontString .FriendsDisabledText 367x470 hidden
+    Frame .FilterBar 410x50
+      Button .SearchFilterDropdown 135x30
+        Texture .Background 143x38 atlas=common-dropdown-b-button
+        FontString .Text 31x20
+        Button .ResetButton 23x23 hidden
+          Texture .? 23x23 atlas=auctionhouse-ui-filter-redx
+          Texture .? 23x23 atlas=auctionhouse-ui-filter-redx
+      EditBox .SearchBar 230x20
+        FontString .? 186x20
+        Texture .? 2x12 hidden
+        FontString .Instructions 186x20
+        Texture .Background 230x20 atlas=common-searchbar-a
+        Texture .searchIcon 12x12 atlas=common-searchbar-icon-a
+        Button .clearButton 17x17 hidden
+          Texture .Icon 10x10 atlas=common-search-clearbutton
+    Frame .LoadingSpinner 60x60 hidden
+      Texture .Ring 60x60 atlas=Spinner_Ring
+      Texture .Sparks 60x60 atlas=Spinner_Sparks
+    Button .ActionButton 160x30 [styled button]
+      FontString .Text 130x12
+      Texture .Left 114x0
+      Texture .Right 292x0
+      Texture .Center 0x0
+      Texture .? 160x30 atlas=128-RedButton-Highlight
+      Texture .? 158x28 tex=130871
+      Texture .? 158x1 tex=130871
+      Texture .? 158x1 tex=130871
+      Texture .? 1x28 tex=130871
+      Texture .? 1x28 tex=130871
+      Texture .? 158x28 tex=130871
+      Frame .Controller 0x0
+    Frame .ScrollBox 382x490
+      Frame .DragDelegate 0x0
+      Frame .ScrollTarget 365x1
+      Frame .Shadows 382x490
+        Texture .Lower 0x0 hidden
+        Texture .Upper 0x0 hidden
+    Frame .ScrollBar 8x479 [styled scroll]
+      Frame .Track 8x441
+        Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+        Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+        Texture .Middle 8x425 atlas=!minimal-scrollbar-track-middle
+        Button .Thumb 8x23 hidden
+          Texture .Begin 8x8 atlas=minimal-scrollbar-small-thumb-top
+          Texture .End 8x8 atlas=minimal-scrollbar-small-thumb-bottom
+          Texture .Middle 8x7 atlas=minimal-scrollbar-small-thumb-middle
+      Button .Back 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+      Button .Forward 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+  Frame .FriendRequestsList 410x606 hidden
+    Texture .TopDivider 399x3 atlas=perks-divider-short
+    Texture .BottomDivider 400x3 atlas=perks-divider-short
+    FontString .FriendsDisabledText 367x508 hidden
+    Frame .FilterBar 410x50 hidden
+      Button .SearchFilterDropdown 135x30
+        Texture .Background 143x38 atlas=common-dropdown-b-button
+        FontString .Text 31x20
+        Button .ResetButton 23x23 hidden
+          Texture .? 23x23 atlas=auctionhouse-ui-filter-redx
+          Texture .? 23x23 atlas=auctionhouse-ui-filter-redx
+      EditBox .SearchBar 230x20
+        FontString .? 186x20
+        Texture .? 2x12 hidden
+        FontString .Instructions 186x20
+        Texture .Background 230x20 atlas=common-searchbar-a
+        Texture .searchIcon 12x12 atlas=common-searchbar-icon-a
+        Button .clearButton 17x17 hidden
+          Texture .Icon 10x10 atlas=common-search-clearbutton
+    Frame .LoadingSpinner 60x60 hidden
+      Texture .Ring 60x60 atlas=Spinner_Ring
+      Texture .Sparks 60x60 atlas=Spinner_Sparks
+    Button .ActionButton 160x30 [styled button]
+      FontString .Text 130x12
+(stopped at 400 lines)
