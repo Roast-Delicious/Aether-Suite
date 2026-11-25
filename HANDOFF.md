@@ -637,6 +637,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   Ledger idea (user): click a finished quest's tracker icon -> directions
   to its turn-in NPC; Hub toggle on the Ledger tab -> with Hub cleanup.
   Map quest DETAILS page still needs a dump (click a quest in the log).
+  FIX BUILD SHIPPED 11:05 (main): Skins 1.4.1, Ledger 1.8.6.
+  MAP LOG BACKGROUND (11:10): B - Aether blue at 45% (35,75,115) behind
+  the map quest log (QuestLog-main-background area; mock/maplog_bg2.py),
+  navy header strips stay. With the POI icons + track boxes -> next build.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
