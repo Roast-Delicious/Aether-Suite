@@ -222,7 +222,8 @@ for _, a in ipairs({ "UI-Character-Info-General-BG", "UI-Character-Info-Stat-BG"
     "RedButton-Condense", "RedButton-Condense-Pressed", "RedButton-Condense-disabled", "RedButton-Highlight",
     "spellbook-item-iconframe", "spellbook-item-iconframe-passive", "spellbook-item-iconframe-shadow",
     "UI-Character-Info-GearSlot", "UI-Character-Info-GearSlotSmall", "RedButton-Exit", "RedButton-Exit-Disabled",
-    "RedButton-exit-pressed", "UI-Character-Info-Title", "groupfinder-Stat-StoneBG" }) do FADE[a] = true end
+    "RedButton-exit-pressed", "UI-Character-Info-Title", "groupfinder-Stat-StoneBG",
+    "newplayerchat-chaticon-newcomer" }) do FADE[a] = true end
 local BLUEL, NAVYF, BLUEH, GOLDT, LIGHTT = {}, {}, {}, {}, {}
 for _, a in ipairs({ "common-framedivider", "UI-Character-Info-ScrollLine-Long", "UI-Character-Info-ScrollLine",
     "perks-divider-short", "Talents-divider-left-c60", "Talents-divider-right-c60", "Talents-divider-vertical-c60",
@@ -252,11 +253,13 @@ for _, a in ipairs({ "common-dropdown-a-button", "QuestLog-icon-setting", "Quest
 -- old art by file ID
 local FADEID = { ["130766"] = "slot", ["136423"] = true, ["525911"] = true, ["130841"] = "itemframe",
                  ["651080"] = "quality" }
-local NAVYID = { ["516764"] = true, ["516763"] = true, ["423811"] = true, ["136430"] = true, ["136467"] = true }
+local NAVYID = { ["136796"] = true, ["516764"] = true, ["516763"] = true, ["423811"] = true, ["136430"] = true, ["136467"] = true }
 local LIGHTID = { ["130864"] = true, ["130865"] = true, ["130866"] = true, ["130867"] = true, ["130868"] = true,
                   ["130869"] = true, ["796424"] = true, ["796423"] = true, ["423808"] = true }
 
 local frameEdges = weak()        -- item button -> { inner edges, outer edges }
+P.SILVER = { 0.78, 0.8, 0.84 }   -- plain (white / gray) items
+P.SLATE  = { 0.2, 0.25, 0.33 }   -- empty slots
 local function IconFrame(b)     -- a blue frame around an item button (vendor tiles, gear slots)
     if not b or not Once(b, "iconframe") then return end
     frameEdges[b] = { Edge(b, "OVERLAY", 6, { BLUE[1], BLUE[2], BLUE[3], 1 }, 0),
@@ -277,7 +280,15 @@ local function QualityUpdate(border)
     local b = border.GetParent and border:GetParent()
     IconFrame(b)
     local e = b and frameEdges[b]; if not e then return end
-    local c = QualityColor(border) or BLUE
+    local c = QualityColor(border)
+    if not c then
+        -- plain items silver, empty slots dim (Nov 25: they looked like rare blue)
+        local nm = b.GetName and b:GetName()
+        local ic = T(b, "icon") or T(b, "Icon") or (nm and _G[nm .. "IconTexture"])
+        local ok, tx = pcall(function() return ic and ic.GetTexture and ic:GetTexture() end)
+        local has = ok and tx ~= nil and tx ~= "" and Shown(ic)
+        c = has and P.SILVER or P.SLATE
+    end
     for i, set in ipairs(e) do
         for _, t in ipairs(set) do t:SetVertexColor(c[1], c[2], c[3], i == 1 and 1 or 0.55) end
     end
@@ -344,6 +355,7 @@ end
 
 local ARROW = { yellow = "gold", gold = "gold", green = "blue" }
 function Rule(t, a)
+    if P.ExtraRule and P.ExtraRule(t, a) then return end   -- Build 2 rules (AetherSkins_Pass3.lua)
     if FADE[a] then
         t:SetAlpha(0)
         local par = t.GetParent and t:GetParent()
@@ -408,8 +420,9 @@ function P.SideTab(tab)
     notch:SetPoint("TOPLEFT", fill, "TOPLEFT", 0, -8); notch:SetPoint("BOTTOMLEFT", fill, "BOTTOMLEFT", 0, 8); notch:SetWidth(4)
     local hl = Tex(tab, "HIGHLIGHT", 0, WHITE, { BLUE[1], BLUE[2], BLUE[3], 0.22 }); hl:SetAllPoints(fill); hl:SetBlendMode("ADD")
     tabParts[tab] = { fill = fill, edge = edge, notch = notch }
-    HookShow(sel, function() SideTabColor(tab) end)
+    HookShow(sel, function() SideTabColor(tab); if P.SideTabExtra then P.SideTabExtra(tab) end end)
     SideTabColor(tab)
+    if P.SideTabExtra then P.SideTabExtra(tab) end
 end
 
 -- Spellbook's square category tabs: navy square, gold when active, icon
@@ -756,7 +769,11 @@ function W.Visit(f, root)
         for _, r in ipairs({ f:GetRegions() }) do
             local a = Atlas(r)
             local role = a and a:match("^UI%-LFG%-RoleIcon%-(%a+)$")
-            if role and ROLE[role] then P.Role(f, ROLE[role], r); break end
+            if role and ROLE[role] then
+                local kind = ROLE[role]
+                if nm and nm:find("NewPlayerFriendly") then kind = "newcomer" end   -- sprout, approved Nov 25
+                P.Role(f, kind, r); break
+            end
         end
     end
 end
@@ -803,3 +820,7 @@ function W.AfterWalk(root)
         for _, t in ipairs(W.chev[root].right) do t:Hide() end
     end
 end
+
+-- Helpers for AetherSkins_Pass3.lua (Build 2 designs).
+P.H = { Tint = Tint, Atlas = Atlas, FileID = FileID, Shown = Shown, Once = Once, HookShow = HookShow,
+        PillOn = PillOn, tabParts = tabParts, Again = Again, weak = weak, busy = busy }

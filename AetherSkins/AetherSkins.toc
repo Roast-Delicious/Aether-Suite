@@ -9,3 +9,4 @@
 AetherSkins.lua
 AetherSkins_Windows.lua
 AetherSkins_Pass2.lua
+AetherSkins_Pass3.lua
