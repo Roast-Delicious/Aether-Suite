@@ -115,6 +115,31 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     (approved capsule bars, Neutral gold / Friendly+ #22e650), rows and
     section headers (tracker-style), world map specifics: phase 2, from
     the user's screenshots + /skins debug.
+- READY, NOT SHIPPED (branch fix-skins-tab-center): AetherSkins 1.2.1. Tab
+  boxes centered on the tab's Text (TOP/BOTTOM of the text +-7), not the
+  whole button: Talents' Primary/Secondary text sat low (user 1.12 note).
+- SKINS SECOND PASS, INVENTORY (from the user's checklist + screenshots,
+  Nov 25 ~04:00-04:10; not queued yet, waiting on 2 decisions: right
+  chevron (c) move past Forever's side tabs?; crest = player portrait on
+  every tab, or keep Forever's class icon on Character?):
+  WORKED: outer frame everywhere, title strip, close box, crest disc,
+  Add New Friend + Apply Changes buttons, Reputation checkboxes, gold
+  text, Talents' bottom-style tabs (Primary/Secondary) + its search box.
+  TO DO: Forever SIDE TABS (Character/Reputation/... column, Friends'
+  column, Progress Track) navy + blue edge, gold selected; RIGHT CHEVRON
+  hidden under side tabs; title gold sticks (Character title = player
+  name, Blizzard recolors it white); stat category headers + rep
+  faction headers + "Friends List 1/2" header -> tracker-style header;
+  rep bars -> capsule bars, Neutral Aether gold, Friendly+ #22e650;
+  selected row -> blue band; scroll bars (Forever's not MinimalScrollBar:
+  ours looked murky green on rep) -> clearly Aether blue; panel
+  backgrounds + divider (CharacterFrame InsetRight etc. brown) -> dark;
+  equipment slot frames brown -> faded (keep quality borders); small icon
+  buttons (friend invite, ☰ menu, status/clock dropdown, Talents' ▼)
+  -> navy, glyphs white; Filter button; Forever's search box (Friends: no
+  blue edge, different build than SearchBoxTemplate); yellow glyphs
+  (model zoom/rotate, ◀ collapse) -> white. Ask for /skins debug from
+  each window (Debug page copy) to get Forever's part names.
 - LAST BUILD (Nov 25, 04:20; go-ahead 03:49): AetherLedger 1.8.0 + AetherHub
   1.14.7 (rest unchanged from 03:45).
   * Ledger tracker icon (1.7.2 fix, merged): overlay parented to the BLOCK,
