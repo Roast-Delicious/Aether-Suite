@@ -223,7 +223,7 @@ for _, a in ipairs({ "UI-Character-Info-General-BG", "UI-Character-Info-Stat-BG"
     "spellbook-item-iconframe", "spellbook-item-iconframe-passive", "spellbook-item-iconframe-shadow",
     "UI-Character-Info-GearSlot", "UI-Character-Info-GearSlotSmall", "RedButton-Exit", "RedButton-Exit-Disabled",
     "RedButton-exit-pressed", "UI-Character-Info-Title", "groupfinder-Stat-StoneBG",
-    "newplayerchat-chaticon-newcomer" }) do FADE[a] = true end
+    "newplayerchat-chaticon-newcomer", "UI-Character-Info-Honor-Bar-BG-Glow" }) do FADE[a] = true end
 local BLUEL, NAVYF, BLUEH, GOLDT, LIGHTT = {}, {}, {}, {}, {}
 for _, a in ipairs({ "common-framedivider", "UI-Character-Info-ScrollLine-Long", "UI-Character-Info-ScrollLine",
     "perks-divider-short", "Talents-divider-left-c60", "Talents-divider-right-c60", "Talents-divider-vertical-c60",
@@ -232,13 +232,15 @@ for _, a in ipairs({ "common-framedivider", "UI-Character-Info-ScrollLine-Long",
     "Legacy-Progressbar-Frame", "Talents-Main-Ring-c60", "talents-node-circle-gray",
     "QuestLog-icon-ticksquare", "common-insideframe", "_UI-Frame-InnerTopTile", "_UI-Frame-InnerBotTile",
     "!UI-Frame-InnerLeftTile", "!UI-Frame-InnerRightTile", "UI-Frame-InnerBotLeftCorner", "UI-Frame-InnerBotRight",
-    "UI-Frame-InnerTopLeft", "UI-Frame-InnerTopRight", "groupfinder-ScrollLine" }) do BLUEL[a] = true end
+    "UI-Frame-InnerTopLeft", "UI-Frame-InnerTopRight", "groupfinder-ScrollLine", "UI-Character-Info-Honor-LevelBG" }) do BLUEL[a] = true end
 for _, a in ipairs({ "Talents-Main-Ring-Box-c60", "Talents-Square-Box-c60",
     "UI-Character-Info-ItemLevel-Bounce", "common-dropdown-textholder", "common-dropdown-b-button",
     "common-button-tertiary-square-normal", "common-button-tertiary-square-pressed", "Legacy-Progressbar-BG",
     "Legacy-Rewards-Tracker-Cards-Disable", "Legacy-Rewards-Tracker-Cards", "Legacy-Rewards-Tracker-Diamond-Disable",
     "spellbook-Tab-Frame-C60", "groupfinder-button-cover", "groupfinder-button-cover-down",
-    "UI-Character-Info-StatTab", "common-button-square-gray-up", "common-button-square-gray-down" }) do NAVYF[a] = true end
+    "UI-Character-Info-StatTab", "common-button-square-gray-up", "common-button-square-gray-down",
+    "UI-Character-Info-Honor-Bar-BG-Horde", "UI-Character-Info-Honor-Bar-BG-Alliance",
+    "pvpqueue-sidebar-honorbar-background" }) do NAVYF[a] = true end
 for _, a in ipairs({ "charactercreate-customize-dropdown-linemouseover-side", "charactercreate-customize-dropdown-linemouseover-middle",
     "friends-card-selected", "groupfinder-button-cover-hover", "QuestLog-quest-glow-yellow", "spellbook-item-iconframe-hover",
     "spellbook-item-iconframe-passive-hover", "UI-Character-Info-Line-Bounce2" }) do BLUEH[a] = true end
@@ -334,6 +336,7 @@ function P.Texture(t)
     if a then return Rule(t, a) end
     local id = FileID(t)
     if not id then return end
+    if P.ExtraID and P.ExtraID(t, id) then return end   -- Pass3 rules by file ID
     if FADEID[id] then
         t:SetAlpha(0)
         local par = t.GetParent and t:GetParent()
@@ -345,6 +348,7 @@ function P.Texture(t)
         end
     elseif NAVYID[id] then Tint(t, { 0.2, 0.36, 0.62 }, 0.95)
     elseif LIGHTID[id] then
+        if P.PageArrow and P.PageArrow(t, id) then return end   -- chevron in a square (Pass3)
         -- page arrows: bright when you can click them, dim when you can't
         -- (user, Nov 25: both looked alike, and too dark)
         local par = t.GetParent and t:GetParent()

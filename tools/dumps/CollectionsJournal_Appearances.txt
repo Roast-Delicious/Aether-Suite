@@ -1,0 +1,307 @@
+== Window dump: CollectionsJournal ==
+Frame CollectionsJournal 703x606
+  Texture CollectionsJournalBg 699x583 tex=374155
+  Texture .TopTileStreaks 695x43 atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 703x606
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 528x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 528x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x435 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x435 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture CollectionsJournalPortrait 62x62 tex=132658
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 737x644 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 621x20
+    FontString CollectionsJournalTitleText 621x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button CollectionsJournalCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .TabContainer 55x606
+    Frame CollectionsJournalTab1 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=2143124
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab2 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=5279604
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab3 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197120
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CollectionsJournalTab4 55x55 hidden (15 parts inside, skipped)
+    Frame CollectionsJournalTab5 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=7539422
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+  Frame MountJournal 703x606 hidden (13 parts inside, skipped)
+  Frame PetJournal 703x606 hidden (10 parts inside, skipped)
+  Frame ToyBox 703x606 hidden (7 parts inside, skipped)
+  Frame HeirloomsJournal 703x606 hidden (6 parts inside, skipped)
+  Frame WardrobeCollectionFrame 703x606
+    Button .InfoButton 64x64 hidden (5 parts inside, skipped)
+    Button WardrobeCollectionFrameTab1 72x32 [styled tab]
+      Texture .LeftActive 35x32 atlas=uiframe-activetab-left
+      Texture .RightActive 37x32 atlas=uiframe-activetab-right
+      Texture .MiddleActive 9x32 atlas=_uiframe-activetab-center
+      Texture .Left 35x27 hidden atlas=uiframe-tab-left
+      Texture .Right 37x27 hidden atlas=uiframe-tab-right
+      Texture .Middle 10x27 hidden atlas=_uiframe-tab-center
+      Texture .LeftHighlight 35x27 atlas=uiframe-tab-left
+      Texture .MiddleHighlight 10x27 atlas=_uiframe-tab-center
+      Texture .RightHighlight 37x27 atlas=uiframe-tab-right
+      FontString .Text 52x10
+    Button WardrobeCollectionFrameTab2 72x32 hidden [styled tab] (16 parts inside, skipped)
+    EditBox WardrobeCollectionFrameSearchBox 115x20 [styled input]
+      FontString .? 79x20
+      Texture .? 2x10 hidden
+      Texture .Left 8x20 atlas=common-search-border-left
+      Texture .Right 8x20 atlas=common-search-border-right
+      Texture .Middle 104x20 atlas=common-search-border-middle
+      FontString .Instructions 79x20
+      Texture WardrobeCollectionFrameSearchBoxSearchIcon 10x10 atlas=common-search-magnifyingglass
+      Button WardrobeCollectionFrameSearchBoxClearButton 17x17 hidden (1 parts inside, skipped)
+      Frame .ProgressFrame 125x24 hidden (9 parts inside, skipped)
+    StatusBar .progressBar 196x13 hidden (4 parts inside, skipped)
+    Button .FilterButton 90x18
+      Texture .Background 98x26 atlas=common-dropdown-b-button
+      FontString .Text 31x20
+      Button .ResetButton 23x23 hidden (2 parts inside, skipped)
+    Button .ClassDropdown 150x25
+      Texture .Background 166x41 atlas=common-dropdown-textholder
+      Texture .Arrow 27x27 atlas=common-dropdown-a-button
+      FontString .Text 116x10
+    Frame .activeFrame 693x541 [styled inset]
+      Texture .Bg 693x541 tex=374154
+      Texture .BackgroundTile 685x533 atlas=collections-background-tile
+      Texture .ShadowCornerTopLeft 145x147 atlas=collections-background-shadow-large
+      Texture .ShadowCornerTopRight 145x147 atlas=collections-background-shadow-large
+      Texture .ShadowCornerBottomLeft 145x147 atlas=collections-background-shadow-large
+      Texture .ShadowCornerBottomRight 145x147 atlas=collections-background-shadow-large
+      Texture .ShadowCornerTop 395x147 atlas=collections-background-shadow-large
+      Texture .ShadowCornerLeft 145x239 atlas=collections-background-shadow-large
+      Texture .ShadowCornerRight 145x239 atlas=collections-background-shadow-large
+      Texture .ShadowCornerBottom 395x147 atlas=collections-background-shadow-large
+      Texture .OverlayShadowTopLeft 13x13 atlas=collections-background-shadow-small
+      Texture .OverlayShadowTopRight 13x13 atlas=collections-background-shadow-small
+      Texture .OverlayShadowBottomLeft 13x13 atlas=collections-background-shadow-small
+      Texture .OverlayShadowBottomRight 13x13 atlas=collections-background-shadow-small
+      Texture .OverlayShadowTop 659x13 atlas=collections-background-shadow-small
+      Texture .OverlayShadowLeft 13x507 atlas=collections-background-shadow-small
+      Texture .OverlayShadowRight 13x507 atlas=collections-background-shadow-small
+      Texture .OverlayShadowBottom 659x13 atlas=collections-background-shadow-small
+      Texture .BGCornerTopLeft 90x67 hidden atlas=collections-background-corner
+      Texture .BGCornerTopRight 90x67 hidden atlas=collections-background-corner
+      Texture .BGCornerBottomLeft 90x67 atlas=collections-background-corner
+      Texture .BGCornerBottomRight 90x67 atlas=collections-background-corner
+      Frame .NineSlice 693x541
+        Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+        Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+        Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+        Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+        Texture .TopEdge 681x3 atlas=_UI-Frame-InnerTopTile
+        Texture .BottomEdge 681x3 atlas=_UI-Frame-InnerBotTile
+        Texture .LeftEdge 3x530 atlas=!UI-Frame-InnerLeftTile
+        Texture .RightEdge 3x530 atlas=!UI-Frame-InnerRightTile
+      Frame .PagingFrame 33x32
+        FontString .PageText 59x12
+        Button .PrevPageButton 32x32
+          Texture .? 32x32 hidden tex=130869
+          Texture .? 32x32 hidden tex=130868
+          Texture .? 32x32 tex=130867
+          Texture .? 32x32 tex=130757
+        Button .NextPageButton 32x32
+          Texture .? 32x32 hidden tex=130866
+          Texture .? 32x32 hidden tex=130865
+          Texture .? 32x32 tex=130864
+          Texture .? 32x32 tex=130757
+      Button .WeaponDropdown 157x25 hidden (3 parts inside, skipped)
+      Frame .SlotsFrame 10x10
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-head
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-shoulder
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 25x25 hidden (3 parts inside, skipped)
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-back
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-chest
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-shirt
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-tabard
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-wrist
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-hands
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-waist
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-legs
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-feet
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-mainhand
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-secondaryhand
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+        Button .? 31x31
+          Texture .SelectedTexture 45x47 hidden atlas=transmog-nav-slot-selected
+          Texture .NormalTexture 35x37 atlas=transmog-nav-slot-ranged
+          Texture .Highlight 31x31 atlas=bags-roundhighlight
+      DressUpModel .ModelR1C1 78x104
+        Texture .? 78x104
+        Texture .Border 96x122 atlas=transmog-wardrobe-border-collected
+        Texture .DisabledOverlay 96x124 hidden atlas=transmog-wardrobe-border-selected
+        Texture .TransmogStateTexture 102x128 hidden atlas=transmog-wardrobe-border-selected
+        Texture .SlotInvalidTexture 60x56 hidden atlas=transmog-icon-unsupported
+        FontString .NewString 29x12 hidden
+        Texture .NewGlow 69x32 hidden atlas=collections-newglow
+        Texture .? 84x110 atlas=transmog-wardrobe-border-highlighted
+        Frame .Favorite 78x104
+          Texture .Icon 31x33 hidden atlas=collections-icon-favorites
+        Frame .HideVisual 78x104
+          Texture .Icon 29x24 hidden atlas=transmog-icon-hidden
+      DressUpModel .ModelR1C2 78x104
+        Texture .? 78x104
+        Texture .Border 96x122 atlas=transmog-wardrobe-border-collected
+        Texture .DisabledOverlay 96x124 hidden atlas=transmog-wardrobe-border-selected
+        Texture .TransmogStateTexture 102x128 hidden atlas=transmog-wardrobe-border-selected
+        Texture .SlotInvalidTexture 60x56 hidden atlas=transmog-icon-unsupported
+        FontString .NewString 29x12 hidden
+        Texture .NewGlow 69x32 hidden atlas=collections-newglow
+        Texture .? 84x110 atlas=transmog-wardrobe-border-highlighted
+        Frame .Favorite 78x104
+          Texture .Icon 31x33 hidden atlas=collections-icon-favorites
+        Frame .HideVisual 78x104
+          Texture .Icon 29x24 hidden atlas=transmog-icon-hidden
+      DressUpModel .ModelR1C3 78x104
+        Texture .? 78x104
+        Texture .Border 96x122 atlas=transmog-wardrobe-border-collected
+        Texture .DisabledOverlay 96x124 hidden atlas=transmog-wardrobe-border-selected
+        Texture .TransmogStateTexture 102x128 hidden atlas=transmog-wardrobe-border-selected
+        Texture .SlotInvalidTexture 60x56 hidden atlas=transmog-icon-unsupported
+        FontString .NewString 29x12 hidden
+        Texture .NewGlow 69x32 hidden atlas=collections-newglow
+        Texture .? 84x110 atlas=transmog-wardrobe-border-highlighted
+        Frame .Favorite 78x104
+          Texture .Icon 31x33 hidden atlas=collections-icon-favorites
+        Frame .HideVisual 78x104
+          Texture .Icon 29x24 hidden atlas=transmog-icon-hidden
+      DressUpModel .ModelR1C4 78x104
+        Texture .? 78x104
+        Texture .Border 96x122 atlas=transmog-wardrobe-border-collected
+        Texture .DisabledOverlay 96x124 hidden atlas=transmog-wardrobe-border-selected
+        Texture .TransmogStateTexture 102x128 hidden atlas=transmog-wardrobe-border-selected
+        Texture .SlotInvalidTexture 60x56 hidden atlas=transmog-icon-unsupported
+        FontString .NewString 29x12 hidden
+        Texture .NewGlow 69x32 hidden atlas=collections-newglow
+        Texture .? 84x110 atlas=transmog-wardrobe-border-highlighted
+        Frame .Favorite 78x104
+          Texture .Icon 31x33 hidden atlas=collections-icon-favorites
+        Frame .HideVisual 78x104
+          Texture .Icon 29x24 hidden atlas=transmog-icon-hidden
+      DressUpModel .ModelR1C5 78x104
+        Texture .? 78x104
+        Texture .Border 96x122 atlas=transmog-wardrobe-border-collected
+        Texture .DisabledOverlay 96x124 hidden atlas=transmog-wardrobe-border-selected
+        Texture .TransmogStateTexture 102x128 hidden atlas=transmog-wardrobe-border-selected
+        Texture .SlotInvalidTexture 60x56 hidden atlas=transmog-icon-unsupported
+        FontString .NewString 29x12 hidden
+        Texture .NewGlow 69x32 hidden atlas=collections-newglow
+        Texture .? 84x110 atlas=transmog-wardrobe-border-highlighted
+        Frame .Favorite 78x104
+          Texture .Icon 31x33 hidden atlas=collections-icon-favorites
+        Frame .HideVisual 78x104
+          Texture .Icon 29x24 hidden atlas=transmog-icon-hidden
+      DressUpModel .ModelR1C6 78x104
+        Texture .? 78x104
+        Texture .Border 96x122 atlas=transmog-wardrobe-border-collected
+        Texture .DisabledOverlay 96x124 hidden atlas=transmog-wardrobe-border-selected
+        Texture .TransmogStateTexture 102x128 hidden atlas=transmog-wardrobe-border-selected
+        Texture .SlotInvalidTexture 60x56 hidden atlas=transmog-icon-unsupported
+        FontString .NewString 29x12 hidden
+        Texture .NewGlow 69x32 hidden atlas=collections-newglow
+        Texture .? 84x110 atlas=transmog-wardrobe-border-highlighted
+        Frame .Favorite 78x104
+          Texture .Icon 31x33 hidden atlas=collections-icon-favorites
+        Frame .HideVisual 78x104
+          Texture .Icon 29x24 hidden atlas=transmog-icon-hidden
+      DressUpModel .ModelR2C1 78x104
+        Texture .? 78x104
+        Texture .Border 96x122 atlas=transmog-wardrobe-border-collected
+        Texture .DisabledOverlay 96x124 hidden atlas=transmog-wardrobe-border-selected
+        Texture .TransmogStateTexture 102x128 hidden atlas=transmog-wardrobe-border-selected
+        Texture .SlotInvalidTexture 60x56 hidden atlas=transmog-icon-unsupported
+        FontString .NewString 29x12 hidden
+        Texture .NewGlow 69x32 hidden atlas=collections-newglow
+        Texture .? 84x110 atlas=transmog-wardrobe-border-highlighted
+        Frame .Favorite 78x104
+          Texture .Icon 31x33 hidden atlas=collections-icon-favorites
+        Frame .HideVisual 78x104
+          Texture .Icon 29x24 hidden atlas=transmog-icon-hidden
+      DressUpModel .ModelR2C2 78x104 hidden (10 parts inside, skipped)
+      DressUpModel .ModelR2C3 78x104 hidden (10 parts inside, skipped)
+      DressUpModel .ModelR2C4 78x104 hidden (10 parts inside, skipped)
+      DressUpModel .ModelR2C5 78x104 hidden (10 parts inside, skipped)
+      DressUpModel .ModelR2C6 78x104 hidden (10 parts inside, skipped)
+      DressUpModel .ModelR3C1 78x104 hidden (10 parts inside, skipped)
+      DressUpModel .ModelR3C2 78x104 hidden (10 parts inside, skipped)
+      DressUpModel .ModelR3C3 78x104 hidden (10 parts inside, skipped)
+      DressUpModel .ModelR3C4 78x104 hidden (10 parts inside, skipped)
+      DressUpModel .ModelR3C5 78x104 hidden (10 parts inside, skipped)
+      DressUpModel .ModelR3C6 78x104 hidden (10 parts inside, skipped)
+    Frame .SetsCollectionFrame 693x541 hidden (5 parts inside, skipped)
+  Frame WarbandSceneJournal 703x606 hidden (1 parts inside, skipped)
+  Button .? 16x16

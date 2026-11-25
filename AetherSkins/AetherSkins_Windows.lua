@@ -24,6 +24,10 @@ local GOLD  = { 1, 0.69, 0 }
 local BLUE  = { 0.3, 0.65, 1 }
 local NAVY  = { 0.075, 0.157, 0.29 }
 local PANEL = { 0.047, 0.055, 0.075, 0.95 }
+-- three background layers (user, Nov 25 12:05, mock/bg_tiers.py A):
+-- frame = PANEL (window body), box = NAVY (strips, panels, lists),
+-- page = PAGE (anything you read: quest text, gossip, map quest log)
+local PAGE  = { 35 / 255, 75 / 255, 115 / 255 }
 local TEXT  = { 0.92, 0.93, 0.96 }
 
 local function FontFile(weight)
@@ -311,7 +315,8 @@ local function Scroll(s)
     local tr = T(s, "Track")
     local th = (tr and T(tr, "Thumb")) or T(s, "Thumb")
     if tr then Tint(T(tr, "Begin"), BLUE, 0.35); Tint(T(tr, "Middle"), BLUE, 0.35); Tint(T(tr, "End"), BLUE, 0.35) end
-    if th then Tint(T(th, "Begin"), BLUE); Tint(T(th, "Middle"), BLUE); Tint(T(th, "End"), BLUE) end
+    -- the thumb itself gets our gold art laid over it (AetherSkins_Pass3); no tint here,
+    -- a desaturated thumb turned our gold white (user, Nov 25 11:36)
     for _, k in ipairs({ "Back", "Forward" }) do
         local a = T(s, k)
         if a then Tint(T(a, "Texture") or (a.GetNormalTexture and a:GetNormalTexture()), TEXT) end
@@ -407,7 +412,10 @@ local function Kind(o)
     if not ok then return end
     if t == "CheckButton" then
         local n = o.GetNormalTexture and o:GetNormalTexture()
-        if n and o.GetCheckedTexture and o:GetCheckedTexture() then return "check" end
+        -- only real checkboxes: big picture buttons (Legacy Tree cards,
+        -- 67-110px) are CheckButtons too and lost their art to our box
+        local okw, w = pcall(o.GetWidth, o)
+        if n and o.GetCheckedTexture and o:GetCheckedTexture() and not T(o, "Ring") and not (okw and w and w > 34) then return "check" end
     elseif t == "Button" then
         if T(o, "LeftActive") and T(o, "MiddleActive") then return "tab" end
         if T(o, "Left") and T(o, "Right") and (T(o, "Middle") or T(o, "Center")) and o.GetFontString and o:GetFontString() then return "button" end
@@ -536,7 +544,7 @@ end
 
 -- Helpers shared with AetherSkins_Pass2.lua
 W.H = { Tex = Tex, Fade = Fade, T = T, Edge = Edge, NavyBox = NavyBox, Fonts = Fonts, Forbidden = Forbidden,
-        MEDIA = MEDIA, WHITE = WHITE, GOLD = GOLD, BLUE = BLUE, NAVY = NAVY, TEXT = TEXT, FontFile = FontFile,
+        MEDIA = MEDIA, WHITE = WHITE, GOLD = GOLD, BLUE = BLUE, NAVY = NAVY, PAGE = PAGE, PANEL = PANEL, TEXT = TEXT, FontFile = FontFile,
         Close = Close }
 
 -- The window under the mouse (or its window), for /skins this.

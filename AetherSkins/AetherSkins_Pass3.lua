@@ -24,10 +24,88 @@ if not (P and P.H and W.H) then return end
 local H, PH = W.H, P.H
 local Tex, Fade, T, Edge, NavyBox, Forbidden = H.Tex, H.Fade, H.T, H.Edge, H.NavyBox, H.Forbidden
 local MEDIA, WHITE, GOLD, BLUE, NAVY, TEXT = H.MEDIA, H.WHITE, H.GOLD, H.BLUE, H.NAVY, H.TEXT
+local PAGE = H.PAGE or { 35 / 255, 75 / 255, 115 / 255 }
 local Tint, Atlas, FileID, Shown, Once, HookShow = PH.Tint, PH.Atlas, PH.FileID, PH.Shown, PH.Once, PH.HookShow
 local weak = PH.weak
 local P3 = {}
 W.P3 = P3
+local Usable
+
+-- ------------------------------------------
+-- Gold when you can click it, gray when you can't (user, Nov 25)
+-- ------------------------------------------
+local usable = weak()            -- button -> { look = fn }
+local GRAY = { 0.62, 0.65, 0.72 }
+Usable = function(b, o, extra, col)
+    local u = usable[b]
+    if not u then
+        u = { list = {} }
+        usable[b] = u
+        u.look = function()
+            local okE, en = pcall(function() return not b.IsEnabled or b:IsEnabled() end)
+            local on = (not okE) or en
+            if on and u.extra then local okX, x = pcall(u.extra); on = okX and x end
+            for ob, c in pairs(u.list) do
+                if ob.SetDesaturated then ob:SetDesaturated(not on) end
+                local k = on and c or GRAY
+                ob:SetVertexColor(k[1], k[2], k[3], 1)
+            end
+            if u.onLook then pcall(u.onLook, on) end
+        end
+        if hooksecurefunc then
+            for _, m in ipairs({ "Enable", "Disable", "SetEnabled" }) do
+                if b[m] then pcall(hooksecurefunc, b, m, u.look) end
+            end
+        end
+    end
+    if o then u.list[o] = col or { 1, 1, 1 } end
+    if extra then u.extra = extra end
+    u.look()
+    return u
+end
+P3.Usable = Usable
+function P3.RefreshUsable() for _, u in pairs(usable) do pcall(u.look) end end
+-- repairs and money change without the buttons being touched
+if CreateFrame then
+    local ev = CreateFrame("Frame")
+    for _, e in ipairs({ "MERCHANT_SHOW", "MERCHANT_UPDATE", "UPDATE_INVENTORY_DURABILITY", "PLAYER_MONEY", "BAG_UPDATE_DELAYED" }) do
+        pcall(ev.RegisterEvent, ev, e)
+    end
+    ev:SetScript("OnEvent", function() P3.RefreshUsable() end)
+end
+
+-- ------------------------------------------
+-- Page arrows (vendor, Spellbook): our chevron inside a navy square
+-- ------------------------------------------
+local PAGE_DIR = { ["130864"] = "right", ["130865"] = "right", ["130866"] = "right",
+                   ["130867"] = "left", ["130868"] = "left", ["130869"] = "left" }
+function P.PageArrow(t, id)
+    local dir = PAGE_DIR[id]
+    local b = t.GetParent and t:GetParent()
+    if not dir or not b or not b.CreateTexture then return false end
+    t:SetAlpha(0)
+    if not Once(b, "pagearrow") then return true end
+    local okw, bw = pcall(b.GetWidth, b)
+    local q = math.min(26, math.max(14, ((okw and bw) or 32) - 6))
+    local s = Tex(b, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
+    s:SetSize(q, q); s:SetPoint("CENTER", b, "CENTER")
+    local f = CreateFrame("Frame", nil, b)
+    f:SetSize(q, q); f:SetPoint("CENTER", b, "CENTER")
+    local e = Edge(f, "BORDER", 1, { BLUE[1], BLUE[2], BLUE[3], 1 }, 0)
+    local c = Tex(b, "ARTWORK", 7, MEDIA .. "chev3d_" .. dir, { 1, 1, 1, 1 })
+    c:SetSize(q - 6, q - 6); c:SetPoint("CENTER", b, "CENTER")
+    local u = Usable(b, c)
+    u.onLook = function(on)
+        local k = on and BLUE or { 0.24, 0.27, 0.35 }
+        for _, x in ipairs(e) do x:SetVertexColor(k[1], k[2], k[3], 1) end
+    end
+    u.look()
+    if b.HookScript then
+        b:HookScript("OnMouseDown", function() c:ClearAllPoints(); c:SetPoint("CENTER", b, "CENTER", 1, -1) end)
+        b:HookScript("OnMouseUp", function() c:ClearAllPoints(); c:SetPoint("CENTER", b, "CENTER") end)
+    end
+    return true
+end
 
 -- ------------------------------------------
 -- Side tabs: glyph, thick gold frame and glow on the open one
@@ -36,7 +114,16 @@ local TAB_BY_ICON = {
     ["8197103"] = "tab_rep", ["2447783"] = "tab_skills", ["8197098"] = "tab_pvp",
     ["8197078"] = "tab_coin", ["8197104"] = "tab_stats", ["8197096"] = "gl_eyeball",
     ["2056011"] = "gl_track", ["413584"] = "tab_pvp", ["442272"] = "gl_talents",
+    -- professions (flat set approved Nov 25 12:22, mock/profs_flat.py)
+    ["8197101"] = "pr_overview", ["136247"] = "pr_leather", ["134366"] = "pr_skinning", ["135966"] = "pr_firstaid",
+    ["136245"] = "pr_fishing", ["133971"] = "pr_cooking", ["136241"] = "pr_blacksmith", ["136248"] = "pr_mining",
+    ["136246"] = "pr_herbalism", ["136240"] = "pr_alchemy", ["136249"] = "pr_tailoring", ["136244"] = "pr_enchanting",
+    ["136243"] = "pr_engineering", ["134071"] = "pr_jewel", ["237171"] = "pr_inscription",
+    -- Collections (mock/coll_flat.py)
+    ["2143124"] = "cl_mount", ["5279604"] = "cl_pet", ["8197120"] = "cl_toy", ["7539422"] = "cl_appearance",
 }
+local TAB_BY_NAME = { CollectionsJournalTab1 = "cl_mount", CollectionsJournalTab2 = "cl_pet", CollectionsJournalTab3 = "cl_toy",
+    CollectionsJournalTab4 = "cl_heirloom", CollectionsJournalTab5 = "cl_appearance" }
 local TAB_BY_ATLAS = { { "^friends%-icon%-tab%-friends", "gl_friends" }, { "^friends%-icon%-tab%-recentAllies", "gl_clock" },
     { "^friends%-icon%-tab%-friendRequest", "gl_request" }, { "^friends%-icon%-tab%-raid", "gl_people" } }
 local TAB_BY_KEY = { { "Listing", "gl_eyeball" }, { "Browse", "gl_eye" }, { "Who", "gl_people" },
@@ -51,6 +138,8 @@ function P3.TabGlyph(tab)
     local ic = T(tab, "Icon")
     local a = ic and Atlas(ic)
     if a then for _, m in ipairs(TAB_BY_ATLAS) do if a:find(m[1]) then return m[2] end end end
+    local nm = tab.GetName and tab:GetName()
+    if nm and TAB_BY_NAME[nm] then return TAB_BY_NAME[nm] end
     local id = ic and FileID(ic)
     if id and TAB_BY_ICON[id] then return TAB_BY_ICON[id] end
     local key = TabKey(tab)
@@ -86,6 +175,7 @@ function P.SideTabExtra(tab)
     local sel = Shown(T(tab, "SelectedTexture"))
     for _, e in ipairs(x.rings) do e:SetShown(sel) end
     x.glow:SetShown(sel)
+    if p.notch then p.notch:Hide() end   -- the thick gold frame replaces it (user, Nov 25 11:36)
 end
 
 -- ------------------------------------------
@@ -95,7 +185,22 @@ local CREST = { WorldMapFrame = "gl_map", SocialUIFrame = "gl_friends", FriendsF
     LegacySystemFrame = "gl_track", LFGListingFrame = "gl_eyeball", LFGBrowseFrame = "gl_eyeball",
     LFGWhoListFrame = "gl_eyeball", PlayerSpellsFrame = "gl_book" }
 local crestParts = weak()
-local function CrestKind(win, name)
+local COLL_PAGES = { { "MountJournal", "cl_mount" }, { "PetJournal", "cl_pet" }, { "ToyBox", "cl_toy" },
+    { "HeirloomsJournal", "cl_heirloom" }, { "WardrobeCollectionFrame", "cl_appearance" } }
+local function CrestKind(win, name, portrait)
+    -- Professions: the portrait shows the open profession's icon
+    if name == "ProfessionsFrame" then
+        local id = portrait and FileID(portrait)
+        local k = id and TAB_BY_ICON[id]
+        return (k and k:find("^pr_")) and k or "pr_overview"
+    end
+    if name == "CollectionsJournal" then
+        for _, pg in ipairs(COLL_PAGES) do
+            local f = _G[pg[1]]
+            if f and f.IsShown and f:IsShown() then return pg[2] end
+        end
+        return "cl_mount"
+    end
     if name == "PlayerSpellsFrame" then
         local tf = T(win, "TalentsFrame")
         if tf and tf.IsShown and tf:IsShown() then return "gl_talents" end
@@ -104,12 +209,12 @@ local function CrestKind(win, name)
 end
 function P3.Crest(win)
     local name = win.GetName and win:GetName()
-    local kind = name and CrestKind(win, name)
-    if not kind then return end
+    if not name then return end
     local chrome = (not T(win, "NineSlice") and T(win, "BorderFrame")) or win
     local pc = T(chrome, "PortraitContainer")
     local portrait = (pc and (T(pc, "portrait") or T(pc, "Portrait"))) or (name and _G[name .. "Portrait"])
-    if not portrait then return end
+    local kind = CrestKind(win, name, portrait)
+    if not kind or not portrait then return end
     local c = crestParts[win]
     if not c then
         local owner = pc or chrome
@@ -119,6 +224,15 @@ function P3.Crest(win)
         c.glyph = Tex(owner, "OVERLAY", 6, MEDIA .. kind, GOLD)
         c.glyph:SetSize(36, 36); c.glyph:SetPoint("CENTER", portrait, "CENTER")
         crestParts[win] = c
+        if name == "ProfessionsFrame" and hooksecurefunc and portrait.SetTexture then
+            pcall(hooksecurefunc, portrait, "SetTexture", function() pcall(P3.Crest, win) end)
+        end
+        if name == "CollectionsJournal" then
+            for _, pg in ipairs(COLL_PAGES) do
+                local f = _G[pg[1]]
+                if f and f.HookScript then f:HookScript("OnShow", function() pcall(P3.Crest, win) end) end
+            end
+        end
         if name == "PlayerSpellsFrame" then
             for _, k in ipairs({ "TalentsFrame", "SpellBookFrame", "SpecFrame" }) do
                 local sub = T(win, k)
@@ -140,7 +254,8 @@ local VENDOR = { ["SpellIcon-256x256-RepairAll"] = "btn_repairall", ["SpellIcon-
 -- scroll thumb asks for its size on every resize; replacing it raised
 -- "Usage: C_Texture.GetAtlasInfo(atlas)", user, Nov 25 10:55).
 local over = weak()
-local function Ours(t, file, col, w, h)
+local function Ours(t, file, col, w, h, path)
+    -- (returns our texture)
     local o = over[t]
     local par = t.GetParent and t:GetParent()
     if not par or not par.CreateTexture then return end
@@ -150,29 +265,32 @@ local function Ours(t, file, col, w, h)
             local ok, l, sl = pcall(t.GetDrawLayer, t)
             if ok and l then layer, sub = l, math.min((sl or 0) + 1, 7) end
         end
-        o = Tex(par, layer, sub, MEDIA .. file, col)
+        o = Tex(par, layer, sub, path or (MEDIA .. file), col)
         over[t] = o
         local function Sync()
             o:SetShown(Shown(t))
-            local okd, d = pcall(function() return t.IsDesaturated and t:IsDesaturated() end)
-            if o.SetDesaturated then o:SetDesaturated(okd and d or false) end
+            if o.mirrorDesat then
+                local okd, d = pcall(function() return t.IsDesaturated and t:IsDesaturated() end)
+                if o.SetDesaturated then o:SetDesaturated(okd and d or false) end
+            end
         end
         HookShow(t, Sync)
         if hooksecurefunc and t.SetDesaturated then pcall(hooksecurefunc, t, "SetDesaturated", Sync) end
         Sync()
     end
-    o:SetTexture(MEDIA .. file)
+    o:SetTexture(path or (MEDIA .. file))
     o:SetVertexColor(col[1], col[2], col[3], col[4] or 1)
     o:ClearAllPoints()
     if w then o:SetSize(w, h or w); o:SetPoint("CENTER", t, "CENTER")
     else o:SetPoint("TOPLEFT", t, "TOPLEFT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT") end
     t:SetAlpha(0)
+    return o
 end
 
 -- The Aether page in place of the parchment, with a thin blue edge.
 local pageEdge = weak()
 local function Page(t)
-    Ours(t, "page_aether", { 1, 1, 1, 1 })
+    Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE)   -- flat page (bg_tiers A)
     if not pageEdge[t] then
         local par = t.GetParent and t:GetParent()
         if par then
@@ -183,35 +301,250 @@ local function Page(t)
     end
 end
 
+local cardFill, cardSel = weak(), weak()
+local function FriendCardSel(card)
+    local f = cardFill[card]; if not f then return end
+    local sel = cardSel[card] or false
+    local c = sel and { PAGE[1], PAGE[2], PAGE[3], 0.97 } or f.c
+    f.o:SetVertexColor(c[1], c[2], c[3], c[4])
+    local x = card.aetherSel
+    if x then x.notch:SetShown(sel); for _, e in ipairs(x.edge) do e:SetShown(sel) end end
+end
 local friendSel = weak()
 local function FriendSelected(t)
     local card = t.GetParent and t:GetParent()
     if not card or friendSel[t] then return end
     local notch = Tex(card, "OVERLAY", 4, WHITE, GOLD)
-    notch:SetPoint("TOPLEFT", t, "TOPLEFT", 0, -4); notch:SetPoint("BOTTOMLEFT", t, "BOTTOMLEFT", 0, 4); notch:SetWidth(3)
+    notch:SetPoint("TOPLEFT", t, "TOPLEFT", 0, -4); notch:SetPoint("BOTTOMLEFT", t, "BOTTOMLEFT", 0, 4); notch:SetWidth(4)
     local f = CreateFrame("Frame", nil, card)
     f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
     local e = Edge(f, "OVERLAY", 3, { BLUE[1], BLUE[2], BLUE[3], 1 }, 0)
     friendSel[t] = { notch, e }
-    local function Upd()
-        local on = Shown(t)
-        notch:SetShown(on); for _, x in ipairs(e) do x:SetShown(on) end
+    card.aetherSel = { notch = notch, edge = e }
+    -- Blizzard marks the picked friend by locking the card's highlight
+    if hooksecurefunc and card.LockHighlight then
+        pcall(hooksecurefunc, card, "LockHighlight", function() cardSel[card] = true; FriendCardSel(card) end)
+        pcall(hooksecurefunc, card, "UnlockHighlight", function() cardSel[card] = false; FriendCardSel(card) end)
     end
-    HookShow(t, Upd); Upd()
+    notch:SetShown(false); for _, x in ipairs(e) do x:SetShown(false) end
+    FriendCardSel(card)
     -- under the mouse: a thin blue edge (Blizzard's own highlight layer)
     if card.CreateTexture and Once(card, "frhover") then
         Edge(card, "HIGHLIGHT", 1, { BLUE[1], BLUE[2], BLUE[3], 0.9 }, 1)
     end
 end
 
+
+-- ------------------------------------------
+-- Map quest log: tracker-style quest icons, navy track boxes, Aether
+-- blue background (decided Nov 25 10:55 / 11:10, mock/maplog_icons.py,
+-- mock/maplog_bg2.py)
+-- ------------------------------------------
+local poi = weak()
+local function PoiLook(b)
+    local o = poi[b]
+    if o then return o end
+    o = {}
+    o.disc = Tex(b, "ARTWORK", 6, MEDIA .. "trk_disc", { NAVY[1], NAVY[2], NAVY[3], 0.96 })
+    o.ring = Tex(b, "ARTWORK", 7, MEDIA .. "trk_ring", GOLD)
+    o.dots = Tex(b, "OVERLAY", 6, MEDIA .. "trk_dots", GOLD)
+    o.mark = b:CreateFontString(nil, "OVERLAY")
+    if not (H.FontFile and pcall(o.mark.SetFont, o.mark, H.FontFile("Bold"), 11, "")) then o.mark:SetFontObject("GameFontNormal") end
+    o.mark:SetPoint("CENTER", b, "CENTER", 0.5, 0); o.mark:SetText("?")
+    o.mark:SetTextColor(GOLD[1], GOLD[2], GOLD[3])
+    for _, k in ipairs({ "disc", "ring", "dots" }) do
+        o[k]:ClearAllPoints(); o[k]:SetSize(18, 18); o[k]:SetPoint("CENTER", b, "CENTER")
+    end
+    o.mark:Hide()
+    poi[b] = o
+    return o
+end
+local function PoiButton(t)     -- the icon sits in .Display inside the button
+    local d = t.GetParent and t:GetParent()
+    local b = d and d.GetParent and d:GetParent()
+    return b and b.CreateTexture and b or nil
+end
+function P3.MapLogRule(t, a)
+    -- plain and recurring (daily) quests alike
+    if a:find("^UI%-QuestPoi%a*%-QuestNumber") then
+        t:SetAlpha(0)
+        local b = t.GetParent and t:GetParent()
+        if b and b.CreateTexture then PoiLook(b) end
+        return true
+    end
+    if a:find("^UI%-QuestPoi%a*%-%a+Glow$") then
+        Tint(t, BLUE, 0.5); return true
+    end
+    if a == "Quest-In-Progress-Icon-yellow" or a == "UI-QuestIcon-TurnIn-Normal" or a == "UI-QuestPoiRecurring-QuestBangTurnIn" then
+        t:SetAlpha(0)
+        local b = PoiButton(t)
+        if b then
+            local o = PoiLook(b)
+            local turnIn = (a ~= "Quest-In-Progress-Icon-yellow")
+            o.dots:SetShown(not turnIn); o.mark:SetShown(turnIn)
+        end
+        return true
+    end
+    if a == "QuestLog-icon-ticksquare" then
+        t:SetAlpha(0)
+        local cb = t.GetParent and t:GetParent()
+        if cb and cb.CreateTexture and Once(cb, "tickbox") then
+            local f = Tex(cb, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
+            f:SetSize(12, 12); f:SetPoint("CENTER", cb, "CENTER")
+            local e = CreateFrame("Frame", nil, cb)
+            e:SetSize(12, 12); e:SetPoint("CENTER", cb, "CENTER")
+            Edge(e, "BORDER", 1, { BLUE[1], BLUE[2], BLUE[3], 1 }, 0)
+        end
+        return true
+    end
+    -- quest details page (B, user Nov 25 11:58, mock/maplog_details.py):
+    -- flat Aether blue like the list, navy strips and rewards box
+    if a == "QuestDetailsBackgrounds" then
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE)
+        local par = t.GetParent and t:GetParent()
+        if par and Once(t, "detailsedge") then
+            local f = CreateFrame("Frame", nil, par)
+            f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
+            Edge(f, "BORDER", 3, { 0.24, 0.43, 0.69, 0.9 }, 0)
+        end
+        return true
+    end
+    if a == "QuestLog-reward-top-frame" or a == "QuestLog-reward-bottom" or a == "QuestLog-reward-header-top"
+       or a == "QuestLog-reward-tile-vertical" then
+        Ours(t, nil, { NAVY[1], NAVY[2], NAVY[3], 1 }, nil, nil, WHITE)
+        return true
+    end
+    if a == "QuestLog-main-background" then
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE)
+        return true
+    end
+    return false
+end
+
+-- ------------------------------------------
+-- Professions and Legacy Tree on the three layers (user Nov 25 12:11-12:21,
+-- mock/profs_flat.py; dumps ProfessionsFrame_*, LegacySystemFrame_Tree)
+-- ------------------------------------------
+local boxEdge = weak()
+local function BoxEdge(t, col)
+    local par = t.GetParent and t:GetParent()
+    if not par or boxEdge[t] then return end
+    local f = CreateFrame("Frame", nil, par)
+    f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
+    boxEdge[t] = Edge(f, "BORDER", 3, col or { 0.24, 0.43, 0.69, 0.9 }, 0)
+end
+local NAVYC = { NAVY[1], NAVY[2], NAVY[3], 1 }
+local TRACK = { 0.055, 0.1, 0.18, 1 }
+local FADE3 = { ["Profession-Background-Overview"] = true, ["Profession-Background-Template2"] = true,
+    ["Legacy-Tree-Frame-background"] = true, ["spec-background"] = true, ["Legacy-Challenge-BG"] = true,
+    ["Legacy-Challenge-Cards-Ribbon-Blue"] = true, ["Legacy-Challenge-Cards-Ribbon-Blue-Disable"] = true }
+function P3.MoreRule(t, a)
+    if FADE3[a] or a:find("^Skillbar_Flare_") then t:SetAlpha(0); return true end
+    -- boxes: navy with a blue edge
+    if a:find("^Profession%-overview%-[Cc]ard") or a == "Legacy-Tree-Frame-Card" then
+        Ours(t, nil, NAVYC, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    if a == "Professions-background-summarylist" or a == "Legacy-Tree-Frame-Points-Bar" then
+        Ours(t, nil, NAVYC, nil, nil, WHITE); return true
+    end
+    -- the recipe you read: page blue
+    if a:find("^Profession%-background%-card%-") then
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    -- skill bars: dark track, gold fill, blue frame
+    if a == "Profession-ProgressBar-BG" or a == "Professions-skillbar-bg" then
+        Ours(t, nil, TRACK, nil, nil, WHITE); return true
+    end
+    if a:find("^Skillbar_Fill_Flipbook_") then Tint(t, GOLD); return true end
+    if a == "Profession-ProgressBar-frame" or a == "Professions-skillbar-frame" or a == "Professions-Slot-Frame"
+       or a == "auctionhouse-itemicon-border-white" or a == "Legacy-Tree-Frame-divider-Vertical" then
+        Tint(t, BLUE, 0.9); return true
+    end
+    if a == "Professions-Slot-bg" or a == "Legacy-Tree-Frame-level-circle" then Tint(t, NAVY, 1); return true end
+    -- recipe list: picked row blue, hover softer
+    if a == "Professions_Recipe_Active" then Tint(t, BLUE, 0.45); return true end
+    if a == "Professions_Recipe_Hover" then Tint(t, BLUE, 0.2); return true end
+    -- Legacy Tree: gold rings round the tree pictures, blue glow on the open one
+    if a == "Legacy-Tree-Frame-Card-Ring" or a == "Legacy-Tree-Frame-Ring-big" or a == "charactercreate-ring-select" then
+        Tint(t, GOLD); return true
+    end
+    if a == "Legacy-Tree-Frame-Card-Glow" then Tint(t, BLUE, 0.5); return true end
+    -- Legacy Challenges: navy cards (not yet earned: frame-dark), picked
+    -- card blue; category rows navy, the open one blue
+    if a == "Legacy-Challenge-Cards-selected" then Tint(t, BLUE, 0.3); return true end
+    if a == "Legacy-Challenge-Cards-Date-BG" then Tint(t, NAVY, 1); return true end
+    if a:find("^Legacy%-Challenge%-Cards") then
+        local off = a:lower():find("disable")
+        Ours(t, nil, off and { 0.047, 0.055, 0.075, 1 } or NAVYC, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    if a == "Legacy-Challenge-Left-Sub-Tab" then Tint(t, { 0.2, 0.36, 0.62 }, 0.95); return true end
+    if a == "Legacy-Challenge-Left-Sub-Tab-selected" then Tint(t, BLUE, 0.45); return true end
+    if a == "Legacy-Tree-Frame-icon-frame" then Tint(t, BLUE, 0.9); return true end
+    if a == "worldquest-tracker-checkmark" then Tint(t, GOLD); return true end
+    if a == "Legacy-Tree-Frame-icon-frame-disable" then Tint(t, { 0.43, 0.59, 0.82 }, 1); return true end
+    return false
+end
+
+-- ------------------------------------------
+-- Collections (dumps CollectionsJournal_Mounts/Pets/Toys/Appearances,
+-- user Nov 25 12:27): model backdrops and item pages page blue, list rows
+-- navy, Blizzard's shadows and corner flourishes gone
+-- ------------------------------------------
+local SHADOW_IDS = { ["423809"] = true, ["423810"] = true, ["423811"] = true, ["423812"] = true, ["423813"] = true }
+function P.ExtraID(t, id)
+    if id == "651761" or id == "651762" then            -- mount / pet model backdrop
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    if SHADOW_IDS[id] then                              -- only inside the model's shadow frame
+        local par = t.GetParent and t:GetParent()
+        local gp = par and par.GetParent and par:GetParent()
+        if gp and T(gp, "ShadowOverlay") == par then t:SetAlpha(0); return true end
+        return false
+    end
+    if id == "130975" then                              -- the "Total Mounts" count pill
+        local par = t.GetParent and t:GetParent()
+        if par and (T(par, "Count") or T(par, "Label")) then Tint(t, { 0.24, 0.43, 0.69 }, 1); return true end
+        return false
+    end
+    return false
+end
+local COLL_FADE = { ["collections-background-shadow-large"] = true, ["collections-background-shadow-small"] = true,
+    ["collections-background-corner"] = true }
+function P3.CollRule(t, a)
+    if COLL_FADE[a] then t:SetAlpha(0); return true end
+    if a == "collections-background-tile" then Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true end
+    if a == "PetList-ButtonBackground" then Ours(t, nil, NAVYC, nil, nil, WHITE); BoxEdge(t); return true end
+    if a == "PetList-ButtonSelect" then Tint(t, BLUE, 0.45); return true end
+    if a == "PetList-ButtonHighlight" then Tint(t, BLUE, 0.2); return true end
+    if a == "collections-itemborder-collected" or a == "transmog-wardrobe-border-collected" then Tint(t, BLUE, 0.9); return true end
+    if a == "collections-itemborder-uncollected" then Tint(t, { 0.3, 0.33, 0.4 }, 1); return true end
+    if a == "transmog-wardrobe-border-highlighted" then Tint(t, BLUE, 0.5); return true end
+    if a == "transmog-wardrobe-border-selected" or a == "transmog-nav-slot-selected" then Tint(t, GOLD); return true end
+    return false
+end
+
 function P.ExtraRule(t, a)
+    if P3.CollRule(t, a) then return true end
+    if P3.MapLogRule(t, a) then return true end
+    if P3.MoreRule(t, a) then return true end
     -- vendor buttons
     local v = VENDOR[a]
     if v then
         local b = t.GetParent and t:GetParent()
         local nm = b and b.GetName and b:GetName()
         if nm == "MerchantGuildBankRepairButton" then v = "btn_guild" end
-        Ours(t, v, GOLD, 26)
+        local o = Ours(t, v, GOLD, 26)
+        -- gray when there's nothing to repair or sell (user, Nov 25).
+        -- Repair item is never disabled by Blizzard, and repair all may
+        -- not be refreshed after repairing, so the repair cost decides too.
+        if o and b then
+            local repair = nm and nm:find("Repair")
+            Usable(b, o, function()
+                if not repair or not GetRepairAllCost then return true end
+                local ok, cost = pcall(GetRepairAllCost)
+                return ok and type(cost) == "number" and cost > 0
+            end, GOLD)
+        end
         return true
     end
     -- scroll bars: beveled gold thumb, dark navy track, gold chevrons
@@ -228,15 +561,28 @@ function P.ExtraRule(t, a)
     end
     local dir = a:match("^minimal%-scrollbar%-arrow%-(%a+)")
     if dir then
-        Ours(t, (dir == "top") and "chev3d_up" or "chev3d_down", { 1, 1, 1, 1 }, 14)
+        local o = Ours(t, (dir == "top") and "chev3d_up" or "chev3d_down", { 1, 1, 1, 1 }, 14)
+        -- gray at the end of the list (user, Nov 25)
+        local b = t.GetParent and t:GetParent()
+        if o and b and b.IsEnabled then Usable(b, o) end
         return true
     end
     -- quest and gossip pages
     if a == "QuestBG-Parchment" then Page(t); return true end
-    -- Friends: the picked card
+    -- Friends: our own navy card (Blizzard's art is near-black once tinted);
+    -- the mouse-over highlight a soft blue; the picked card (Blizzard locks
+    -- its highlight) brighter, with a gold notch and a blue edge
     if a == "friends-card-selected" then
-        Tint(t, BLUE, 0.55)
+        Tint(t, BLUE, 0.18)
         FriendSelected(t)
+        return true
+    end
+    if a:find("^friends%-card%-") then
+        local dim = a:find("disabled") or a:find("offline")
+        local c = dim and { 0.047, 0.055, 0.075, 0.97 } or { NAVY[1], NAVY[2], NAVY[3], 0.97 }
+        local o = Ours(t, nil, c, nil, nil, WHITE)
+        local card = t.GetParent and t:GetParent()
+        if card then cardFill[card] = { o = o, c = c } ; FriendCardSel(card) end
         return true
     end
     return false
@@ -255,6 +601,26 @@ function P3.Headings()
     end
     local rf = _G.QuestInfoRewardsFrame
     if rf and T(rf, "Header") then P.KeepColor(rf.Header, GOLD) end
+    -- map quest details: "Rewards" label
+    local qm = _G.QuestMapFrame
+    local qf = qm and T(qm, "QuestsFrame")
+    local d = (qf and T(qf, "DetailsFrame")) or (qm and T(qm, "DetailsFrame"))
+    local c = d and T(d, "RewardsFrameContainer")
+    local r = c and T(c, "RewardsFrame")
+    if r and T(r, "Label") then P.KeepColor(r.Label, GOLD) end
+end
+
+-- the map's quest list and details page take turns; whichever was hidden
+-- when the map was walked gets styled when it first shows
+function P3.MapPages(root)
+    if not (root and root == _G.WorldMapFrame) then return end
+    local qm = _G.QuestMapFrame
+    local qf = qm and T(qm, "QuestsFrame")
+    for _, f in ipairs({ qf and T(qf, "DetailsFrame"), _G.QuestScrollFrame, qm and T(qm, "MapLegend"), qm and T(qm, "EventsFrame") }) do
+        if f and f.HookScript and Once(f, "mappage") then
+            f:HookScript("OnShow", function() pcall(W.Contents, root); pcall(P3.Headings) end)
+        end
+    end
 end
 
 local function GossipChoice(f, root)
@@ -283,7 +649,7 @@ function P3.Grip(win)
     local name = win.GetName and win:GetName()
     if not name or NO_GRIP[name] or not Once(win, "grip") then return end
     local g = CreateFrame("Button", nil, win)
-    g:SetSize(16, 16); g:SetPoint("BOTTOMRIGHT", win, "BOTTOMRIGHT", -3, 3)
+    g:SetSize(14, 14); g:SetPoint("BOTTOMRIGHT", win, "BOTTOMRIGHT", 6, -6)   -- on the rim, clear of scroll bars
     g:SetFrameLevel((win.GetFrameLevel and win:GetFrameLevel() or 1) + 20)
     for i, len in ipairs({ 12, 8, 4 }) do      -- three short gold strokes, corner to corner
         local l = Tex(g, "OVERLAY", 1, WHITE, { GOLD[1], GOLD[2], GOLD[3], 0.9 })
@@ -330,6 +696,7 @@ function W.AfterWalk(root)
     if afterWalk then pcall(afterWalk, root) end
     pcall(P3.Crest, root)
     pcall(P3.Grip, root)
+    pcall(P3.MapPages, root)
     pcall(P3.Headings)
 end
 local visit = W.Visit

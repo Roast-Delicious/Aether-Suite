@@ -1088,3 +1088,64 @@ Run from /home/claude/tools, e.g.:
 
 Renderers: frames_render.py (unit frames), decor_render.py (window
 trim), xpbar_render.py (XP bar).
+- BUILD 3 (branch build3, NOT BUILT; user 11:36 + 11:44):
+  Reputation thumb white -> Windows.Scroll no longer tints thumb, Ours()
+  mirrors desaturation only when o.mirrorDesat. Selected side tab: old
+  notch hidden. PvP: honor bar glow faded, LevelBG blue, bar BGs navy.
+  Friends: own navy card fill; picked friend (Blizzard LockHighlight)
+  brighter blue + gold notch + blue edge. Grip 14px at BOTTOMRIGHT +6,-6.
+  ARROWS (user 11:44 "an enthusiastic yes", mock/arrows_vendor.py): P3
+  Usable(b, o, extra) = gold when b:IsEnabled() (+extra), gray desat
+  otherwise; hooks Enable/Disable/SetEnabled; events MERCHANT_*, durab.,
+  money, bags refresh. Scroll arrows chev3d gold/gray. Page arrows
+  (file IDs 130864-6 next, 130867-9 prev; vendor+Spellbook): Blizzard's
+  faded, our chevron in a 26px navy square, blue edge (dim when off).
+  VENDOR: repair buttons also need GetRepairAllCost() > 0 (repair item
+  is never disabled by Blizzard). User 11:44: repair stayed gold - was
+  testing the 11:05 build, which lacked this.
+  MAP LOG (queued since 10:55/11:10): POI number -> trk disc/ring/dots
+  (Media copied from Ledger), turn-in gold "?"; glows blue; ticksquare
+  -> 12px navy box with blue edge; QuestLog-main-background -> (35,75,
+  115) overlay. Tests: skins_pass2 ALL OK; suite = baseline 15.
+  MAP QUEST DETAILS (user 11:58 "b it is", mock/maplog_details.py B;
+  dump tools/dumps/WorldMapFrame_QuestDetails.txt): QuestDetailsBack-
+  grounds -> (35,75,115) + blue edge; QuestLog-reward-top-frame/-bottom/
+  -header-top/-tile-vertical -> navy; RewardsFrame.Label gold. P3.
+  MapPages hooks OnShow of DetailsFrame/QuestScrollFrame/MapLegend/
+  EventsFrame -> rewalk the map (hidden pages are skipped by the walk).
+  Daily quests: UI-QuestPoiRecurring-* get the same disc.
+  BACKGROUND TIERS (user 12:02 "different backgrounds?", 12:05 "A it
+  is", mock/bg_tiers.py A): frame = PANEL (12,14,19), box = NAVY
+  (19,40,74), page = H.PAGE (35,75,115) for every reading page. Page()
+  (NPC quest/gossip parchment) now flat PAGE (page_aether no longer
+  used). Friends cards: card NAVY, picked PAGE, offline frame-dark.
+  STILL TO DO: per-window sweep of in-between tints (NAVYF {0.16,0.3,
+  0.52} on textured Blizzard boxes, NAVYID, spellbook backplate, talent
+  plate) -> needs in-game screenshots, after this build.
+  PROFESSIONS / LEGACY / COLLECTIONS ICONS (user 12:11-12:23; dumps
+  ProfessionsFrame_Overview/_Crafting, LegacySystemFrame_Tree/
+  _Challenges, CollectionsJournal_Appearances):
+  - BUG FIXED: Windows Kind() styled the Legacy Tree picture buttons
+    (67/110px CheckButtons with .Ring) as checkboxes -> blue squares,
+    pictures faded. Now only CheckButtons <= 34px without .Ring.
+  - P3.MoreRule: overview/legacy cards navy + blue edge; recipe details
+    page blue; recipe list navy; skill bars dark track + gold fill (Tint
+    of the flipbook) + blue frame, flare faded; picked recipe blue 0.45,
+    hover 0.2; Legacy rings gold, card glow blue; challenge cards navy
+    (not earned: frame-dark), ribbons faded, sub-tab rows navy/blue.
+  - Page arrows size to the button (Create amount arrows 23px).
+  - Flat icons APPROVED 12:22 (mock/profs_flat.py, coll_flat.py): baked
+    pr_*.tga (15) + cl_*.tga (5) by tools/gen_skins_art4.py; tabs by
+    icon ID / CollectionsJournalTabN name; crest: ProfessionsFrame by
+    portrait file ID (hooks SetTexture), CollectionsJournal by shown page.
+  - NOT YET: Collections pages (Mounts/Pets/Toys/Appearances
+    backgrounds) - have only the Appearances dump; need Mounts, Pets, Toys.
+  COLLECTIONS PAGES (user 12:27, dumps CollectionsJournal_Mounts/Pets/
+  Toys): P.ExtraID hook (Pass2 file-ID branch, before FADEID): model
+  backdrop 651761/651762 -> page blue + edge; ShadowOverlay 423809-13
+  faded (only under .ShadowOverlay - 423811 is also the map home button);
+  130975 count pill -> blue. P3.CollRule: collections-background-tile
+  page blue, shadows/corners faded, PetList rows navy (select blue .45,
+  hover .2), item/wardrobe borders blue, uncollected slate, selected gold.
+  Dump workflow (user video 12:27) is right: open tab, /skins tree, Hub
+  Debug > Show Window Dump, copy.

@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (11:05)
+Last updated: November 25, 2026 (12:35)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -32,7 +32,7 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.7    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.4.1     The Aether look for Blizzard's windows
+  AetherSkins        1.5.0     The Aether look for Blizzard's windows
                                and the minimap
 
 
@@ -482,7 +482,7 @@ AetherLedger - where to quest, train and skin next             /ledger
   - Finished quests from any zone that are handed in somewhere else
     stay at the bottom of the list, under a thin gold line (it shows
     right after a /reload), with a gold check in place of the ? for
-    their icon, reading "Ready for turn-in: Orgrimmar" (the zone to go to).
+    their icon, reading "Ready for turn-in: Orgrimmar" (the zone to go).
     The zone comes from the game's own turn-in marker first, so quests
     the guide doesn't know about show up there too.
   - Somewhere with nothing for you (a city, a road), it shows the

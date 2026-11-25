@@ -1,0 +1,353 @@
+== Window dump: CharacterFrame ==
+Frame CharacterFrame 631x484
+  Frame .NineSlice 631x484
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 456x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 456x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x313 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x313 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture CharacterFramePortrait 62x62 tex=RTPortrait1
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 665x522 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 549x20
+    FontString CharacterFrameTitleText 549x13
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button CharacterFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame CharacterFrameLeftPaneHost 398x464
+    Texture .? 398x464 atlas=UI-Character-Info-General-BG
+  Frame CharacterFrameRightPaneHost 233x464
+    Texture .? 233x464 atlas=UI-Character-Info-Stat-BG
+    Texture CharacterFrameRightPaneHostStoneBg 233x60 hidden atlas=UI-Character-Info-Stat-StoneBG3
+    Frame .? 11x463
+      Texture .? 11x463 atlas=common-framedivider
+  Frame CharacterStatsPaneScrollBox 233x404 hidden (5 parts inside, skipped)
+  Frame CharacterStatsPanePetScrollBox 233x404 hidden (4 parts inside, skipped)
+  Frame CharacterStatsPane 233x404 hidden (5 parts inside, skipped)
+  Button CharacterFrameRightPaneToggleButton 28x28
+    Texture .? 28x28 tex=130869
+    Texture .? 28x28 hidden tex=130868
+    Texture .? 28x28 tex=130757
+  Frame CharacterFrameModeTabs 64x384
+    Frame CharacterFrameModeTab1 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=RTPortrait1
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CharacterFrameModeTab2 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197103
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CharacterFrameModeTab3 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=2447783
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CharacterFrameModeTab4 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197098
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CharacterFrameModeTab5 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197078
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+    Frame CharacterFrameModeTab6 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197104
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+      Frame .? 52x49
+  Frame CharacterFrameTabIndicators 0x0 hidden (2 parts inside, skipped)
+  Frame PaperDollFrame 631x484 hidden (9 parts inside, skipped)
+  Frame PaperDollSidebarTabs 233x85 hidden (4 parts inside, skipped)
+  Frame ReputationFrame 631x484
+    Button .filterDropdown 120x25 hidden (3 parts inside, skipped)
+    Frame .ScrollBox 363x409
+      Frame .DragDelegate 0x0
+      Frame .ScrollTarget 343x1
+        Button .? 343x28
+          Texture .? 343x28 atlas=common-button-list-collapseExpand
+          Texture .? 343x28 atlas=common-button-list-collapseExpand
+          Texture .StateIcon 13x4 atlas=common-button-list-minus
+          FontString .Name 39x15
+        Button .? 341x30
+          Frame .Content 341x30
+            FontString .Name 153x15
+            Frame .ReputationBar 160x29
+              Texture .? 160x29 atlas=common-stat-bar-BG
+              Texture .Fill 36x15 atlas=common-stat-bar-white
+              MaskTexture .Mask 160x29
+              FontString .Text 160x20
+              Frame .FillArea 148x29
+              Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+              Frame .? 152x19
+            Button .ParagonIcon 20x20 hidden (4 parts inside, skipped)
+            Frame .BackgroundHighlight 341x30
+              Texture .Left 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Right 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Middle 329x30 atlas=charactercreate-customize-dropdown-linemouseover-middle
+            Frame .AccountWideIcon 23x22 hidden (1 parts inside, skipped)
+        Button .? 341x30
+          Frame .Content 341x30
+            FontString .Name 153x15
+            Frame .ReputationBar 160x29
+              Texture .? 160x29 atlas=common-stat-bar-BG
+              Texture .Fill 56x15 atlas=common-stat-bar-white
+              MaskTexture .Mask 160x29
+              FontString .Text 160x20
+              Frame .FillArea 148x29
+              Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+              Frame .? 152x19
+            Button .ParagonIcon 20x20 hidden (4 parts inside, skipped)
+            Frame .BackgroundHighlight 341x30
+              Texture .Left 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Right 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Middle 329x30 atlas=charactercreate-customize-dropdown-linemouseover-middle
+            Frame .AccountWideIcon 23x22 hidden (1 parts inside, skipped)
+        Button .? 341x30
+          Frame .Content 341x30
+            FontString .Name 153x15
+            Frame .ReputationBar 160x29
+              Texture .? 160x29 atlas=common-stat-bar-BG
+              Texture .Fill 146x15 atlas=common-stat-bar-white
+              MaskTexture .Mask 160x29
+              FontString .Text 160x20
+              Frame .FillArea 148x29
+              Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+              Frame .? 152x19
+            Button .ParagonIcon 20x20 hidden (4 parts inside, skipped)
+            Frame .BackgroundHighlight 341x30
+              Texture .Left 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Right 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Middle 329x30 atlas=charactercreate-customize-dropdown-linemouseover-middle
+            Frame .AccountWideIcon 23x22 hidden (1 parts inside, skipped)
+        Button .? 341x30
+          Frame .Content 341x30
+            FontString .Name 153x15
+            Frame .ReputationBar 160x29
+              Texture .? 160x29 atlas=common-stat-bar-BG
+              Texture .Fill 22x15 atlas=common-stat-bar-white
+              MaskTexture .Mask 160x29
+              FontString .Text 160x20
+              Frame .FillArea 148x29
+              Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+              Frame .? 152x19
+            Button .ParagonIcon 20x20 hidden (4 parts inside, skipped)
+            Frame .BackgroundHighlight 341x30
+              Texture .Left 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Right 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Middle 329x30 atlas=charactercreate-customize-dropdown-linemouseover-middle
+            Frame .AccountWideIcon 23x22 hidden (1 parts inside, skipped)
+        Button .? 343x28
+          Texture .? 343x28 atlas=common-button-list-collapseExpand
+          Texture .? 343x28 atlas=common-button-list-collapseExpand
+          Texture .StateIcon 13x4 atlas=common-button-list-minus
+          FontString .Name 128x15
+        Button .? 341x30
+          Frame .Content 341x30
+            FontString .Name 153x15
+            Frame .ReputationBar 160x29
+              Texture .? 160x29 atlas=common-stat-bar-BG
+              Texture .Fill 1x15 atlas=common-stat-bar-white
+              MaskTexture .Mask 160x29
+              FontString .Text 160x20
+              Frame .FillArea 148x29
+              Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+              Frame .? 152x19
+            Button .ParagonIcon 20x20 hidden (4 parts inside, skipped)
+            Frame .BackgroundHighlight 341x30
+              Texture .Left 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Right 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Middle 329x30 atlas=charactercreate-customize-dropdown-linemouseover-middle
+            Frame .AccountWideIcon 23x22 hidden (1 parts inside, skipped)
+        Button .? 341x30
+          Frame .Content 341x30
+            FontString .Name 153x15
+            Frame .ReputationBar 160x29
+              Texture .? 160x29 atlas=common-stat-bar-BG
+              Texture .Fill 133x15 atlas=common-stat-bar-white
+              MaskTexture .Mask 160x29
+              FontString .Text 160x20
+              Frame .FillArea 148x29
+              Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+              Frame .? 152x19
+            Button .ParagonIcon 20x20 hidden (4 parts inside, skipped)
+            Frame .BackgroundHighlight 341x30
+              Texture .Left 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Right 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Middle 329x30 atlas=charactercreate-customize-dropdown-linemouseover-middle
+            Frame .AccountWideIcon 23x22 hidden (1 parts inside, skipped)
+        Button .? 341x30
+          Frame .Content 341x30
+            FontString .Name 153x15
+            Frame .ReputationBar 160x29
+              Texture .? 160x29 atlas=common-stat-bar-BG
+              Texture .Fill 133x15 atlas=common-stat-bar-white
+              MaskTexture .Mask 160x29
+              FontString .Text 160x20
+              Frame .FillArea 148x29
+              Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+              Frame .? 152x19
+            Button .ParagonIcon 20x20 hidden (4 parts inside, skipped)
+            Frame .BackgroundHighlight 341x30
+              Texture .Left 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Right 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Middle 329x30 atlas=charactercreate-customize-dropdown-linemouseover-middle
+            Frame .AccountWideIcon 23x22 hidden (1 parts inside, skipped)
+        Button .? 341x30
+          Frame .Content 341x30
+            FontString .Name 153x15
+            Frame .ReputationBar 160x29
+              Texture .? 160x29 atlas=common-stat-bar-BG
+              Texture .Fill 133x15 atlas=common-stat-bar-white
+              MaskTexture .Mask 160x29
+              FontString .Text 160x20
+              Frame .FillArea 148x29
+              Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+              Frame .? 152x19
+            Button .ParagonIcon 20x20 hidden (4 parts inside, skipped)
+            Frame .BackgroundHighlight 341x30
+              Texture .Left 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Right 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Middle 329x30 atlas=charactercreate-customize-dropdown-linemouseover-middle
+            Frame .AccountWideIcon 23x22 hidden (1 parts inside, skipped)
+        Button .? 341x30
+          Frame .Content 341x30
+            FontString .Name 153x15
+            Frame .ReputationBar 160x29
+              Texture .? 160x29 atlas=common-stat-bar-BG
+              Texture .Fill 48x15 atlas=common-stat-bar-white
+              MaskTexture .Mask 160x29
+              FontString .Text 160x20
+              Frame .FillArea 148x29
+              Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+              Frame .? 152x19
+            Button .ParagonIcon 20x20 hidden (4 parts inside, skipped)
+            Frame .BackgroundHighlight 341x30
+              Texture .Left 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Right 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Middle 329x30 atlas=charactercreate-customize-dropdown-linemouseover-middle
+            Frame .AccountWideIcon 23x22 hidden (1 parts inside, skipped)
+        Button .? 343x28
+          Texture .? 343x28 atlas=common-button-list-collapseExpand
+          Texture .? 343x28 atlas=common-button-list-collapseExpand
+          Texture .StateIcon 13x4 atlas=common-button-list-minus
+          FontString .Name 36x15
+        Button .? 341x30
+          Frame .Content 341x30
+            FontString .Name 153x15
+            Frame .ReputationBar 160x29
+              Texture .? 160x29 atlas=common-stat-bar-BG
+              Texture .Fill 22x15 atlas=common-stat-bar-white
+              MaskTexture .Mask 160x29
+              FontString .Text 160x20
+              Frame .FillArea 148x29
+              Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+              Frame .? 152x19
+            Button .ParagonIcon 20x20 hidden (4 parts inside, skipped)
+            Frame .BackgroundHighlight 341x30
+              Texture .Left 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Right 6x30 atlas=charactercreate-customize-dropdown-linemouseover-side
+              Texture .Middle 329x30 atlas=charactercreate-customize-dropdown-linemouseover-middle
+            Frame .AccountWideIcon 23x22 hidden (1 parts inside, skipped)
+        Button .? 0x30 hidden (1 parts inside, skipped)
+        Button .? 0x30 hidden (1 parts inside, skipped)
+      Frame .Shadows 363x409
+        Texture .Lower 0x0
+        Texture .Upper 0x0 hidden
+      Frame .? 1x1
+        Texture .? 384x8 atlas=UI-Character-Info-ScrollLine-Long
+      Frame .? 1x1
+        Texture .? 384x8 atlas=UI-Character-Info-ScrollLine-Long
+    Frame .ScrollBar 8x403 [styled scroll]
+      Frame .Track 8x365
+        Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+        Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+        Texture .Middle 8x349 atlas=!minimal-scrollbar-track-middle
+        Button .Thumb 8x277
+          Texture .Begin 8x8 atlas=minimal-scrollbar-small-thumb-top-over
+          Texture .End 8x8 atlas=minimal-scrollbar-small-thumb-bottom-over
+          Texture .Middle 8x261 atlas=minimal-scrollbar-small-thumb-middle-over
+      Button .Back 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+      Button .Forward 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+    Frame .ReputationDetailFrame 205x436
+      FontString .Title 195x14
+      FontString .Subtitle 195x12
+      FontString .EmptyText 170x24 hidden
+      Texture .Divider 210x7 atlas=UI-Character-Info-ScrollLine
+      Frame .Description 191x200
+        Frame .ScrollBox 191x200
+          Frame .DragDelegate 0x0
+          Frame .ScrollTarget 191x1
+            Frame .? 191x60
+              FontString .FontString 191x60
+          Frame .Shadows 191x200
+            Texture .Lower 0x0 hidden
+            Texture .Upper 0x0 hidden
+      Frame .DescriptionScrollBar 8x198 hidden [styled scroll] (3 parts inside, skipped)
+      Frame .Content 195x0
+      Frame .Footer 205x108
+      Frame .StandingBar 180x29
+        Texture .? 180x29 atlas=common-stat-bar-BG
+        Texture .Fill 41x15 atlas=common-stat-bar-white
+        MaskTexture .Mask 180x29
+        FontString .Text 180x20
+        Frame .FillArea 168x29
+        Frame .BonusIcon 16x16 hidden (1 parts inside, skipped)
+        Frame .? 172x19
+      CheckButton .AtWarCheckbox 26x26 [styled check]
+        FontString .Label 158x12
+        Texture .? 26x26 atlas=checkbox-minimal
+        Texture .? 26x26 hidden atlas=checkbox-minimal
+        Texture .? 32x32 hidden tex=130754
+        Texture .? 26x26 hidden atlas=checkmark-minimal-disabled
+      CheckButton .MakeInactiveCheckbox 26x26 [styled check]
+        FontString .Label 158x12
+        Texture .? 26x26 atlas=checkbox-minimal
+        Texture .? 26x26 hidden atlas=checkbox-minimal
+        Texture .? 26x26 hidden atlas=checkmark-minimal
+        Texture .? 26x26 hidden atlas=checkmark-minimal-disabled
+      CheckButton .WatchFactionCheckbox 26x26 [styled check]
+        FontString .Label 158x12
+        Texture .? 26x26 atlas=checkbox-minimal
+        Texture .? 26x26 hidden atlas=checkbox-minimal
+        Texture .? 26x26 hidden atlas=checkmark-minimal
+        Texture .? 26x26 hidden atlas=checkmark-minimal-disabled
+      Button .ViewRenownButton 140x18 hidden [styled button] (12 parts inside, skipped)
+  Frame SkillsFrame 631x484 hidden (3 parts inside, skipped)
+  Frame PVPRankFrame 631x484 hidden (3 parts inside, skipped)
+  Frame StatisticsFrame 631x484 hidden (2 parts inside, skipped)
+  Frame TokenFrame 631x484 hidden (5 parts inside, skipped)
+  Button .? 16x16

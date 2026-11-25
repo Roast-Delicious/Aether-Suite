@@ -1,0 +1,334 @@
+== Window dump: LegacySystemFrame ==
+Frame LegacySystemFrame 920x575
+  Texture LegacySystemFrameBg 916x552 tex=374155
+  Texture .TopTileStreaks 912x43 atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 920x575
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 745x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 745x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x404 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x404 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture LegacySystemFramePortrait 45x62 atlas=Legacy-up-c60
+    MaskTexture .CircleMask 41x58
+  Frame .FrameGlow 954x613 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 838x20
+    FontString LegacySystemFrameTitleText 838x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button LegacySystemFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .LegacyRewardTrackTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=2056011
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .LegacyChallengeTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=413584
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame .LegacyTreeTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=442272
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame .? 52x49
+  Frame LegacySystemFrameTabIndicators 0x0 hidden (2 parts inside, skipped)
+  Frame .RewardTrackPage 910x569 hidden (7 parts inside, skipped)
+  Frame .ChallengesPage 920x575 hidden (5 parts inside, skipped)
+  Frame .TreePage 920x575
+    Texture .Background 917x561 atlas=Legacy-Tree-Frame-background
+    Frame .LegacyTreeSelectionPanel 142x230
+      Frame .TreeSelections 67x231
+        CheckButton .? 67x67 [styled check]
+          Texture .DisabledOverlay 67x67 hidden
+          Texture .Ring 70x70 atlas=Legacy-Tree-Frame-Card-Ring
+          MaskTexture .CircleMask 63x63
+          Texture .NormalTexture 67x67 atlas=UI-Legacy-Tree-Professions
+          Texture .HighlightTexture 70x70 atlas=Legacy-Tree-Frame-Card-Ring
+          Texture .PushedTexture 67x67 hidden atlas=UI-Legacy-Tree-Professions
+          Texture .CheckedTexture 70x70 atlas=charactercreate-ring-select
+          Texture .Background 142x93 atlas=Legacy-Tree-Frame-Card
+          Texture .SelectedGlow 95x76 atlas=Legacy-Tree-Frame-Card-Glow
+          Frame .Flash 67x67 hidden (3 parts inside, skipped)
+          Frame .New 40x20 hidden (3 parts inside, skipped)
+        CheckButton .? 67x67 [styled check]
+          Texture .DisabledOverlay 67x67 hidden
+          Texture .Ring 70x70 atlas=Legacy-Tree-Frame-Card-Ring
+          MaskTexture .CircleMask 63x63
+          Texture .NormalTexture 67x67 atlas=UI-Legacy-Tree-Adventure
+          Texture .HighlightTexture 70x70 atlas=Legacy-Tree-Frame-Card-Ring
+          Texture .PushedTexture 67x67 hidden atlas=UI-Legacy-Tree-Adventure
+          Texture .CheckedTexture 70x70 hidden atlas=charactercreate-ring-select
+          Texture .Background 142x93 atlas=Legacy-Tree-Frame-Card
+          Texture .SelectedGlow 95x76 hidden atlas=Legacy-Tree-Frame-Card-Glow
+          Frame .Flash 67x67 hidden (3 parts inside, skipped)
+          Frame .New 40x20 hidden (3 parts inside, skipped)
+        CheckButton .? 67x67 [styled check]
+          Texture .DisabledOverlay 67x67 hidden
+          Texture .Ring 70x70 atlas=Legacy-Tree-Frame-Card-Ring
+          MaskTexture .CircleMask 63x63
+          Texture .NormalTexture 67x67 atlas=UI-Legacy-Tree-Progression
+          Texture .HighlightTexture 70x70 atlas=Legacy-Tree-Frame-Card-Ring
+          Texture .PushedTexture 67x67 hidden atlas=UI-Legacy-Tree-Progression
+          Texture .CheckedTexture 70x70 hidden atlas=charactercreate-ring-select
+          Texture .Background 142x93 atlas=Legacy-Tree-Frame-Card
+          Texture .SelectedGlow 95x76 hidden atlas=Legacy-Tree-Frame-Card-Glow
+          Frame .Flash 67x67 hidden (3 parts inside, skipped)
+          Frame .New 40x20 hidden (3 parts inside, skipped)
+    Frame .LegacyTreePointSummary 212x36
+      FontString .AvailablePointsLabel 149x16
+      Texture .Border 179x37 atlas=Legacy-Tree-Frame-Points-Bar
+      Button .Shield 46x64
+        Texture .Icon 46x66 atlas=UI-Legacy-Points-icon-c60
+        FontString .Points 42x16
+    Frame .LegacyTreeTraitPanel 775x550
+      Texture .BackgroundFlash 775x442 atlas=spec-background
+      Frame .AnimationHolder 0x0
+      Frame .ButtonsParent 775x442
+        Button Performance Bonus 40x40
+          Texture .Shadow 78x78 atlas=talents-node-square-shadow
+          Texture .Icon 46x46 tex=135725
+          Texture .DisabledOverlay 46x46
+          Texture .StateBorder 60x60 atlas=Legacy-Tree-Frame-icon-frame-disable
+          Texture .StateBorderHover 60x60 hidden atlas=Legacy-Tree-Frame-icon-frame-disable
+          FontString .SpendText 26x16
+          Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+          FontString .SpendTextShadow1 26x16 hidden
+          FontString .SpendTextShadow2 26x16 hidden
+          FontString .SpendTextShadow3 26x16 hidden
+          FontString .SpendTextShadow4 26x16 hidden
+          MaskTexture .IconMask 46x46 hidden
+          MaskTexture .DisabledOverlayMask 46x46 hidden
+          Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+          Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+          Texture .? 79x34 atlas=Talents-Square-Box-c60
+          FontString .? 1x1 hidden
+          Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+        Button Working Overtime 40x40
+          Texture .Shadow 78x78 atlas=talents-node-square-shadow
+          Texture .Icon 46x46 tex=134378
+          Texture .DisabledOverlay 46x46
+          Texture .StateBorder 60x60 atlas=Legacy-Tree-Frame-icon-frame-disable
+          Texture .StateBorderHover 60x60 hidden atlas=Legacy-Tree-Frame-icon-frame-disable
+          FontString .SpendText 26x16
+          Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+          FontString .SpendTextShadow1 26x16 hidden
+          FontString .SpendTextShadow2 26x16 hidden
+          FontString .SpendTextShadow3 26x16 hidden
+          FontString .SpendTextShadow4 26x16 hidden
+          MaskTexture .IconMask 46x46 hidden
+          MaskTexture .DisabledOverlayMask 46x46 hidden
+          Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+          Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+          Texture .? 79x34 atlas=Talents-Square-Box-c60
+          FontString .? 1x1 hidden
+          Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+        Button Master Chef 40x40
+          Texture .Shadow 78x78 atlas=talents-node-square-shadow
+          Texture .Icon 46x46 tex=236571
+          Texture .DisabledOverlay 46x46
+          Texture .StateBorder 60x60 atlas=Legacy-Tree-Frame-icon-frame-disable
+          Texture .StateBorderHover 60x60 hidden atlas=Legacy-Tree-Frame-icon-frame-disable
+          FontString .SpendText 26x16
+          Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+          FontString .SpendTextShadow1 26x16 hidden
+          FontString .SpendTextShadow2 26x16 hidden
+          FontString .SpendTextShadow3 26x16 hidden
+          FontString .SpendTextShadow4 26x16 hidden
+          MaskTexture .IconMask 46x46 hidden
+          MaskTexture .DisabledOverlayMask 46x46 hidden
+          Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+          Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+          Texture .? 79x34 atlas=Talents-Square-Box-c60
+          FontString .? 1x1 hidden
+          Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+        Button Bartering 40x40
+          Texture .Shadow 78x78 atlas=talents-node-square-shadow
+          Texture .Icon 46x46 tex=133789
+          Texture .DisabledOverlay 46x46
+          Texture .StateBorder 60x60 atlas=Legacy-Tree-Frame-icon-frame-disable
+          Texture .StateBorderHover 60x60 hidden atlas=Legacy-Tree-Frame-icon-frame-disable
+          FontString .SpendText 25x16
+          Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+          FontString .SpendTextShadow1 25x16 hidden
+          FontString .SpendTextShadow2 25x16 hidden
+          FontString .SpendTextShadow3 25x16 hidden
+          FontString .SpendTextShadow4 25x16 hidden
+          MaskTexture .IconMask 46x46 hidden
+          MaskTexture .DisabledOverlayMask 46x46 hidden
+          Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+          Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+          Texture .? 79x34 atlas=Talents-Square-Box-c60
+          FontString .? 1x1 hidden
+          Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+        Button Unknown 40x40
+          Texture .Shadow 78x78 atlas=talents-node-square-shadow
+          Texture .Icon 46x46 tex=134400
+          Texture .DisabledOverlay 46x46
+          Texture .StateBorder 60x60 atlas=Legacy-Tree-Frame-icon-frame-disable
+          Texture .StateBorderHover 60x60 hidden atlas=Legacy-Tree-Frame-icon-frame-disable
+          FontString .SpendText 24x16
+          Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+          FontString .SpendTextShadow1 24x16 hidden
+          FontString .SpendTextShadow2 24x16 hidden
+          FontString .SpendTextShadow3 24x16 hidden
+          FontString .SpendTextShadow4 24x16 hidden
+          MaskTexture .IconMask 46x46 hidden
+          MaskTexture .DisabledOverlayMask 46x46 hidden
+          Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+          Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+          Texture .? 79x34 atlas=Talents-Square-Box-c60
+          FontString .? 1x1 hidden
+          Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+        Button Dedicated Study 40x40
+          Texture .Shadow 78x78 atlas=talents-node-square-shadow
+          Texture .Icon 46x46 tex=133740
+          Texture .DisabledOverlay 46x46
+          Texture .StateBorder 60x60 atlas=Legacy-Tree-Frame-icon-frame-disable
+          Texture .StateBorderHover 60x60 hidden atlas=Legacy-Tree-Frame-icon-frame-disable
+          FontString .SpendText 24x16
+          Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+          FontString .SpendTextShadow1 24x16 hidden
+          FontString .SpendTextShadow2 24x16 hidden
+          FontString .SpendTextShadow3 24x16 hidden
+          FontString .SpendTextShadow4 24x16 hidden
+          MaskTexture .IconMask 46x46 hidden
+          MaskTexture .DisabledOverlayMask 46x46 hidden
+          Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+          Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+          Texture .? 79x34 atlas=Talents-Square-Box-c60
+          FontString .? 1x1 hidden
+          Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+        Button Bountiful Harvest 40x40
+          Texture .Shadow 78x78 atlas=talents-node-square-shadow
+          Texture .Icon 46x46 tex=133651
+          Texture .DisabledOverlay 46x46
+          Texture .StateBorder 60x60 atlas=Legacy-Tree-Frame-icon-frame-disable
+          Texture .StateBorderHover 60x60 hidden atlas=Legacy-Tree-Frame-icon-frame-disable
+          FontString .SpendText 26x16
+          Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+          FontString .SpendTextShadow1 26x16 hidden
+          FontString .SpendTextShadow2 26x16 hidden
+          FontString .SpendTextShadow3 26x16 hidden
+          FontString .SpendTextShadow4 26x16 hidden
+          MaskTexture .IconMask 46x46 hidden
+          MaskTexture .DisabledOverlayMask 46x46 hidden
+          Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+          Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+          Texture .? 79x34 atlas=Talents-Square-Box-c60
+          FontString .? 1x1 hidden
+          Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+        Button Unknown 40x40
+          Texture .Shadow 78x78 atlas=talents-node-square-shadow
+          Texture .Icon 46x46 tex=134400
+          Texture .DisabledOverlay 46x46
+          Texture .StateBorder 60x60 atlas=Legacy-Tree-Frame-icon-frame-disable
+          Texture .StateBorderHover 60x60 hidden atlas=Legacy-Tree-Frame-icon-frame-disable
+          FontString .SpendText 24x16
+          Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+          FontString .SpendTextShadow1 24x16 hidden
+          FontString .SpendTextShadow2 24x16 hidden
+          FontString .SpendTextShadow3 24x16 hidden
+          FontString .SpendTextShadow4 24x16 hidden
+          MaskTexture .IconMask 46x46 hidden
+          MaskTexture .DisabledOverlayMask 46x46 hidden
+          Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+          Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+          Texture .? 79x34 atlas=Talents-Square-Box-c60
+          FontString .? 1x1 hidden
+          Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+        Button Luremaster 40x40
+          Texture .Shadow 78x78 atlas=talents-node-square-shadow
+          Texture .Icon 46x46 tex=237270
+          Texture .DisabledOverlay 46x46
+          Texture .StateBorder 60x60 atlas=Legacy-Tree-Frame-icon-frame-disable
+          Texture .StateBorderHover 60x60 hidden atlas=Legacy-Tree-Frame-icon-frame-disable
+          FontString .SpendText 25x16
+          Texture .SelectableIcon 19x18 hidden atlas=talents-icon-learnableplus
+          FontString .SpendTextShadow1 25x16 hidden
+          FontString .SpendTextShadow2 25x16 hidden
+          FontString .SpendTextShadow3 25x16 hidden
+          FontString .SpendTextShadow4 25x16 hidden
+          MaskTexture .IconMask 46x46 hidden
+          MaskTexture .DisabledOverlayMask 46x46 hidden
+          Texture .Glow 84x84 hidden atlas=talents-node-square-greenglow
+          Texture .Ghost 52x52 hidden atlas=talents-node-square-ghost
+          Texture .? 79x34 atlas=Talents-Square-Box-c60
+          FontString .? 1x1 hidden
+          Frame .SearchIcon 63x63 hidden (3 parts inside, skipped)
+        Frame .? 0x0
+          Line .Line 48x0
+          Texture .ArrowHead 20x20 tex=-535
+          Texture .GhostArrowHead 20x20 hidden tex=-535
+          Line .GhostLine 48x0 hidden
+        Frame .? 0x0
+          Line .Line 48x0
+          Texture .ArrowHead 20x20 tex=-535
+          Texture .GhostArrowHead 20x20 hidden tex=-535
+          Line .GhostLine 48x0 hidden
+        Frame .? 0x0
+          Line .Line 48x0
+          Texture .ArrowHead 20x20 tex=-535
+          Texture .GhostArrowHead 20x20 hidden tex=-535
+          Line .GhostLine 48x0 hidden
+      Frame .SelectionChoiceFrame 1x1 hidden (0 parts inside, skipped)
+      Frame .DisabledOverlay 775x442 hidden (1 parts inside, skipped)
+      Frame .CommitSpinner 110x110 hidden (2 parts inside, skipped)
+      CheckButton .SelectedTreeIcon 110x110 [styled check]
+        Texture .DisabledOverlay 110x110 hidden
+        Texture .Ring 130x130 atlas=Legacy-Tree-Frame-Ring-big
+        MaskTexture .CircleMask 106x106
+        Texture .NormalTexture 110x110 atlas=UI-Legacy-Tree-Professions
+        Texture .HighlightTexture 110x110
+        Texture .PushedTexture 110x110 hidden atlas=UI-Legacy-Tree-Professions
+        Texture .CheckedTexture 99x99 hidden atlas=charactercreate-ring-select
+        FontString .SelectedTreeLabel 111x20
+        Frame .Flash 110x110 hidden (3 parts inside, skipped)
+        Frame .New 40x20 hidden (3 parts inside, skipped)
+      Frame .SpentPointsFrame 30x30
+        Texture .Background 64x64 atlas=Legacy-Tree-Frame-level-circle
+        FontString .Text 15x24
+      Button .ApplyButton 164x22 [styled button]
+        Texture .Left 12x22 tex=130824
+        Texture .Right 12x22 tex=130824
+        Texture .Middle 140x22 tex=130824
+        FontString LegacySystemFrameText 85x12
+        Texture .? 164x22 tex=130826
+        Frame .Controller 0x0
+        Frame .YellowGlow 188x1 hidden (3 parts inside, skipped)
+      Frame .GamepadResetButton 30x30 hidden (11 parts inside, skipped)
+      Button .ResetButton 25x25 hidden (3 parts inside, skipped)
+      Frame .GamepadUndoButton 30x30 hidden (11 parts inside, skipped)
+      Button .UndoButton 25x25 hidden (3 parts inside, skipped)
+      EditBox .SearchBox 184x30 [styled input]
+        FontString .? 148x30
+        Texture .? 2x10 hidden
+        Texture .Left 8x20 atlas=common-search-border-left
+        Texture .Right 8x20 atlas=common-search-border-right
+        Texture .Middle 173x20 atlas=common-search-border-middle
+        FontString .Instructions 148x30
+        Texture LegacySystemFrameSearchIcon 10x10 atlas=common-search-magnifyingglass
+        Button LegacySystemFrameClearButton 17x17 hidden (1 parts inside, skipped)
+        Frame .GamepadFocusIcon 28x28 hidden (11 parts inside, skipped)
+      Frame .SearchPreviewContainer 176x0 hidden (8 parts inside, skipped)
+    Frame .VerticalDivider 12x503
+      Texture .VerticalDivider 12x503 atlas=Legacy-Tree-Frame-divider-Vertical
+  Button .? 16x16

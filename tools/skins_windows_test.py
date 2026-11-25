@@ -129,7 +129,7 @@ expect("inset: Blizzard art faded", E('CHAR.Inset.NineSlice.alpha == 0 and CHAR.
 expect("panel button: art faded, white font", E('BTN.Left.alpha == 0 and BTN.Right.alpha == 0 and BTN.nfont == AetherSkinsFontButton'), True)
 expect("checkbox: box art faded, check turned gold", E('CHK.nt.alpha == 0 and CHK.ck.desat == true and CHK.ck.vc[1] == 1 and CHK.ck.vc[2] == 0.69'), True)
 expect("search box art faded", E('SRCH.Left.alpha == 0 and SRCH.Middle.alpha == 0'), True)
-expect("scroll bar: thumb blue, arrows white", E('SCR.Track.Thumb.Middle.vc[1] == 0.3 and SCR.Back.Texture.desat == true'), True)
+expect("scroll bar: thumb left untinted (gold art goes over it), arrows white", E('SCR.Track.Thumb.Middle.desat ~= true and SCR.Back.Texture.desat == true'), True)
 def tab_box(t): return E('(function() local f; for _,r in ipairs(%s.regs) do if r.texture and r.texture:find("WHITE") and r.points[1] and r.points[1][1] == "LEFT" then f = r end end; if not f then return nil end; for _,p in ipairs(f.points) do if p[1] == "TOP" and p[2] == %s and p[3] == "CENTER" then return p[5] end end; return nil end)()' % (t, t))
 expect("tab box is tied to the tab's center at the text height (not the whole button)", tab_box('TAB1') is not None, True)
 expect("every tab's box at the same height (selected text sits higher)", tab_box('TAB1') == tab_box('TAB2'), True)
