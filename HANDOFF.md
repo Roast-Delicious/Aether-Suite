@@ -283,6 +283,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   (mock/talent_1c.py, three strengths) - pick pending. Glow: Aether
   blue #4DA6FF (mock/talent_glow.py, soft/medium/strong) - pick pending;
   user said "Aether looks good" (07:07).
+  07:08: counts = 3c, pill CENTERED ON THE FRAME'S BOTTOM EDGE ("2 of 5",
+  gold maxed / blue partial). Full-window mockup: mock/talent_full.py
+  (on the user's screenshot; unspent shown as 2).
   GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
   LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
   (no [styled] marks anywhere): the skinner never caught it -> added
