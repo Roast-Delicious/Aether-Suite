@@ -233,6 +233,8 @@ L.execute('NEWROW = kid(LIST.ScrollTarget, "Button"); NEWROW.bg1 = tex(NEWROW, "
 expect("a row made later (on scroll) gets styled right away", E('NEWROW.bg1.alpha'), 0)
 L.execute('STATH = kid(WIN, "Frame"); STATH.Background = tex(STATH, "UI-Character-Info-Title"); STATH.Title = STATH:CreateFontString(); STATH.Title.SetTextColor = function(x, r, g, b) x.color = {r, g, b} end; AetherSkins_Windows.Contents(WIN)')
 expect("character stat headings: navy strip with a gold title", E('STATH.Background.alpha == 0 and STATH.Title.color[2] == 0.69 and #STATH.regs >= 3'), True)
+L.execute('LTABS = kid(UIParent, "Frame"); LT = kid(LTABS, "Frame"); LT.w, LT.h = 55, 55; LT.Background = tex(LT, "common-sidetab"); LT.SelectedTexture = tex(LT, "common-sidetab-selected"); LT.TabGlow = tex(LT, "common-sidetab-selected"); LT.HighlightTexture = tex(LT, "common-sidetab-hover"); GetTime = function() return 1000 end; AetherSkins_Windows.Contents(WIN)')
+expect("Group Finder side tabs (outside any window) styled like the Character ones", E('LT.Background.alpha == 0 and #LT.regs > 6'), True)
 # switch off
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

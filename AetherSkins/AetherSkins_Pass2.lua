@@ -688,8 +688,33 @@ function W.Visit(f, root)
     end
 end
 
+-- Side tabs that live outside their window (Group Finder: the three tabs
+-- sit in their own frame beside its three windows, Nov 25 dump). After a
+-- window is styled, the frames on the screen's top level are checked once
+-- every few seconds for side tabs, which are styled like the Character ones.
+local lastScan = 0
+local function LooseSideTabs(root)
+    local now = GetTime and GetTime() or 0
+    if now - lastScan < 2 and lastScan > 0 then return end
+    lastScan = now
+    if not (UIParent and UIParent.GetChildren) then return end
+    local found = false
+    for _, c in ipairs({ UIParent:GetChildren() }) do
+        if not Forbidden(c) and c.GetChildren and not W.IsWindow(c) then
+            for _, k in ipairs({ c:GetChildren() }) do
+                local bg = T(k, "Background")
+                if bg and Atlas(bg) == "common-sidetab" and T(k, "SelectedTexture") then
+                    P.SideTab(k); found = true
+                end
+            end
+        end
+    end
+    if found and root and (root.GetName and (root:GetName() or ""):find("^LFG")) then sidetabsIn[root] = true end
+end
+
 -- After a window's walk: windows with side tabs drop the right chevron.
 function W.AfterWalk(root)
+    pcall(LooseSideTabs, root)
     if sidetabsIn[root] and W.chev[root] and W.chev[root].right then
         for _, t in ipairs(W.chev[root].right) do t:Hide() end
     end
