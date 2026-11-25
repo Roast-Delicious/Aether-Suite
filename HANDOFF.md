@@ -263,6 +263,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   ON BLUE. Mockup AFTER all the remaining dumps are in.
   CHOSEN (06:48): option A, navy disc + blue ring, gold ring when
   selected, gold check, dim gold when unavailable (mock/roles.py).
+  SECOND-PASS MOCKUPS (mock/pass2_*.py, out_p2_*.png): 1 Reputation
+  (side tabs navy, selected = gold edge + gold notch; header strips;
+  capsule bars; blue selected row w/ gold left accent; stronger blue
+  scroll thumb; detail pane) APPROVED 06:50 "love it". 2 Friends (navy
+  cards, offline dimmer, selected blue edge; search box; dropdowns;
+  small navy icon buttons; navy Add Friend) APPROVED 06:50.
   GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
   LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
   (no [styled] marks anywhere): the skinner never caught it -> added
