@@ -1218,3 +1218,9 @@ trim), xpbar_render.py (XP bar).
   AetherSkins 1.5.4.
 - BUILD 8 (branch build8): red quest names tried Blizzard red, user kept the LIGHTER red (14:30).
   14:28, mock/red_default.py), shadow kept; orange lifted, yellow->gold.
+  RELEASE PLAN (user 14:29-14:32): A = skin polish (Skins: legacy empty
+  rank boxes, Toy Box tip, 1.5.4 feedback; lighter red already on
+  build8). B = Ledger: tracker click -> directions to turn-in NPC (on by
+  default) + tracker quest names lighter red (1,.376,.345) + orange (1,
+  .588,.329) + yellow->gold like the map (user 14:32 'go with ours').
+  C = Hub cleanup (design-first, moves the directions toggle into Hub).
