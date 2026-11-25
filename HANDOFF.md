@@ -428,6 +428,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   mock/slider3d.py thumb 'bev'), thickness as in the quest mock (~6 UI
   units), dark navy track, arrows = our 3D gold chevrons (chev3d_up/down
   + win_chev_dark backing).
+  SIDE TABS (08:48): flat gold glyphs on navy for non-character tabs
+  (banner=Reputation, hammer+pick=Skills, shield+blades=PvP, coin stack=
+  Currency, bar chart=Statistics; Character tab keeps the portrait); open
+  tab = B: thick gold frame (3px) + gold notch + soft gold glow (mock/
+  sidetabs_flat.py).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
