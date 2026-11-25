@@ -1190,3 +1190,7 @@ trim), xpbar_render.py (XP bar).
   GOLD, others light gray (.85); Blizzard's tab text hidden (alpha 0,
   SetAlpha hook) and our own FontString copies its words (SetText hook),
   centered in the box, so it no longer jumps up when picked.
+  SOLID WINDOWS (user 13:56): Skins window fills 0.95-0.97 -> 1 (PANEL,
+  navy boxes, inputs, friend cards, tints). HUD (chat, meter, tracker,
+  minimap) and AetherPack unchanged (user 13:57: keep the pack as is).
+  OPEN: page blue +20% (42,90,138) everywhere - recommended, not yet ok'd.

@@ -87,7 +87,7 @@ function P.PageArrow(t, id)
     if not Once(b, "pagearrow") then return true end
     local okw, bw = pcall(b.GetWidth, b)
     local q = math.min(26, math.max(14, ((okw and bw) or 32) - 6))
-    local s = Tex(b, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
+    local s = Tex(b, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 1 })
     s:SetSize(q, q); s:SetPoint("CENTER", b, "CENTER")
     local f = CreateFrame("Frame", nil, b)
     f:SetSize(q, q); f:SetPoint("CENTER", b, "CENTER")
@@ -346,7 +346,7 @@ local cardFill, cardSel = weak(), weak()
 local function FriendCardSel(card)
     local f = cardFill[card]; if not f then return end
     local sel = cardSel[card] or false
-    local c = sel and { PAGE[1], PAGE[2], PAGE[3], 0.97 } or f.c
+    local c = sel and { PAGE[1], PAGE[2], PAGE[3], 1 } or f.c
     f.o:SetVertexColor(c[1], c[2], c[3], c[4])
     local x = card.aetherSel
     if x then x.notch:SetShown(sel); for _, e in ipairs(x.edge) do e:SetShown(sel) end end
@@ -386,7 +386,7 @@ local function PoiLook(b)
     local o = poi[b]
     if o then return o end
     o = {}
-    o.disc = Tex(b, "ARTWORK", 6, MEDIA .. "trk_disc", { NAVY[1], NAVY[2], NAVY[3], 0.96 })
+    o.disc = Tex(b, "ARTWORK", 6, MEDIA .. "trk_disc", { NAVY[1], NAVY[2], NAVY[3], 1 })
     o.ring = Tex(b, "ARTWORK", 7, MEDIA .. "trk_ring", GOLD)
     o.dots = Tex(b, "OVERLAY", 6, MEDIA .. "trk_dots", GOLD)
     o.mark = b:CreateFontString(nil, "OVERLAY")
@@ -430,7 +430,7 @@ function P3.MapLogRule(t, a)
         t:SetAlpha(0)
         local cb = t.GetParent and t:GetParent()
         if cb and cb.CreateTexture and Once(cb, "tickbox") then
-            local f = Tex(cb, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
+            local f = Tex(cb, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 1 })
             f:SetSize(12, 12); f:SetPoint("CENTER", cb, "CENTER")
             local e = CreateFrame("Frame", nil, cb)
             e:SetSize(12, 12); e:SetPoint("CENTER", cb, "CENTER")
@@ -533,7 +533,7 @@ function P3.MoreRule(t, a)
         if not a:find("tiled") then BoxEdge(t) end          -- one edge per card
         return true
     end
-    if a == "Legacy-Challenge-Left-Sub-Tab" then Tint(t, { 0.2, 0.36, 0.62 }, 0.95); return true end
+    if a == "Legacy-Challenge-Left-Sub-Tab" then Tint(t, { 0.2, 0.36, 0.62 }, 1); return true end
     if a == "Legacy-Challenge-Left-Sub-Tab-selected" then Tint(t, BLUE, 0.45); return true end
     if a == "Legacy-Tree-Frame-icon-frame" then Tint(t, BLUE, 0.9); return true end
     if a == "worldquest-tracker-checkmark" then Tint(t, GOLD); return true end
@@ -690,7 +690,7 @@ function P.ExtraRule(t, a)
     end
     if a:find("^friends%-card%-") then
         local dim = a:find("disabled") or a:find("offline")
-        local c = dim and { 0.047, 0.055, 0.075, 0.97 } or { NAVY[1], NAVY[2], NAVY[3], 0.97 }
+        local c = dim and { 0.047, 0.055, 0.075, 1 } or { NAVY[1], NAVY[2], NAVY[3], 1 }
         local o = Ours(t, nil, c, nil, nil, WHITE)
         local card = t.GetParent and t:GetParent()
         if card then cardFill[card] = { o = o, c = c } ; FriendCardSel(card) end

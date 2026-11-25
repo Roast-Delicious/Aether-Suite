@@ -168,7 +168,7 @@ local function Capsule(bar)
     local p = AetherSkins_Pill and AetherSkins_Pill(bar, "BACKGROUND")
     if p then
         for _, t in ipairs(p.parts) do W.ours[t] = true end
-        for _, k in ipairs({ "l", "r", "m" }) do p[k]:SetVertexColor(DARK[1], DARK[2], DARK[3], 0.95) end
+        for _, k in ipairs({ "l", "r", "m" }) do p[k]:SetVertexColor(DARK[1], DARK[2], DARK[3], 1) end
         for _, k in ipairs({ "ll", "rl", "top", "bot" }) do p[k]:SetVertexColor(0.24, 0.43, 0.69, 1) end
         p:Place(a, 0, 0)
     end
@@ -346,7 +346,7 @@ function P.Texture(t)
             local ok, kind = pcall(par.GetObjectType, par)
             if ok and kind == "Button" and Once(par, "slotbox") then NavyBox(par, -1, -1, -1, -1) end
         end
-    elseif NAVYID[id] then Tint(t, { 0.2, 0.36, 0.62 }, 0.95)
+    elseif NAVYID[id] then Tint(t, { 0.2, 0.36, 0.62 }, 1)
     elseif LIGHTID[id] then
         if P.PageArrow and P.PageArrow(t, id) then return end   -- chevron in a square (Pass3)
         -- page arrows: bright when you can click them, dim when you can't
@@ -372,13 +372,13 @@ function Rule(t, a)
         return
     end
     if BLUEL[a] then return Tint(t, BLUE, 0.9) end
-    if NAVYF[a] then return Tint(t, { 0.16, 0.3, 0.52 }, 0.95) end
+    if NAVYF[a] then return Tint(t, { 0.16, 0.3, 0.52 }, 1) end
     if BLUEH[a] then return Tint(t, BLUE, 0.4) end
     if GOLDT[a] then return Tint(t, GOLD) end
     if LIGHTT[a] then return Tint(t, { 0.75, 0.86, 1 }) end
-    if a == "friends-card-battleNet" or a == "friends-card-wow" then return P.KeepTint(t, { 0.16, 0.33, 0.6, 0.95 }) end
-    if a == "friends-card-disabled" or a == "friends-card-offline" then return P.KeepTint(t, { 0.1, 0.15, 0.24, 0.95 }) end
-    if a:find("^friends%-card") then return P.KeepTint(t, { 0.16, 0.33, 0.6, 0.95 }) end
+    if a == "friends-card-battleNet" or a == "friends-card-wow" then return P.KeepTint(t, { 0.16, 0.33, 0.6, 1 }) end
+    if a == "friends-card-disabled" or a == "friends-card-offline" then return P.KeepTint(t, { 0.1, 0.15, 0.24, 1 }) end
+    if a:find("^friends%-card") then return P.KeepTint(t, { 0.16, 0.33, 0.6, 1 }) end
     if a == "spellbook-item-backplate" then return Tint(t, { 0.12, 0.25, 0.46 }, 0.6) end
     local state = a:match("^talents%-arrow%-head%-(%a+)")
     -- the ghost head (Blizzard's preview of a pending change) is left alone
@@ -409,7 +409,7 @@ local function SideTabColor(tab)
     local c = sel and GOLD or BLUE
     for _, e in ipairs(p.edge) do e:SetVertexColor(c[1], c[2], c[3], 1) end
     p.notch:SetShown(sel)
-    p.fill:SetVertexColor(sel and 0.11 or NAVY[1], sel and 0.23 or NAVY[2], sel and 0.41 or NAVY[3], 0.97)
+    p.fill:SetVertexColor(sel and 0.11 or NAVY[1], sel and 0.23 or NAVY[2], sel and 0.41 or NAVY[3], 1)
 end
 function P.SideTab(tab)
     if not Once(tab, "sidetab") then return end

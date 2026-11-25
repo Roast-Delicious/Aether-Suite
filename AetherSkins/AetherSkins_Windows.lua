@@ -23,7 +23,7 @@ local WHITE = "Interface\\Buttons\\WHITE8X8"
 local GOLD  = { 1, 0.69, 0 }
 local BLUE  = { 0.3, 0.65, 1 }
 local NAVY  = { 0.075, 0.157, 0.29 }
-local PANEL = { 0.047, 0.055, 0.075, 0.95 }
+local PANEL = { 0.047, 0.055, 0.075, 1 }   -- windows fully solid (user, Nov 25 13:56; HUD stays see-through)
 -- three background layers (user, Nov 25 12:05, mock/bg_tiers.py A):
 -- frame = PANEL (window body), box = NAVY (strips, panels, lists),
 -- page = PAGE (anything you read: quest text, gossip, map quest log)
@@ -259,7 +259,7 @@ end
 -- Widgets inside a window
 -- ------------------------------------------
 local function NavyBox(owner, l, r, t, b)   -- navy fill + blue edge on owner, inset by l/r/t/b
-    local fill = Tex(owner, "BACKGROUND", 1, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
+    local fill = Tex(owner, "BACKGROUND", 1, WHITE, { NAVY[1], NAVY[2], NAVY[3], 1 })
     fill:SetPoint("TOPLEFT", owner, "TOPLEFT", l, -t); fill:SetPoint("BOTTOMRIGHT", owner, "BOTTOMRIGHT", -r, b)
     local c = { BLUE[1], BLUE[2], BLUE[3], 0.9 }
     local e = {}
@@ -418,7 +418,7 @@ end
 local function Input(eb)
     W.done[eb] = "input"
     Fade(T(eb, "Left")); Fade(T(eb, "Middle")); Fade(T(eb, "Right"))
-    local fill = Tex(eb, "BACKGROUND", 1, WHITE, { 0.03, 0.047, 0.086, 0.95 })
+    local fill = Tex(eb, "BACKGROUND", 1, WHITE, { 0.03, 0.047, 0.086, 1 })
     fill:SetPoint("TOPLEFT", eb, "TOPLEFT", -4, 0); fill:SetPoint("BOTTOMRIGHT", eb, "BOTTOMRIGHT", 0, 0)
     local c = { BLUE[1], BLUE[2], BLUE[3], 0.8 }
     for _, s in ipairs({ { "TOPLEFT", "TOPRIGHT", "H" }, { "BOTTOMLEFT", "BOTTOMRIGHT", "H" },
