@@ -346,8 +346,14 @@ local ARROW_COLOR = {
 local arrowState, lineHead = weak(), weak()
 function P.Arrow(head, state)
     if not head or Forbidden(head) then return end
-    arrowState[head] = state
     local par = head.GetParent and head:GetParent()
+    -- Each arrow also has a hidden .GhostArrowHead + .GhostLine (Blizzard's
+    -- preview of a change you haven't applied). The ghost head is left to
+    -- Blizzard: styling it as a head painted the REAL .Line in the preview
+    -- blue at 55%, so every shaft came out see-through blue (user 16:19).
+    if par and T(par, "GhostArrowHead") == head then return end
+    if par and T(par, "ArrowHead") and T(par, "ArrowHead") ~= head then return end
+    arrowState[head] = state
     local line = par and T(par, "Line")
     -- ghost = Blizzard's preview of a change you haven't applied: blue, softer
     local key = (state == "ghost" and "blue") or ARROW[state] or "gray"
@@ -359,7 +365,7 @@ function P.Arrow(head, state)
     if not line then return end
     lineHead[line] = head
     if hooksecurefunc and Once(line, "arrowline") then
-        for _, m in ipairs({ "SetAtlas", "SetTexture" }) do
+        for _, m in ipairs({ "SetAtlas", "SetTexture", "SetColorTexture", "SetVertexColor", "SetThickness" }) do
             if line[m] then pcall(hooksecurefunc, line, m, function(self)
                 if busy[self] or not W.Enabled() then return end
                 local h = lineHead[self]

@@ -1460,3 +1460,12 @@ trim), xpbar_render.py (XP bar).
   (height = width), centered, edge in the background color (no frame),
   model fills the stage, camera 15% closer (SetCamDistanceScale 1.65).
   Waiting for the build go (bump Hub to 1.15.2 + README stamp when built).
+- 16:19 TALENT ARROWS AGAIN (user screenshot): every shaft 5 px but
+  see-through BLUE (heads right). Cause: each arrow frame also has a hidden
+  .GhostArrowHead + .GhostLine (dump: Line .Line, .ArrowHead 14x12,
+  .GhostArrowHead, Line .GhostLine). The ghost head's SetAtlas ran
+  P.Arrow(ghost), which painted the parent's REAL .Line blue at 0.55.
+  READY, NOT SHIPPED (branch dancer2, with the dancer change): P.Arrow
+  returns for the ghost head (or any texture not the frame's .ArrowHead);
+  line hooks also on SetColorTexture / SetVertexColor / SetThickness.
+  skins_pass2_test (+2). Build go -> Skins 1.6.1, Hub 1.15.2.
