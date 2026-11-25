@@ -876,9 +876,15 @@ function P3.ApplyScale(win)
     local s = name and DB()[name]
     if s and not (InCombatLockdown and InCombatLockdown()) then pcall(win.SetScale, win, s) end
 end
+local gripped = weak()      -- windows that have a grip, for Reset Window Sizes
+function P3.ResetScales()
+    if InCombatLockdown and InCombatLockdown() then return end
+    for win in pairs(gripped) do pcall(win.SetScale, win, 1) end
+end
 function P3.Grip(win)
     local name = win.GetName and win:GetName()
     if not name or NO_GRIP[name] or not Once(win, "grip") then return end
+    gripped[win] = true
     local g = CreateFrame("Button", nil, win)
     g:SetSize(14, 14); g:SetPoint("BOTTOMRIGHT", win, "BOTTOMRIGHT", 6, -6)   -- on the rim, clear of scroll bars
     g:SetFrameLevel((win.GetFrameLevel and win:GetFrameLevel() or 1) + 20)

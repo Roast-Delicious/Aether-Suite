@@ -773,6 +773,9 @@ local function AetherButton(parent, name, small)
     b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
     b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
+    -- soft rounded corners (AetherHub, Release C)
+    b.aetherButton = true
+    if AetherHub_Round then AetherHub_Round(b, 5) end
     return b
 end
 
@@ -1225,6 +1228,10 @@ SlashCmdList["AETHERMETER"] = function(msg)
         SetSplit(true)
     elseif command == "join" then
         SetSplit(false)
+    elseif command == "defaults" then
+        -- settings back to how they started; where the windows sit is kept
+        if db then for k, v in pairs(DEFAULTS) do db[k] = v end end
+        print("|cff4da6ffAetherMeter:|r settings back to their defaults. Type /reload to apply.")
     elseif command == "reset" then
         if db then
             db.positions = nil

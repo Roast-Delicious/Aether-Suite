@@ -1696,6 +1696,9 @@ local function AetherButton(parent, name, small)
     b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
     b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
+    -- soft rounded corners (AetherHub, Release C)
+    b.aetherButton = true
+    if AetherHub_Round then AetherHub_Round(b, 5) end
     return b
 end
 
@@ -2480,6 +2483,11 @@ SlashCmdList["AETHERFRAMES"] = function(input)
     elseif cmd == "center" or cmd == "centre" then
         local ok, why = CenterFrames()
         Print(ok and "Frames centered and lined up." or why)
+    elseif cmd == "defaults" then
+        -- every setting back to how it started; where the frames sit is kept
+        for k, v in pairs(defaults) do if k ~= "locked" then db[k] = v end end
+        db.portraitTune = nil
+        Print("Settings back to their defaults (positions kept). Type /reload to apply.")
     elseif cmd == "reset" then
         db.pos = nil
         Print("Positions reset to where Blizzard's frames sit. Type /reload to apply.")
@@ -2511,6 +2519,7 @@ SlashCmdList["AETHERFRAMES"] = function(input)
         print("  /af center           center your, your pet's and your target's frames, lined up")
         print("  /af petreset         put your pet's frame back under yours")
         print("  /af reset            back to Blizzard's spots")
+        print("  /af defaults         every setting back to its default (positions kept)")
         print("  /af on | off         use AetherFrames or Blizzard's frames")
     end
 end

@@ -645,6 +645,9 @@ local function AetherButton(parent, name, small)
     b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
     b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
+    -- soft rounded corners (AetherHub, Release C)
+    b.aetherButton = true
+    if AetherHub_Round then AetherHub_Round(b, 5) end
     return b
 end
 
@@ -1203,6 +1206,17 @@ SlashCmdList["AETHERLEDGER"] = function(msg)
         else
             print(PREFIX .. "export failed: " .. tostring(data))
         end
+    elseif cmd == "turnin" or cmd == "turnin on" or cmd == "turnin off" then
+        local on = AetherLedgerDB.turnInDirections ~= false
+        if cmd == "turnin" then on = not on else on = (cmd == "turnin on") end
+        AetherLedgerDB.turnInDirections = on
+        print(PREFIX .. "click a finished quest's tracker icon for directions to turn in: " .. (on and "on" or "off"))
+    elseif cmd == "defaults" then
+        -- Ledger's own switches (the suggestion interests live in AetherHub)
+        AetherLedgerDB.suggest = true
+        AetherLedgerDB.turnInDirections = nil
+        AetherLedgerDB.tooltipSpot = nil
+        print(PREFIX .. "settings back to their defaults.")
     elseif cmd == "status" then
         print(PREFIX .. Status())
     elseif cmd == "zones" then
@@ -1244,6 +1258,8 @@ SlashCmdList["AETHERLEDGER"] = function(msg)
         print("  /ledger cleanup   gray quests you could drop; /ledger sort re-sorts the quest tracker")
         print("  /ledger tracker   why each quest is or isn't on the tracker")
         print("  /ledger tooltip   tooltips beside the quest tracker, or back in the corner")
+        print("  /ledger turnin    click a finished quest's tracker icon for directions to turn in, on or off")
+        print("  /ledger defaults  Ledger's switches back to their defaults")
         print("  /ledger resetwindows   put Ledger's windows back in their usual spots")
     end
 end

@@ -116,6 +116,9 @@ local function AetherButton(parent, name, small)
     b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
     b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
+    -- soft rounded corners (AetherHub, Release C)
+    b.aetherButton = true
+    if AetherHub_Round then AetherHub_Round(b, 5) end
     return b
 end
 
@@ -1769,6 +1772,15 @@ SlashCmdList["AETHERPACK"] = function(msg)
         db.backpackCount = (arg == "on") or (arg ~= "off" and not db.backpackCount)
         UpdateBackpackCount()
         print(PREFIX .. "free slots on the backpack button: " .. (db.backpackCount and "|cff33dd66on|r" or "|cffff5555off|r"))
+    elseif cmd == "defaults" then
+        -- settings back to how they started; where the windows sit and folded sections are kept
+        for _, k in ipairs({ "replace", "backpackCount", "columns", "scale", "deposit", "depositPulse" }) do db[k] = DEFAULTS[k] end
+        if win then win:SetScale(db.scale) end
+        ForEachBagWindow(function(w) w:SetScale(db.scale) end)
+        UpdateBackpackCount()
+        if AetherPack_UpdatePulse then AetherPack_UpdatePulse() end
+        AetherPack_Layout()
+        print(PREFIX .. "settings back to their defaults (window spots kept).")
     elseif cmd == "reset" then
         db.pos = nil
         if win then win:ClearAllPoints(); win:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -80, 120) end
@@ -1786,6 +1798,7 @@ SlashCmdList["AETHERPACK"] = function(msg)
         print("  /pack pulse item|always|off  when its number pulses")
         print("  /pack scale 0.6-1.5   window size")
         print("  /pack reset           windows back to their starting spots")
+        print("  /pack defaults        settings back to their defaults")
     end
 end
 

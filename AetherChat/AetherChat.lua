@@ -42,8 +42,9 @@ local function Unbury(obj)
 end
 
 -- Same see-through level as AetherMeter's window out of combat (else 20%).
+-- AetherHub keeps it (AetherPanels) so it works without the meter too.
 local function PanelAlpha()
-    local m = _G.AetherMeterDB
+    local m = type(_G.AetherPanels) == "table" and _G.AetherPanels or _G.AetherMeterDB
     local a = type(m) == "table" and tonumber(m.opacityOutCombat)
     return a and math.max(0, math.min(1, a)) or 0.2
 end

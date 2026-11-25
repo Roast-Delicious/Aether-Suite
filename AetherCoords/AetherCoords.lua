@@ -476,6 +476,9 @@ local function AetherButton(parent, name, small)
     b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
     b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
+    -- soft rounded corners (AetherHub, Release C)
+    b.aetherButton = true
+    if AetherHub_Round then AetherHub_Round(b, 5) end
     return b
 end
 
@@ -929,6 +932,11 @@ SlashCmdList.AETHERCOORDS = function(input)
     elseif cmd == "popup" then
         db.popup = (val ~= "off")
         Print("Map cursor popup " .. (db.popup and "on" or "off"))
+    elseif cmd == "defaults" then
+        -- settings back to how they started; waypoints and the readout's spot are kept
+        for k, v in pairs(defaults) do db[k] = v end
+        mini:SetShown(db.minimap); PlaceMini()
+        Print("Settings back to their defaults (waypoints kept).")
     elseif cmd == "reset" then
         db.point = nil; PlaceMini()
         Print("Readout moved back under the minimap.")
@@ -938,6 +946,7 @@ SlashCmdList.AETHERCOORDS = function(input)
         print("  /mc minimap on|off   readout under the minimap")
         print("  /mc popup on|off     cursor popup on the world map")
         print("  /mc reset            move the readout back under the minimap")
+        print("  /mc defaults         settings back to their defaults (waypoints kept)")
         print("  Shift-drag the readout to move it.")
         print("  /way for waypoints (notes on the world map and minimap).")
     end

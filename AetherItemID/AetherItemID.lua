@@ -803,6 +803,7 @@ SlashCmdList.AETHERITEMID = function(input)
         print(PREFIX .. "opens after hovering " .. db.delay .. " seconds.")
     elseif cmd == "debug" then
         debugging = not debugging
+        AetherItemID_Debugging = debugging     -- AetherHub's switch reads it
         print(PREFIX .. "debug messages " .. (debugging and "on: hover an item in your bags." or "off."))
     elseif cmd == "reset" and val == "recipes" then
         db.learned, db.known = {}, {}

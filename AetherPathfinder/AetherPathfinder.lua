@@ -390,6 +390,9 @@ local function AetherButton(parent, name, small)
     b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
     b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
+    -- soft rounded corners (AetherHub, Release C)
+    b.aetherButton = true
+    if AetherHub_Round then AetherHub_Round(b, 5) end
     return b
 end
 
@@ -1533,6 +1536,13 @@ SlashCmdList["AETHERPATHFINDER"] = function(msg)
             pinsDirty = true
             print(prefix .. "Forgot every NPC in this zone.")
         end
+    elseif command == "defaults" then
+        -- options and NPC types back to how they started; learned NPCs are kept
+        for k, v in pairs(OPTION_DEFAULTS) do db[k] = v end
+        db.filters = db.filters or {}
+        for _, cat in ipairs(CATEGORIES) do db.filters[cat.key] = cat.on and true or false end
+        pinsDirty = true; rebuildIn = 0
+        print(prefix .. "settings back to their defaults (learned NPCs kept).")
     elseif command == "reset" then
         db.npcs = {}
         db.mailboxes = {}
