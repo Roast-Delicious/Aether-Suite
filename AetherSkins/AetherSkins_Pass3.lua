@@ -28,6 +28,81 @@ local Tint, Atlas, FileID, Shown, Once, HookShow = PH.Tint, PH.Atlas, PH.FileID,
 local weak = PH.weak
 local P3 = {}
 W.P3 = P3
+local Usable
+
+-- ------------------------------------------
+-- Gold when you can click it, gray when you can't (user, Nov 25)
+-- ------------------------------------------
+local usable = weak()            -- button -> { look = fn }
+local GRAY = { 0.62, 0.65, 0.72 }
+Usable = function(b, o, extra, col)
+    local u = usable[b]
+    if not u then
+        u = { list = {} }
+        usable[b] = u
+        u.look = function()
+            local okE, en = pcall(function() return not b.IsEnabled or b:IsEnabled() end)
+            local on = (not okE) or en
+            if on and u.extra then local okX, x = pcall(u.extra); on = okX and x end
+            for ob, c in pairs(u.list) do
+                if ob.SetDesaturated then ob:SetDesaturated(not on) end
+                local k = on and c or GRAY
+                ob:SetVertexColor(k[1], k[2], k[3], 1)
+            end
+            if u.onLook then pcall(u.onLook, on) end
+        end
+        if hooksecurefunc then
+            for _, m in ipairs({ "Enable", "Disable", "SetEnabled" }) do
+                if b[m] then pcall(hooksecurefunc, b, m, u.look) end
+            end
+        end
+    end
+    if o then u.list[o] = col or { 1, 1, 1 } end
+    if extra then u.extra = extra end
+    u.look()
+    return u
+end
+P3.Usable = Usable
+function P3.RefreshUsable() for _, u in pairs(usable) do pcall(u.look) end end
+-- repairs and money change without the buttons being touched
+if CreateFrame then
+    local ev = CreateFrame("Frame")
+    for _, e in ipairs({ "MERCHANT_SHOW", "MERCHANT_UPDATE", "UPDATE_INVENTORY_DURABILITY", "PLAYER_MONEY", "BAG_UPDATE_DELAYED" }) do
+        pcall(ev.RegisterEvent, ev, e)
+    end
+    ev:SetScript("OnEvent", function() P3.RefreshUsable() end)
+end
+
+-- ------------------------------------------
+-- Page arrows (vendor, Spellbook): our chevron inside a navy square
+-- ------------------------------------------
+local PAGE_DIR = { ["130864"] = "right", ["130865"] = "right", ["130866"] = "right",
+                   ["130867"] = "left", ["130868"] = "left", ["130869"] = "left" }
+function P.PageArrow(t, id)
+    local dir = PAGE_DIR[id]
+    local b = t.GetParent and t:GetParent()
+    if not dir or not b or not b.CreateTexture then return false end
+    t:SetAlpha(0)
+    if not Once(b, "pagearrow") then return true end
+    local s = Tex(b, "BACKGROUND", 7, WHITE, { NAVY[1], NAVY[2], NAVY[3], 0.95 })
+    s:SetSize(26, 26); s:SetPoint("CENTER", b, "CENTER")
+    local f = CreateFrame("Frame", nil, b)
+    f:SetSize(26, 26); f:SetPoint("CENTER", b, "CENTER")
+    local e = Edge(f, "BORDER", 1, { BLUE[1], BLUE[2], BLUE[3], 1 }, 0)
+    local c = Tex(b, "ARTWORK", 7, MEDIA .. "chev3d_" .. dir, { 1, 1, 1, 1 })
+    c:SetSize(20, 20); c:SetPoint("CENTER", b, "CENTER")
+    local u = Usable(b, c)
+    u.onLook = function(on)
+        local k = on and BLUE or { 0.24, 0.27, 0.35 }
+        for _, x in ipairs(e) do x:SetVertexColor(k[1], k[2], k[3], 1) end
+    end
+    u.look()
+    if b.HookScript then
+        b:HookScript("OnMouseDown", function() c:ClearAllPoints(); c:SetPoint("CENTER", b, "CENTER", 1, -1) end)
+        b:HookScript("OnMouseUp", function() c:ClearAllPoints(); c:SetPoint("CENTER", b, "CENTER") end)
+    end
+    return true
+end
 
 -- ------------------------------------------
 -- Side tabs: glyph, thick gold frame and glow on the open one
@@ -229,20 +304,17 @@ function P.ExtraRule(t, a)
         local nm = b and b.GetName and b:GetName()
         if nm == "MerchantGuildBankRepairButton" then v = "btn_guild" end
         local o = Ours(t, v, GOLD, 26)
-        -- gray when there's nothing to repair or sell (user, Nov 25)
-        if o and b and Once(b, "vendorgray") then
-            local function Upd()
-                local on = not (b.IsEnabled and not b:IsEnabled())
-                local c = on and GOLD or { 0.45, 0.47, 0.52 }
-                o:SetVertexColor(c[1], c[2], c[3], 1)
-            end
-            for _, m in ipairs({ "Enable", "Disable", "SetEnabled" }) do
-                if b[m] and hooksecurefunc then pcall(hooksecurefunc, b, m, Upd) end
-            end
-            P3.vendorUpd = P3.vendorUpd or {}
-            P3.vendorUpd[b] = Upd
-            Upd()
-        elseif P3.vendorUpd and P3.vendorUpd[b] then P3.vendorUpd[b]() end
+        -- gray when there's nothing to repair or sell (user, Nov 25).
+        -- Repair item is never disabled by Blizzard, and repair all may
+        -- not be refreshed after repairing, so the repair cost decides too.
+        if o and b then
+            local repair = nm and nm:find("Repair")
+            Usable(b, o, function()
+                if not repair or not GetRepairAllCost then return true end
+                local ok, cost = pcall(GetRepairAllCost)
+                return ok and type(cost) == "number" and cost > 0
+            end, GOLD)
+        end
         return true
     end
     -- scroll bars: beveled gold thumb, dark navy track, gold chevrons
@@ -259,7 +331,10 @@ function P.ExtraRule(t, a)
     end
     local dir = a:match("^minimal%-scrollbar%-arrow%-(%a+)")
     if dir then
-        Ours(t, (dir == "top") and "chev3d_up" or "chev3d_down", { 1, 1, 1, 1 }, 14)
+        local o = Ours(t, (dir == "top") and "chev3d_up" or "chev3d_down", { 1, 1, 1, 1 }, 14)
+        -- gray at the end of the list (user, Nov 25)
+        local b = t.GetParent and t:GetParent()
+        if o and b and b.IsEnabled then Usable(b, o) end
         return true
     end
     -- quest and gossip pages

@@ -347,6 +347,7 @@ function P.Texture(t)
         end
     elseif NAVYID[id] then Tint(t, { 0.2, 0.36, 0.62 }, 0.95)
     elseif LIGHTID[id] then
+        if P.PageArrow and P.PageArrow(t, id) then return end   -- chevron in a square (Pass3)
         -- page arrows: bright when you can click them, dim when you can't
         -- (user, Nov 25: both looked alike, and too dark)
         local par = t.GetParent and t:GetParent()
