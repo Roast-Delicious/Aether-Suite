@@ -303,13 +303,20 @@ end
 -- ------------------------------------------
 local function ReadyLine(line)
     local t = line and line.Text and line.Text:GetText()
-    return t and QUEST_WATCH_QUEST_READY and t == QUEST_WATCH_QUEST_READY
+    if not t or not QUEST_WATCH_QUEST_READY or (issecretvalue and issecretvalue(t)) then return false end
+    return t:sub(1, #QUEST_WATCH_QUEST_READY) == QUEST_WATCH_QUEST_READY
 end
 
 local function Paint(block)
     if not block then return end
     Recolor(block.HeaderText)
+    -- A finished quest handed in elsewhere (kept at the bottom by the tracker):
+    -- "Ready for turn-in: Orgrimmar".
+    local where = AetherLedger_Tracker and AetherLedger_Tracker.ElsewhereZone and AetherLedger_Tracker.ElsewhereZone(tonumber(block.id))
     for _, line in pairs(block.usedLines or {}) do
+        if where and ReadyLine(line) and line.Text:GetText() == QUEST_WATCH_QUEST_READY then
+            line.Text:SetText(QUEST_WATCH_QUEST_READY .. ": " .. where)
+        end
         Recolor(line.Text, ReadyLine(line))
         if line.Dash then Recolor(line.Dash) end
     end
@@ -335,21 +342,53 @@ local function HookBlock(block)
     end
 end
 
+-- A tapered gold line above the first finished quest that's handed in
+-- elsewhere: the divider between "your zone" and "hand in elsewhere" (user,
+-- Nov 25). One per module, on the block it marks; hidden when there are none.
+local dividers = setmetatable({}, { __mode = "k" })   -- module -> texture
+local function Divider(module, block)
+    local d = dividers[module]
+    if not block then if d then d:Hide() end; return end
+    if not d or d:GetParent() ~= block then
+        if d then d:Hide() end
+        d = block:CreateTexture(nil, "OVERLAY")
+        d:SetTexture(MEDIA .. "trk_line")
+        d:SetVertexColor(GOLD[1], GOLD[2], GOLD[3], 0.85)
+        d:SetHeight(4)
+        dividers[module] = d
+    end
+    d:ClearAllPoints()
+    d:SetPoint("BOTTOMLEFT", block, "TOPLEFT", -6, 1)
+    d:SetPoint("BOTTOMRIGHT", block, "TOPRIGHT", 6, 1)
+    d:Show()
+end
+
 local function PaintModule(module)
     if not module then return end
     StyleHeader(module.Header)
     local blocks = module.usedBlocks
     if type(blocks) ~= "table" then return end
+    local firstElsewhere, firstTop
+    local function One(block)
+        HookBlock(block); Paint(block)
+        local id = tonumber(block.id)
+        if id and AetherLedger_Tracker and AetherLedger_Tracker.ElsewhereZone and AetherLedger_Tracker.ElsewhereZone(id)
+            and block.IsShown and block:IsShown() then
+            local top = block.GetTop and block:GetTop()
+            if top and (not firstTop or top > firstTop) then firstElsewhere, firstTop = block, top end
+        end
+    end
     -- usedBlocks is keyed by template, then by id (or a flat list on some versions).
     for _, v in pairs(blocks) do
         if type(v) == "table" and v.HeaderText then
-            HookBlock(v); Paint(v)
+            One(v)
         elseif type(v) == "table" then
             for _, block in pairs(v) do
-                if type(block) == "table" and block.HeaderText then HookBlock(block); Paint(block) end
+                if type(block) == "table" and block.HeaderText then One(block) end
             end
         end
     end
+    Divider(module, firstElsewhere)
 end
 
 -- ------------------------------------------

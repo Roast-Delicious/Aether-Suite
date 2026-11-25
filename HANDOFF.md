@@ -115,24 +115,35 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     (approved capsule bars, Neutral gold / Friendly+ #22e650), rows and
     section headers (tracker-style), world map specifics: phase 2, from
     the user's screenshots + /skins debug.
-- QUEUED for the next build (user, Nov 25 04:31, "queue it"): Check Zones
-  Now popup includes YOUR zone (it filtered option.map ~= report.current):
-  first line "Here, <zone>: N quests (lo-hi), M in your log", then the
-  other zones ranked with Go; if none beats here: "<zone> is still your
-  best zone."; if here has run dry (no available quests at this level, or
-  all done): say so. Ledger.Suggest(force) / ZoneRows.
-- READY, NOT SHIPPED (branch fix-ledger-skins-errors, includes the tab fix):
-  AetherLedger 1.8.1 + AetherSkins 1.2.1. Two errors from the user's
-  checklist (04:15, 04:16): (1) Ledger.lua:248 concat nil: GiverText was
-  defined above the field-name locals, so GIVER was a nil global ->
-  Hub's Ledger page errored on any moving giver; moved below them,
-  ledger_routes_test now checks the order and the text. (2) Skins
-  IsCoordText (/skins debug + minimap scan) indexed a SECRET string
-  (Midnight secret values) -> issecretvalue guard; zone-text color Fix
-  also guarded.
-- READY, NOT SHIPPED (branch fix-skins-tab-center): AetherSkins 1.2.1. Tab
-  boxes centered on the tab's Text (TOP/BOTTOM of the text +-7), not the
-  whole button: Talents' Primary/Secondary text sat low (user 1.12 note).
+- LAST BUILD (Nov 25, 05:50; user 05:33 "go ahead with all the fixes and
+  recommendations"): AetherLedger 1.8.1, AetherSkins 1.2.1, AetherHub 1.14.8.
+  * Errors fixed: Ledger GiverText order (Hub Ledger tab / moving givers),
+    Skins secret-text guard (Debug Skins, Copy Full Report). Skins tab boxes
+    centered on their text.
+  * Check Zones Now: "Here, <ZoneShort>." (or "no quests left for your
+    level") right above the zone list; "<zone> is still your best zone.
+    Others for your level:" when here ranks first.
+  * TRACKER HAND-INS (user pick "bottom of tracker", 05:33; divider asked
+    05:35): finished quests whose home is here/focus and turn-in is not
+    here stay tracked, added FIRST so they sit at the BOTTOM (newest-on-
+    top tracker), sorted by title, trimmed first if over the watch cap;
+    AetherLedger_Tracker.ElsewhereZone(id) -> zone name; TrackerLook:
+    Ready line -> "Ready for turn-in: <zone>" (prefix match, no double
+    append, stays Aether blue) and a gold trk_line divider on top of the
+    topmost such block (one per module, hidden when none).
+  * RED QUEST NOTE (user's option 2): QUEST_ACCEPTED remembers the id; the
+    next Apply prints once "<title> is red for you right now (level N), so
+    it's off the tracker until you level up. Shift-click it in your quest
+    log to keep it on." tracker_handin_test (new).
+  * /skins tree (point at a window): AetherSkinsDB.lastTree = {name, lines}
+    (kind, name or .parentKey, size, hidden, atlas/tex, [styled kind];
+    depth 5, 400 lines, no text); Hub Debug "Show Window Dump" + in Copy
+    Full Report. Ask the user for dumps of Character, Reputation, Friends,
+    Talents, Progress Track before the second pass.
+  * NOT DONE, user asked (05:35): quest list 10-20 px lower (too close to
+    the zone/clock pill). Nothing of ours moves the tracker (Edit Mode
+    does); moving ObjectiveTrackerFrame from addon code taints Edit Mode,
+    so suggested a one-time Edit Mode drag (Hub Layout: Open Edit Mode).
 - DESIGN, NOT QUEUED (user, Nov 25 ~04:20, checklist 2.6): "our Addons
   option list is getting long and out of control. we need to review the
   menus, combine like options, normalize button naming conventions,
@@ -484,6 +495,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 25, 2026 (05:50): built Ledger 1.8.1 (fixes, Check Zones shows your
+  zone, hand-ins at the bottom with divider, red-quest note), Skins 1.2.1
+  (fixes, /skins tree), Hub 1.14.8 (Show Window Dump).
 - Nov 25, 2026 (04:20): built Ledger 1.8.0 (icon fix, quest zoom b, moving
   givers) + Hub 1.14.7 (Debug page). In-game checklist made as a doc.
 - Nov 25, 2026 (03:45): built AetherSkins 1.2.0 (all Blizzard windows,

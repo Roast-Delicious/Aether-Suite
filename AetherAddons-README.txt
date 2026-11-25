@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (04:20)
+Last updated: November 25, 2026 (05:50)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -15,7 +15,7 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.14.7    One window with every addon's settings
+  AetherHub          1.14.8    One window with every addon's settings
   AetherMeter        1.13.9    Damage and healing meter
   AetherBars         1.14.3    Clean action bars with a cooldown glow
   AetherCoords       1.3.15    Coordinates, plus your own map waypoints
@@ -111,6 +111,8 @@ and anything that can't be undone asks first.
     Meter. What they print shows in a box you can copy: click in it,
     Ctrl+A, Ctrl+C. Copy Full Report puts versions, memory and every
     report in the box, already selected, to paste to whoever helps.
+    Show Window Dump shows the structure of the last window you
+    pointed at with /skins tree (for restyling Forever's windows).
   AetherMeter tab: Window (show or hide, lock, DPS and HPS or only
     one, split into two windows), plus Preview Meter (sample numbers)
     and Reset Meter Position.
@@ -437,10 +439,11 @@ AetherLedger - where to quest, train and skin next             /ledger
     turned gray. A single new class or profession quest gets its own
     Go button too. Show quests opens the full list in AetherHub, Clean
     up opens the gray-quest window, and Not now closes it. Check zones
-    now always lists your best zones, even when you're already in a
-    good spot. Drag the window (or the cleanup or directions window)
-    where you like it and it opens there from then on; /ledger
-    resetwindows puts them back. Chains that
+    now always starts with your own zone (its quests at your level, or
+    that it has run dry), then your best other zones, and says when
+    yours is still the best. Drag the window (or the cleanup or
+    directions window) where you like it and it opens there from then
+    on; /ledger resetwindows puts them back. Chains that
     keep going past your level count extra, so you can stay in one
     zone longer.
   - Go: puts a waypoint (AetherCoords) on that zone's quest giver with
@@ -472,7 +475,11 @@ AetherLedger - where to quest, train and skin next             /ledger
     are. In a zone it shows that zone's quests, lowest level at the top,
     plus quests ready to hand in there (a finished quest shows up in the
     zone where you turn it in, not where you got it). Red quests (too hard
-    for now) are left out until a level-up turns them orange.
+    for now) are left out until a level-up turns them orange; when one
+    you just accepted goes, a chat line says why.
+  - Finished quests from the zone you're in that are handed in
+    somewhere else stay at the bottom of the list, under a thin gold
+    line, reading "Ready for turn-in: Orgrimmar" (the zone to go to).
   - Somewhere with nothing for you (a city, a road), it shows the
     quests of the zone you're heading to with Go, or else the zone
     holding most of your quests. A line in chat says which zone the
@@ -904,9 +911,10 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
   - Commands: /skins minimap and /skins windows (each on or off, then
     /reload), /skins this, /skins day and /skins night to preview the
     sun or moon (/skins auto follows the game again), /skins debug
-    (what it found and changed: send this if something looks off).
-    Both switches and Run Debug are also on the AetherSkins tab in
-    AetherHub (/hub skins).
+    (what it found and changed: send this if something looks off),
+    /skins tree (point at a window: saves its structure for AetherHub's
+    Debug page). Both switches are also on the AetherSkins tab in
+    AetherHub (/hub skins), and Debug Skins on its Debug tab.
 
 
 AUTOMATIC NPC DATA REFRESH (optional, Windows only)

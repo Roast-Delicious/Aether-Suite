@@ -630,6 +630,15 @@ SlashCmdList["AETHERSKINS"] = function(msg)
         if cmd == "windows" then on = not on else on = (cmd == "windows on") end
         db.windows = on
         Print("windows look " .. (on and "on" or "off") .. ". Type /reload to see the change.")
+    elseif cmd == "tree" then
+        local W = AetherSkins_Windows
+        local name, n
+        if W then name, n = W.TreeUnderMouse() end
+        if name then
+            Print("saved the structure of " .. name .. " (" .. n .. " lines). Open AetherHub's Debug page and click Show Window Dump to copy it.")
+        else
+            Print("point at a Blizzard window first, then type /skins tree.")
+        end
     elseif cmd == "this" then
         local W = AetherSkins_Windows
         local f = W and W.Enabled() and W.SkinUnderMouse()
@@ -663,6 +672,7 @@ SlashCmdList["AETHERSKINS"] = function(msg)
         print("  /skins minimap       turn the minimap look on or off (then /reload)")
         print("  /skins windows       turn the windows look on or off (then /reload)")
         print("  /skins this          style the Blizzard window under your mouse, if it was missed")
+        print("  /skins tree          save the structure of the window under your mouse (for its next restyle)")
         print("  /skins day | night   preview the day or night light; /skins auto follows the game again")
         print("  /skins debug         what was found and hidden (send this if something looks off)")
     end

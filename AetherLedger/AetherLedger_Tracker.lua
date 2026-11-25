@@ -331,6 +331,8 @@ end
 -- ==========================================
 
 local applying = false     -- true while we change the tracker (so it isn't taken as you doing it)
+local lastAccepted          -- the quest you just accepted (to say why a red one left the tracker)
+local elsewhereZone = {}    -- questID -> name of the zone it's handed in, for finished quests from here
 local pending, waitingForCombat = false, false
 
 local function Watch(q, on)
@@ -401,14 +403,43 @@ local function Apply()
         if a.level ~= b.level then return a.level < b.level end
         return tostring(a.title) < tostring(b.title)
     end)
+    -- Finished quests from here (or the zone the list follows) that are handed
+    -- in somewhere else: they stay, at the bottom, and the tracker says where
+    -- (user, Nov 25: "hunting through the quest list" for completed quests).
+    local inWant, elsewhere = {}, {}
+    for _, q in ipairs(want) do inWant[q.id] = true end
+    for k in pairs(elsewhereZone) do elsewhereZone[k] = nil end
+    for _, q in ipairs(quests) do
+        if q.complete and not inWant[q.id] and not manual.hide[q.id] then
+            local home, turnIn = ZonesOf(q)
+            if home and (here[home] or focus[home]) and turnIn and not here[turnIn] then
+                elsewhere[#elsewhere + 1] = q
+                elsewhereZone[q.id] = MapName(turnIn)
+            end
+        end
+    end
+    table.sort(elsewhere, function(a, b) return tostring(a.title) < tostring(b.title) end)
     local cap = MaxWatches()
+    while #want + #elsewhere > cap and #elsewhere > 0 do table.remove(elsewhere) end
     while #want > cap do table.remove(want) end
+    -- A red quest you just accepted: the game put it on the tracker, we take it
+    -- off; say why, once (user's pick 2, Nov 25).
+    if lastAccepted then
+        for _, q in ipairs(quests) do
+            if q.id == lastAccepted and not inWant[q.id] and not manual.keep[q.id] and Difficulty(q.level) == "red" then
+                print(PREFIX .. tostring(q.title) .. " is red for you right now (level " .. tostring(q.level)
+                    .. "), so it's off the tracker until you level up. Shift-click it in your quest log to keep it on.")
+            end
+        end
+        lastAccepted = nil
+    end
 
     -- Nothing to do if the tracker already shows what we last set up and
     -- nothing has moved since. (The order the game reports isn't the order
     -- it shows, so compare with what it reported right after we set it.)
     local ids = {}
     for i, q in ipairs(want) do ids[i] = tostring(q.id) end
+    for _, q in ipairs(elsewhere) do ids[#ids + 1] = "e" .. tostring(q.id) end
     local wantKey = table.concat(ids, ",")
     local currentKey = table.concat(WatchOrder(byIndex), ",")
     if wantKey == lastWantKey and currentKey == lastReadKey then return end
@@ -429,6 +460,7 @@ local function Apply()
         -- In WoW Forever the tracker lists quests in the reverse of the order
         -- they were added (the newest on top), so add
         -- the highest level first and the lowest last: lowest ends up on top.
+        for i = #elsewhere, 1, -1 do Watch(elsewhere[i], true) end   -- added first = shown last
         for i = #want, 1, -1 do Watch(want[i], true) end
     end)
     applying = false
@@ -593,6 +625,10 @@ end
 
 AetherLedger_Tracker = {}
 
+-- The zone a finished quest from here is handed in (nil if it's handed in here),
+-- for the tracker look's "Ready for turn-in: <zone>".
+function AetherLedger_Tracker.ElsewhereZone(questID) return questID and elsewhereZone[questID] end
+
 function AetherLedger_Tracker.ShowCleanup()
     if not win then BuildWindow() end
     local drop, turnIn = Cleanup()
@@ -697,6 +733,7 @@ events:SetScript("OnEvent", function(_, event, arg1, arg2)
             if now == zone then ApplySoon(0) end
         end)
     elseif event == "QUEST_ACCEPTED" then
+        lastAccepted = tonumber(arg2) or tonumber(arg1)     -- (questID) newer, (logIndex, questID) older
         quietUntil = GetTime() + 2
         ApplySoon(1.5)   -- after the game's own auto-tracking of the new quest
     else

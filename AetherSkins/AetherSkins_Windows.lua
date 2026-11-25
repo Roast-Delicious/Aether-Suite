@@ -504,6 +504,79 @@ function W.SkinUnderMouse()
     if f then W.Watch(f); W.Skin(f); return f end
 end
 
+-- /skins tree: the structure of the window under the mouse, so the second
+-- pass can style Forever's own parts by name (they aren't Blizzard's
+-- standard templates). Saved in AetherSkinsDB.lastTree for the Hub's Debug
+-- page to show in its copy box. Names only: no text that could be secret.
+local function KeyIn(parent, child)
+    if type(parent) ~= "table" then return nil end
+    local ok, key = pcall(function()
+        for k, v in pairs(parent) do if v == child and type(k) == "string" then return k end end
+    end)
+    return ok and key or nil
+end
+local function Describe(o, parent)
+    local ok, kind = pcall(o.GetObjectType, o)
+    kind = ok and kind or "?"
+    local name = (o.GetName and o:GetName()) or nil
+    local key = KeyIn(parent, o)
+    local bits = { kind, name or ("." .. (key or "?")) }
+    if o.GetWidth then
+        local okw, w, h = pcall(function() return o:GetWidth(), o:GetHeight() end)
+        if okw and w and not (issecretvalue and (issecretvalue(w) or issecretvalue(h))) then
+            bits[#bits + 1] = string.format("%dx%d", math.floor(w + 0.5), math.floor(h + 0.5))
+        end
+    end
+    if o.IsShown and not o:IsShown() then bits[#bits + 1] = "hidden" end
+    if kind == "Texture" then
+        local a = o.GetAtlas and o:GetAtlas()
+        local t = o.GetTexture and o:GetTexture()
+        if a and not (issecretvalue and issecretvalue(a)) then bits[#bits + 1] = "atlas=" .. tostring(a)
+        elseif t and not (issecretvalue and issecretvalue(t)) then bits[#bits + 1] = "tex=" .. tostring(t) end
+    end
+    if W.done[o] then bits[#bits + 1] = "[styled " .. W.done[o] .. "]" end
+    return table.concat(bits, " ")
+end
+function W.Tree(root)
+    local lines, count = {}, 0
+    local function Walk(f, parent, depth)
+        if count >= 400 or Forbidden(f) then return end
+        count = count + 1
+        lines[#lines + 1] = string.rep("  ", depth) .. Describe(f, parent)
+        if depth >= 5 then return end
+        if f.GetRegions then
+            for _, r in ipairs({ f:GetRegions() }) do
+                if count >= 400 then break end
+                if not Forbidden(r) then
+                    count = count + 1
+                    lines[#lines + 1] = string.rep("  ", depth + 1) .. Describe(r, f)
+                end
+            end
+        end
+        if f.GetChildren then
+            for _, c in ipairs({ f:GetChildren() }) do Walk(c, f, depth + 1) end
+        end
+    end
+    Walk(root, root.GetParent and root:GetParent(), 0)
+    if count >= 400 then lines[#lines + 1] = "(stopped at 400 lines)" end
+    return lines
+end
+function W.TreeUnderMouse()
+    local foci = GetMouseFoci and GetMouseFoci() or { GetMouseFocus and GetMouseFocus() }
+    local f = foci and foci[1]
+    local top = f
+    while f do
+        if W.IsWindow(f) then top = f; break end
+        f = f.GetParent and f:GetParent()
+        if f == UIParent then break end
+    end
+    if not top or top == UIParent then return nil end
+    local name = (top.GetName and top:GetName()) or "window"
+    AetherSkinsDB = AetherSkinsDB or {}
+    AetherSkinsDB.lastTree = { name = name, lines = W.Tree(top) }
+    return name, #AetherSkinsDB.lastTree.lines
+end
+
 function W.Debug(print)
     print(("Windows: %s; %d skinned; Blizzard yellow text turned gold on %d fonts.")
         :format(Enabled() and "on" or "off", #W.names, W.goldDone or 0))

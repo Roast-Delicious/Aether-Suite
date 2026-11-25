@@ -168,5 +168,22 @@ expect("hand-in copy: above everything on UIParent, 1x -> 25x, fades out",
         L.eval('PLAYS[2].anims[2].afrom'), L.eval('PLAYS[2].anims[2].ato'), L.eval('PLAYS[2].owner.mouse')), (True, 1, 25, 1, 0, False))
 fire("QUEST_TURNED_IN", 999)
 expect("hand-in of an untracked quest: nothing", L.eval('#PLAYS'), 2)
+# A finished quest handed in elsewhere (B1, ready): "Ready for turn-in: Orgrimmar",
+# still Aether blue, with a gold divider line above it.
+L.execute('''
+AetherLedger_Tracker = { ElsewhereZone = function(id) if id == 1 then return "Orgrimmar" end end }
+B1.usedLines[1].Text.text = "Ready for turn-in"
+B1.GetTop = function() return 300 end; B2.GetTop = function() return 340 end; B3.GetTop = function() return 260 end
+B1.IsShown = function() return true end; B2.IsShown = function() return true end; B3.IsShown = function() return true end
+QuestObjectiveTracker:Update()
+''')
+expect("hand-in elsewhere: Ready line names the zone", L.eval('B1.usedLines[1].Text.text'), "Ready for turn-in: Orgrimmar")
+expect("...and stays Aether blue", col('B1.usedLines[1].Text.color'), (0.3, 0.65, 1))
+L.execute('QuestObjectiveTracker:Update()')
+expect("...without adding the zone twice", L.eval('B1.usedLines[1].Text.text'), "Ready for turn-in: Orgrimmar")
+div = L.eval('(function() for _,o in ipairs(B1.kids or {}) do if o.texture and tostring(o.texture):find("trk_line") then return o end end end)()')
+expect("a gold divider line sits on the first hand-in quest", div is not None, True)
+L.execute('AetherLedger_Tracker = { ElsewhereZone = function() end }; QuestObjectiveTracker:Update()')
+expect("no hand-ins elsewhere: divider hidden", div.shown if div is not None else None, False)
 expect("no errors printed", L.eval('OUT'), None)
 print("PASS" if ok else "FAIL"); sys.exit(0 if ok else 1)

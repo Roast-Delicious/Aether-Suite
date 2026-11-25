@@ -1754,6 +1754,13 @@ BUILDERS.Debug = function(p)
         { "Preview Meter", function() Run("AETHERMETER", "test") end,
           "Fills the meter with sample numbers so you can see how it looks." },
     })
+    AddButtons(p, {
+        { "Show Window Dump", function()
+            local t = AetherSkinsDB and AetherSkinsDB.lastTree
+            if t then Show("Window dump: " .. tostring(t.name), t.lines)
+            else Show("Window dump", { "Nothing saved yet. Point at a Blizzard window and type /skins tree, then click this again." }) end
+        end, "Shows the window structure /skins tree saved (point at a window and type /skins tree first)." },
+    })
 
     AddHeader(p, "Output")
     AddNote(p, "Click in the box, press Ctrl+A, then Ctrl+C to copy.")
@@ -1804,6 +1811,8 @@ BUILDERS.Debug = function(p)
             for _, d in ipairs(DEBUGS) do
                 if IsLoaded(d[2]) then Add(d[1], Capture(function() Run(d[3], d[4]) end)) end
             end
+            local t = AetherSkinsDB and AetherSkinsDB.lastTree
+            if t then Add("Window dump: " .. tostring(t.name), t.lines) end
             box:SetText(table.concat(all, "\n"))
             box:SetCursorPosition(0)
             scroll:SetVerticalScroll(0)

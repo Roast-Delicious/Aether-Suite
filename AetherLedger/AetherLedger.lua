@@ -1039,10 +1039,25 @@ local function Suggest(force, level)
         -- You asked: list your best zones even if none is clearly better than here.
         ZoneRows(0.1)
         local here = report.here
-        zoneHeader = (here and #here.quests > 0)
-            and ("You're in a good spot (" .. #here.quests .. " quests here). Other zones for your level:")
-            or "Zones with quests for your level:"
+        local top = report.zones and report.zones[1]
+        if here and #here.quests > 0 and top and top.map == report.current then
+            zoneHeader = MapName(report.current) .. " is still your best zone. Others for your level:"
+        else
+            zoneHeader = "Other zones for your level:"
+        end
         if #rows == 0 then zoneHeader = "No other zone has quests for your level right now." end
+    end
+    -- Your own zone always comes first, so you can compare (user, Nov 25: it
+    -- was scanned but never shown). It changes as you level: quests go gray,
+    -- new ones open up.
+    local hereLine
+    if zoneHeader and report.current then
+        local here = report.here
+        if here and #here.quests > 0 then
+            hereLine = "Here, " .. ZoneShort(here) .. "."
+        else
+            hereLine = "Here, " .. MapName(report.current) .. ": no quests left for your level."
+        end
     end
     for _, item in ipairs(report.rankUps or {}) do
         local tag = "rank:" .. item.prof.key .. ":" .. item.prof.max
@@ -1080,6 +1095,7 @@ local function Suggest(force, level)
             or (#gray .. " quests have turned gray")) .. " (little XP now). Clean up lets you drop them."
     end
 
+    if hereLine then lines[#lines + 1] = hereLine end
     if zoneHeader then lines[#lines + 1] = zoneHeader end
     if newQuestRow then           -- the new class/profession quest gets the last Go row
         while #rows > 2 do table.remove(rows) end
