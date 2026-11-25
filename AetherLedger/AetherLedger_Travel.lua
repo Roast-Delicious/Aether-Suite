@@ -132,6 +132,10 @@ local function Plan(dest)
     local flights = KnownFlights()
     local steps = {}
     local label = string.format("Walk to %s in %s (%.0f, %.0f)", dest.name, MapName(dest.map), dest.x * 100, dest.y * 100)
+    if dest.route then
+        label = string.format("Walk to the road %s travels in %s (%.0f, %.0f): on the move, look along it",
+            dest.name, MapName(dest.map), dest.x * 100, dest.y * 100)
+    end
     if here.inst == target.inst then
         OverLand(steps, here, target, label, flights)
         return steps, nil, target
@@ -459,7 +463,7 @@ local function Render(extra)
     if not trip then return end
     -- Title: destination and zone; if that's too long, the destination alone
     -- (and if even that is too long, the game trims it with "...").
-    local full = "To " .. trip.dest.name .. " (" .. MapName(trip.dest.map) .. ")"
+    local full = "To " .. trip.dest.name .. " (" .. MapName(trip.dest.map) .. (trip.dest.route and ", on the move)" or ")")
     local titleText = full
     if OneLineWidth(win.title, full) + PADX + 40 > MAX_W then titleText = "To " .. trip.dest.name end
     local want = OneLineWidth(win.title, titleText) + PADX + 40
@@ -578,8 +582,32 @@ end
 
 AetherLedger_Travel = {}
 
+-- A quest giver on the move (AetherLedger_Routes): his route on the map, as
+-- world spots, so "there" is anywhere along it.
+local ROUTE_YARDS = 40
+local function RouteOf(dest)
+    local r = dest.qid and AetherLedger_Routes and AetherLedger_Routes[dest.qid]
+    if not r or r[1] ~= dest.map then return nil end
+    local pts = {}
+    for i = 2, #r - 1, 2 do
+        local w = World(r[1], r[i] / 100, r[i + 1] / 100)
+        if w then pts[#pts + 1] = w end
+    end
+    return #pts >= 2 and pts or nil
+end
+local function Nearest(here, pts)
+    local best, bd
+    for _, p in ipairs(pts) do
+        local d = Dist(here, p)
+        if not bd or d < bd then best, bd = p, d end
+    end
+    return best, bd or math.huge
+end
+AetherLedger_Travel_RouteOf = RouteOf     -- for tests
+
 function AetherLedger_Travel.Start(dest)
     if not win then BuildWindow() end
+    dest.route = RouteOf(dest)
     local steps, why, target = Plan(dest)
     if not steps then
         print(PREFIX .. "no directions: " .. why .. ". The waypoint is on your map.")
@@ -644,9 +672,13 @@ end
 
 -- You've reached the quest giver: flash it in the middle of the screen, take
 -- the waypoint off the map, and close the directions window.
-function AetherLedger_Travel.Arrived()
+function AetherLedger_Travel.Arrived(how)
     if not trip or trip.doneAt then return end
-    Flash("You're there!", trip.dest.name)
+    if how == "route" then       -- on his road, but he may be anywhere along it
+        Flash("You're on the road!", trip.dest.name .. " travels it: look along it")
+    else
+        Flash("You're there!", trip.dest.name)
+    end
     local db = AetherLedgerDB
     if db and db.waypoint and AetherCoords_API then
         AetherCoords_API.RemoveWaypoint(db.waypoint)
@@ -664,8 +696,15 @@ function AetherLedger_Travel.Update()
     local here = PlayerWorld()
     if not here then Render("(position unknown here)"); return end
     local onTaxi = UnitOnTaxi and UnitOnTaxi("player")
-    -- Already at the quest giver (whatever way you came)?
-    if Dist(here, trip.target) <= ARRIVED_YARDS then
+    -- Already at the quest giver (whatever way you came)? For one on the
+    -- move: anywhere along his route, and the last walk aims at its nearest point.
+    local route = trip.dest.route
+    if route then
+        local near, d = Nearest(here, route)
+        if d <= ROUTE_YARDS then AetherLedger_Travel.Arrived("route"); return end
+        local last = trip.steps[#trip.steps]
+        if near and last and last.kind == "walk" and near.inst == here.inst then last.w = near end
+    elseif Dist(here, trip.target) <= ARRIVED_YARDS then
         AetherLedger_Travel.Arrived()
         return
     end

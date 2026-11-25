@@ -1,4 +1,5 @@
-AetherLedger_Data.lua contains data derived from QuestieDB's WoW Forever data,
+AetherLedger_Data.lua and AetherLedger_Routes.lua contain data derived from
+QuestieDB's WoW Forever data,
 https://github.com/Questie/QuestieDB
 (data/Forever/foreverQuestDB.lua, foreverNpcDB.lua and foreverObjectDB.lua, plus
 support/Forever/Zones; quests on Questie's quest blacklist are left out).

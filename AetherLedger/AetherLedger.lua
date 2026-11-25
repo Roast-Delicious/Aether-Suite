@@ -239,6 +239,15 @@ end
 -- ==========================================
 
 local DATA = AetherLedger_Data or {}
+
+-- Quest givers who walk a route (AetherLedger_Routes, from QuestieDB): their
+-- one spot in DATA is only somewhere on the way, so say they're on the move.
+local function Moving(id) return AetherLedger_Routes and id and AetherLedger_Routes[id] ~= nil end
+local function GiverText(id)
+    local d = DATA[id]
+    return d[GIVER] .. (Moving(id) and " (on the move)" or "")
+end
+AetherLedger_Moving = Moving
 -- Field positions in AetherLedger_Data entries.
 local NAME, REQ, LEVEL, MAP, X, Y, GIVER, SIDE, RACES, CLASSES, TOP, LEN, PRE_ANY, PRE_ALL, NOT_WITH =
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
@@ -496,7 +505,7 @@ end
 
 local function QuestLine(id)
     local d = DATA[id]
-    local line = string.format("[%d] %s - %s (%.0f, %.0f)", d[LEVEL], d[NAME], d[GIVER], d[X], d[Y])
+    local line = string.format("[%d] %s - %s (%.0f, %.0f)", d[LEVEL], d[NAME], GiverText(id), d[X], d[Y])
     if d[LEN] > 1 and d[TOP] > d[LEVEL] then line = line .. ", chain to " .. d[TOP] end
     return line
 end
@@ -874,7 +883,7 @@ local function Destination(z)
         local key = d[GIVER] .. "@" .. d[MAP]
         local g = byGiver[key]
         if not g then
-            g = { name = d[GIVER], map = d[MAP], x = d[X] / 100, y = d[Y] / 100, count = 0, level = d[LEVEL], quests = {} }
+            g = { name = d[GIVER], map = d[MAP], x = d[X] / 100, y = d[Y] / 100, count = 0, level = d[LEVEL], quests = {}, qid = id }
             byGiver[key] = g
         end
         g.count = g.count + 1
@@ -906,7 +915,7 @@ GoToQuest = function(id)
     local d = DATA[id]
     if not d then return end
     local db = Settings()
-    local dest = { name = d[GIVER], map = d[MAP], x = d[X] / 100, y = d[Y] / 100 }
+    local dest = { name = d[GIVER], map = d[MAP], x = d[X] / 100, y = d[Y] / 100, qid = id }
     if AetherCoords_API then
         if db.waypoint then AetherCoords_API.RemoveWaypoint(db.waypoint) end
         db.waypoint = AetherCoords_API.AddWaypoint(dest.map, dest.x, dest.y, d[NAME] .. ": " .. d[GIVER])
@@ -1047,7 +1056,7 @@ local function Suggest(force, level)
     if #new == 1 then
         local d = DATA[new[1]]
         lines[#lines + 1] = string.format("New %s quest: %s, from %s in %s.",
-            d[KIND] == "c" and "class" or "profession", d[NAME], d[GIVER], MapName(d[MAP]))
+            d[KIND] == "c" and "class" or "profession", d[NAME], GiverText(new[1]), MapName(d[MAP]))
         newQuestRow = { text = "[" .. d[LEVEL] .. "] " .. d[NAME] .. " (" .. MapName(d[MAP]) .. ")",
             action = function() GoToQuest(new[1]) end }
     elseif #new > 1 then
