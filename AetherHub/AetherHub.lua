@@ -1671,12 +1671,16 @@ BUILDERS.AetherSkins = function(p)
         function(v) Run("AETHERSKINS", "minimap " .. (v and "on" or "off")); NeedReload() end, nil, nil, nil,
         "A navy ring with gold chevrons, the sun or moon and the tracking button on the ring, and the zone "
         .. "and clock in a pill underneath. Off brings Blizzard's minimap back. Needs a reload.")
+    AddCheck(p, "Blizzard's windows in the Aether look",
+        function() return db().windows ~= false end,
+        function(v) Run("AETHERSKINS", "windows " .. (v and "on" or "off")); NeedReload() end, nil, nil, nil,
+        "Character, Reputation, Friends, Talents, Progress Track and the rest: the Aether frame, navy buttons, "
+        .. "gold checks and Aether gold instead of Blizzard's yellow. Needs a reload.")
     AddButtons(p, {
         { "Run Debug", function() Run("AETHERSKINS", "debug") end,
           "Prints what AetherSkins found and changed into your chat. Send it along if something looks off." },
     })
-    AddNote(p, "More of Blizzard's windows (world map, reputation, friends and so on) get their own switch "
-        .. "here as they're restyled.")
+    AddNote(p, "If a Blizzard window wasn't restyled, point at it and type /skins this.")
 end
 
 SelectPage = function(name)

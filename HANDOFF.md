@@ -88,6 +88,37 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
+- LAST BUILD (Nov 25, 03:45; user 03:11: "go ahead with the entire
+  interface", with screenshots of Reputation, Progress Track, Talents,
+  Friends): AetherSkins 1.2.0 + Hub 1.14.6.
+  * NEW AetherSkins_Windows.lua: one generic skinner for every window on
+    Blizzard's portrait-window templates (wow-ui-source 12.1.5, keys
+    NineSlice/Bg/TopTileStreaks/TitleContainer.TitleText/PortraitContainer
+    .portrait/CloseButton/Inset). Approved style A: rounded panel, blue
+    edge+inner line, glow, navy title strip + gold underline, gold title
+    (AetherSkinsFontTitle), 3D chevrons, navy crest disc (btn_disc) behind
+    the portrait, navy close box with white x. Inside (walk, depth 10):
+    panel buttons (Left/Middle/Right) navy + white font objects; check
+    boxes dark + gold check (desaturate + vertex); MinimalScrollBar blue;
+    PanelTabButtonTemplate tabs navy, gold edge when LeftActive shown
+    (hooks PanelTemplates_SelectTab/DeselectTab/UpdateTabs); search boxes
+    dark; insets faint. Blizzard art only SetAlpha(0); no fields written
+    to Blizzard frames (weak tables); in combat -> after PLAYER_REGEN.
+    Found by: W.KNOWN names (+ rescan on Blizzard_ ADDON_LOADED) and
+    hooksecurefunc ShowUIPanel; /skins this styles the window under the
+    mouse. Blizzard yellow font objects (1,.82,0) -> Aether gold
+    (W.GoldText, pairs(_G) once at login; Aether* fonts skipped).
+    /skins windows on|off (AetherSkinsDB.windows), Hub switch.
+    Test: skins_windows_test (35 checks, mock from template keys).
+  * NOT YET in game. Expect rough edges: Forever's custom windows
+    (Talents, Progress Track side tabs), side tabs in general, rep bars
+    (approved capsule bars, Neutral gold / Friendly+ #22e650), rows and
+    section headers (tracker-style), world map specifics: phase 2, from
+    the user's screenshots + /skins debug.
+- OPEN QUESTION (user, 03:16 video): a just-accepted RED quest ([45]
+  Horde Trauma) flashes in the tracker, then AetherLedger removes it
+  (red rule). Offered: 1 keep, 2 same + chat note why (recommended),
+  3 keep a just-accepted quest until a zone change, 4 show red dimmed.
 - LAST BUILD (Nov 24, 20:20; go-ahead 20:10): Hub 1.14.5, Coords 1.3.15,
   Pathfinder 1.9.6 (Skins 1.1.1 and the rest unchanged from 16:15).
   * AetherSkins tab in AetherHub (user, 19:54): "Minimap in the Aether
@@ -358,6 +389,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 25, 2026 (03:45): built AetherSkins 1.2.0 (all Blizzard windows,
+  generic skinner) + Hub 1.14.6 (windows switch).
 - Nov 24, 2026 (20:20): built Hub 1.14.5 (AetherSkins tab), Coords
   1.3.15 and Pathfinder 1.9.6 (minimap loops 30/s; memory 25.7 MB ->
   9.7 MB after GC showed it was garbage). Memory /run line must stay

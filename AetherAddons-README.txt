@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 24, 2026 (20:20)
+Last updated: November 25, 2026 (03:40)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -15,7 +15,7 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.14.5    One window with every addon's settings
+  AetherHub          1.14.6    One window with every addon's settings
   AetherMeter        1.13.9    Damage and healing meter
   AetherBars         1.14.3    Clean action bars with a cooldown glow
   AetherCoords       1.3.15    Coordinates, plus your own map waypoints
@@ -32,8 +32,8 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.7    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.1.1     The Aether look for Blizzard's windows,
-                               starting with the minimap
+  AetherSkins        1.2.0     The Aether look for Blizzard's windows
+                               and the minimap
 
 
 GETTING STARTED
@@ -135,9 +135,8 @@ and anything that can't be undone asks first.
   AetherFrames tab: use them instead of Blizzard's, buff and debuff
     rows, threat glow, party frames, numbers on the pet's resource
     bar, and Reset Pet Frame Position.
-  AetherSkins tab: the minimap's Aether look on or off (needs a
-    reload) and Run Debug. More windows get a switch here as they're
-    restyled.
+  AetherSkins tab: the minimap's Aether look and Blizzard's windows'
+    Aether look, each on or off (needs a reload), and Run Debug.
 
   Button names follow one pattern: what it does, then what it does it
   to ("Reset Meter Position", "Clear All Waypoints..."). A name ending
@@ -848,8 +847,24 @@ AetherFrames - player, pet, target and party frames            /af
 
 
 AetherSkins - the Aether look for Blizzard's windows           /skins
-  Gives Blizzard's own windows the Aether look, a few at a time. First:
-  the minimap.
+  Gives Blizzard's own windows and the minimap the Aether look.
+
+  Windows (Character and Reputation, Friends, Talents, Progress Track,
+  and every other window built on Blizzard's standard frame):
+  - The Aether frame: rounded dark panel, blue edge, soft blue glow,
+    navy title strip with a gold underline and gold title, the four
+    gold chevrons, and a plain navy crest behind the portrait.
+  - Inside: navy buttons with white text, dark checkboxes with a gold
+    check, blue scroll bars, navy tabs (gold edge on the open one),
+    and dark search boxes.
+  - Blizzard's yellow text is Aether gold everywhere (the only yellow).
+  - Blizzard's own art is only faded out, never removed or moved, so
+    every window works as before. A window opened in combat gets the
+    look right after the fight.
+  - A window that was missed: point at it and type /skins this, and
+    send /skins debug so it can be added for good.
+
+  The minimap:
   - Blizzard's ring around the minimap is replaced by a navy ring with a
     bevel (a ridge along its middle), the four gold chevrons at 12, 3, 6
     and 9 o'clock (beveled too, lit from the sun's side), and a soft
@@ -872,13 +887,12 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
     own coordinates under the minimap (the Aether pill shows them).
   - The map, its pins, AetherCoords' waypoints, AetherPathfinder's NPCs
     and other addons' minimap buttons all work as before.
-  - More of Blizzard's windows (world map, reputation, friends and so
-    on) get the same look in coming updates.
-  - Commands: /skins minimap (on or off, then /reload), /skins day and
-    /skins night to preview the sun or moon (/skins auto follows the
-    game again), /skins debug (what it found and changed: send this if
-    something on the minimap looks off). The minimap switch and Run
-    Debug are also on the AetherSkins tab in AetherHub (/hub skins).
+  - Commands: /skins minimap and /skins windows (each on or off, then
+    /reload), /skins this, /skins day and /skins night to preview the
+    sun or moon (/skins auto follows the game again), /skins debug
+    (what it found and changed: send this if something looks off).
+    Both switches and Run Debug are also on the AetherSkins tab in
+    AetherHub (/hub skins).
 
 
 AUTOMATIC NPC DATA REFRESH (optional, Windows only)

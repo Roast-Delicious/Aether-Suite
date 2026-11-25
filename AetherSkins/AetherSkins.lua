@@ -622,6 +622,15 @@ SlashCmdList["AETHERSKINS"] = function(msg)
     if cmd == "minimap" or cmd == "minimap on" or cmd == "minimap off" then
         if cmd == "minimap" then db.minimap = not db.minimap else db.minimap = (cmd == "minimap on") end
         Print("minimap look " .. (db.minimap and "on" or "off") .. ". Type /reload to see the change.")
+    elseif cmd == "windows" or cmd == "windows on" or cmd == "windows off" then
+        local on = db.windows ~= false
+        if cmd == "windows" then on = not on else on = (cmd == "windows on") end
+        db.windows = on
+        Print("windows look " .. (on and "on" or "off") .. ". Type /reload to see the change.")
+    elseif cmd == "this" then
+        local W = AetherSkins_Windows
+        local f = W and W.Enabled() and W.SkinUnderMouse()
+        Print(f and ("styled " .. (f:GetName() or "that window") .. ".") or "no Blizzard window under the mouse (or windows look is off).")
     elseif cmd == "day" or cmd == "night" or cmd == "auto" then
         forced = (cmd ~= "auto") and cmd or nil
         CheckDay(false)
@@ -645,9 +654,12 @@ SlashCmdList["AETHERSKINS"] = function(msg)
             if p then for _, c in ipairs(Children(p)) do if not ours[c] then kids[#kids + 1] = Name(c) end end end
         end
         Print("other minimap frames: " .. table.concat(kids, ", "))
+        if AetherSkins_Windows then AetherSkins_Windows.Debug(Print) end
     else
-        Print("the Aether look for Blizzard's windows. Now: the minimap.")
+        Print("the Aether look for the minimap and Blizzard's windows.")
         print("  /skins minimap       turn the minimap look on or off (then /reload)")
+        print("  /skins windows       turn the windows look on or off (then /reload)")
+        print("  /skins this          style the Blizzard window under your mouse, if it was missed")
         print("  /skins day | night   preview the day or night light; /skins auto follows the game again")
         print("  /skins debug         what was found and hidden (send this if something looks off)")
     end
