@@ -1404,10 +1404,10 @@ trim), xpbar_render.py (XP bar).
   dance), DRAG to turn (SetFacing), plus a Hub switch to turn it off.
   ALL RELEASE C PAGES DESIGNED. Waiting for the build go.
 - 15:49 user "GO, Green One" = Release C build go.
-- RELEASE C SHIPPED 16:45 (main, merged releaseC). Versions: Hub 1.15.0,
+- RELEASE C SHIPPED ~16:00 (main, merged releaseC). Versions: Hub 1.15.0,
   Bars 1.14.4, Chat 1.0.9, Coords 1.3.16, Frames 1.14.8, ItemID 1.1.5,
   Ledger 1.8.8, Marks 1.6.14, Meter 1.13.10, Pack 1.6.5, Pathfinder
-  1.9.7, Skins 1.6.0. README stamp 16:45.
+  1.9.7, Skins 1.6.0. README stamp (wrongly) 16:45.
   * Hub: PAGES table (8 keys Character/ActionBar/Frames/Map/Quests/Bags/
     Look/Debug, title + sidebar sub-line + info), OLD_PAGE maps old page
     names (saved lastPage, AetherHub_Toggle("AetherSkins")...) to new
@@ -1440,3 +1440,18 @@ trim), xpbar_render.py (XP bar).
     Suite = baseline failures only.
   UNTESTED IN GAME: all of it. Watch: rounded pieces on tiny buttons,
   dancer animation under Forever's rules, tab boxes (Skins), Unlock/Lock.
+- RELEASE C FIX (user 16:07-16:09 screenshots), Hub 1.15.1, shipped 16:15:
+  * Every Hub/Aether button WHITE in game (fill pieces white, edges and
+    corners right; checkboxes + boxes fine). Only paths to the fill: State
+    (always BTN colors) and our SetBackdropColor override -> something
+    (likely Blizzard's backdrop code) called SetBackdropColor on buttons.
+    Fix: buttons ignore SetBackdropColor; Paint skips empty colors; State
+    uses BTN.normal; repaint OnShow. UNCONFIRMED cause: if still white,
+    ask for /fstack on a button.
+  * Dancer: switch + hint removed (user: let them discover the emotes);
+    model 230x182 centered, SetCamDistanceScale 1.9 (re-applied on
+    OnModelLoaded), floor glow 0.2.
+  * Waypoint list sized to the waypoints you have (1-8 rows);
+    AetherHub_RebuildPage("Map") when the count changes.
+  * Quests & Mobs: Ledger's HubReport moved to a last band "Zone details"
+    (dynamic text overlapped the Quest tracker band).

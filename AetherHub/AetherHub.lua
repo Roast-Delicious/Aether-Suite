@@ -164,7 +164,10 @@ local function RoundShape(f, layer, sub, R, kind, color)
     end
     return parts
 end
-local function Paint(parts, c) for _, t in ipairs(parts) do t:SetVertexColor(c[1], c[2], c[3], c[4] or 1) end end
+local function Paint(parts, c)
+    if not (c and c[1] and c[2] and c[3]) then return end      -- never paint with an empty color
+    for _, t in ipairs(parts) do t:SetVertexColor(c[1], c[2], c[3], c[4] or 1) end
+end
 
 function AetherHub_Round(f, R, fill)
     if not f or f.aetherRound or not f.CreateTexture then return end
@@ -184,6 +187,9 @@ function AetherHub_Round(f, R, fill)
     f.SetBackdropBorderColor = function(_, r, g, b, a) edge = { r, g, b, a or 1 }; Paint(edgeParts, edge) end
     f.GetBackdropBorderColor = function() return edge[1], edge[2], edge[3], edge[4] end
     f.SetBackdropColor = function(_, r, g, b, a)
+        -- a button's fill follows its state only: Blizzard's backdrop code can
+        -- set it white on a resize (Release C in game: every button was white)
+        if button or not r then return end
         bg = { r, g, b, a or 1 }
         if fillParts then Paint(fillParts, bg) else fillParts = RoundShape(f, "BACKGROUND", 1, R, "fill", bg) end
     end
@@ -198,11 +204,12 @@ function AetherHub_Round(f, R, fill)
     for _, t in ipairs(hover) do t:SetBlendMode("ADD") end
     local down = false
     local function State()
-        local c = (f.IsEnabled and not f:IsEnabled()) and BTN.disabled or (down and BTN.pushed) or bg
+        local c = (f.IsEnabled and not f:IsEnabled()) and BTN.disabled or (down and BTN.pushed) or BTN.normal
         if fillParts and c then Paint(fillParts, c) end
     end
     f:HookScript("OnMouseDown", function() down = true; State() end)
     f:HookScript("OnMouseUp", function() down = false; State() end)
+    f:HookScript("OnShow", State)
     if hooksecurefunc then
         for _, m in ipairs({ "Enable", "Disable", "SetEnabled" }) do
             if f[m] then hooksecurefunc(f, m, State) end
@@ -1183,13 +1190,15 @@ local function Dancer(page)
     if AetherHub_Round then AetherHub_Round(stage, 5) end
     local floor = stage:CreateTexture(nil, "ARTWORK")        -- soft blue light on the floor
     floor:SetTexture("Interface\\AddOns\\AetherHub\\Media\\btn_disc")
-    floor:SetVertexColor(0.3, 0.65, 1, 0.35)
+    floor:SetVertexColor(0.3, 0.65, 1, 0.2)
     floor:SetSize(170, 26)
     floor:SetPoint("BOTTOM", stage, "BOTTOM", 0, 14)
     floor:SetBlendMode("ADD")
+    -- a squarish model in the middle of the stage, camera pulled back so the
+    -- whole character shows (user 16:09: "zoom out on the character a bit")
     local m = CreateFrame("PlayerModel", nil, stage)
-    m:SetPoint("TOPLEFT", stage, "TOPLEFT", 4, -4)
-    m:SetPoint("BOTTOMRIGHT", stage, "BOTTOMRIGHT", -4, 8)
+    m:SetSize(230, 182)
+    m:SetPoint("BOTTOM", stage, "BOTTOM", 0, 6)
     m:EnableMouse(true)
     local back                                           -- timer back to the dance
     local function Play(anim)
@@ -1198,13 +1207,19 @@ local function Dancer(page)
         if ok and has == false then anim = 0 end          -- no such animation: stand
         pcall(m.SetAnimation, m, anim)
     end
-    local function Refresh()
-        if not (hubDB.dancer ~= false and stage:IsVisible()) then return end
-        pcall(m.SetUnit, m, "player")
+    local function Camera()
         if m.SetPortraitZoom then pcall(m.SetPortraitZoom, m, 0) end
+        if m.SetCamDistanceScale then pcall(m.SetCamDistanceScale, m, 1.9) end
+        if m.SetPosition then pcall(m.SetPosition, m, 0, 0, 0) end
+    end
+    local function Refresh()
+        if not stage:IsVisible() then return end
+        pcall(m.SetUnit, m, "player")
+        Camera()
         Play(DANCE)
     end
-    if m.HookScript then pcall(m.SetScript, m, "OnModelLoaded", function() Play(DANCE) end) end
+    -- the model resets its camera when it finishes loading
+    pcall(m.SetScript, m, "OnModelLoaded", function() Camera(); Play(DANCE) end)
     -- click: another emote, then back to the dance; drag: turn it around
     local nextEmote, downX, facing = 1, nil, 0
     m:SetScript("OnMouseDown", function(self, button)
@@ -1226,24 +1241,13 @@ local function Dancer(page)
         if back then back:Cancel() end
         back = C_Timer.NewTimer(2.6, function() back = nil; Play(DANCE) end)
     end)
-    m:SetScript("OnEnter", function(self)
-        GameTooltip:SetOwner(self, "ANCHOR_NONE")
-        GameTooltip:SetPoint("TOPLEFT", hub, "TOPRIGHT", 6, 0)
-        GameTooltip:SetText("Click: wave, cheer, laugh or bow", 1, 1, 1)
-        GameTooltip:AddLine("Drag: turn around", 0.8, 0.8, 0.8)
-        GameTooltip:Show()
-    end)
-    m:SetScript("OnLeave", function() GameTooltip:Hide() end)
     local ev = CreateFrame("Frame", nil, stage)
     ev:RegisterUnitEvent("UNIT_MODEL_CHANGED", "player")
     ev:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
     ev:SetScript("OnEvent", function() if stage:IsVisible() then Refresh() end end)
     stage:SetScript("OnShow", function() C_Timer.After(0.05, Refresh) end)
     page.y = page.y - 198
-    Track(page, { Refresh = function()
-        stage:SetShown(hubDB.dancer ~= false)
-        if stage:IsShown() then C_Timer.After(0.05, Refresh) end
-    end })
+    Track(page, { Refresh = function() C_Timer.After(0.05, Refresh) end })
 end
 
 BUILDERS.Character = function(p)
@@ -1271,10 +1275,6 @@ BUILDERS.Character = function(p)
         return table.concat(lines, "\n")
     end, 5)
     AddNote(p, "Quests & Mobs uses this for its suggestions; Map & Waypoints' class trainers follow your class.")
-    AddCheck(p, "Dancing character (click it for an emote, drag to turn it)",
-        function() return hubDB.dancer ~= false end,
-        function(v) hubDB.dancer = v and true or false end, nil, nil, nil,
-        "Your character, live and in your gear, dancing under your professions.")
     Dancer(p)
 end
 
@@ -1579,7 +1579,10 @@ local function AddWaypointList(p)
     local more = box:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")
     more:SetTextColor(0.6, 0.62, 0.68)
     local top = p.y
-    p.y = p.y - (WP_ROWS * 22 + 14)
+    -- room for the waypoints you have now (the page is rebuilt when that changes)
+    local function Count() return #((type(AetherCoordsDB) == "table" and AetherCoordsDB.waypoints) or {}) end
+    local built = math.max(1, math.min(Count(), WP_ROWS))
+    p.y = p.y - (built * 22 + 10 + (Count() > WP_ROWS and 16 or 0) + 6)
     local function Zone(mapID)
         local info = mapID and C_Map and C_Map.GetMapInfo and C_Map.GetMapInfo(mapID)
         return info and info.name or "?"
@@ -1598,6 +1601,7 @@ local function AddWaypointList(p)
             end
         end
         local shown = math.max(1, math.min(n, WP_ROWS))
+        if shown ~= built and AetherHub_RebuildPage then C_Timer.After(0, function() AetherHub_RebuildPage("Map") end); return end
         box:SetHeight(shown * 22 + 10 + (n > WP_ROWS and 16 or 0))
         more:ClearAllPoints(); more:SetPoint("BOTTOMLEFT", box, "BOTTOMLEFT", 10, 4)
         more:SetShown(n > WP_ROWS)
@@ -1809,7 +1813,6 @@ BUILDERS.Quests = function(p)
         end })
         p.y = p.y - 4
         AddNote(p, "", function() return api().Status and api().Status() or "" end, 2)
-        AddNote(p, "", function() return api().HubReport and api().HubReport() or "" end)
 
         AddBand(p, "Quest tracker", "AetherLedger")
         InterestCheck(p, "manageTracker")
@@ -1866,6 +1869,11 @@ BUILDERS.Quests = function(p)
         if IsLoaded("AetherMarks") then Run("AETHERMARKS", "defaults") end
         wipe(Interests())
     end)
+    -- last on the page: it can run long, and nothing sits below it
+    if IsLoaded("AetherLedger") then
+        AddBand(p, "Zone details", "AetherLedger")
+        AddNote(p, "", function() return api().HubReport and api().HubReport() or "" end)
+    end
 end
 
 -- ----- Bags & Items -----
@@ -2398,6 +2406,16 @@ function AetherHub_SizeChanged(oldWidth)
     end
     for _, name in ipairs(PAGE_ORDER) do BuildPage(name) end
     SelectPage(current or PAGE_ORDER[1])
+end
+
+function AetherHub_RebuildPage(name)
+    local view = pages[name]
+    if not view then return end
+    local shown = view:IsShown()
+    view:Hide(); view.bar:Hide()
+    pages[name] = nil
+    BuildPage(name)
+    if shown then SelectPage(name); local page = pages[name].content; page:GetScript("OnShow")(page) end
 end
 
 function AetherHub_ResetSize()

@@ -129,5 +129,9 @@ check("AETHERLEDGER resetwindows" in s and "AETHERPACK reset" in s and "AETHERFR
 # panel opacity lives in the Hub
 check(abs(L.eval('AetherPanels.opacityOutCombat') - 0.25) < 1e-9, "panel opacity copied from the meter at first login (AetherPanels)")
 check("AetherChat isn't loaded" in " ".join(t for t in L.eval('ALLTEXT').values() if isinstance(t, str)), "an addon that isn't loaded: a note instead of its controls")
-check("Dancing character (click it for an emote, drag to turn it)" in L.eval('ALLTEXT').values(), "Your Character: dancer switch")
+check("Dancing character (click it for an emote, drag to turn it)" not in L.eval('ALLTEXT').values(), "Your Character: no dancer switch or hint (user 16:09)")
+# waypoints all removed -> the Map page is rebuilt with room for one row only
+L.execute('AetherCoordsDB.waypoints = {}; AetherHub_Toggle("Map"); AetherHub_RebuildPage("Map")')
+check(any(isinstance(t, str) and t.endswith("No waypoints yet.|r") for t in L.eval('ALLTEXT').values()), "no waypoints: one line, 'No waypoints yet.'")
+check("Zone details" in L.eval('ALLTEXT').values(), "Quests & Mobs: the long zone report has its own band at the bottom")
 print("ALL OK" if ok else "FAILED")
