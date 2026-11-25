@@ -1455,3 +1455,71 @@ trim), xpbar_render.py (XP bar).
     AetherHub_RebuildPage("Map") when the count changes.
   * Quests & Mobs: Ledger's HubReport moved to a last band "Zone details"
     (dynamic text overlapped the Quest tracker band).
+- 16:17 user: Hub 1.15.1 buttons navy now (fix confirmed). DANCER CHANGE
+  READY, NOT SHIPPED (branch dancer2): stage width 85% of the page, square
+  (height = width), centered, edge in the background color (no frame),
+  model fills the stage, camera 15% closer (SetCamDistanceScale 1.65).
+  Waiting for the build go (bump Hub to 1.15.2 + README stamp when built).
+- 16:19 TALENT ARROWS AGAIN (user screenshot): every shaft 5 px but
+  see-through BLUE (heads right). Cause: each arrow frame also has a hidden
+  .GhostArrowHead + .GhostLine (dump: Line .Line, .ArrowHead 14x12,
+  .GhostArrowHead, Line .GhostLine). The ghost head's SetAtlas ran
+  P.Arrow(ghost), which painted the parent's REAL .Line blue at 0.55.
+  READY, NOT SHIPPED (branch dancer2, with the dancer change): P.Arrow
+  returns for the ghost head (or any texture not the frame's .ArrowHead);
+  line hooks also on SetColorTexture / SetVertexColor / SetThickness.
+  skins_pass2_test (+2). Build go -> Skins 1.6.1, Hub 1.15.2.
+- 16:25 CHARACTER GOLD LINE (user + dump tools/dumps/CharacterFrame_b160_
+  2026-11-25.txt): underline frame is there (623x1) but covered on part
+  of the window. Likely the right stats pane: CharacterFrameRightPaneHost
+  233x464 starts ~20 units down (window 484) = inside the 22-unit strip;
+  P3.BelowTitle measured at styling time when the window wasn't laid out
+  (GetTop nil) -> skipped. READY, NOT SHIPPED (branch dancer2): BelowTitle
+  retries on the window's OnShow; underline frame level +200 (was +20),
+  re-lifted on every OnShow. Asked the user for a screenshot to confirm.
+- 16:27 TURN-IN CLICK (user): chat "no turn-in location known for this
+  quest". GoToTurnIn only asked C_QuestLog.GetNextWaypoint (given for
+  hand-ins in ANOTHER zone). READY, NOT SHIPPED (branch dancer2, Ledger
+  1.8.9): TurnInSpot = GetNextWaypoint, else the quest's map marker via
+  GetNextWaypointForMap / GetQuestsOnMap on the current map + parents,
+  then its hand-in zone and home zone (AetherLedger_Zones); nothing found
+  -> "no exact turn-in spot known; this quest is handed in in <zone>".
+  tracker_look_test (+3). Our data has givers, not enders (no NPC coords).
+- 16:29 user: it's the LEFT side that's missing (screenshot refs/character_
+  goldline_2026-11-25.png). Measured: window 946 px = 631 units (1.5 px per
+  unit); gold line visible from x~665 px to the right edge only; the left
+  pane's top strip (PaperDollFrame.TopBackgroundStripHost, "Level 36
+  Hunter") covers it, so that strip's frame level is above window+20.
+  Branch dancer2: underline level = highest child level (4 deep) + 1,
+  re-measured on OnShow and 0.3 s later (replaces the fixed +200).
+- 16:33 TRACKER RED (user screenshot refs/tracker_red_2026-11-25.png):
+  titles still Blizzard red (255,26,26 = 1,0.1,0.1). NameColor matched it
+  but ran once per Paint; Blizzard sets the color again on updates/hover.
+  READY, NOT SHIPPED (branch dancer2, Ledger 1.8.9): post-hook on each
+  HeaderText's SetTextColor re-applies the light red / orange (busy guard,
+  only when Wants()). tracker_look_test (+2).
+- 16:32 talent detail: a 2nd arrowhead pointing UP under the '1 of 1' pill
+  (base visible, ~13 units wide) on the gray arrow below a maxed node =
+  double-headed arrow. Asked the user for a fresh Talents /skins tree.
+- RELEASE C FIX 2 SHIPPED 16:44 (main, merged dancer2; user 16:43 "go").
+  Versions: Skins 1.6.1, Hub 1.15.2, Ledger 1.8.9.
+  * Talent arrows: P.Arrow skips .GhostArrowHead (its SetAtlas was
+    painting the real .Line blue .55, order changed per reload); shaft
+    re-applied on Line SetAtlas/SetTexture/SetColorTexture/
+    SetVertexColor/SetThickness (busy guard). Gold/blue/gray by state.
+  * Dance window: square, 85% of page width, border = background, model
+    4 px inset, SetCamDistanceScale 1.65 (15% closer).
+  * Character gold line: underline lifted above the window's highest
+    child level (4 deep, min +20), on OnShow and again 0.3 s later.
+  * BelowTitle retries on the window's OnShow when GetTop is nil.
+  * Turn-in click: GetNextWaypoint -> map marker (current map + parents)
+    -> names the hand-in zone.
+  * Tracker red/orange re-applied after Blizzard's SetTextColor.
+  Talent dump saved: tools/dumps/PlayerSpellsFrame_Talents_b160.txt.
+  WATCH IN GAME: trapezoid under BM row-5 "1 of 1" (thought to be the
+  ghost-head bug; if still there, new talent dump), dancer camera, gold
+  line left side, arrows stable across reloads.
+  Tests: run from tools/ after sh setup.sh; dancer2 = main = 27 failing
+  scripts by the strict FAIL/Traceback check (no new failures).
+  Parked, not queued: key stats in item tooltips; AetherChat copy
+  button; directions from an in-progress quest's tracker icon (asked).

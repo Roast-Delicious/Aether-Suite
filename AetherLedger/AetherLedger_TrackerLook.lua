@@ -52,13 +52,24 @@ end
 
 -- Quest names: the map log's colors (user, Nov 25 14:32): a lighter red and
 -- orange that read on the busy world, and a dark shadow under them.
+local nameHooked, nameBusy = setmetatable({}, { __mode = "k" }), setmetatable({}, { __mode = "k" })
 local function NameColor(fs)
     if not fs or not fs.GetTextColor then return end
     if fs.SetShadowColor then fs:SetShadowColor(0, 0, 0, 0.9); fs:SetShadowOffset(1, -1) end
     local r, g, b = fs:GetTextColor()
-    if type(r) ~= "number" then return end
+    if type(r) ~= "number" or (issecretvalue and issecretvalue(r)) then return end
+    nameBusy[fs] = true
     if r > 0.9 and g < 0.2 then fs:SetTextColor(1, 0.376, 0.345)
     elseif r > 0.9 and g > 0.4 and g < 0.6 and b < 0.4 then fs:SetTextColor(1, 0.588, 0.329) end
+    nameBusy[fs] = nil
+    -- Blizzard sets the title's color again on every tracker update and on
+    -- hover; ours goes back on right after (user 16:33: red unchanged)
+    if hooksecurefunc and not nameHooked[fs] then
+        nameHooked[fs] = true
+        hooksecurefunc(fs, "SetTextColor", function(self)
+            if not nameBusy[self] and Wants() then NameColor(self) end
+        end)
+    end
 end
 AetherLedger_TrackerNameColor = NameColor   -- for tests
 

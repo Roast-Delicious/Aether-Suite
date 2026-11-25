@@ -348,7 +348,15 @@ function P3.BelowTitle(o, t)
     local ok2, wtop = pcall(win.GetTop, win)
     local ok3, scale = pcall(t.GetEffectiveScale, t)
     local ok4, wscale = pcall(win.GetEffectiveScale, win)
-    if not (ok1 and ok2 and type(top) == "number" and type(wtop) == "number") then return end
+    if not (ok1 and ok2 and type(top) == "number" and type(wtop) == "number") then
+        -- not laid out yet (windows are styled before they first open, e.g.
+        -- Character, user 16:25): measure again each time the window shows
+        if win.HookScript and not (o.belowTitleHooked) then
+            o.belowTitleHooked = true
+            win:HookScript("OnShow", function() if C_Timer then C_Timer.After(0, function() P3.BelowTitle(o, t) end) end end)
+        end
+        return
+    end
     local k = (ok3 and ok4 and type(scale) == "number" and type(wscale) == "number" and wscale > 0) and scale / wscale or 1
     if top * k <= wtop - TITLE_LINE then return end      -- starts below the strip already
     o:ClearAllPoints()

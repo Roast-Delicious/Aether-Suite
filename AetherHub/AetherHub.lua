@@ -1178,14 +1178,16 @@ end
 -- ----- Your Character -----
 local DANCE, EMOTES = 69, { 67, 68, 70, 66 }      -- dance; wave, cheer, laugh, bow
 local function Dancer(page)
+    -- 85% of the page's width, as tall as it is wide, centered; its edge in
+    -- the background's color so no frame shows (user, Nov 25 16:17)
+    local side = math.floor((PAGE_W - 8) * 0.85)
     local stage = CreateFrame("Frame", nil, page, "BackdropTemplate")
-    stage:SetPoint("TOPLEFT", page, "TOPLEFT", 4, page.y)
-    stage:SetPoint("RIGHT", page, "RIGHT", -4, 0)
-    stage:SetHeight(190)
+    stage:SetPoint("TOP", page, "TOPLEFT", PAGE_W / 2, page.y)
+    stage:SetSize(side, side)
     if stage.SetBackdrop then
         stage:SetBackdrop({ bgFile = "Interface\\Buttons\\WHITE8x8", edgeFile = "Interface\\Buttons\\WHITE8x8", edgeSize = 1 })
         stage:SetBackdropColor(0.04, 0.043, 0.055, 1)
-        stage:SetBackdropBorderColor(0.18, 0.41, 0.63, 1)
+        stage:SetBackdropBorderColor(0.04, 0.043, 0.055, 1)
     end
     if AetherHub_Round then AetherHub_Round(stage, 5) end
     local floor = stage:CreateTexture(nil, "ARTWORK")        -- soft blue light on the floor
@@ -1197,8 +1199,8 @@ local function Dancer(page)
     -- a squarish model in the middle of the stage, camera pulled back so the
     -- whole character shows (user 16:09: "zoom out on the character a bit")
     local m = CreateFrame("PlayerModel", nil, stage)
-    m:SetSize(230, 182)
-    m:SetPoint("BOTTOM", stage, "BOTTOM", 0, 6)
+    m:SetPoint("TOPLEFT", stage, "TOPLEFT", 4, -4)
+    m:SetPoint("BOTTOMRIGHT", stage, "BOTTOMRIGHT", -4, 4)
     m:EnableMouse(true)
     local back                                           -- timer back to the dance
     local function Play(anim)
@@ -1209,7 +1211,7 @@ local function Dancer(page)
     end
     local function Camera()
         if m.SetPortraitZoom then pcall(m.SetPortraitZoom, m, 0) end
-        if m.SetCamDistanceScale then pcall(m.SetCamDistanceScale, m, 1.9) end
+        if m.SetCamDistanceScale then pcall(m.SetCamDistanceScale, m, 1.65) end   -- 15% closer (user 16:17)
         if m.SetPosition then pcall(m.SetPosition, m, 0, 0, 0) end
     end
     local function Refresh()
@@ -1246,7 +1248,7 @@ local function Dancer(page)
     ev:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
     ev:SetScript("OnEvent", function() if stage:IsVisible() then Refresh() end end)
     stage:SetScript("OnShow", function() C_Timer.After(0.05, Refresh) end)
-    page.y = page.y - 198
+    page.y = page.y - side - 8
     Track(page, { Refresh = function() C_Timer.After(0.05, Refresh) end })
 end
 
