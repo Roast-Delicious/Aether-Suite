@@ -1399,3 +1399,7 @@ trim), xpbar_render.py (XP bar).
   CHANGED / OnShow; paused (hidden) when the Hub closes. Asked: dance
   nonstop vs click for other emotes; drag to turn; switch to turn it off.
   Check in Forever: model animations under the 12.1 rules.
+- 15:48 CHOSEN: dancer = dance (69) + CLICK for another emote (wave 67,
+  cheer 68, laugh 70, bow 66; each only if HasAnimation, then back to
+  dance), DRAG to turn (SetFacing), plus a Hub switch to turn it off.
+  ALL RELEASE C PAGES DESIGNED. Waiting for the build go.
