@@ -127,3 +127,15 @@ for b=0,2 do for s=1,SLOTS[b] do local btn=_G["AetherPackItem"..(b+1).."_"..s]; 
 AetherPackFrame:Hide(); AetherPackFrame:Show()""")
 L.execute("""G={} for b=0,2 do for s=1,SLOTS[b] do local btn=_G["AetherPackItem"..(b+1).."_"..s]; if btn and btn.shown and btn.icon and btn.NewItemTexture.shown then G[#G+1]=btn.aetherLink:match("%[(.-)%]") end end end""")
 print("glowing:", list(L.eval('G').values()))
+
+print("== quality frames (Nov 25)")
+L.execute("""ITEM_QUALITY_COLORS={[2]={r=0.12,g=1,b=0},[3]={r=0,g=0.44,b=0.87}}
+for b=0,2 do for s=1,SLOTS[b] do local btn=_G["AetherPackItem"..(b+1).."_"..s]
+  if btn and type(btn.aetherFrame)=="table" then for _,p in ipairs(btn.aetherFrame) do rawset(p[1], "SetColorTexture", function(t,r,g,bb) rawset(t, "colortex", {r,g,bb}) end) end end end end
+AetherPackDB.collapsed = {}; AetherPackFrame:Hide(); AetherPackFrame:Show()""")
+def frame_rgb(name):
+    return L.eval('(function() local b=_G["%s"]; if not b or type(b.aetherFrame)~="table" then return nil end; local t=b.aetherFrame[1][1]; local c=rawget(t,"colortex"); if not c then return "nocolor" end; return string.format("%%.2f,%%.2f,%%.2f", c[1], c[2], c[3]) end)()' % name)
+got = (frame_rgb("AetherPackItem1_4"), frame_rgb("AetherPackItem1_8"), frame_rgb("AetherPackItem1_1"))
+print("uncommon / rare / common:", got)
+assert got == ("0.12,1.00,0.00", "0.00,0.44,0.87", "0.30,0.65,1.00"), got
+print("PASS quality frames")

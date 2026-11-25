@@ -328,6 +328,7 @@ local function TabColor(tab)
     for _, t in ipairs(e) do t:SetVertexColor(c[1], c[2], c[3], sel and 1 or 0.9) end
 end
 W.TabColor = TabColor
+local tabOffset = setmetatable({}, { __mode = "k" })   -- row of tabs -> text height
 local function Tab(tab)
     W.done[tab] = "tab"
     local sq, sqa = T(tab, "SquareBackground"), T(tab, "SquareBackgroundActive")
@@ -349,14 +350,29 @@ local function Tab(tab)
     -- button: Blizzard's tab buttons are taller than their art, and the text
     -- sits where the art was, so a full-height box left it low (user, Nov 25,
     -- Talents' Primary / Secondary).
+    -- The selected tab's text sits a few pixels higher than the others, so a
+    -- box tied to each tab's own text came out at different heights (user,
+    -- Nov 25, Merchant / Buyback). The box is tied to the tab instead, at the
+    -- text height measured once for the whole row of tabs (tabOffset).
     local fill, e = NavyBox(tab, 4, 4, 2, 4)
     local text = T(tab, "Text") or (tab.GetFontString and tab:GetFontString())
     if type(text) == "table" and text.GetObjectType then
+        local row = tab.GetParent and tab:GetParent() or tab
+        local dy = tabOffset[row]
+        if not dy then
+            local _, ty = text.GetCenter and text:GetCenter()
+            local _, by = tab.GetCenter and tab:GetCenter()
+            dy = (type(ty) == "number" and type(by) == "number") and math.floor(ty - by + 0.5) or 0
+            local sel = T(tab, "LeftActive"); if sel and sel.IsShown and sel:IsShown() then dy = dy - 2 end
+            tabOffset[row] = dy
+        end
+        local h = (text.GetStringHeight and text:GetStringHeight()) or 12
+        if type(h) ~= "number" or h <= 0 then h = 12 end
         fill:ClearAllPoints()
         fill:SetPoint("LEFT", tab, "LEFT", 4, 0)
         fill:SetPoint("RIGHT", tab, "RIGHT", -4, 0)
-        fill:SetPoint("TOP", text, "TOP", 0, 7)
-        fill:SetPoint("BOTTOM", text, "BOTTOM", 0, -7)
+        fill:SetPoint("TOP", tab, "CENTER", 0, dy + h / 2 + 7)
+        fill:SetPoint("BOTTOM", tab, "CENTER", 0, dy - h / 2 - 7)
     end
     tabEdges[tab] = e
     TabColor(tab)
@@ -520,7 +536,8 @@ end
 
 -- Helpers shared with AetherSkins_Pass2.lua
 W.H = { Tex = Tex, Fade = Fade, T = T, Edge = Edge, NavyBox = NavyBox, Fonts = Fonts, Forbidden = Forbidden,
-        MEDIA = MEDIA, WHITE = WHITE, GOLD = GOLD, BLUE = BLUE, NAVY = NAVY, TEXT = TEXT, FontFile = FontFile }
+        MEDIA = MEDIA, WHITE = WHITE, GOLD = GOLD, BLUE = BLUE, NAVY = NAVY, TEXT = TEXT, FontFile = FontFile,
+        Close = Close }
 
 -- The window under the mouse (or its window), for /skins this.
 function W.SkinUnderMouse()

@@ -617,12 +617,13 @@ local function SlotFrame(b)
     local nt = b.GetNormalTexture and b:GetNormalTexture()
     if nt then nt:SetAlpha(0) end
     if b.aetherFrame then return end
-    b.aetherFrame = true
+    b.aetherFrame = {}
     for i, a in ipairs({ 1, 0.55 }) do
         local inset = i - 1
         for _, side in ipairs({ "TOP", "BOTTOM", "LEFT", "RIGHT" }) do
             local t = b:CreateTexture(nil, "ARTWORK", nil, 7)
             t:SetColorTexture(0.3, 0.65, 1, a)
+            b.aetherFrame[#b.aetherFrame + 1] = { t, a }
             if side == "TOP" or side == "BOTTOM" then
                 local dy = side == "TOP" and -inset or inset
                 t:SetPoint(side .. "LEFT", b, side .. "LEFT", inset, dy); t:SetPoint(side .. "RIGHT", b, side .. "RIGHT", -inset, dy); t:SetHeight(1)
@@ -632,6 +633,26 @@ local function SlotFrame(b)
             end
         end
     end
+end
+
+-- The frame takes the item's quality color for uncommon and up, Aether blue
+-- otherwise; Blizzard's own quality border (under ours) is hidden (user,
+-- Nov 25: "All frames are blue").
+local function SlotQuality(b, quality)
+    local parts = type(b.aetherFrame) == "table" and b.aetherFrame
+    if not parts then return end
+    local r, g, bl = 0.3, 0.65, 1
+    if type(quality) == "number" and quality >= 2 then
+        local c = (ITEM_QUALITY_COLORS and ITEM_QUALITY_COLORS[quality])
+        if c and c.r then r, g, bl = c.r, c.g, c.b
+        elseif C_Item and C_Item.GetItemQualityColor then
+            local ok, cr, cg, cb = pcall(C_Item.GetItemQualityColor, quality)
+            if ok and type(cr) == "number" then r, g, bl = cr, cg, cb end
+        end
+    end
+    for _, p in ipairs(parts) do p[1]:SetColorTexture(r, g, bl, p[2]) end
+    local ib = b.IconBorder
+    if type(ib) == "table" and ib.SetAlpha then ib:SetAlpha(0) end
 end
 
 local function ButtonFor(bag, slot)
@@ -662,6 +683,7 @@ local function UpdateButton(b, bag, slot, noSearch)
     pcall(SetItemButtonCount, b, count or 0)
     pcall(SetItemButtonDesaturated, b, locked and true or false)
     if SetItemButtonQuality then pcall(SetItemButtonQuality, b, quality, itemID) end
+    SlotQuality(b, icon and quality or nil)
     if b.UpdateCooldown then pcall(b.UpdateCooldown, b, icon)
     elseif ContainerFrame_UpdateCooldown then pcall(ContainerFrame_UpdateCooldown, bag, b) end
     -- "New item" glow: only for items the game says are new (it clears

@@ -492,6 +492,29 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   glyphs + B style, flat crests, vendor A cards + flat buttons, NPF
   sprout, gold beveled slider everywhere, quest page option 3, resize
   grip, Pack ammo heading. Hub cleanup = pass after that.
+  BUILD 1 CODED (09:55, branch fixes-pass2b, NOT BUILT): Skins 1.3.1,
+  Pack 1.6.3, Ledger 1.8.4. Windows: tab box tied to tab CENTER at a
+  per-row text offset (tabOffset); W.H.Close exported. Pass2: P.KeepTint
+  / P.KeepColor (post-hook SetVertexColor / SetTextColor+SetFontObject),
+  P.LightText on every FontString (lum < .35 -> TEXT), WatchList on any
+  frame with .ScrollTarget (ScrollUtil acquired + initialized callbacks,
+  OnShow +0.2 s fallback) -> W.Again(root) = one Contents per frame;
+  capsule fitted to .FillArea +-2 / fill height + 4; quality mirror from
+  IconBorder 651080 (QualityBorder) onto IconFrame edges; SpellFrame
+  around Icon when iconframe(-passive) fades; RedButton-Exit -> Close;
+  GearSlot(+Small) fade; StatTab/model buttons/arrow tints; Character
+  stat titles (UI-Character-Info-Title) -> HeaderStrip; talents per
+  decision + canPurchaseRank + DisabledOverlay always 0 + plate; gray
+  arrow SetColorTexture; Role w clamp 64; MerchantTile hides with its
+  ItemButton. Pack: SlotQuality (ITEM_QUALITY_COLORS >=2, IconBorder
+  alpha 0). Ledger: divider +5 above block. Tests: skins_pass2 (+20),
+  skins_windows (tab rule), pack_test (quality). Suite: only baseline
+  failures remain (same list as before the change).
+  NOT IN BUILD 1 (need info): Group Finder side tabs + its window's red
+  close (tabs aren't in LFGListingFrame dump: dump the parent window with
+  the tabs showing); map "dim" (need a skins on/off screenshot pair);
+  talents brown background (unknown art). Vendor repair icons -> Build 2
+  flat buttons.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in

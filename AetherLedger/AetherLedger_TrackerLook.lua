@@ -358,8 +358,11 @@ local function Divider(module, block)
         dividers[module] = d
     end
     d:ClearAllPoints()
-    d:SetPoint("BOTTOMLEFT", block, "TOPLEFT", -6, 1)
-    d:SetPoint("BOTTOMRIGHT", block, "TOPRIGHT", 6, 1)
+    -- Sits in the gap above the block, clear of its title (user, Nov 25:
+    -- the title touched the line). Blizzard places the blocks, so the line
+    -- moves up instead of the block moving down.
+    d:SetPoint("BOTTOMLEFT", block, "TOPLEFT", -6, 5)
+    d:SetPoint("BOTTOMRIGHT", block, "TOPRIGHT", 6, 5)
     d:Show()
 end
 

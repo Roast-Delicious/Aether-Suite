@@ -21,11 +21,12 @@ local function addmethods(t)
   t.SetThickness = function(s, v) s.thick = v end
   t.SetGradient = function(s) s.grad = true end
   t.GetTexture = function(s) return s.texture end
+  t.SetColorTexture = function(s, r, g, b, a) s.colortex = {r, g, b, a} end
   return t
 end
 CreateColor = function(r, g, b, a) return {r, g, b, a} end
-local function kid(parent, kind, name) local f = CreateFrame(kind, name, parent); f.kind = kind; addmethods(f); return f end
-local function tex(owner, atlas, file)
+function kid(parent, kind, name) local f = CreateFrame(kind, name, parent); f.kind = kind; addmethods(f); return f end
+function tex(owner, atlas, file)
   local t = addmethods(owner:CreateTexture()); t.atlas = atlas; if file then t.texture = file end; t.shown = true; t.alpha = 1; return t
 end
 -- make every texture created from now on (ours too) carry the methods
@@ -136,8 +137,12 @@ expect("maxed: icon gold tint", E('NMAX.Icon.desat == true and NMAX.Icon.vc[2] =
 expect("some points: blue frame, icon in color", (border('NPART'), E('NPART.Icon.desat')), ((0.3, 0.65, 1), False))
 expect("can take: light frame, art in color, blue glow on", (border('NCAN'), E('NCAN.Icon.desat')), ((0.82, 0.84, 0.87), False))
 expect("can take: glow shown", E('(function() for _, r in ipairs(NCAN.regs) do if r.texture and r.texture:find("glow_sq") then return r.shown end end end)()'), True)
-expect("not taken (no points): navy frame and navy icon", (border('NNONE'), E('NNONE.Icon.desat')), ((0.24, 0.35, 0.55), True))
-expect("locked: gray", border('NLOCK'), (0.27, 0.29, 0.33))
+expect("not taken (no points): lighter navy frame and navy icon", (border('NNONE'), E('NNONE.Icon.desat')), ((0.43, 0.59, 0.82), True))
+expect("not taken: navy plate behind it", E('(function() for _, r in ipairs(NNONE.regs) do if r.vc and math.abs(r.vc[1] - 0.12) < 0.01 then return r.shown end end end)()'), True)
+expect("locked: lighter gray, Blizzard's dark overlay hidden", (border('NLOCK'), E('NLOCK.DisabledOverlay.alpha')), ((0.49, 0.51, 0.55), 0))
+NCAN2 = None
+L.execute('NINFO = NODE("talents-node-square-gray"); NINFO.GetNodeInfo = function() return { currentRank = 0, maxRanks = 3, canPurchaseRank = true } end; AetherSkins_Windows.P2.Node(NINFO)')
+expect("can take, from the node's own info (no glow parts shown)", border('NINFO'), (0.82, 0.84, 0.87))
 def pill(n): return E('(function() for _, r in ipairs(%s.regs) do if r.kind == "FontString" and r.font and r.text and r.text:find(" of ") then return r.text end end end)()' % n)
 expect("maxed shows '5 of 5'", pill('NMAX'), "5 of 5")
 expect("some points shows '2 of 3'", pill('NPART'), "2 of 3")
@@ -149,11 +154,12 @@ expect("Blizzard re-sets the frame (maxed now): restyled gold", border('NPART'),
 expect("arrow: 3D head and shaft, thicker", E('ARR.ArrowHead.texture:find("arrow_head_gold") ~= nil and ARR.Line.texture:find("arrow_shaft_gold") ~= nil and ARR.Line.thick == 6'), True)
 L.execute('ARR.ArrowHead:SetAtlas("talents-arrow-head-locked")')
 expect("arrow into a locked talent turns gray", E('ARR.ArrowHead.texture:find("arrow_head_gray") ~= nil'), True)
+expect("gray arrow: solid shaft (no striped texture)", E('ARR.Line.colortex ~= nil and ARR.Line.colortex[1] == 0.59'), True)
 expect("spec icon: gold on navy (desaturated, gold, added)", E('SPEC.icon.desat == true and SPEC.icon.vc[2] == 0.69 and SPEC.icon.blend == "ADD"'), True)
 expect("spec ring blue, box navy", E('SPEC.MainRing.vc[3] == 1 and SPEC.TextBackground.vc[3] == 0.52'), True)
 # spellbook
 expect("trainable spell: Blizzard shadow faded, our glow shown", E('SPELL.Button.TrainableShadow.alpha == 0 and (function() for _, r in ipairs(SPELL.Button.regs) do if r.texture and r.texture:find("glow_sq") then return r.shown end end end)()'), True)
-expect("spell frame blue", E('SPELL.Button.Border.vc[3] == 1'), True)
+expect("Blizzard's ornate spell frame faded, our blue frame around the icon", E('SPELL.Button.Border.alpha == 0 and (function() local n = 0; for _, r in ipairs(SPELL.Button.regs) do if r.vc and r.vc[3] == 1 and r.points[1] and r.points[1][2] == SPELL.Button.Icon then n = n + 1 end end; return n >= 8 end)()'), True)
 L.execute('SPELL.TextContainer.RequiredLevel.text = "Level 46"; SPELL.TextContainer.RequiredLevel:Show(); SPELL.Button.TrainableShadow:Hide()')
 expect("level too low: icon navy", E('SPELL.Button.Icon.desat == true and SPELL.Button.Icon.vc[3] == 0.85'), True)
 # roles
@@ -170,6 +176,63 @@ L.execute('MAP.shown = true; AetherSkins_Windows.Watch(MAP); AetherSkins_Windows
 expect("world map recognized and skinned", E('AetherSkins_Windows.skinned[MAP] == true'), True)
 expect("world map: chrome (one level down) faded", E('MAP.BorderFrame.NineSlice.alpha'), 0)
 expect("world map: breadcrumb bar tinted navy", E('NAV.t.desat == true'), True)
+# --- Build 1 fixes (Nov 25)
+L.execute(r'''
+local function fs(owner, r, g, b)
+  local f = owner:CreateFontString(); f.c = {r, g, b}
+  f.SetTextColor = function(s, r, g, b) s.c = {r, g, b} end
+  f.GetTextColor = function(s) return s.c[1], s.c[2], s.c[3] end
+  f.SetFontObject = function(s, o) s.fo = o end
+  f.GetObjectType = function() return "FontString" end
+  return f
+end
+-- dark spell name, gold title, white text
+TXT = kid(WIN, "Frame"); DARKT = fs(TXT, 0.2, 0.12, 0.05); GOLDT2 = fs(TXT, 1, 0.69, 0); WHT = fs(TXT, 1, 1, 1)
+TXT.GetRegions = function(s) return DARKT, GOLDT2, WHT end
+-- friends card
+CARD = kid(WIN, "Button"); CARD.bg = tex(CARD, "friends-card-offline")
+-- an item button with Blizzard's quality border (green) and an empty vendor tile
+GEAR = kid(WIN, "Button"); GEAR.nt = tex(GEAR, nil, 130841); GEAR.IconBorder = tex(GEAR, nil, 651080)
+GEAR.IconBorder.vc = {0.12, 1, 0}; GEAR.bronze = tex(GEAR, "UI-Character-Info-GearSlot")
+MI2 = kid(WIN, "Frame", "MerchantItem2"); MI2.slot = tex(MI2, nil, 130766)
+MI2.ItemButton = kid(MI2, "Button"); MI2.ItemButton.shown = false
+-- red close button on a page inside the window
+RCB = kid(WIN, "Button"); RCB.a = tex(RCB, "RedButton-Exit")
+-- New Player Friendly: an 84 px role button
+NPF = kid(WIN, "Button"); NPF.w, NPF.h = 84, 84; NPF.IsEnabled = function() return true end
+NPF.ic = tex(NPF, "UI-LFG-RoleIcon-Leader")
+-- a scroll list
+SCROLLUTIL_CB = {}
+ScrollUtil = { AddAcquiredFrameCallback = function(sb, cb) SCROLLUTIL_CB[#SCROLLUTIL_CB + 1] = cb end,
+               AddInitializedFrameCallback = function(sb, cb) SCROLLUTIL_CB[#SCROLLUTIL_CB + 1] = cb end }
+C_Timer = C_Timer or {}; C_Timer.After = function(_, fn) fn() end
+LIST = kid(WIN, "Frame"); LIST.ScrollTarget = kid(LIST, "Frame")
+AetherSkins_Windows.Contents(WIN)
+''')
+expect("dark text on our navy turns light", tuple(round(x, 2) for x in E('{DARKT.c[1], DARKT.c[2], DARKT.c[3]}').values()) != (0.2, 0.12, 0.05) and E('DARKT.c[1] > 0.7'), True)
+expect("gold and white text left as they are", E('GOLDT2.c[2] == 0.69 and WHT.c[1] == 1'), True)
+L.execute('DARKT:SetTextColor(0.1, 0.05, 0)')
+expect("Blizzard sets it dark again: light again", E('DARKT.c[1] > 0.7'), True)
+L.execute('HDR.Name:SetTextColor(0.5, 0.5, 0.5)')
+expect("list header recolored by Blizzard: gold again", E('HDR.Name.color[2]'), 0.69)
+expect("friends card navy", E('CARD.bg.vc[3] < 0.3 and CARD.bg.desat == true'), True)
+L.execute('CARD.bg:SetVertexColor(1, 0.82, 0)')
+expect("Blizzard turns the card gold: navy again", E('CARD.bg.vc[2] < 0.3'), True)
+def gear_edge(): return E('(function() for _, r in ipairs(GEAR.regs) do if r.texture and tostring(r.texture):find("WHITE") and r.vc and r.points[1] and r.points[1][2] == GEAR then return r.vc[2] end end end)()')
+expect("gear slot: Blizzard's bronze frame and quality border faded", E('GEAR.bronze.alpha == 0 and GEAR.IconBorder.alpha == 0'), True)
+expect("green item: our frame takes the quality color", gear_edge(), 1)
+L.execute('GEAR.IconBorder:Hide()')
+expect("no quality border (common item): blue frame", round(gear_edge(), 2), 0.65)
+expect("empty vendor tile: navy tile hidden", E('(function() for _, r in ipairs(MI2.regs) do if r.vc and r.vc[3] == NAVYZ then end end; local n = 0; for _, r in ipairs(MI2.regs) do if r.shown == false then n = n + 1 end end; return n >= 5 end)()'), True)
+L.execute('MI2.ItemButton:Show()')
+expect("item appears: tile shown", E('(function() for _, r in ipairs(MI2.regs) do if r.shown == false then return false end end; return true end)()'), True)
+expect("red close button on a page: faded, our navy box", E('RCB.a.alpha == 0 and #RCB.regs > 5'), True)
+expect("New Player Friendly disc clamped to the 64 size", E('(function() for _, r in ipairs(NPF.regs) do if r.texture and r.texture:find("disc_plain") then return r.w end end end)()'), 64 * 0.92)
+expect("scroll list registered for new rows", E('#SCROLLUTIL_CB'), 2)
+L.execute('NEWROW = kid(LIST.ScrollTarget, "Button"); NEWROW.bg1 = tex(NEWROW, "common-button-list-collapseExpand"); SCROLLUTIL_CB[1](nil, NEWROW)')
+expect("a row made later (on scroll) gets styled right away", E('NEWROW.bg1.alpha'), 0)
+L.execute('STATH = kid(WIN, "Frame"); STATH.Background = tex(STATH, "UI-Character-Info-Title"); STATH.Title = STATH:CreateFontString(); STATH.Title.SetTextColor = function(x, r, g, b) x.color = {r, g, b} end; AetherSkins_Windows.Contents(WIN)')
+expect("character stat headings: navy strip with a gold title", E('STATH.Background.alpha == 0 and STATH.Title.color[2] == 0.69 and #STATH.regs >= 3'), True)
 # switch off
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

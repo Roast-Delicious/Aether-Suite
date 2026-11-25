@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (07:35)
+Last updated: November 25, 2026 (09:55)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -24,15 +24,15 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.4     What an item is for, when you hover it
-  AetherLedger       1.8.3     Where to quest, train and skin next,
+  AetherLedger       1.8.4     Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.6.2     Your bags sorted into sections
+  AetherPack         1.6.3     Your bags sorted into sections
   AetherChat         1.0.8     Chat with the Aether look, fitted beside
                                your action bars
   AetherFrames       1.14.7    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.3.0     The Aether look for Blizzard's windows
+  AetherSkins        1.3.1     The Aether look for Blizzard's windows
                                and the minimap
 
 
@@ -478,8 +478,9 @@ AetherLedger - where to quest, train and skin next             /ledger
     for now) are left out until a level-up turns them orange; when one
     you just accepted goes, a chat line says why.
   - Finished quests from any zone that are handed in somewhere else
-    stay at the bottom of the list, under a thin gold
-    line, reading "Ready for turn-in: Orgrimmar" (the zone to go to).
+    stay at the bottom of the list, under a thin gold line (clear of
+    the first one's title), reading "Ready for turn-in: Orgrimmar"
+    (the zone to go to).
     The zone comes from the game's own turn-in marker first, so quests
     the guide doesn't know about show up there too.
   - Somewhere with nothing for you (a city, a road), it shows the
@@ -567,8 +568,8 @@ AetherPack - your bags, sorted into sections                    /pack
     Other        hearthstone, keys, bags and the rest
     Junk         gray items, with their total vendor value
     Free slots   your empty slots (folded; or use the deposit slot)
-  - Each item sits in a thin Aether-blue frame; the colored quality
-    border (green, blue, purple) still shows on top.
+  - Each item sits in a thin frame in its quality color (green, blue,
+    purple and up); everything else gets Aether blue.
   - What's left, as short colored words beside the deposit slot's
     lettering (under it in a narrow window). Hover a line for the full
     numbers.
@@ -894,29 +895,42 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
     edge and a gold notch on the open one. Windows with side tabs drop
     the right-hand chevron.
   - List headers (Reputation, Friends, the quest log) are navy strips
-    with gold names; reputation and standing bars are dark capsules
+    with gold names, also after you fold or open them. Rows that
+    appear as you scroll get the look right away. Reputation and
+    standing bars are dark capsules that fit around the fill
     (Neutral in Aether gold, Friendly and up in Aether green); the
     picked row is blue; brown backgrounds are gone, bronze lines blue.
   - Friends: navy friend cards (offline ones dimmer), the picked one
-    blue.
+    blue. They stay that way when the game recolors them.
+  - Dark text meant for parchment (spell names and ranks, page
+    headings, gossip and quest text) is light on the navy pages.
+  - Character: gear slots lose Blizzard's bronze frame; each has a
+    thin frame in the item's quality color (blue for plain items),
+    the stat tabs are navy and the zoom and turn buttons gold on
+    navy. Vendors' items get the same quality frames.
   - Talents: spec icons gold on navy. Maxed talents are tinted gold
     with a gold frame; talents with some points have a blue frame;
     talents you can take now glow blue; ones you can't take for lack
-    of points are navy; locked ones are gray. Each taken talent shows
+    of points are light navy on a faint navy plate; locked ones are
+    light gray (none are darkened any more). Each taken talent shows
     a pill such as "2 of 5" on its bottom edge, and the arrows between
-    talents are thicker and 3D (gold, blue or gray, like their talent).
-  - Spellbook: the same scheme. Known spells have a blue frame (a ring
-    for passives), ones you can learn at a trainer now glow blue with
+    talents are thicker and 3D (gold, blue or gray, like their talent;
+    the gray ones solid).
+  - Spellbook: the same scheme. Known spells have a thin blue frame in
+    place of Blizzard's ornate ones (blue, and brown for passives),
+    ones you can learn at a trainer now glow blue with
     a "Trainer" pill, ones above your level are navy with their level
     in a pill, and the category tabs are gold on navy.
-  - Group Finder (I): the tank, healer, damage and leader buttons are
-    gold symbols on a navy disc with a blue ring that turns gold when
-    you pick the role.
-  - World map: the Aether frame and buttons, a navy zone bar, and the
-    quest log beside the map in navy with gold headers.
+  - Group Finder (I): the tank, healer, damage and New Player Friendly
+    buttons are gold symbols on a navy disc (all the same size) with a
+    blue ring that turns gold when you pick it. Red close buttons
+    anywhere in a window get the navy Aether one.
+  - World map: the Aether frame and buttons, a navy zone bar with blue
+    edges, and the quest log beside the map in navy with gold zone
+    headers.
   - Progress Track: navy reward cards and a gold progress bar.
-  - Vendors: navy item tiles with blue icon frames, navy repair and
-    junk buttons.
+  - Vendors: navy item tiles (only where there's an item), navy repair
+    and junk buttons, and Merchant / Buyback tabs that line up.
 
   The minimap:
   - Blizzard's ring around the minimap is replaced by a navy ring with a
