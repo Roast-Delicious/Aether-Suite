@@ -239,6 +239,25 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   Talents-divider-left/right/vertical-c60 -> blue. Keep class art and
   cloud/particle animation (decide with user if too busy). SpellBook is
   .SpellBookFrame (hidden here) -> dump #6 with the Spellbook tab open.
+  PROGRESS TRACK = LegacySystemFrame (title "Progress Track"; portrait
+  atlas Legacy-up-c60). Dump 06:32, tools/dumps/LegacySystemFrame_
+  Rewards_2026-11-25.txt, complete. Added to W.KNOWN (branch skins-
+  second-pass). Side tabs .LegacyRewardTrackTab / .LegacyChallengeTab /
+  .LegacyTreeTab (common-sidetab*). .RewardTrackPage: .Background
+  Legacy-Rewards-Tracker-background (big art), .Icon Legacy-Rewards-
+  Tracker-Icon, .Points/.PointsLabel, .ProgressBarBackground Legacy-
+  Progressbar-BG + StatusBar .LegacyRewardProgressBar (.ProgressBarFrame
+  Legacy-Progressbar-Frame, fill Legacy-Progressbar-Fill) -> capsule
+  bar, gold fill. Reward cards (216x241) under .LegacyRewardProgressFrame
+  .ClipFrame: .RewardCardBG Legacy-Rewards-Tracker-Cards-Disable (and
+  presumably -Cards for earned), .LevelSquare Legacy-Rewards-Tracker-
+  Diamond-Disable, .IconBorder Legacy-Rewards-Tracker-Icons-Frame-
+  Disable, .EarnedCheckmark worldquest-tracker-checkmark, .Level,
+  .RewardName -> navy rounded cards, blue icon frame, gold level badge
+  when earned. Arrow buttons .LeftButton/.RightButton/.Jump* hidden
+  (only shown with more cards). Hidden pages: .ChallengesPage, .TreePage
+  -> dump with those side tabs open. How to open: user found it (ask
+  how, for the README/checklist 1.14).
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in

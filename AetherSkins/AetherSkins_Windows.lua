@@ -455,7 +455,7 @@ end
 
 -- Blizzard windows by name (some load later, with their Blizzard_ addon).
 W.KNOWN = {
-    "CharacterFrame", "FriendsFrame", "SocialUIFrame", "PVEFrame", "PlayerSpellsFrame", "SpellBookFrame", "PlayerTalentFrame",
+    "CharacterFrame", "FriendsFrame", "SocialUIFrame", "LegacySystemFrame", "PVEFrame", "PlayerSpellsFrame", "SpellBookFrame", "PlayerTalentFrame",
     "ProfessionsFrame", "CollectionsJournal", "EncounterJournal", "AchievementFrame", "CommunitiesFrame",
     "GuildFrame", "MerchantFrame", "GossipFrame", "QuestFrame", "MailFrame", "OpenMailFrame", "TradeFrame",
     "BankFrame", "AuctionHouseFrame", "ClassTrainerFrame", "TaxiFrame", "DressUpFrame", "ItemTextFrame",
