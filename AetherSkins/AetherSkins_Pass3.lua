@@ -791,8 +791,31 @@ function W.AfterWalk(root)
     pcall(P3.MapPages, root)
     pcall(P3.Headings)
 end
+-- Map quest log titles: Blizzard's difficulty colors, lifted for the blue
+-- page (user, Nov 25 13:02, mock/maplog_red.py right): red and orange a
+-- little lighter, yellow becomes Aether gold, all with a dark shadow
+local titleBusy = weak()
+local function LiftColor(fs, r, g, b)
+    if titleBusy[fs] or type(r) ~= "number" or type(g) ~= "number" or type(b) ~= "number" then return end
+    local nr, ng, nb
+    if r > 0.9 and g < 0.2 then nr, ng, nb = 1, 0.376, 0.345                 -- far above you
+    elseif r > 0.9 and g > 0.4 and g < 0.6 and b < 0.4 then nr, ng, nb = 1, 0.588, 0.329   -- hard
+    elseif r > 0.9 and g > 0.75 and b < 0.2 then nr, ng, nb = GOLD[1], GOLD[2], GOLD[3]    -- your level
+    end
+    if nr then titleBusy[fs] = true; fs:SetTextColor(nr, ng, nb); titleBusy[fs] = nil end
+end
+local function QuestTitle(f, root)
+    if not (root and root == _G.WorldMapFrame) then return end
+    if not (T(f, "Checkbox") and T(f, "TagTexture")) then return end
+    local fs = T(f, "Text")
+    if not (fs and fs.SetTextColor) or not Once(fs, "questtitle") then return end
+    if fs.SetShadowColor then fs:SetShadowColor(0, 0, 0, 0.9); fs:SetShadowOffset(1, -1) end
+    if hooksecurefunc then pcall(hooksecurefunc, fs, "SetTextColor", LiftColor) end
+    local ok, r, g, b = pcall(fs.GetTextColor, fs)
+    if ok then LiftColor(fs, r, g, b) end
+end
 local visit = W.Visit
 function W.Visit(f, root)
     if visit then visit(f, root) end
-    if not Forbidden(f) then pcall(GossipChoice, f, root) end
+    if not Forbidden(f) then pcall(GossipChoice, f, root); pcall(QuestTitle, f, root) end
 end

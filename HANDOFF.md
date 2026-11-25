@@ -1174,3 +1174,7 @@ trim), xpbar_render.py (XP bar).
   CHARACTER CREST (user 12:59 'A'): P3.FaceCrest - navy disc + live
   SetPortraitTexture('player') masked round, refreshed on UNIT_PORTRAIT_
   UPDATE / PLAYER_ENTERING_WORLD / UNIT_MODEL_CHANGED / OnShow.
+  MAP QUEST TITLES (user 13:02 yes, mock/maplog_red.py right): QuestTitle
+  in W.Visit (WorldMapFrame rows with .Checkbox+.TagTexture): shadow
+  0,0,0,.9 1,-1; SetTextColor hook: red->(1,.376,.345), orange->
+  (1,.588,.329), yellow->GOLD; green/gray kept.

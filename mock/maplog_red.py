@@ -10,7 +10,10 @@ def panel(mode):
         y=14+i*38; col=c
         if mode=='B' and c==RED: col=(255,112,104)
         if mode=='B' and c==ORG: col=(255,160,96)
-        if mode in('A','C'):
+        if mode=='D' and c==RED: col=(255,96,88)
+        if mode=='D' and c==ORG: col=(255,150,84)
+        if mode=='D' and c==YEL: col=GOLD
+        if mode in('A','C','D'):
             sh=Image.new('RGBA',(W,H),(0,0,0,0)); sd=ImageDraw.Draw(sh)
             sd.text((20+1,y+1),t,font=F(15,'SemiBold'),fill=(0,0,0,230))
             if mode=='C': sd.text((20,y),t,font=F(15,'SemiBold'),fill=(0,0,0,255),stroke_width=2,stroke_fill=(8,14,26,255))
@@ -20,6 +23,6 @@ def panel(mode):
     return im
 out=Image.new('RGBA',(1100,300),(16,18,24,255)); d=ImageDraw.Draw(out)
 d.text((20,10),"Red quest names on the blue map log (game size)",font=F(20,'SemiBold'),fill=GOLD)
-for i,(m,t) in enumerate((('N',"Now"),('A',"A  Drop shadow"),('B',"B  Lighter red/orange (recommended)"),)):
+for i,(m,t) in enumerate((('N',"Now"),('B',"B  Lighter red/orange"),('D',"B + shadow, 10% redder, yellow as gold"),)):
     x=20+i*360; d.text((x,46),t,font=F(14),fill=DIM); out.alpha_composite(panel(m),(x,76))
 out.convert('RGB').save('out_maplog_red.png')
