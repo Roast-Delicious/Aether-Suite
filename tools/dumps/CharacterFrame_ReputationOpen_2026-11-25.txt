@@ -1,0 +1,402 @@
+== Window dump: CharacterFrame ==
+Frame CharacterFrame 631x484
+  Texture .? 8x8 tex=-528
+  Texture .? 8x8 tex=-528
+  Texture .? 8x8 tex=-528
+  Texture .? 8x8 tex=-528
+  Texture .? 615x484 tex=130871
+  Texture .? 8x468 tex=130871
+  Texture .? 8x468 tex=130871
+  Texture .? 8x8 tex=-530
+  Texture .? 8x8 tex=-530
+  Texture .? 8x8 tex=-530
+  Texture .? 8x8 tex=-530
+  Texture .? 615x1 tex=130871
+  Texture .? 615x1 tex=130871
+  Texture .? 1x468 tex=130871
+  Texture .? 1x468 tex=130871
+  Texture .? 8x8 tex=-529
+  Texture .? 8x8 tex=-529
+  Texture .? 8x8 tex=-529
+  Texture .? 8x8 tex=-529
+  Texture .? 615x1 tex=130871
+  Texture .? 615x1 tex=130871
+  Texture .? 1x468 tex=130871
+  Texture .? 1x468 tex=130871
+  Texture .? 615x7 tex=-526
+  Texture .? 615x7 tex=-526
+  Texture .? 7x468 tex=-525
+  Texture .? 7x468 tex=-525
+  Texture .? 15x15 tex=-527
+  Texture .? 15x15 tex=-527
+  Texture .? 15x15 tex=-527
+  Texture .? 15x15 tex=-527
+  Texture .? 8x8 tex=-531
+  Texture .? 8x8 tex=-531
+  Texture .? 615x4 tex=130871
+  Texture .? 623x14 tex=130871
+  Texture .? 623x1 tex=130871
+  Texture .? 26x26 tex=-300
+  Texture .? 26x26 tex=-291
+  Texture .? 26x26 tex=-300
+  Texture .? 26x26 tex=-288
+  Texture .? 34x34 tex=-300
+  Texture .? 34x34 tex=-289
+  Texture .? 34x34 tex=-300
+  Texture .? 34x34 tex=-290
+  Frame .NineSlice 631x484
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 456x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 456x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x313 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x313 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture CharacterFramePortrait 62x62 tex=RTPortrait1
+    MaskTexture .CircleMask 58x58
+    Texture .? 66x66 tex=-287
+  Frame .FrameGlow 665x522 hidden
+    Texture .GlowTexture 1330x1044 atlas=gamepad-uiframemetal-largeportrait-focus
+  Frame .TitleContainer 549x20
+    FontString CharacterFrameTitleText 549x13
+  Frame .LeftJumpHint 32x32 hidden
+    Texture .NormalTexture 42x42 atlas=Gamepad-Xbox1-Trigger-LT-Normal
+    Texture .HoverTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Over
+    Texture .PressedTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Down
+    Texture .ActiveTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Focus
+    Texture .DisabledTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-LT-Disabled
+    Texture .LoadBar 42x42 hidden atlas=gamepad-press&hold-loadBar
+    Texture .HoldIndicatorBG 42x42 hidden atlas=gamepad-press&hold-indicator-BG
+    Texture .LoadBarBG 42x42 hidden atlas=gamepad-press&hold-loadBar-BG
+    Texture .LoadBarGlow 42x42 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+    Texture .HoldIndicator 42x42 hidden atlas=gamepad-press&hold-indicator
+    Texture .SpinnerTip 42x42 hidden atlas=gamepad-press&hold-spinnerTip
+  Frame .RightJumpHint 32x32 hidden
+    Texture .NormalTexture 42x42 atlas=Gamepad-Xbox1-Trigger-RT-Normal
+    Texture .HoverTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Over
+    Texture .PressedTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Down
+    Texture .ActiveTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Focus
+    Texture .DisabledTexture 42x42 hidden atlas=Gamepad-Xbox1-Trigger-RT-Disabled
+    Texture .LoadBar 42x42 hidden atlas=gamepad-press&hold-loadBar
+    Texture .HoldIndicatorBG 42x42 hidden atlas=gamepad-press&hold-indicator-BG
+    Texture .LoadBarBG 42x42 hidden atlas=gamepad-press&hold-loadBar-BG
+    Texture .LoadBarGlow 42x42 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+    Texture .HoldIndicator 42x42 hidden atlas=gamepad-press&hold-indicator
+    Texture .SpinnerTip 42x42 hidden atlas=gamepad-press&hold-spinnerTip
+  Frame .FocusJumpHint 32x32 hidden
+    Texture .NormalTexture 42x42 atlas=Gamepad-Xbox1-View-Normal
+    Texture .HoverTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Over
+    Texture .PressedTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Down
+    Texture .ActiveTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Focus
+    Texture .DisabledTexture 42x42 hidden atlas=Gamepad-Xbox1-View-Disabled
+    Texture .LoadBar 42x42 hidden atlas=gamepad-press&hold-loadBar
+    Texture .HoldIndicatorBG 42x42 hidden atlas=gamepad-press&hold-indicator-BG
+    Texture .LoadBarBG 42x42 hidden atlas=gamepad-press&hold-loadBar-BG
+    Texture .LoadBarGlow 42x42 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+    Texture .HoldIndicator 42x42 hidden atlas=gamepad-press&hold-indicator
+    Texture .SpinnerTip 42x42 hidden atlas=gamepad-press&hold-spinnerTip
+  Button CharacterFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+    Texture .? 20x20 tex=130871
+    Texture .? 20x1 tex=130871
+    Texture .? 20x1 tex=130871
+    Texture .? 1x20 tex=130871
+    Texture .? 1x20 tex=130871
+    Texture .? 2x12 tex=130871
+    Texture .? 2x12 tex=130871
+    Texture .? 20x20 tex=130871
+  Frame CharacterFrameLeftPaneHost 398x464
+    Texture .? 398x464 atlas=UI-Character-Info-General-BG
+  Frame CharacterFrameRightPaneHost 233x464
+    Texture .? 233x464 atlas=UI-Character-Info-Stat-BG
+    Texture CharacterFrameRightPaneHostStoneBg 233x60 hidden atlas=UI-Character-Info-Stat-StoneBG3
+    Frame .? 11x463
+      Texture .? 11x463 atlas=common-framedivider
+  Frame CharacterStatsPaneScrollBox 233x404 hidden
+    Texture .Border 228x403 atlas=common-insideframe
+    Texture .? 210x7 atlas=UI-Character-Info-ScrollLine
+    Texture .ClassBackground 233x383 atlas=UI-Character-Info-Hunter-BG
+    Frame .ScrollBox 193x366
+      Frame .DragDelegate 0x0
+      Frame .ScrollTarget 193x1
+        Frame .? 193x40
+          Texture .Background 193x40 atlas=UI-Character-Info-Title
+          FontString .Title 47x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 35x12
+          FontString .Label 43x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 35x12
+          FontString .Label 37x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 33x12
+          FontString .Label 111x12
+        Frame .? 193x40
+          Texture .Background 193x40 atlas=UI-Character-Info-Title
+          FontString .Title 109x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 17x12
+          FontString .Label 55x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 23x12
+          FontString .Label 43x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 24x12
+          FontString .Label 51x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 17x12
+          FontString .Label 53x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 17x12
+          FontString .Label 35x12
+        Frame .? 193x40
+          Texture .Background 193x40 atlas=UI-Character-Info-Title
+          FontString .Title 57x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 52x12
+          FontString .Label 69x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 52x12
+          FontString .Label 49x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 25x12
+          FontString .Label 84x12
+      Frame .Shadows 193x366
+        Texture .Lower 0x0
+        Texture .Upper 0x0
+    Frame .ScrollBar 8x354 [styled scroll]
+      Frame .Track 8x316
+        Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+        Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+        Texture .Middle 8x300 atlas=!minimal-scrollbar-track-middle
+        Button .Thumb 8x149
+          Texture .Begin 8x8 atlas=minimal-scrollbar-small-thumb-top
+          Texture .End 8x8 atlas=minimal-scrollbar-small-thumb-bottom
+          Texture .Middle 8x133 atlas=minimal-scrollbar-small-thumb-middle
+      Button .Back 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+      Button .Forward 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+  Frame CharacterStatsPanePetScrollBox 233x404 hidden
+    Texture .Border 228x403 atlas=common-insideframe
+    Texture .? 210x7 atlas=UI-Character-Info-ScrollLine
+    Frame .ScrollBox 193x366
+      Frame .DragDelegate 0x0
+      Frame .ScrollTarget 193x1
+        Frame .? 193x40
+          Texture .Background 193x40 atlas=UI-Character-Info-Title
+          FontString .Title 47x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 35x12
+          FontString .Label 43x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 33x12
+          FontString .Label 111x12
+        Frame .? 193x40
+          Texture .Background 193x40 atlas=UI-Character-Info-Title
+          FontString .Title 48x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 35x12
+          FontString .Label 42x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 44x12
+          FontString .Label 53x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 24x12
+          FontString .Label 84x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 37x12
+          FontString .Label 83x12
+        Frame .? 193x40
+          Texture .Background 193x40 atlas=UI-Character-Info-Title
+          FontString .Title 70x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 17x12
+          Texture .Icon 33x33 atlas=UI-Character-Info-Resistance-Arcane
+          FontString .Label 46x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 17x12
+          Texture .Icon 33x33 atlas=UI-Character-Info-Resistance-Fire
+          FontString .Label 25x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 17x12
+          Texture .Icon 33x33 atlas=UI-Character-Info-Resistance-Frost
+          FontString .Label 33x12
+        Frame .? 193x23
+          Texture .Background 213x23 hidden atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 17x12
+          Texture .Icon 33x33 atlas=UI-Character-Info-Resistance-Nature
+          FontString .Label 45x12
+        Frame .? 193x23
+          Texture .Background 213x23 atlas=UI-Character-Info-Line-Bounce2
+          FontString .Value 17x12
+          Texture .Icon 33x33 atlas=UI-Character-Info-Resistance-Shadow
+          FontString .Label 52x12
+      Frame .Shadows 193x366
+        Texture .Lower 0x0
+        Texture .Upper 0x0
+    Frame .ScrollBar 8x354 [styled scroll]
+      Frame .Track 8x316
+        Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+        Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+        Texture .Middle 8x300 atlas=!minimal-scrollbar-track-middle
+        Button .Thumb 8x304
+          Texture .Begin 8x8 atlas=minimal-scrollbar-small-thumb-top
+          Texture .End 8x8 atlas=minimal-scrollbar-small-thumb-bottom
+          Texture .Middle 8x288 atlas=minimal-scrollbar-small-thumb-middle
+      Button .Back 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+      Button .Forward 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+  Frame CharacterStatsPane 233x404 hidden
+    Frame .ItemLevelCategory 197x40
+      Texture .Background 197x40 atlas=UI-Character-Info-Title
+      FontString .Title 63x12
+    Frame .ItemLevelFrame 187x29
+      Texture .Background 204x21 atlas=UI-Character-Info-ItemLevel-Bounce
+      FontString .Value 1x1
+    Frame .AttributesCategory 197x40
+      Texture .Background 197x40 atlas=UI-Character-Info-Title
+      FontString .Title 60x12
+    Frame .EnhancementsCategory 197x40
+      Texture .Background 201x32 atlas=UI-Character-Info-Title
+      FontString .Title 87x12
+    Frame .? 187x15 hidden
+      Texture .Background 213x18 atlas=UI-Character-Info-Line-Bounce
+      FontString .Label 45x12
+      FontString .Value 29x12
+  Button CharacterFrameRightPaneToggleButton 28x28
+    Texture .? 28x28 tex=130869
+    Texture .? 28x28 hidden tex=130868
+    Texture .? 28x28 tex=130757
+  Frame CharacterFrameModeTabs 64x384
+    Frame CharacterFrameModeTab1 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=RTPortrait1
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame CharacterFrameModeTab2 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197103
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame CharacterFrameModeTab3 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=2447783
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame CharacterFrameModeTab4 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197098
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame CharacterFrameModeTab5 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197078
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    Frame CharacterFrameModeTab6 55x55
+      Texture .Background 55x60 atlas=common-sidetab
+      Texture .Icon 50x50 tex=8197104
+      MaskTexture .Mask 55x60
+      Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+      Texture .TabGlow 55x60 atlas=common-sidetab-selected
+      Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+  Frame CharacterFrameTabIndicators 0x0 hidden
+    Button CharacterFrameTabIndicatorsLeftTabButton 26x26
+      Texture .NormalTexture 0x0 atlas=Gamepad-Xbox1-Trigger-LB-Normal
+      Texture .HoverTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-LB-Over
+      Texture .PressedTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-LB-Down
+      Texture .ActiveTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-LB-Focus
+      Texture .DisabledTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-LB-Disabled
+      Texture .LoadBar 0x0 hidden atlas=gamepad-press&hold-loadBar
+      Texture .HoldIndicatorBG 0x0 hidden atlas=gamepad-press&hold-indicator-BG
+      Texture .LoadBarBG 0x0 hidden atlas=gamepad-press&hold-loadBar-BG
+      Texture .LoadBarGlow 0x0 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+      Texture .HoldIndicator 0x0 hidden atlas=gamepad-press&hold-indicator
+      Texture .SpinnerTip 0x0 hidden atlas=gamepad-press&hold-spinnerTip
+    Button CharacterFrameTabIndicatorsRightTabButton 26x26
+      Texture .NormalTexture 0x0 atlas=Gamepad-Xbox1-Trigger-RB-Normal
+      Texture .HoverTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-RB-Over
+      Texture .PressedTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-RB-Down
+      Texture .ActiveTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-RB-Focus
+      Texture .DisabledTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-RB-Disabled
+      Texture .LoadBar 0x0 hidden atlas=gamepad-press&hold-loadBar
+      Texture .HoldIndicatorBG 0x0 hidden atlas=gamepad-press&hold-indicator-BG
+      Texture .LoadBarBG 0x0 hidden atlas=gamepad-press&hold-loadBar-BG
+      Texture .LoadBarGlow 0x0 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+      Texture .HoldIndicator 0x0 hidden atlas=gamepad-press&hold-indicator
+      Texture .SpinnerTip 0x0 hidden atlas=gamepad-press&hold-spinnerTip
+  Frame PaperDollFrame 631x484 hidden
+    Frame PaperDollTabIndicators 0x0 hidden
+      Button PaperDollTabIndicatorsLeftTabButton 26x26
+        Texture .NormalTexture 0x0 atlas=Gamepad-Xbox1-Trigger-LB-Normal
+        Texture .HoverTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-LB-Over
+        Texture .PressedTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-LB-Down
+        Texture .ActiveTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-LB-Focus
+        Texture .DisabledTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-LB-Disabled
+        Texture .LoadBar 0x0 hidden atlas=gamepad-press&hold-loadBar
+        Texture .HoldIndicatorBG 0x0 hidden atlas=gamepad-press&hold-indicator-BG
+        Texture .LoadBarBG 0x0 hidden atlas=gamepad-press&hold-loadBar-BG
+        Texture .LoadBarGlow 0x0 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+        Texture .HoldIndicator 0x0 hidden atlas=gamepad-press&hold-indicator
+        Texture .SpinnerTip 0x0 hidden atlas=gamepad-press&hold-spinnerTip
+      Button PaperDollTabIndicatorsRightTabButton 26x26
+        Texture .NormalTexture 0x0 atlas=Gamepad-Xbox1-Trigger-RB-Normal
+        Texture .HoverTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-RB-Over
+        Texture .PressedTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-RB-Down
+        Texture .ActiveTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-RB-Focus
+        Texture .DisabledTexture 0x0 hidden atlas=Gamepad-Xbox1-Trigger-RB-Disabled
+        Texture .LoadBar 0x0 hidden atlas=gamepad-press&hold-loadBar
+        Texture .HoldIndicatorBG 0x0 hidden atlas=gamepad-press&hold-indicator-BG
+        Texture .LoadBarBG 0x0 hidden atlas=gamepad-press&hold-loadBar-BG
+        Texture .LoadBarGlow 0x0 hidden atlas=gamepad-press&hold-loadBar-glw-BG
+        Texture .HoldIndicator 0x0 hidden atlas=gamepad-press&hold-indicator
+        Texture .SpinnerTip 0x0 hidden atlas=gamepad-press&hold-spinnerTip
+    Frame .TitleManagerPane 233x404 hidden
+      Texture .Border 228x403 atlas=common-insideframe
+      Frame .ScrollBox 193x366
+        Frame .DragDelegate 0x0
+        Frame .ScrollTarget 191x1
+        Frame .Shadows 193x366
+          Texture .Lower 0x0 hidden
+          Texture .Upper 0x0 hidden
+      Frame .ScrollBar 8x354 [styled scroll]
+        Frame .Track 8x316
+(stopped at 400 lines)

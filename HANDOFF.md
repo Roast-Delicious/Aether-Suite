@@ -143,6 +143,18 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   common-insideframe + .ClassBackground UI-Character-Info-Hunter-BG, side
   tabs CharacterFrameModeTab1-6 (.TabGlow common-sidetab-selected), scroll
   bar IS MinimalScrollBar (styled; tint just too faint).
+  Second dump (Reputation open, 06:21, tools/dumps/CharacterFrame_
+  ReputationOpen_2026-11-25.txt) also cut at 400 before ReputationFrame,
+  but adds: CharacterFrameLeftPaneHost bg atlas UI-Character-Info-General-
+  BG, CharacterFrameRightPaneHost bg UI-Character-Info-Stat-BG + divider
+  common-framedivider, side tabs CharacterFrameModeTab1-6 = .Background
+  common-sidetab, .SelectedTexture/.TabGlow common-sidetab-selected,
+  .HighlightTexture common-sidetab-hover, .Icon (Tab1 = RTPortrait1);
+  CharacterFrameRightPaneToggleButton (tex 130869/130868/130757);
+  CharacterStatsPane categories .ItemLevelCategory/.AttributesCategory/
+  .EnhancementsCategory (UI-Character-Info-Title), .ItemLevelFrame
+  UI-Character-Info-ItemLevel-Bounce. Need the 1.2.2 dump for the
+  Reputation page itself.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 05:50; user 05:33 "go ahead with all the fixes and
