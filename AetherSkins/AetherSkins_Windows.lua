@@ -334,7 +334,19 @@ local function Tab(tab)
             Fade(t)
         end
     end
-    local _, e = NavyBox(tab, 4, 4, 2, 4)
+    -- The box is centered on the tab's text, not stretched over the whole
+    -- button: Blizzard's tab buttons are taller than their art, and the text
+    -- sits where the art was, so a full-height box left it low (user, Nov 25,
+    -- Talents' Primary / Secondary).
+    local fill, e = NavyBox(tab, 4, 4, 2, 4)
+    local text = T(tab, "Text") or (tab.GetFontString and tab:GetFontString())
+    if type(text) == "table" and text.GetObjectType then
+        fill:ClearAllPoints()
+        fill:SetPoint("LEFT", tab, "LEFT", 4, 0)
+        fill:SetPoint("RIGHT", tab, "RIGHT", -4, 0)
+        fill:SetPoint("TOP", text, "TOP", 0, 7)
+        fill:SetPoint("BOTTOM", text, "BOTTOM", 0, -7)
+    end
     tabEdges[tab] = e
     TabColor(tab)
 end
