@@ -847,8 +847,8 @@ local titleBusy = weak()
 local function LiftColor(fs, r, g, b)
     if titleBusy[fs] or type(r) ~= "number" or type(g) ~= "number" or type(b) ~= "number" then return end
     local nr, ng, nb
-    if r > 0.9 and g < 0.2 then nr, ng, nb = 1, 0.376, 0.345                 -- far above you (user kept the +10% version, 13:05)
-    elseif r > 0.9 and g > 0.4 and g < 0.6 and b < 0.4 then nr, ng, nb = 1, 0.588, 0.329   -- hard
+    if r > 0.9 and g < 0.2 then return end                                 -- far above you: Blizzard's own red (user, 14:28)
+    if r > 0.9 and g > 0.4 and g < 0.6 and b < 0.4 then nr, ng, nb = 1, 0.588, 0.329   -- hard
     elseif r > 0.9 and g > 0.75 and b < 0.2 then nr, ng, nb = GOLD[1], GOLD[2], GOLD[3]    -- your level
     end
     if nr then titleBusy[fs] = true; fs:SetTextColor(nr, ng, nb); titleBusy[fs] = nil end
