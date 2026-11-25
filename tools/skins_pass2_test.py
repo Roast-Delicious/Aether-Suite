@@ -407,4 +407,21 @@ function FillOf(par) for _, r in ipairs(par.regs) do if r.texture == "Interface\
 expect("page starting inside the title strip: our black stops at the gold line", E('(function() for _, r in ipairs(SBP.regs) do if r ~= PGL and r ~= PGR and r.points then local y = TopPoint(r); if y then return y end end end end)()'), -23)
 expect("page already below the strip: left as Blizzard placed it", E('(function() local n = 0 for _, r in ipairs(SBP.regs) do if r ~= PGL and r ~= PGR and r.points and TopPoint(r) then n = n + 1 end end return n end)()'), 1)
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
+# Forever gives BM row 5 -> 7 an extra edge back UP over the real arrow
+# (dump b160: 9 arrows, 8 on the tree; user 16:46): up arrows are hidden
+L.execute(r"""
+local function btn(y) local b = kid(WIN, "Button"); b.GetCenter = function() return 100, y end; return b end
+local function arrow(sy, ey)
+  local a = kid(WIN, "Frame"); a.Line = tex(a); a.ArrowHead = tex(a, "talents-arrow-head-gray")
+  a.alpha = 1; a.SetAlpha = function(s, v) s.alpha = v end
+  a.startButton, a.endButton = btn(sy), btn(ey)
+  return a
+end
+DOWN = arrow(500, 400); UP = arrow(400, 500)
+""")
+L.execute('AetherSkins_Windows.P2.Arrow(DOWN.ArrowHead, "gray"); AetherSkins_Windows.P2.Arrow(UP.ArrowHead, "gray")')
+expect("talent arrow pointing down the tree: shown", E('DOWN.alpha'), 1)
+expect("talent arrow pointing back up (Forever's extra edge): hidden", E('UP.alpha'), 0)
+L.execute('UP.startButton, UP.endButton = DOWN.startButton, DOWN.endButton; AetherSkins_Windows.P2.Arrow(UP.ArrowHead, "gray")')
+expect("pooled arrow reused for a downward link: shown again", E('UP.alpha'), 1)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

@@ -344,6 +344,34 @@ local ARROW_COLOR = {
     gray = { 0.78, 0.8, 0.86 },
 }
 local arrowState, lineHead = weak(), weak()
+local arrowRetry = weak()
+-- true = this arrow points up the tree, false = down/sideways, nil = not laid out yet
+function P.ArrowUp(par, head)
+    local function Btn(key, getter)
+        local b = rawget(par, key)
+        if not b and type(par[getter]) == "function" then
+            local ok, r = pcall(par[getter], par); if ok then b = r end
+        end
+        return b
+    end
+    local s, e = Btn("startButton", "GetStartButton"), Btn("endButton", "GetEndButton")
+    if s and e and s.GetCenter and e.GetCenter then
+        local _, sy = s:GetCenter(); local _, ey = e:GetCenter()
+        if sy and ey then return ey > sy + 4 end
+        return nil
+    end
+    -- no buttons known: the head sits at the arrow's end; compare it with the
+    -- line's start anchor
+    local line = T(par, "Line")
+    if line and line.GetStartPoint and head.GetCenter then
+        local ok, _, rel = pcall(line.GetStartPoint, line)
+        if ok and rel and rel ~= par and rel.GetCenter then
+            local _, ry = rel:GetCenter(); local _, hy = head:GetCenter()
+            if ry and hy then return hy > ry + 4 end
+        end
+    end
+    return nil
+end
 function P.Arrow(head, state)
     if not head or Forbidden(head) then return end
     local par = head.GetParent and head:GetParent()
@@ -355,6 +383,23 @@ function P.Arrow(head, state)
     if par and T(par, "ArrowHead") and T(par, "ArrowHead") ~= head then return end
     arrowState[head] = state
     local line = par and T(par, "Line")
+    -- Talent trees only flow downward. Forever's data gives one pair of
+    -- talents (BM row 5 -> 7) an extra edge back UP, drawn over the real
+    -- arrow, so it looked double-headed (dump b160: 9 arrows, 8 on the
+    -- tree; user 16:46). An arrow whose end sits above its start is hidden.
+    if par and par.SetAlpha then
+        local up = P.ArrowUp(par, head)
+        if up == nil then
+            local n = (arrowRetry[par] or 0) + 1      -- a few tries while the tree lays out
+            if C_Timer and n <= 10 then
+                arrowRetry[par] = n
+                C_Timer.After(0.1, function() if arrowState[head] then pcall(P.Arrow, head, arrowState[head]) end end)
+            end
+        else
+            arrowRetry[par] = nil
+        end
+        par:SetAlpha(up and 0 or 1)
+    end
     -- ghost = Blizzard's preview of a change you haven't applied: blue, softer
     local key = (state == "ghost" and "blue") or ARROW[state] or "gray"
     local c = ARROW_COLOR[key]
