@@ -11,6 +11,7 @@ from skins_lib import GOLD, BLUE, NAVY, PANEL, WHITE, DIM, RED, U, SS
 WU, HU = 620, 525           # Hub window in UI units (WIN_W, WIN_H)
 SIDE = 160
 M = 34                      # px margin around the window
+NO_MM = False               # minimap button moved out of the footer (mockup 7)
 OX, OY = M, M
 
 def X(ux): return OX + ux * U
@@ -151,10 +152,11 @@ def window(c, footer_moves=False):
             T(c, x0 + w / 2, fy, s, 15, WHITE, 'SemiBold', 'mm')
     else:
         T(c, 16, fy, 'Changes apply right away. Hover anything for help.', 13, (150, 150, 150), 'Regular', 'lm')
-    x = WU - 24 - 100 - 150
-    rect(c, x, fy - 8, x + 16, fy + 8, fill=(18, 43, 82), outline=GOLD, r=2)
-    rect(c, x + 4, fy - 4, x + 12, fy + 4, fill=GOLD, r=1)
-    T(c, x + 22, fy, 'Minimap button', 15.5, WHITE, 'Regular', 'lm')
+    if not NO_MM:
+        x = WU - 24 - 100 - 150
+        rect(c, x, fy - 8, x + 16, fy + 8, fill=(18, 43, 82), outline=GOLD, r=2)
+        rect(c, x + 4, fy - 4, x + 12, fy + 4, fill=GOLD, r=1)
+        T(c, x + 22, fy, 'Minimap button', 15.5, WHITE, 'Regular', 'lm')
     rect(c, WU - 124, fy - 11, WU - 24, fy + 11, fill=NAVY, outline=BLUE, r=5)
     T(c, WU - 74, fy, 'Reload UI', 15, WHITE, 'SemiBold', 'mm')
 
@@ -272,7 +274,7 @@ def render_b(selected, pagefn, out):
         for name, sub in GROUPS:
             tab(c, y, name, selected=(name == selected), h=36, sub=sub); y += 39
         p = Page(c); pagefn(p)
-        if not full: p.scrollbar(0.4)
+        if not full and p.full: p.scrollbar(0.4)
         c.done().save(out + ('_full' if full else '') + '.png')
         background = base
     HU = 525; PB = HU - 44

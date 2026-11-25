@@ -1373,3 +1373,10 @@ trim), xpbar_render.py (XP bar).
   here, Open Bags), Item details (ItemID on, hover time, Clear Learned
   Recipes...), Restore Defaults... (Pack needs a new defaults command;
   ItemID has /itemid reset). /itemid debug -> Help & Debug.
+- 15:41 user "cool" = Bags & Items approved.
+- MOCKUP 7, Window Look (mock/hub_look.py, out_hub_look(_full)): Blizzard's
+  windows switch (reload), grip note, NEW Reset Window Sizes... (clears
+  AetherSkinsDB.scale, asks), '/skins this' note; Minimap switch (reload),
+  NEW Sun or moon: Follow the game/Day/Night (= /skins auto|day|night),
+  AetherHub minimap button MOVED here from the footer; Restore Defaults.
+  /skins debug + tree stay on Help & Debug.
