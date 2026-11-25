@@ -385,5 +385,21 @@ L.execute('''LN = kid(WIN, "Button"); LN.StateBorder = tex(LN, "Legacy-Tree-Fram
 LN.box = tex(LN, "Talents-Square-Box-c60"); AetherSkins_Windows.Contents(WIN)''')
 expect("Legacy Tree rank box: Blizzard's dark square hidden", E('LN.box.alpha'), 0)
 # switch off
+# Spellbook (user 15:25): page fills stop at the title strip's gold line
+L.execute("""
+local W = AetherSkins_Windows
+SBW = kid(UIParent, "Frame", "SpellbookTestWin"); W.chev[SBW] = {}
+SBW.GetTop = function() return 800 end; SBW.GetEffectiveScale = function() return 1 end
+SBP = kid(SBW, "Frame")
+PGL = tex(SBP, "spellbook-Page-Left-C60"); PGL.GetTop = function() return 795 end; PGL.GetEffectiveScale = function() return 1 end
+PGL.GetDrawLayer = function() return "BACKGROUND", 1 end
+PGR = tex(SBP, "spellbook-Page-Right-C60"); PGR.GetTop = function() return 760 end; PGR.GetEffectiveScale = function() return 1 end
+W.P3.BelowTitleTest = true
+AetherSkins_Windows.Contents(SBW)
+function TopPoint(o) for _, p in ipairs(o.points or {}) do if p[1] == "TOP" then return p[2] == SBW and p[5] end end return nil end
+function FillOf(par) for _, r in ipairs(par.regs) do if r.texture == "Interface\\\\Buttons\\\\WHITE8x8" or (r.texture and tostring(r.texture):find("WHITE")) then return r end end end
+""")
+expect("page starting inside the title strip: our black stops at the gold line", E('(function() for _, r in ipairs(SBP.regs) do if r ~= PGL and r ~= PGR and r.points then local y = TopPoint(r); if y then return y end end end end)()'), -23)
+expect("page already below the strip: left as Blizzard placed it", E('(function() local n = 0 for _, r in ipairs(SBP.regs) do if r ~= PGL and r ~= PGR and r.points and TopPoint(r) then n = n + 1 end end return n end)()'), 1)
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

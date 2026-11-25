@@ -1315,3 +1315,12 @@ trim), xpbar_render.py (XP bar).
   add; TabColor hides every Blizzard FontString on the tab on each
   pick/unpick (cause not confirmed by dump; if it recurs, /skins tree on
   the Buyback tab). Tests: skins_pass2 (+5), skins_windows (+1).
+- SPELLBOOK TITLE (user 15:25, refs/spellbook_title_2026-11-25.png):
+  strip looked short, gold line missing. Cause: Blizzard's page art
+  (spellbook-Page-Left/Right-C60) starts inside the title strip; our page
+  fill copies its position and, solid black since Build 7, covers the
+  strip's lower half + the gold line. READY, NOT SHIPPED (branch
+  fix-spellbook-title, off fix-vendor-tips; Skins 1.5.7): Pass3 Ours ->
+  P3.BelowTitle: any flat fill (Ours with no art file) whose texture
+  starts above win top - 23 is re-anchored TOP to the window at -23.
+  skins_pass2_test (+2).

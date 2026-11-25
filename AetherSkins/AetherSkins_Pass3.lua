@@ -324,9 +324,36 @@ local function Ours(t, file, col, w, h, path)
     o:SetVertexColor(col[1], col[2], col[3], col[4] or 1)
     o:ClearAllPoints()
     if w then o:SetSize(w, h or w); o:SetPoint("CENTER", t, "CENTER")
-    else o:SetPoint("TOPLEFT", t, "TOPLEFT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT") end
+    else
+        o:SetPoint("TOPLEFT", t, "TOPLEFT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
+        -- a flat fill never reaches into the window's title strip: Blizzard's
+        -- page art often starts higher, and since pages went solid black
+        -- (Nov 25 14:25) the Spellbook's covered the strip's lower half and
+        -- its gold line (user, 15:25)
+        if not file then P3.BelowTitle(o, t) end
+    end
     t:SetAlpha(0)
     return o
+end
+local TITLE_LINE = 23          -- title strip (22) + its gold line
+function P3.BelowTitle(o, t)
+    local win, f = nil, t.GetParent and t:GetParent()
+    for _ = 1, 12 do
+        if not f then break end
+        if W.chev and W.chev[f] then win = f; break end
+        f = f.GetParent and f:GetParent()
+    end
+    if not win then return end
+    local ok1, top = pcall(t.GetTop, t)
+    local ok2, wtop = pcall(win.GetTop, win)
+    local ok3, scale = pcall(t.GetEffectiveScale, t)
+    local ok4, wscale = pcall(win.GetEffectiveScale, win)
+    if not (ok1 and ok2 and type(top) == "number" and type(wtop) == "number") then return end
+    local k = (ok3 and ok4 and type(scale) == "number" and type(wscale) == "number" and wscale > 0) and scale / wscale or 1
+    if top * k <= wtop - TITLE_LINE then return end      -- starts below the strip already
+    o:ClearAllPoints()
+    o:SetPoint("LEFT", t, "LEFT"); o:SetPoint("RIGHT", t, "RIGHT"); o:SetPoint("BOTTOM", t, "BOTTOM")
+    o:SetPoint("TOP", win, "TOP", 0, -TITLE_LINE)
 end
 
 -- The Aether page in place of the parchment, with a thin blue edge.
