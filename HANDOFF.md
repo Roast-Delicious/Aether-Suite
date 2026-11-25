@@ -303,6 +303,15 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   .PagingControls Prev/Next tex 130864-130869 (old round page arrows)
   -> our chevrons. .MaximizeMinimizeButton (RedButton-Condense) shown
   here -> navy box (queued).
+  BAGS = AetherPackFrame (our own window, already Aether-styled; dump
+  06:36, tools/dumps/AetherPackFrame_2026-11-25.txt, 1472 lines, near
+  the 1500 cap: item buttons are ~25 lines each). Nothing for AetherSkins
+  to do. Note for AetherPack: item buttons still carry Blizzard's
+  NormalTexture tex 130841 (64x64 quickslot frame) and HighlightTexture
+  130718 (shown in dump as visible) -> check in game whether the gray
+  square frame shows behind our slot look; if so, SetNormalTexture("")
+  / alpha 0. Dump cap: raise to 2500 or fold repeated item buttons
+  ("N more like this") next time.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
