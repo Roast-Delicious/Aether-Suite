@@ -198,6 +198,27 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   checkboxes checkbox-minimal (styled), .ViewRenownButton (styled).
   .filterDropdown hidden here. Sibling pages SkillsFrame, PVPRankFrame,
   StatisticsFrame, TokenFrame: need dumps when open (tabs 3-6).
+  FRIENDS FULL (06:30, tools/dumps/SocialUIFrame_full_2026-11-25.txt,
+  174 lines, complete): .FriendsList: .TopDivider/.BottomDivider perks-
+  divider-short -> blue line; .FilterBar dropdown common-dropdown-b-
+  button, .SearchBar common-searchbar-a (+icon) -> our input box;
+  .ActionButton ("Add Friend") is 128-RedButton-Left/Right/_Center:
+  marked [styled button] but its red art is atlas parts .Left/.Right/
+  .Center, NOT faded -> fade those. Group headers: Button 365x24 with
+  common-button-list-collapseExpand x2 + .CollapseButton (common-button-
+  list-minus) + .ButtonText -> navy strip, gold text (same as rep).
+  Friend cards 365x70: .Background friends-card-battleNet / friends-
+  card-disabled (offline) -> dark navy card, rounded, dimmer offline;
+  selected overlay friends-card-selected -> blue; .FriendName, .Location;
+  .PresenceHolder.PresenceIcon friends-status-online/offline (keep);
+  .PartyButton common-button-tertiary-square-* (+ BattleNetMenuButton
+  same) -> small navy icon button. .BattleNetBar .Background friends-
+  frame-infoBG + .ControlsContainer.BattleNetBackground (tex 632259) ->
+  navy strip; status dropdown common-dropdown-textholder/-a-button.
+  .TopFade/.BottomFade friends-frame-top/bottomTexBG -> fade. Side tabs
+  (4 unnamed Buttons, common-sidetab*, icons friends-icon-tab-*): same
+  treatment as Character side tabs. Hidden pages to dump later: Recent
+  Allies, Friend Requests, Raid, Ignore List.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in

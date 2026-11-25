@@ -1,0 +1,174 @@
+== Window dump: SocialUIFrame ==
+Frame SocialUIFrame 410x675
+  Texture SocialUIFrameBg 406x652
+  Texture .TopTileStreaks 402x43 hidden atlas=_UI-Frame-TopTileStreaks
+  Texture .TopFade 408x71 atlas=friends-frame-topTexBG
+  Texture .BottomFade 406x91 atlas=friends-frame-bottomTexBG
+  Frame .NineSlice 410x675
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 235x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 235x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x504 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x504 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture SocialUIFramePortrait 62x62 tex=526421
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 444x713 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 328x20
+    FontString SocialUIFrameTitleText 328x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button SocialUIFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .BattleNetBar 413x50
+    Texture .Background 413x50 atlas=friends-frame-infoBG
+    Frame .ControlsContainer 413x32
+      Texture .BattleNetBackground 299x29 tex=632259
+      Button .OnlineStatusDropdown 54x25
+        Texture .Background 70x41 atlas=common-dropdown-textholder
+        Texture .Arrow 27x27 atlas=common-dropdown-a-button
+        FontString .Text 60x10
+      Button .BattleNetMenuButton 34x34
+        Texture .Icon 11x12 atlas=friends-icon-menu
+        Texture .NormalTexture 34x34 atlas=common-button-tertiary-square-normal
+        Texture .PushedTexture 34x34 hidden atlas=common-button-tertiary-square-pressed
+        Texture .HighlightTexture 34x34 atlas=common-button-tertiary-square-normal
+      Frame .PersonalBattleTagDisplay 245x29
+        FontString .DisplayText 82x14
+        Button .CopyBattleTagToClipboardButton 13x13
+          Texture .Icon 12x12 atlas=friends-icon-battlenet-copy
+          Texture .HighlightTexture 13x13 atlas=friends-icon-battlenet-copy
+        Button .BattleNetUnavailableNoticeButton 16x16 hidden (2 parts inside, skipped)
+  Frame .BattleNetUnavailableNoticeFrame 1x1 hidden (3 parts inside, skipped)
+  Frame .BattleNetBroadcastFrame 1x1 hidden (5 parts inside, skipped)
+  Frame .IgnoreListFrame 320x292 hidden (15 parts inside, skipped)
+  Frame .RecentAlliesList 410x606 hidden (8 parts inside, skipped)
+  Frame .FriendRequestsList 410x606 hidden (9 parts inside, skipped)
+  Frame .FriendsList 410x606
+    Texture .TopDivider 399x3 atlas=perks-divider-short
+    Texture .BottomDivider 400x3 atlas=perks-divider-short
+    FontString .FriendsDisabledText 367x470 hidden
+    Frame .FilterBar 410x50
+      Button .SearchFilterDropdown 135x30
+        Texture .Background 143x38 atlas=common-dropdown-b-button
+        FontString .Text 31x20
+        Button .ResetButton 23x23 hidden (2 parts inside, skipped)
+      EditBox .SearchBar 230x20
+        FontString .? 186x20
+        Texture .? 2x12 hidden
+        FontString .Instructions 186x20
+        Texture .Background 230x20 atlas=common-searchbar-a
+        Texture .searchIcon 12x12 atlas=common-searchbar-icon-a
+        Button .clearButton 17x17 hidden (1 parts inside, skipped)
+    Frame .LoadingSpinner 60x60 hidden (2 parts inside, skipped)
+    Button .ActionButton 160x30 [styled button]
+      FontString .Text 130x12
+      Texture .Left 114x128 atlas=128-RedButton-Left
+      Texture .Right 292x128 atlas=128-RedButton-Right
+      Texture .Center 65x30 atlas=_128-RedButton-Center
+      Texture .? 160x30 atlas=128-RedButton-Highlight
+      Frame .Controller 0x0
+    Frame .ScrollBox 382x490
+      Frame .DragDelegate 0x0
+      Frame .ScrollTarget 365x1
+        Button .? 365x24
+          FontString .? 327x1 hidden
+          Texture .? 365x24 atlas=common-button-list-collapseExpand
+          Texture .? 365x24 atlas=common-button-list-collapseExpand
+          FontString .ButtonText 327x15
+          Button .CollapseButton 20x20
+            Texture .Icon 13x4 atlas=common-button-list-minus
+            Texture .? 13x4 atlas=common-button-list-minus
+        Frame .? 365x2
+        Button .? 365x70
+          Texture .Background 365x70 atlas=friends-card-battleNet
+          FontString .FriendName 89x16
+          FontString .Name 1x1 hidden
+          FontString .Level 1x1 hidden
+          FontString .Class 271x1 hidden
+          FontString .Location 286x14
+          Texture .? 365x70 atlas=friends-card-selected
+          Frame .PresenceHolder 19x19
+            Texture .PresenceIcon 19x19 atlas=friends-status-online
+          Button .PartyButton 34x34
+            Texture .ActionIcon 21x21 atlas=friends-icon-friendsAvailable-dis
+            Texture .NormalTexture 34x34 atlas=common-button-tertiary-square-normal
+            Texture .PushedTexture 34x34 hidden atlas=common-button-tertiary-square-pressed
+            Texture .HighlightTexture 34x34 atlas=common-button-tertiary-square-normal
+          Frame .GameIconHolder 20x20
+            Texture .Icon 20x20 tex=-2
+          Frame .TextHolder 286x55
+          Frame .StateDisplay 0x18 hidden (1 parts inside, skipped)
+        Button .? 365x70
+          Texture .Background 365x70 atlas=friends-card-disabled
+          FontString .FriendName 93x16
+          FontString .Name 1x1 hidden
+          FontString .Level 1x1 hidden
+          FontString .Class 297x1 hidden
+          FontString .Location 312x14
+          Texture .? 365x70 atlas=friends-card-selected
+          Frame .PresenceHolder 19x19
+            Texture .PresenceIcon 19x19 atlas=friends-status-offline
+          Button .PartyButton 34x34
+            Texture .ActionIcon 21x21 atlas=friends-icon-friendsAvailable-dis
+            Texture .NormalTexture 34x34 atlas=common-button-tertiary-square-normal
+            Texture .PushedTexture 34x34 hidden atlas=common-button-tertiary-square-pressed
+            Texture .HighlightTexture 34x34 atlas=common-button-tertiary-square-normal
+          Frame .GameIconHolder 20x20 hidden (1 parts inside, skipped)
+          Frame .TextHolder 312x55
+          Frame .StateDisplay 0x18 hidden (1 parts inside, skipped)
+      Frame .Shadows 382x490
+        Texture .Lower 0x0 hidden
+        Texture .Upper 0x0 hidden
+    Frame .ScrollBar 8x479 [styled scroll]
+      Frame .Track 8x441
+        Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+        Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+        Texture .Middle 8x425 atlas=!minimal-scrollbar-track-middle
+        Button .Thumb 8x441 hidden (3 parts inside, skipped)
+      Button .Back 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+      Button .Forward 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+  Frame .RaidFrame 410x606 hidden (8 parts inside, skipped)
+  Frame .RaidInfoFrame 345x250 hidden (12 parts inside, skipped)
+  Button .? 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 33x33 atlas=friends-icon-tab-friends
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    FontString .Count 32x18 hidden
+  Button .? 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 33x33 atlas=friends-icon-tab-recentAllies-inactive
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    FontString .Count 32x18 hidden
+  Button .? 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 33x33 atlas=friends-icon-tab-friendRequest-inactive
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    FontString .Count 32x18 hidden
+  Button .? 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 33x33 atlas=friends-icon-tab-raid-inactive
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+    FontString .Count 32x18 hidden
