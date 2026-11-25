@@ -212,6 +212,9 @@ local function AetherButton(parent, name, small)
     b:SetHighlightFontObject(small and "AetherFontHighlightSmall" or "AetherFontHighlight")
     b:SetDisabledFontObject(small and "AetherFontDisableSmall" or "AetherFontDisable")
     b:SetText(" ")
+    -- soft rounded corners (AetherHub, Release C)
+    b.aetherButton = true
+    if AetherHub_Round then AetherHub_Round(b, 5) end
     return b
 end
 
@@ -385,7 +388,7 @@ local function ApplyAlpha()
         return
     end
     if hovered or GetTime() < awakeUntil then win:SetAlpha(1); return end
-    local m = AetherMeterDB or {}
+    local m = (type(AetherPanels) == "table" and AetherPanels) or AetherMeterDB or {}
     local alpha = InCombatLockdown() and (m.opacityInCombat or 0.8) or (m.opacityOutCombat or 0.3)
     win:SetAlpha(alpha)
 end

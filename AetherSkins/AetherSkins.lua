@@ -643,8 +643,19 @@ SlashCmdList["AETHERSKINS"] = function(msg)
         local W = AetherSkins_Windows
         local f = W and W.Enabled() and W.SkinUnderMouse()
         Print(f and ("styled " .. (f:GetName() or "that window") .. ".") or "no Blizzard window under the mouse (or windows look is off).")
+    elseif cmd == "sizes" then
+        -- every window the grip resized back to its normal size
+        db.scale = nil
+        local W = AetherSkins_Windows
+        if W and W.P3 and W.P3.ResetScales then pcall(W.P3.ResetScales) end
+        Print("every window back to its normal size.")
+    elseif cmd == "defaults" then
+        db.minimap, db.windows = true, true
+        forced = nil; AetherSkins_Light = "auto"; CheckDay(false)
+        Print("settings back to their defaults. Type /reload to see the change.")
     elseif cmd == "day" or cmd == "night" or cmd == "auto" then
         forced = (cmd ~= "auto") and cmd or nil
+        AetherSkins_Light = cmd     -- AetherHub reads it for its Sun or moon choice
         CheckDay(false)
         local day, src = IsDay()
         Print((day and "day" or "night") .. " (" .. src .. ")")

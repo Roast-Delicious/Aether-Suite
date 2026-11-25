@@ -1403,3 +1403,40 @@ trim), xpbar_render.py (XP bar).
   cheer 68, laugh 70, bow 66; each only if HasAnimation, then back to
   dance), DRAG to turn (SetFacing), plus a Hub switch to turn it off.
   ALL RELEASE C PAGES DESIGNED. Waiting for the build go.
+- 15:49 user "GO, Green One" = Release C build go.
+- RELEASE C SHIPPED 16:45 (main, merged releaseC). Versions: Hub 1.15.0,
+  Bars 1.14.4, Chat 1.0.9, Coords 1.3.16, Frames 1.14.8, ItemID 1.1.5,
+  Ledger 1.8.8, Marks 1.6.14, Meter 1.13.10, Pack 1.6.5, Pathfinder
+  1.9.7, Skins 1.6.0. README stamp 16:45.
+  * Hub: PAGES table (8 keys Character/ActionBar/Frames/Map/Quests/Bags/
+    Look/Debug, title + sidebar sub-line + info), OLD_PAGE maps old page
+    names (saved lastPage, AetherHub_Toggle("AetherSkins")...) to new
+    keys; AddBand (navy gradient strip, gold name, gold line, addon name
+    right), Need(page, addon) note when not loaded, AddRowButtons,
+    AddDefaults (Confirm -> addon defaults commands -> NeedReload);
+    reset/restore/clear buttons get a red edge in AddButtons; footer
+    Unlock to Move (toggles to Lock) / Reset Positions... (+ /ledger
+    resetwindows) / Reload UI; minimap button switch on Window Look.
+  * Panel opacity: hubDB.panels exposed as global AetherPanels (set at
+    Hub ADDON_LOADED if saved, at PLAYER_LOGIN copied from AetherMeterDB
+    first time); Bars/Chat/Ledger_Travel read AetherPanels first.
+  * New addon commands: /af defaults, /am defaults, /mc defaults, /qm
+    defaults, /pack defaults, /pfm defaults (filters -> CATEGORIES.on),
+    /skins defaults, /skins sizes (P3.ResetScales over gripped windows),
+    AetherSkins_Light global (auto|day|night), /ledger turnin on|off,
+    /ledger defaults, AetherItemID_Debugging global.
+  * Dancer: PlayerModel on Your Character, SetAnimation(69) with
+    HasAnimation fallback to 0, click = 67/68/70/66 then back after 2.6 s,
+    drag = SetFacing, hubDB.dancer switch; refresh on UNIT_MODEL_CHANGED,
+    PLAYER_EQUIPMENT_CHANGED, OnShow. UNVERIFIED in Forever.
+  * Rounded: AetherHub_Round(f, R, fill) global (Media btn_round5/3_fill
+    /line from tools/gen_btn_round.py): buttons (aetherButton flag) get
+    rounded fill/edge/hover + pushed/disabled shades, overrides
+    SetBackdrop(Border)Color; checkboxes R3; Hub boxes. Every addon's
+    AetherButton calls it. Skins: RoundBox/RoundPieces (anchor texture
+    standing in for the old fill: SetVertexColor/Show/Hide/SetShown
+    overridden) for NavyBox, Input, button hover.
+  * Tests: hub_pages_test (new), hub_debug_test + skins_hub_test updated.
+    Suite = baseline failures only.
+  UNTESTED IN GAME: all of it. Watch: rounded pieces on tiny buttons,
+  dancer animation under Forever's rules, tab boxes (Skins), Unlock/Lock.

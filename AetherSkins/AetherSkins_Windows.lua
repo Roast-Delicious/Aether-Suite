@@ -258,16 +258,56 @@ end
 -- ------------------------------------------
 -- Widgets inside a window
 -- ------------------------------------------
+-- Soft rounded boxes (Release C, user Nov 25 15:36: the Hub's button shape
+-- everywhere; radius 5). A box is an invisible anchor texture with rounded
+-- fill and edge pieces pinned to its corners, so callers can still move it
+-- (ClearAllPoints / SetPoint), recolor it (SetVertexColor) and show or hide
+-- it, exactly as with the old single square texture.
+local RFLIP = { TOPLEFT = { 0, 1, 0, 1 }, TOPRIGHT = { 1, 0, 0, 1 }, BOTTOMLEFT = { 0, 1, 1, 0 }, BOTTOMRIGHT = { 1, 0, 1, 0 } }
+local function RoundPieces(owner, layer, sub, box, kind, c, R)
+    R = R or 5
+    local parts = {}
+    for corner, fl in pairs(RFLIP) do
+        local t = Tex(owner, layer, sub, MEDIA .. "btn_round" .. R .. "_" .. kind, c)
+        t:SetTexCoord(fl[1], fl[2], fl[3], fl[4]); t:SetSize(R, R); t:SetPoint(corner, box, corner, 0, 0)
+        parts[#parts + 1] = t
+    end
+    local function Add(p1, p2, x1, y1, x2, y2, w, h)
+        local t = Tex(owner, layer, sub, WHITE, c)
+        t:SetPoint(p1, box, p1, x1, y1); t:SetPoint(p2, box, p2, x2, y2)
+        if w then t:SetWidth(w) end
+        if h then t:SetHeight(h) end
+        parts[#parts + 1] = t
+    end
+    if kind == "line" then
+        Add("TOPLEFT", "TOPRIGHT", R, 0, -R, 0, nil, 1)
+        Add("BOTTOMLEFT", "BOTTOMRIGHT", R, 0, -R, 0, nil, 1)
+        Add("TOPLEFT", "BOTTOMLEFT", 0, -R, 0, R, 1, nil)
+        Add("TOPRIGHT", "BOTTOMRIGHT", 0, -R, 0, R, 1, nil)
+    else
+        Add("TOPLEFT", "BOTTOMRIGHT", R, 0, -R, 0)
+        Add("TOPLEFT", "BOTTOMLEFT", 0, -R, 0, R, R, nil)
+        Add("TOPRIGHT", "BOTTOMRIGHT", 0, -R, 0, R, R, nil)
+    end
+    return parts
+end
+local function RoundBox(owner, l, r, t, b, fillC, edgeC, layer)
+    local box = Tex(owner, layer or "BACKGROUND", 0, WHITE, { 1, 1, 1, 0 })
+    box:SetPoint("TOPLEFT", owner, "TOPLEFT", l, -t); box:SetPoint("BOTTOMRIGHT", owner, "BOTTOMRIGHT", -r, b)
+    local fill = RoundPieces(owner, layer or "BACKGROUND", 1, box, "fill", fillC)
+    local e = RoundPieces(owner, "BORDER", 1, box, "line", edgeC)
+    -- the anchor stands in for the old fill texture
+    box.SetVertexColor = function(_, r2, g2, b2, a2) for _, x in ipairs(fill) do x:SetVertexColor(r2, g2, b2, a2 or 1) end end
+    local show, hide = box.Show, box.Hide
+    box.SetShown = function(self, on) if on then self:Show() else self:Hide() end end
+    box.Show = function(self) show(self); for _, x in ipairs(fill) do x:Show() end end
+    box.Hide = function(self) hide(self); for _, x in ipairs(fill) do x:Hide() end end
+    box.SetDesaturated = function(_, v) for _, x in ipairs(fill) do if x.SetDesaturated then x:SetDesaturated(v) end end end
+    box.parts = fill
+    return box, e
+end
 local function NavyBox(owner, l, r, t, b)   -- navy fill + blue edge on owner, inset by l/r/t/b
-    local fill = Tex(owner, "BACKGROUND", 1, WHITE, { NAVY[1], NAVY[2], NAVY[3], 1 })
-    fill:SetPoint("TOPLEFT", owner, "TOPLEFT", l, -t); fill:SetPoint("BOTTOMRIGHT", owner, "BOTTOMRIGHT", -r, b)
-    local c = { BLUE[1], BLUE[2], BLUE[3], 0.9 }
-    local e = {}
-    e[1] = Tex(owner, "BORDER", 1, WHITE, c); e[1]:SetPoint("TOPLEFT", fill); e[1]:SetPoint("TOPRIGHT", fill); e[1]:SetHeight(1)
-    e[2] = Tex(owner, "BORDER", 1, WHITE, c); e[2]:SetPoint("BOTTOMLEFT", fill); e[2]:SetPoint("BOTTOMRIGHT", fill); e[2]:SetHeight(1)
-    e[3] = Tex(owner, "BORDER", 1, WHITE, c); e[3]:SetPoint("TOPLEFT", fill); e[3]:SetPoint("BOTTOMLEFT", fill); e[3]:SetWidth(1)
-    e[4] = Tex(owner, "BORDER", 1, WHITE, c); e[4]:SetPoint("TOPRIGHT", fill); e[4]:SetPoint("BOTTOMRIGHT", fill); e[4]:SetWidth(1)
-    return fill, e
+    return RoundBox(owner, l, r, t, b, { NAVY[1], NAVY[2], NAVY[3], 1 }, { BLUE[1], BLUE[2], BLUE[3], 0.9 })
 end
 
 -- Red/gold panel buttons (Left/Middle/Right art) -> navy, blue edge, white text.
@@ -275,9 +315,8 @@ local function Button(b)
     W.done[b] = "button"
     Fade(T(b, "Left")); Fade(T(b, "Middle")); Fade(T(b, "Right")); Fade(T(b, "Center"))
     if b.GetHighlightTexture then Fade(b:GetHighlightTexture()) end
-    NavyBox(b, 1, 1, 1, 1)
-    local hl = Tex(b, "HIGHLIGHT", 0, WHITE, { BLUE[1], BLUE[2], BLUE[3], 0.3 })
-    hl:SetPoint("TOPLEFT", b, "TOPLEFT", 1, -1); hl:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", -1, 1); hl:SetBlendMode("ADD")
+    local box = NavyBox(b, 1, 1, 1, 1)
+    for _, x in ipairs(RoundPieces(b, "HIGHLIGHT", 0, box, "fill", { BLUE[1], BLUE[2], BLUE[3], 0.3 })) do x:SetBlendMode("ADD") end
     local F = Fonts()
     if b.SetNormalFontObject then
         b:SetNormalFontObject(F.button); b:SetHighlightFontObject(F.button); b:SetDisabledFontObject(F.disable)
@@ -426,14 +465,8 @@ end
 local function Input(eb)
     W.done[eb] = "input"
     Fade(T(eb, "Left")); Fade(T(eb, "Middle")); Fade(T(eb, "Right"))
-    local fill = Tex(eb, "BACKGROUND", 1, WHITE, { 0.03, 0.047, 0.086, 1 })
-    fill:SetPoint("TOPLEFT", eb, "TOPLEFT", -4, 0); fill:SetPoint("BOTTOMRIGHT", eb, "BOTTOMRIGHT", 0, 0)
-    local c = { BLUE[1], BLUE[2], BLUE[3], 0.8 }
-    for _, s in ipairs({ { "TOPLEFT", "TOPRIGHT", "H" }, { "BOTTOMLEFT", "BOTTOMRIGHT", "H" },
-                         { "TOPLEFT", "BOTTOMLEFT", "V" }, { "TOPRIGHT", "BOTTOMRIGHT", "V" } }) do
-        local e = Tex(eb, "BORDER", 1, WHITE, c); e:SetPoint(s[1], fill); e:SetPoint(s[2], fill)
-        if s[3] == "H" then e:SetHeight(1) else e:SetWidth(1) end
-    end
+    -- dark, with a soft rounded blue edge (Release C)
+    RoundBox(eb, -4, 0, 0, 0, { 0.03, 0.047, 0.086, 1 }, { BLUE[1], BLUE[2], BLUE[3], 0.8 })
 end
 
 -- Insets (InsetFrameTemplate) -> a faint dark panel with a fine blue line.
@@ -606,7 +639,7 @@ function W.Init()
 end
 
 -- Helpers shared with AetherSkins_Pass2.lua
-W.H = { Tex = Tex, Fade = Fade, T = T, Edge = Edge, NavyBox = NavyBox, Fonts = Fonts, Forbidden = Forbidden,
+W.H = { Tex = Tex, Fade = Fade, T = T, Edge = Edge, NavyBox = NavyBox, RoundBox = RoundBox, Fonts = Fonts, Forbidden = Forbidden,
         MEDIA = MEDIA, WHITE = WHITE, GOLD = GOLD, BLUE = BLUE, NAVY = NAVY, PAGE = PAGE, PANEL = PANEL, TEXT = TEXT, FontFile = FontFile,
         Close = Close }
 

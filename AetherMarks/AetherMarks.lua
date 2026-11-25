@@ -997,6 +997,13 @@ SlashCmdList["AETHERMARKS"] = function(msg)
         wipe(questCache); questDirty = true
         UpdateAllPlates()
         ColorAllNames()
+    elseif command == "defaults" then
+        for k, v in pairs(DEFAULTS) do db[k] = v end
+        rangePending = not ApplyRadarRange()
+        wipe(questCache); questDirty = true
+        UpdateAllPlates()
+        ColorAllNames()
+        print(prefix .. "settings back to their defaults.")
     elseif command == "debug" then
         local function yn(v) return v == nil and "?" or (v and "yes" or "no") end
         local plates = C_NamePlate.GetNamePlates() or {}

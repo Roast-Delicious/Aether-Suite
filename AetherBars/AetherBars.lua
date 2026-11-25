@@ -64,7 +64,7 @@ local defaults = {
     hideMacro   = true,  -- hide macro names on buttons
     size        = "bar2",-- resize buttons to match Action Bar 1: "bar2", "all" or "off"
     edgeAlpha   = 0.85,  -- darkness of the 1px edge around each icon
-    readyGlow   = true,  -- red-to-green glow while on cooldown, green flare when ready
+    readyGlow   = true,  -- orange-to-green glow while on cooldown, green flare when ready
     trim        = true,  -- Aether trim: panel, blue frame and gold corners on each bar
     alignCenter = true,  -- Align also centers the whole layout across the screen
 }
@@ -475,8 +475,9 @@ end
 -- "Edge darkness" sets how strong either one is.
 -- How see-through the panels and empty slots are: the same as AetherMeter's
 -- window when you're not fighting (its "opacity out of combat"), else 20%.
+-- AetherHub keeps it (AetherPanels) so it works without the meter too.
 local function PanelAlpha()
-    local m = _G.AetherMeterDB
+    local m = type(_G.AetherPanels) == "table" and _G.AetherPanels or _G.AetherMeterDB
     local a = type(m) == "table" and tonumber(m.opacityOutCombat)
     return a and math.max(0, math.min(1, a)) or 0.2
 end
@@ -2313,7 +2314,7 @@ SlashCmdList.AETHERBARS = function(input)
         end
         return
     elseif cmd == "glow" then
-        db.readyGlow = (val ~= "off"); Print("Cooldown glow (red to green): " .. OnOff(db.readyGlow))
+        db.readyGlow = (val ~= "off"); Print("Cooldown glow (orange to green): " .. OnOff(db.readyGlow))
     elseif cmd == "art" then
         db.hideArt = (val ~= "on")
         Print("Bar art " .. (db.hideArt and "hidden" or "shown after /reload"))
@@ -2373,7 +2374,7 @@ SlashCmdList.AETHERBARS = function(input)
         print("  /cb mouseover on|off  solid on hover (now " .. OnOff(db.mouseover) .. ")")
         print("  /cb macro on|off   show macro names (now " .. OnOff(not db.hideMacro) .. ")")
         print("  /cb art on|off     show default bar art (now " .. OnOff(not db.hideArt) .. ")")
-        print("  /cb glow on|off    red-to-green cooldown glow (now " .. OnOff(db.readyGlow) .. ")")
+        print("  /cb glow on|off    orange-to-green cooldown glow (now " .. OnOff(db.readyGlow) .. ")")
         print("  /cb size bar2|all|off  match button size to Action Bar 1 (now " .. db.size .. ")")
         print("  /cb align          line up your bars neatly (/cb align undo to put them back)")
         print("  /cb align center on|off   also center them on screen (now " .. OnOff(db.alignCenter ~= false) .. ")")

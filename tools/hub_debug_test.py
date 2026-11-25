@@ -49,20 +49,20 @@ function BOXTEXT() for _,o in ipairs(FR) do if rawget(o,"multi") or rawget(o,"is
 L.execute('SlashCmdList.AETHERHUB("debug")')
 check(L.eval('AetherHubDB.lastPage') == "Debug", "/hub debug opens the Debug page")
 texts = list(L.eval('ALLTEXT').values())
-check("Debug" in texts, "Debug tab in the sidebar")
-for b in ["Debug Bars", "Debug Chat", "Debug ItemID", "Debug Marks", "Debug Pathfinder", "Debug Skins", "Show Ledger Status",
-          "Check Memory", "Preview Meter", "Copy Full Report", "Clear"]:
+check("Help & Debug" in texts, "Help & Debug tab (Release C)")
+for b in ["Bars", "Chat", "Marks", "Pathfinder", "Skins", "Ledger", "Zones", "Tracker", "NPC Counts", "Flight Paths",
+          "Check Memory", "Show Window Dump", "Copy Full Report", "Clear"]:
     check(b in texts, "button: " + b)
 box = L.eval('(function() for _,o in ipairs(FR) do if rawget(o,"text")=="Pick a report above, or Copy Full Report." then return o end end end)()')
 check(box is not None, "copy box shows its starting hint")
 L.execute('CHATLINES = {}')
-check(L.eval('CLICK("Debug Skins")') and list(L.eval('SENT').values()) == ["AETHERSKINS debug"], "Debug Skins runs /skins debug")
+check(L.eval('CLICK("Skins")') and list(L.eval('SENT').values()) == ["AETHERSKINS debug"], "Report: Skins runs /skins debug")
 t = box.text
-check("== Debug Skins ==" in t and "AETHERSKINS: report line for debug" in t, "its output is in the copy box")
+check("== AetherSkins debug ==" in t and "AETHERSKINS: report line for debug" in t, "its output is in the copy box")
 check("|c" not in t and "|r" not in t, "color codes stripped for copying")
 check(L.eval('#CHATLINES') == 1, "it still prints in chat too")
-L.execute('CLICK("Show Ledger Status")')
-check(list(L.eval('SENT').values()) == ["AETHERLEDGER status"] and "report line for status" in box.text, "Show Ledger Status -> /ledger status, in the box")
+L.execute('CLICK("Ledger")')
+check(list(L.eval('SENT').values()) == ["AETHERLEDGER status"] and "report line for status" in box.text, "Report: Ledger -> /ledger status, in the box")
 L.execute('CLICK("Check Memory")')
 t = box.text
 check("== Memory ==" in t and "AetherLedger" in t and "3152 KB" in t and "AetherCoords" in t and "78 KB" in t, "Check Memory lists each addon's KB")
@@ -71,11 +71,10 @@ check(L.eval('GC or 0') >= 1, "memory cleaned up first (real numbers, not garbag
 L.execute('CLICK("Copy Full Report")')
 t = box.text
 for part in ["== Aether report ==", "Jay, level 36", "== Versions ==", "AetherHub 9.9", "AetherPack not loaded", "== Memory ==",
-             "== Debug Bars ==", "AETHERBARS: report line for debug", "== Debug Skins ==", "== Show Ledger Status =="]:
+             "== AetherBars debug ==", "AETHERBARS: report line for debug", "== AetherSkins debug ==", "== AetherLedger status ==",
+             "== AetherLedger zones ==", "== AetherPathfinder flights =="]:
     check(part in t, "full report has: " + part)
 check(L.eval('CLICK("Clear")') and box.text == "", "Clear empties the box")
-L.execute('CLICK("Preview Meter")')
-check(list(L.eval('SENT').values()) == ["AETHERMETER test"], "Preview Meter -> meter test")
 L.execute('CLICK("Show Window Dump")')
 check("type /skins tree" in box.text, "Show Window Dump with nothing saved: explains")
 L.execute('AetherSkinsDB = { lastTree = { name = "CharacterFrame", lines = { "Frame CharacterFrame 338x424", "  Frame .Inset 330x350" } } }; CLICK("Show Window Dump")')

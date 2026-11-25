@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (15:30)
+Last updated: November 25, 2026 (16:45)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -15,24 +15,24 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.14.8    One window with every addon's settings
-  AetherMeter        1.13.9    Damage and healing meter
-  AetherBars         1.14.3    Clean action bars with a cooldown glow
-  AetherCoords       1.3.15    Coordinates, plus your own map waypoints
-  AetherPathfinder   1.9.6     Trainers, vendors, flight masters and
+  AetherHub          1.15.0    One window with every addon's settings
+  AetherMeter        1.13.10   Damage and healing meter
+  AetherBars         1.14.4    Clean action bars with a cooldown glow
+  AetherCoords       1.3.16    Coordinates, plus your own map waypoints
+  AetherPathfinder   1.9.7     Trainers, vendors, flight masters and
                                mailboxes on the world map and minimap
-  AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
+  AetherMarks        1.6.14    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
-  AetherItemID       1.1.4     What an item is for, when you hover it
-  AetherLedger       1.8.7     Where to quest, train and skin next,
+  AetherItemID       1.1.5     What an item is for, when you hover it
+  AetherLedger       1.8.8     Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.6.4     Your bags sorted into sections
-  AetherChat         1.0.8     Chat with the Aether look, fitted beside
+  AetherPack         1.6.5     Your bags sorted into sections
+  AetherChat         1.0.9     Chat with the Aether look, fitted beside
                                your action bars
-  AetherFrames       1.14.7    Your, your pet's, your target's, its
+  AetherFrames       1.14.8    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.5.7     The Aether look for Blizzard's windows
+  AetherSkins        1.6.0     The Aether look for Blizzard's windows
                                and the minimap
 
 
@@ -60,96 +60,88 @@ Three ways to open it:
     opens AetherHub, right-click gives shortcuts (check zones, directions
     to the best zone, clean up quests, show or hide the meter, reset the
     window size), and dragging slides it around the minimap. Untick
-    "Minimap button" at the bottom of AetherHub (or type /hub minimap) to
-    hide it.
+    "AetherHub button on the minimap" on the Window Look page (or type
+    /hub minimap) to hide it.
   - A key of your choice: Esc > Options > Keybindings > AddOns >
     AetherHub > "Open or close AetherHub".
   - Type /hub (it's also under Esc > Options > AddOns > AetherHub).
 
-The sidebar has two sections. GENERAL holds what several addons share
-(Appearance, Fading and Layout), so you change those in one place.
-ADDONS has a tab for each addon with only what's unique to it; where
-an addon's look, fading or placement moved to a General page, its tab
-has small buttons that jump there. Changes apply right away. Hover any
-setting for a short explanation (it shows beside the window, so it
-never covers the page), and scroll with the
-mouse wheel on longer pages (a gold bar on the right shows where you
-are). Click a slider's number to type an exact value. Drag the grip in
-the bottom-right corner to make the window bigger: taller shows more of
-each tab, and wider lets the text spread out. The size is remembered;
-right-click the minimap button and pick Reset window size (or type /hub
-resetsize) to go back. You can jump straight to a tab with /hub meter,
-/hub bars, /hub coords, /hub map, /hub marks, /hub itemid, /hub ledger,
-/hub pack, /hub chat, /hub frames, /hub skins, /hub me (Your
-character), /hub look (Appearance), /hub fade (Fading) or /hub layout
-(Layout). The Reload UI button turns gold when a change needs a reload,
-and anything that can't be undone asks first.
+The sidebar has eight tabs, grouped by what you see on screen rather
+than by addon; under each tab's name are the addons it covers. Every
+option of every Aether addon is on one of these pages (the slash
+commands still work as a backup). Each page is split into navy bands
+with gold names, and the addon a band belongs to is on its right.
+Changes apply right away. Hover any setting for a short explanation
+(it shows beside the window, so it never covers the page), and scroll
+with the mouse wheel on longer pages (a gold bar on the right shows
+where you are). Click a slider's number to type an exact value. Drag
+the grip in the bottom-right corner to make the window bigger. The
+size is remembered; right-click the minimap button and pick Reset
+window size (or type /hub resetsize) to go back.
 
-  Appearance: Aether panels behind your action bars and behind your
-    chat, and sizes (unit frames, the bag window, chat text).
-  Fading: how solid things are. Aether panels in and out of combat
-    (the meter, the panels behind your bars and chat, and the
-    directions window); action bars when idle, solid in combat,
-    solid under your mouse; unit frames out of combat, faces fade too.
-  Layout: Unlock to Move (unlocks your unit frames, the meter and the
-    XP bar together; drag them, then click Lock or Done on any of
-    them), Open Edit Mode (Blizzard's, for action bars), Line Up Frames
-    and Line Up and Center Frames (the same as the question AetherFrames
-    asks after you move frames, any time), chat fitting
-    to the left of your bars, the meter docking to the right,
-    centering, Align Bars... and Undo Last Align, Fit Chat Now, and
-    Reset All Positions... (unit frames, meter, bag window,
-    coordinates and XP bar).
-  Your character tab: your class, race, level and professions with
-    their skill, read straight from the game (nothing to set up, and
-    right on every character), plus every Aether addon's version.
-    AetherHub's own version is next to its title, and /hub version
-    lists them all in chat.
-  Debug tab (/hub debug): a button for each addon's report (Debug
-    Bars, Chat, ItemID, Marks, Pathfinder, Skins, Show Ledger Status),
-    Check Memory (cleans up first, then each addon's KB) and Preview
-    Meter. What they print shows in a box you can copy: click in it,
-    Ctrl+A, Ctrl+C. Copy Full Report puts versions, memory and every
-    report in the box, already selected, to paste to whoever helps.
-    Show Window Dump shows the structure of the last window you
-    pointed at with /skins tree (for restyling Forever's windows).
-  AetherMeter tab: Window (show or hide, lock, DPS and HPS or only
-    one, split into two windows), plus Preview Meter (sample numbers)
-    and Reset Meter Position.
-  AetherBars tab: Look (edge darkness, cooldown glow, macro names,
-    default bar art), button sizes, Reset XP Bar Position and Restore
-    Defaults...
-  AetherCoords tab: Coordinates (minimap readout, cursor readout on the
-    world map, decimal places) and Waypoints (Clear All Waypoints).
-  AetherPathfinder tab: Show on the map (whose class trainers, which
-    NPC types), Options (built-in locations, other faction's NPCs,
-    minimap markers), and Learned NPCs (count, forgetting them).
-  AetherMarks tab: Name colors (quest, rare, rare alert) and Rare
-    Radar (on or off, how visible other names are).
-  AetherItemID tab: turn the item window on or off, how long to hover
-    before it opens, Restore Defaults... (keeps learned recipes) and
-    Clear Learned Recipes...
-  AetherLedger tab: What AetherLedger does for you (zone suggestions,
-    rank-up reminders, profession and class quests, skinning spots,
-    keeping your quest tracker on your zone, its Aether look), Check Zones
-    Now, Save Quest Log to File, Clean Up Quest Log, and your three best
-    zones: click one to see its quests below, or Go for directions. Under
-    that: rank-ups due, class and profession quests, and where to skin.
-  AetherPack tab: open it instead of Blizzard's bags, free slots on
-    the backpack button, Open Bags, Reset Bag Window Position, and
-    icons per row.
-  AetherChat tab: hide the voice/channel/emote buttons, slim typing
-    line, and restoring its defaults.
-  AetherFrames tab: use them instead of Blizzard's, buff and debuff
-    rows, threat glow, party frames, numbers on the pet's resource
-    bar, and Reset Pet Frame Position.
-  AetherSkins tab: the minimap's Aether look and Blizzard's windows'
-    Aether look, each on or off (needs a reload), and Run Debug.
+Always at the bottom: Unlock to Move (unlocks your unit frames, the
+meter and the XP bar together; drag them, then click Lock), Reset
+Positions... (unit frames, meter, bag window, coordinates, XP bar and
+the directions windows back to their starting spots) and Reload UI
+(it turns gold when a change needs a reload).
 
-  Button names follow one pattern: what it does, then what it does it
-  to ("Reset Meter Position", "Clear All Waypoints..."). A name ending
-  in "..." asks before it acts. In a row of choices, the selected one
-  is highlighted with its text in the Aether gold.
+  Your Character (/hub me): your name, level, race, class and faction,
+    and your professions with their skill and when to train the next
+    rank, read straight from the game. Under them, your character,
+    live and in your gear, dancing: click it for a wave, cheer, laugh
+    or bow, drag to turn it around (a switch turns it off).
+  Action Bar Area (/hub bars): Panels (the Aether panel behind your
+    bars and behind your chat, and how solid the panels, the meter and
+    the directions window are in and out of combat, also without the
+    meter), Action bars (fading when idle, solid in combat or under
+    your mouse, icon edges, cooldown glow, macro names, Blizzard's bar
+    art, button sizes, Align Bars..., Undo Last Align, Open Edit Mode),
+    XP bar (width and height), Chat (fitting beside your bars, its side
+    buttons, the slim typing line, text size, Fit Chat Now) and Meter
+    (show, lock, DPS and HPS, two windows, docking, Preview Meter).
+  Unit Frames (/hub frames): Frames (yours, party, target of target,
+    pet resource numbers, size, Line Up Frames, Line Up and Center),
+    Portraits (3D or flat, threat glow, class color, enemy level glow,
+    red flash when hit, damage numbers), Fading (out of combat, faces,
+    in combat only the target and whoever has aggro solid, and how
+    solid everyone else is) and Buffs.
+  Map & Waypoints (/hub map): Coordinates (under the minimap, on the
+    world map, decimal places), Waypoints (your list, with a red x to
+    remove one, and Clear All Waypoints...), NPCs on your maps (whose
+    class trainers, the fifteen NPC types, built-in locations, the
+    other faction, minimap markers) and Learned NPCs.
+  Quests & Mobs (/hub ledger): Suggestions (better zones, profession
+    and class quests, skinning spots, rank reminders, Check Zones Now),
+    Pick a zone (your three best zones, Go for directions), Quest
+    tracker (on your zone, its Aether look, click a finished quest's
+    icon for directions to turn in, tooltips beside the tracker, Sort
+    Tracker Now, Stop Directions), Quest log (Clean Up, Save to File)
+    and Mob names (quest and rare colors, rare alert, Rare Radar).
+  Bags & Items (/hub bags): Bags (instead of Blizzard's, free slots on
+    the backpack button, the "No swaps. Just drops." slot and when its
+    number pulses, icons per row, window size, Open Bags) and Item
+    details (on or off, hover time, Clear Learned Recipes...).
+  Window Look (/hub skins): Blizzard's windows in the Aether look,
+    Reset Window Sizes... (every window you resized with its grip),
+    the minimap's Aether look, the sun or moon (follow the game, day or
+    night), and the AetherHub button on the minimap.
+  Help & Debug (/hub debug): every addon's version, reports (Bars,
+    Chat, Marks, Pathfinder, Skins, Ledger; Ledger's zones and tracker;
+    Pathfinder's NPC counts and flight paths), Check Memory, Show
+    Window Dump, and a switch for ItemID's explain-as-you-hover. What
+    they print shows in a box you can copy: click in it, Ctrl+A,
+    Ctrl+C. Copy Full Report puts everything in the box, selected.
+
+  Every settings page ends with Restore Defaults... (it asks first;
+  positions, waypoints and learned data are kept).
+
+  Buttons, tabs and search boxes, in the Hub and in every Aether and
+  restyled Blizzard window, have soft rounded corners. Button names
+  follow one pattern: what it does, then what it does it to ("Clear
+  All Waypoints..."). A name ending in "..." asks before it acts, and
+  reset, restore and clear buttons have a faint red edge. In a row of
+  choices, the selected one is highlighted with its text in the Aether
+  gold.
 
 Every setting is also a slash command (listed under each addon below)
 if you prefer typing.
@@ -195,8 +187,9 @@ AetherMeter - damage and healing meter                         /am
     space between your action bars and the right edge of the screen, as
     tall as the bars, the mirror image of AetherChat on the left. When
     split, the DPS and HPS windows share that space side by side. Untick
-    "Meter docks to the right of your bars" on AetherHub's Layout page (or
-    /am dock off) to place it yourself again; it goes back to your own
+    "Meter docks right of your bars" on AetherHub's Action Bar Area
+    page (or /am dock off) to place it yourself again; it goes back to
+    your own
     saved spot and size. The meter remembers its docked spot, so after a
     reload it opens right there instead of hopping over.
   - Not docked: drag the window to move it and its corner to resize
@@ -207,7 +200,7 @@ AetherMeter - damage and healing meter                         /am
     back 10 seconds after you stop.
   - Commands: /am show, hide, toggle, show dps|hps|both, lock, unlock,
     split, join, dock on|off, opacity in 0-100, opacity out 0-100,
-    reset, test.
+    reset, defaults, test.
 
 AetherBars - cleaner action bars                               /cb
   Flat, simple action buttons with the default bar art removed: the
@@ -220,8 +213,8 @@ AetherBars - cleaner action bars                               /cb
     echo, and one gold chevron). The panels and empty slots use
     AetherMeter's window colors and
     are exactly as see-through as the meter is out of combat (change
-    "Out of combat" under Aether panels on the Fading page, and the bars
-    follow).
+    "Panels out of combat" on the Action Bar Area page, and the bars
+    follow; it works without the meter too).
     The gold corners and chevron fade to the same level, so the frame
     reads as one. Every bar has its own panel with all four gold corners;
     the bag bar and micro menu (with the keyring) share one strip. If
@@ -230,7 +223,7 @@ AetherBars - cleaner action bars                               /cb
     corner shows. Everything is snapped to whole screen pixels so lines
     meet cleanly. The bag strip's panel replaces Blizzard's dark
     background. Buttons get a thin blue outline. Turn it off on
-    AetherHub's Appearance page (or /cb trim off).
+    AetherHub's Action Bar Area page (or /cb trim off).
   - The Aether XP bar (part of the trim): a pill-shaped bar with round
     ends. Navy is the XP you've earned; bright blue ahead of it is your
     rested bonus. Faint gold ticks mark every 5%, a thin gold mark
@@ -240,7 +233,7 @@ AetherBars - cleaner action bars                               /cb
     its ends so they never touch the bars beside it. Hover it for
     Blizzard's XP text and rested tooltip, as usual.
   - Bars stay fully solid. If you'd like them to dim when you're not
-    using them, lower "When idle" on AetherHub's Fading page (or
+    using them, lower "When idle" on AetherHub's Action Bar Area page (or
     /cb alpha);
     they still turn solid in combat or under your mouse.
   - Cooldown glow: the moment you use an ability, its button glows
@@ -263,7 +256,7 @@ AetherBars - cleaner action bars                               /cb
     AetherBars do it:
       1. Open Blizzard's Edit Mode and drag your bars ROUGHLY where you
          want them. They don't need to line up. Close Edit Mode.
-      2. Click Align Bars on AetherHub's Layout page (it asks
+      2. Click Align Bars on AetherHub's Action Bar Area page (it asks
          first), or type /cb align.
     What it does:
       - Everything lines up around Action Bar 1. Then the whole layout
@@ -301,10 +294,11 @@ AetherBars - cleaner action bars                               /cb
     fight ends.
     Tip: if Align puts a bar in the wrong row, nudge it more clearly
     above, below or beside its neighbor and Align again.
-  - Tip: to move or resize the XP bar, click Unlock to Move on
-    AetherHub's Layout page (or /cb xp): drag the bar to move it, drag
+  - Tip: to move or resize the XP bar, click Unlock to Move at the
+    bottom of AetherHub (or /cb xp): drag the bar to move it, drag
     the handle at its bottom-right corner to resize it, then click
-    Done beside it (or Lock).
+    Done beside it (or Lock). Its width and height are also sliders on
+    the Action Bar Area page.
     The bar inside (and its rested XP shading) resizes with it. The
     same spot also shows reputation or honor when you track those.
   - Commands: /cb alpha 0-1, edge 0-1, combat on|off, mouseover on|off,
@@ -333,7 +327,8 @@ AetherCoords - coordinates and waypoints                  /mc and /way
     shows them all and /way clear removes them all.
   - Tip: when a guide gives you coordinates, paste them into /way so you
     can follow the star on your minimap.
-  - Commands: /mc decimals 0-2, minimap on|off, popup on|off, reset.
+  - Commands: /mc decimals 0-2, minimap on|off, popup on|off, reset,
+    defaults (waypoints kept).
 
 AetherPathfinder - service NPCs on your maps                   /pfm
   Puts trainers, vendors, flight masters, mailboxes and other service
@@ -365,7 +360,8 @@ AetherPathfinder - service NPCs on your maps                   /pfm
   - Tip: the minimap markers follow you as you move, so you can walk
     straight to the nearest innkeeper or mailbox.
   - Commands: /pfm stats, /pfm flights (what the last flight map
-    reported), /pfm debug, /pfm clearzone, /pfm reset.
+    reported), /pfm debug, /pfm clearzone, /pfm reset, /pfm defaults
+    (settings and NPC types back to their defaults, learned NPCs kept).
 
 AetherMarks - quest and rare mob highlights                    /qm
   Colors the names of mobs that matter to you.
@@ -409,7 +405,8 @@ AetherMarks - quest and rare mob highlights                    /qm
   - Commands: /qm quest, /qm rare, /qm sound, /qm radar (each turns
     that on or off), /qm names 50 (how visible ordinary mobs'
     names are with Rare Radar, 0 hides them), /qm debug (lists every
-    nameplate on screen and why it got its color, handy for reports).
+    nameplate on screen and why it got its color, handy for reports),
+    /qm defaults.
 
 AetherItemID - item details                                    /itemid
   Hover an item in your bags or bank for a second and a small window
@@ -511,7 +508,7 @@ AetherLedger - where to quest, train and skin next             /ledger
     quest you point at. A quest you accept zooms onto the list (its
     icon starts about a third of the screen across and shrinks into
     place), and one you hand in swells and fades off, half a second
-    each. Turn it off on AetherHub's AetherLedger tab (takes effect
+    each. Turn it off on AetherHub's Quests & Mobs page (takes effect
     after a reload).
   - Click a finished quest's icon on the tracker (the gold ?) and
     AetherLedger points you to the turn-in NPC: a waypoint plus
@@ -537,7 +534,7 @@ AetherLedger - where to quest, train and skin next             /ledger
     can skin (skill / 5, or skill / 10 + 10 below 100), where skill-ups
     come fastest. Beasts are picked by name (wolves, cats, raptors,
     basilisks and so on), so a few odd ones may be missing.
-  - Pick what you want on AetherHub's AetherLedger tab. Each message
+  - Pick what you want on AetherHub's Quests & Mobs page. Each message
     shows once (a zone once per level); it waits until combat ends and
     stays quiet in dungeons. Checks run only when something changes:
     you level up, gain skill, accept or turn in a quest, or change zone.
@@ -556,8 +553,9 @@ AetherLedger - where to quest, train and skin next             /ledger
     (check now and show the window), /ledger go and /ledger stop
     (directions), /ledger suggest (on or off), /ledger cleanup (gray
     quests to drop), /ledger sort (re-sort the quest tracker), /ledger
-    tracker, /ledger tooltip (tooltip spot), /ledger (record now),
-    /ledger status.
+    tracker, /ledger tooltip (tooltip spot), /ledger turnin (click a
+    finished quest's icon for directions, on or off), /ledger defaults,
+    /ledger (record now), /ledger status.
 
 AetherPack - your bags, sorted into sections                    /pack
   Everything in your bags in one compact window, sorted into sections.
@@ -631,7 +629,7 @@ AetherPack - your bags, sorted into sections                    /pack
     left when one gets too tall. Drag one and it stays put. A Toggle
     Bag 1-4 key opens the same windows. In a fight, a bag window you
     haven't opened yet this session opens when combat ends.
-    Turn all this off on AetherPack's AetherHub tab, and /pack still
+    Turn all this off on AetherHub's Bags & Items page, and /pack still
     opens the combined window.
   - Click a section's title to fold or open it; it stays that way.
     Empty sections hide themselves.
@@ -652,7 +650,8 @@ AetherPack - your bags, sorted into sections                    /pack
   - Commands: /pack (open or close), /pack replace on|off, /pack count
     on|off (backpack number), /pack deposit on|off, /pack pulse
     item|always|off, /pack columns 6-16,
-    /pack scale 0.6-1.5, /pack reset (all window positions).
+    /pack scale 0.6-1.5, /pack reset (all window positions), /pack
+    defaults (settings back to their defaults).
 
 
 AetherChat - chat that fits beside your bars                   /achat
@@ -673,7 +672,7 @@ AetherChat - chat that fits beside your bars                   /achat
     mouse is over the chat or you're typing, and fades back when you
     stop. The text itself always stays fully readable.
   - Smaller text: starts one size smaller than Blizzard's; set it with
-    "Chat text" on AetherHub's Appearance page.
+    "Chat text" on AetherHub's Action Bar Area page.
   - Less clutter: Blizzard's chat background, the voice, channel and
     emote buttons, and the tab art are gone. Tabs are flat, the tab
     you're on has its name in Aether gold with a gold underline, and the
@@ -685,7 +684,8 @@ AetherChat - chat that fits beside your bars                   /achat
     (the "Classic" chat style keeps it up), so it never covers the
     newest line.
   - Tip: chat no longer fits? Make sure there's at least about 220 wide
-    by 90 tall beside your bars, then click Fit Chat Now (Layout page).
+    by 90 tall beside your bars, then click Fit Chat Now (Action Bar
+    Area page).
   - The text and tabs start just inside the panel's left edge (Blizzard
     normally keeps chat windows a little way in from the screen's edge;
     the fitted chat doesn't). If the text still sits too far right, type
@@ -751,7 +751,7 @@ AetherFrames - player, pet, target and party frames            /af
     disease), so you can see what you're able to remove. Members out of
     range (about 40 yards) fade to half; offline members turn gray and say
     Offline. Click to target, right-click for the menu. Drag them with
-    Unlock to Move on AetherHub's Layout page (they move as one). Untick
+    Unlock to Move at the bottom of AetherHub (they move as one). Untick
     "Party frames in the Aether look" (or /af party off, then /reload) to
     get Blizzard's party frames back.
   - Target of target: who your target is targeting, in a small crest
@@ -838,7 +838,7 @@ AetherFrames - player, pet, target and party frames            /af
     also floats the damage up over the portrait for a moment, bigger for
     crits (off to start).
   - Placement: the first time, the frames go where Blizzard's sat. Click
-    Unlock to Move on AetherHub's Layout page and drag any frame: yours,
+    Unlock to Move at the bottom of AetherHub and drag any frame: yours,
     your pet's, your target's, target of target and the party's each
     move on their own (your pet's follows yours until you move it).
     While moving, every frame shows, even with no pet, target or party;
@@ -860,7 +860,7 @@ AetherFrames - player, pet, target and party frames            /af
       Keep As Is (or Escape): every frame stays exactly where you
         dropped it.
     Moving only the party frames doesn't ask. The same two line-ups
-    are on AetherHub's Layout page any time, or /af lineup and
+    are on AetherHub's Action Bar Area page any time, or /af lineup and
     /af lineup center.
   - Centered: your frame and your target's sit side by side in the
     middle of the screen, mirrored, with your pet's under yours and the
@@ -878,7 +878,8 @@ AetherFrames - player, pet, target and party frames            /af
     mybuffs on|off, aggro on|off, combatalpha 0-1, hits on|off, hitnumbers
     on|off, levelglow on|off, classglow on|off, party on|off, tot on|off,
     petpower on|off, scale 0.6-1.6, portraits 3d|2d, unlock, lock, lineup
-    [center], center, petreset, reset, on|off, auras (a report of what the
+    [center], center, petreset, reset, defaults (every setting back to
+    its default, positions kept), on|off, auras (a report of what the
     game tells the addon about your auras and hawk timers, for tracking
     down problems).
 
@@ -997,9 +998,10 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
     sun or moon (/skins auto follows the game again), /skins debug
     (what it found and changed: send this if something looks off),
     /skins tree (point at a window: saves its structure for AetherHub's
-    Debug page; up to 1,500 lines, with hidden parts folded into one
-    line each). Both switches are also on the AetherSkins tab in
-    AetherHub (/hub skins), and Debug Skins on its Debug tab.
+    Help & Debug page; up to 1,500 lines, with hidden parts folded into
+    one line each), /skins sizes (every resized window back to normal)
+    and /skins defaults. Both switches are also on AetherHub's Window
+    Look page (/hub skins), and its Skins report on Help & Debug.
 
 
 AUTOMATIC NPC DATA REFRESH (optional, Windows only)
