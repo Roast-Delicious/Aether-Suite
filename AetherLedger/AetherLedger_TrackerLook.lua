@@ -50,6 +50,18 @@ local function GoldCodes(text)
     end))
 end
 
+-- Quest names: the map log's colors (user, Nov 25 14:32): a lighter red and
+-- orange that read on the busy world, and a dark shadow under them.
+local function NameColor(fs)
+    if not fs or not fs.GetTextColor then return end
+    if fs.SetShadowColor then fs:SetShadowColor(0, 0, 0, 0.9); fs:SetShadowOffset(1, -1) end
+    local r, g, b = fs:GetTextColor()
+    if type(r) ~= "number" then return end
+    if r > 0.9 and g < 0.2 then fs:SetTextColor(1, 0.376, 0.345)
+    elseif r > 0.9 and g > 0.4 and g < 0.6 and b < 0.4 then fs:SetTextColor(1, 0.588, 0.329) end
+end
+AetherLedger_TrackerNameColor = NameColor   -- for tests
+
 local function Recolor(fs, ready)
     if not fs or not fs.GetTextColor then return end
     if ready then fs:SetTextColor(READY[1], READY[2], READY[3]); return end
@@ -242,6 +254,17 @@ local function StyleIcon(block)
     if not button then return end
     local o = overlays[button]
     if o and o:GetParent() ~= block then o:Hide(); o = nil end   -- pooled button moved to another block
+    -- a finished quest's icon: click for directions to its turn-in (the
+    -- game's own click still runs first)
+    if not button.aetherTurnIn and button.HookScript then
+        button.aetherTurnIn = true
+        button:HookScript("OnClick", function(self)
+            local qid = self.questID or (self.GetQuestID and self:GetQuestID())
+            local Q = C_QuestLog
+            local ready = qid and Q and ((Q.ReadyForTurnIn and Q.ReadyForTurnIn(qid)) or (Q.IsComplete and Q.IsComplete(qid)))
+            if ready and AetherLedger_GoToTurnIn then pcall(AetherLedger_GoToTurnIn, qid) end
+        end)
+    end
     if not o then
         o = CreateFrame("Frame", nil, block)
         o:SetPoint("TOPLEFT", button, "TOPLEFT", -1, 1)
@@ -318,6 +341,7 @@ end
 local function Paint(block)
     if not block then return end
     Recolor(block.HeaderText)
+    NameColor(block.HeaderText)
     -- A finished quest handed in elsewhere (kept at the bottom by the tracker):
     -- "Ready for turn-in: Orgrimmar".
     local where = AetherLedger_Tracker and AetherLedger_Tracker.ElsewhereZone and AetherLedger_Tracker.ElsewhereZone(tonumber(block.id))

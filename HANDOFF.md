@@ -1237,3 +1237,14 @@ trim), xpbar_render.py (XP bar).
 - RELEASE A SHIPPED 14:44 (main, merged build8): AetherSkins 1.5.5 (Group
   Finder tabs/crest/close, Legacy rank pills). NEXT: Release B (Ledger
   directions on click + tracker colors) - user may continue Saturday.
+
+## Release B shipped (Nov 25, 14:55)
+- AetherLedger 1.8.7: click a finished quest's tracker icon -> waypoint
+  + directions to the turn-in NPC (AetherLedger_GoToTurnIn, via
+  C_QuestLog.GetNextWaypoint; off when AetherLedgerDB.turnInDirections
+  == false; Hub toggle comes in Release C). Tracker red/orange names
+  lifted to map-log colors with a dark shadow.
+- AetherSkins 1.5.6: gray talent arrow shafts thinned (SetThickness 3);
+  user 14:48 said gray was "out of whack" (fat shafts).
+- Untested in game: turn-in click, thin gray shafts.
+- Next: Release C (Hub cleanup), design-first, fresh session.
