@@ -286,6 +286,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   07:08: counts = 3c, pill CENTERED ON THE FRAME'S BOTTOM EDGE ("2 of 5",
   gold maxed / blue partial). Full-window mockup: mock/talent_full.py
   (on the user's screenshot; unspent shown as 2).
+  07:10: glow = MEDIUM Aether blue (talent_glow.py strength 1.6, spread
+  .13). User idea 07:10: navy for 'not taken, no points left', locked
+  gray; asked for blue-locked mock (talent_scheme2.py). Recommended:
+  can take = art + blue glow; not taken = navy duotone; locked = gray.
+  Awaiting confirm.
   GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
   LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
   (no [styled] marks anywhere): the skinner never caught it -> added
