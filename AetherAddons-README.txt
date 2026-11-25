@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (03:40)
+Last updated: November 25, 2026 (04:20)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -15,7 +15,7 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.14.6    One window with every addon's settings
+  AetherHub          1.14.7    One window with every addon's settings
   AetherMeter        1.13.9    Damage and healing meter
   AetherBars         1.14.3    Clean action bars with a cooldown glow
   AetherCoords       1.3.15    Coordinates, plus your own map waypoints
@@ -24,7 +24,7 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.4     What an item is for, when you hover it
-  AetherLedger       1.7.2     Where to quest, train and skin next,
+  AetherLedger       1.8.0     Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.1     Your bags sorted into sections
   AetherChat         1.0.8     Chat with the Aether look, fitted beside
@@ -105,6 +105,12 @@ and anything that can't be undone asks first.
     right on every character), plus every Aether addon's version.
     AetherHub's own version is next to its title, and /hub version
     lists them all in chat.
+  Debug tab (/hub debug): a button for each addon's report (Debug
+    Bars, Chat, ItemID, Marks, Pathfinder, Skins, Show Ledger Status),
+    Check Memory (cleans up first, then each addon's KB) and Preview
+    Meter. What they print shows in a box you can copy: click in it,
+    Ctrl+A, Ctrl+C. Copy Full Report puts versions, memory and every
+    report in the box, already selected, to paste to whoever helps.
   AetherMeter tab: Window (show or hide, lock, DPS and HPS or only
     one, split into two windows), plus Preview Meter (sample numbers)
     and Reset Meter Position.
@@ -452,6 +458,11 @@ AetherLedger - where to quest, train and skin next             /ledger
     and their name flash in big letters in the upper middle of the
     screen, the waypoint comes off your map and the window closes. Its
     x closes it early (the waypoint stays).
+  - Quest givers on the move (61 quests, like Cork and Rigger
+    Gizelton's caravan in Desolace) say "on the move" in the lists
+    and the directions window. The walk aims at the nearest point of
+    their road, and reaching the road counts as there ("You're on the
+    road!"): look along it for them.
   - Professions: when a profession is near its cap (Skinning 147/150),
     it tells you which rank to train and the nearest trainer who
     teaches it. Expert and Artisan crafting are only taught by some
@@ -484,8 +495,11 @@ AetherLedger - where to quest, train and skin next             /ledger
     the quest you're following). Yellow quest names turn Aether gold
     (other difficulty colors stay), "Ready for turn-in" is Aether blue,
     the text uses the Aether font, and a soft blue band shows behind the
-    quest you point at. Turn it off on AetherHub's AetherLedger tab
-    (takes effect after a reload).
+    quest you point at. A quest you accept zooms onto the list (its
+    icon starts about a third of the screen across and shrinks into
+    place), and one you hand in swells and fades off, half a second
+    each. Turn it off on AetherHub's AetherLedger tab (takes effect
+    after a reload).
   - /ledger tracker lists every quest in your log with its color, zone
     and why it is or isn't on the tracker.
   - Tooltips: ones the game puts in its usual corner (bottom right,

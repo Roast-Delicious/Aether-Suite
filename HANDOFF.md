@@ -88,48 +88,6 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
-- QUEUED for the next build (user, Nov 25 03:46, "queue both"):
-  * MOVING QUEST GIVERS (user was sent to Desolace 66.8,58.6 for Cork /
-    Rigger Gizelton, quests 5821 / 5943: they walk the road with their
-    caravan, nobody at the single QuestieDB spot). (1) Regenerate
-    AetherLedger_Data keeping QuestieDB's NPC WAYPOINTS for quest givers
-    that have them (check how many; caravans, patrols, escorts); travel
-    window + waypoint show the route ("travels this road with his
-    caravan") instead of one spot; arrival = near the route, not the
-    point. (2) "on the move" tag next to those givers in suggestions and
-    the travel window. Keep the data file size in mind (memory readout:
-    Ledger 3.2 MB).
-  * HUB DEBUG PAGE (as described 03:31): last tab under GENERAL; default
-    Hub height +25 (WIN_H 500 -> 525; sidebar was full with ~6 px spare;
-    saved larger sizes unchanged). One "Run" button per addon debug
-    (/bars /chat /itemid /marks /pf /skins debug, /ledger status; Skins'
-    Run Debug moves here), Check Memory (collectgarbage + per-addon KB,
-    replaces the /run line), tests (Preview Meter, Frames portrait test,
-    /ledger why if added), and a COPYABLE OUTPUT BOX (capture the debug
-    lines while running, e.g. hook DEFAULT_CHAT_FRAME:AddMessage for that
-    moment; Ctrl+A/C) + "Copy Full Report" running all of them. Button
-    names per Hub rules (verb first, Title Case).
-- QUEUED for the next build (user, Nov 25 03:27, "I like the middle one"):
-  quest icon ZOOM, option b, built on the icon fix (branch
-  fix-tracker-icon-pop, AetherLedger 1.7.2: merge it first). Our own
-  animation on the fixed overlay, not Blizzard's AddAnim:
-  ACCEPTED = icon starts 25x (about a third of the screen), faint, and
-  shrinks into its spot while turning solid, 0.6 s, ease-out (cubic);
-  alpha 0->1 over the first 35%. HANDED IN = a copy of the icon (on
-  UIParent at the icon's spot, since Blizzard drops the row at once)
-  swells 1 -> 25x and fades 1 -> 0, 0.6 s, ease-in. Play only on a real
-  add / turn-in (QUEST_ACCEPTED / QUEST_TURNED_IN for that quest), not
-  on every tracker rebuild. It takes no clicks.
-- READY, NOT SHIPPED (branch fix-tracker-icon-pop): AetherLedger 1.7.2.
-  Bug (user video 03:16, "every time a quest is handed in or accepted"):
-  the tracker's Aether quest icon (navy disc + gold ring) balloons to
-  cover the screen for ~0.1 s. Cause: our overlay was a CHILD of the POI
-  button, and Blizzard plays button.AddAnim (Scale) on it when a quest is
-  added/handed in (ObjectiveTrackerPOIButtonTemplate; Forever's scale is
-  evidently far bigger than retail's 1.2). Fix: overlay parented to the
-  BLOCK, anchored to the button (render-time scale doesn't move anchors),
-  weak map button->overlay, hidden on the button's OnHide, rebuilt if a
-  pooled button changes block. tracker_look_test (+1 check).
 - LAST BUILD (Nov 25, 03:45; user 03:11: "go ahead with the entire
   interface", with screenshots of Reputation, Progress Track, Talents,
   Friends): AetherSkins 1.2.0 + Hub 1.14.6.
@@ -157,6 +115,45 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     (approved capsule bars, Neutral gold / Friendly+ #22e650), rows and
     section headers (tracker-style), world map specifics: phase 2, from
     the user's screenshots + /skins debug.
+- LAST BUILD (Nov 25, 04:20; go-ahead 03:49): AetherLedger 1.8.0 + AetherHub
+  1.14.7 (rest unchanged from 03:45).
+  * Ledger tracker icon (1.7.2 fix, merged): overlay parented to the BLOCK,
+    anchored to the POI button (Blizzard's AddAnim scaled the button and
+    our child disc filled the screen on Forever); Blizzard's own button
+    regions + children SetAlpha(0) so nothing of theirs balloons either.
+  * Quest ZOOM (user pick b): AetherLedger_TrackerZoom. QUEST_ACCEPTED marks
+    the quest (a2 or a1 = questID, 6 s window); next StyleIcon for that
+    block.id plays our AnimationGroup: Scale 25->1 (OUT) + Alpha 0->1 over
+    35%, 0.6 s, once. QUEST_TURNED_IN: a ghost copy on UIParent (HIGH) at
+    the icon's spot plays Scale 1->25 (IN) + Alpha 1->0. Off with the
+    tracker look (Wants()). tracker_look_test (+10 checks).
+  * MOVING QUEST GIVERS: new AetherLedger_Routes.lua (18 KB, 61 quests, 28
+    walkers) from QuestieDB Forever npc field 8 (waypoints), by
+    tools/extract_routes.py <folder with foreverQuestDB.lua, foreverNpcDB.lua,
+    areaIdToUiMapId.lua> (clone github.com/Questie/QuestieDB, data/Forever
+    + support/Forever/Zones). Path thinned to 1-unit steps, cap 80, span
+    >= 3. Companions share a walker's route only if within 1.5 units of its
+    start AND the route spans >= 25 (caravans; town patrols 3-12 swept in
+    shopkeepers): only Rigger Gizelton (5943). Ledger: "(on the move)" after
+    the giver in quest lines and the new class/profession notice; dest.qid
+    on GoTo/GoToQuest; Travel: dest.route (world points), last walk aims at
+    the nearest route point, arrival = within 40 yd of the route ->
+    Arrived("route") flash "You're on the road!"; title "(Desolace, on the
+    move)". Targeting/talking to the NPC still = "You're there!".
+    ledger_routes_test (new), travel_window_test (+1).
+  * HUB DEBUG PAGE: GENERAL tab "Debug" (/hub debug, /hub report); WIN_H
+    500 -> 525 (saved smaller heights are raised). Buttons: Debug Bars /
+    Chat / ItemID / Marks / Pathfinder / Skins, Show Ledger Status, Check
+    Memory (collectgarbage + GetAddOnMemoryUsage per loaded Aether addon),
+    Preview Meter; output in a multi-line EditBox (copy: Ctrl+A/C), lines
+    caught by a hooksecurefunc on DEFAULT_CHAT_FRAME.AddMessage while a
+    command runs, color codes stripped; Copy Full Report = versions +
+    memory + every report, selected. Skins tab's Run Debug -> link to Debug.
+    No Frames portrait test (its command changes the user's 2D/3D setting).
+    /ledger tracker already explains each quest (the "why" command exists).
+    hub_debug_test (new, 34 checks), skins_hub_test updated.
+  NOT yet in game: all of the above. Checklist doc (user ticks boxes):
+  https://claude.ai/artifact/BEV8UsMzQVq3k6KJn13Be1
 - OPEN QUESTION (user, 03:16 video): a just-accepted RED quest ([45]
   Horde Trauma) flashes in the tracker, then AetherLedger removes it
   (red rule). Offered: 1 keep, 2 same + chat note why (recommended),
@@ -431,6 +428,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Session log
 
+- Nov 25, 2026 (04:20): built Ledger 1.8.0 (icon fix, quest zoom b, moving
+  givers) + Hub 1.14.7 (Debug page). In-game checklist made as a doc.
 - Nov 25, 2026 (03:45): built AetherSkins 1.2.0 (all Blizzard windows,
   generic skinner) + Hub 1.14.6 (windows switch).
 - Nov 24, 2026 (20:20): built Hub 1.14.5 (AetherSkins tab), Coords
