@@ -219,6 +219,26 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   (4 unnamed Buttons, common-sidetab*, icons friends-icon-tab-*): same
   treatment as Character side tabs. Hidden pages to dump later: Recent
   Allies, Friend Requests, Raid, Ignore List.
+  TALENTS FULL (06:30, tools/dumps/PlayerSpellsFrame_Talents_full_2026-
+  11-25.txt, 1241 lines, complete, under the 1500 cap). Nodes (~50,
+  20 lines each) under .TalentsFrame.ButtonsParent: .StateBorder states
+  seen: -yellow (maxed), -green (has points, not maxed), -gray
+  (available, 0 points), -locked. Arrows: Frame with .Line + .ArrowHead
+  talents-arrow-head-locked/-gray/-yellow. Plan: yellow border/arrow ->
+  tint Aether gold (SetVertexColor on .StateBorder/.ArrowHead after
+  Blizzard sets the atlas; hook the node's state update), keep green,
+  gray, locked. Spec headers: three Frames 48x48 with .MainRing
+  Talents-Main-Ring-c60 + .TextBackground Talents-Main-Ring-Box-c60 +
+  .Divider Talents-small-divider-c60 (bronze) -> navy ring + blue
+  divider. .ClassCurrencyDisplay .Border Talents-Square-Box-c60
+  ("unspent") -> navy box. .SearchBox [styled input] but its bronze
+  .Left/.Right/.Middle common-search-border-* NOT faded -> fade.
+  .SearchOptionsDropdown .Arrow common-dropdown-a-button -> navy.
+  .ApplyButton tex 130824 (styled). TabSystem now 2 tabs (styled).
+  Window chrome: .BackgroundBorder Talents-inner-frame-c60, dividers
+  Talents-divider-left/right/vertical-c60 -> blue. Keep class art and
+  cloud/particle animation (decide with user if too busy). SpellBook is
+  .SpellBookFrame (hidden here) -> dump #6 with the Spellbook tab open.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
