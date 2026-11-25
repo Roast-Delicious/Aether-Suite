@@ -298,6 +298,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   go); Spellbook to follow the talent scheme -> new mock (pass2_book.py).
   07:19: Spellbook talent-scheme mock APPROVED ("love it"). ALL
   SECOND-PASS MOCKUPS APPROVED. Waiting for the build go.
+  07:26: AetherPack 1.6.2 into the next build (user OK): hide Blizzard's
+  quickslot NormalTexture (130841, the light-gray rounded edge around
+  every bag slot, seen in the 07:22 screenshot) and draw a thin Aether
+  blue icon frame like the Vendor/Spellbook; quality borders stay on top.
   GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
   LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
   (no [styled] marks anywhere): the skinner never caught it -> added
