@@ -1523,3 +1523,22 @@ trim), xpbar_render.py (XP bar).
   scripts by the strict FAIL/Traceback check (no new failures).
   Parked, not queued: key stats in item tooltips; AetherChat copy
   button; directions from an in-progress quest's tracker icon (asked).
+- BRANCH crestline (staged 16:55, waiting for the build go): Skins 1.6.2,
+  Ledger 1.8.10.
+  * Crest above the gold title line on every window (user 16:46-16:47:
+    the 1.6.1 lift put the line across the crest; World Map and Group
+    Finder were fine). Lift() skips PortraitContainer and sets it to the
+    line's level + 1.
+  * Talent arrows pointing back UP the tree hidden (P.ArrowUp: start/end
+    button centers, else the line's start anchor). Forever has an extra
+    up edge BM row 5 -> 7 (dump b160: 9 arrows, 8 on the tree).
+  * Open side tab: glow_sq's hollow middle fitted to the tab box minus
+    2 px a side (was the tab width: 55x55 hole around a 52x49 box = dark
+    frame on every tabbed window; dump CharacterFrame_tabs_b161). Inner
+    gold rings rounded (radius 4 and 3, new btn_round4_* art).
+  * Tracker red: still 255,26,26 in game on 1.8.9 (refs/tracker_red_b189
+    .png; user thought background, pixels say text). Forever writes the
+    difficulty color into the title as a code: NameCodes swaps red/orange
+    codes; NameColor also re-runs on SetText/SetFormattedText.
+  Open: guild window has no crest (Communities not in CREST; empty
+  without a guild) - offered mockups (banner/tabard/shield).

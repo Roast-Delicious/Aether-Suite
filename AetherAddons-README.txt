@@ -24,7 +24,7 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.14    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.5     What an item is for, when you hover it
-  AetherLedger       1.8.9     Where to quest, train and skin next,
+  AetherLedger       1.8.10    Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.5     Your bags sorted into sections
   AetherChat         1.0.9     Chat with the Aether look, fitted beside
@@ -32,7 +32,7 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.8    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.6.1     The Aether look for Blizzard's windows
+  AetherSkins        1.6.2     The Aether look for Blizzard's windows
                                and the minimap
 
 
