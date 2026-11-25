@@ -213,4 +213,11 @@ if L.eval('AetherLedger_GoToTurnIn ~= nil'):
       local p = print; print = function(...) LASTPRINT = table.concat({...}, " ") end
       AetherLedger_GoToTurnIn(777); print = p""")
     expect("nothing known: says which zone it's handed in", (L.eval('STARTED'), "handed in in The Barrens" in (L.eval('LASTPRINT') or "")), (None, True))
+# Forever writes the difficulty color into the title as a code (user 16:53)
+L.execute('B10 = { HeaderText = { color = {1, 1, 1}, text = "|cffff1a1a[60] Craftsman\'s Writ|r" } }; local h = B10.HeaderText; h.GetTextColor = function(s) return unpack(s.color) end; h.SetTextColor = function(s, r, g, b) s.color = {r, g, b} end; h.GetText = function(s) return s.text end; h.SetText = function(s, t) s.text = t end; AetherLedger_TrackerNameColor(h)')
+expect("red written into the title: lighter red code", L.eval('B10.HeaderText.text'), "|cffff6058[60] Craftsman's Writ|r")
+L.execute('B10.HeaderText:SetText("|cffff1a1a[60] Craftsman\'s Writ|r")')
+expect("tracker writes the title again: lighter red comes back", L.eval('B10.HeaderText.text'), "|cffff6058[60] Craftsman's Writ|r")
+expect("orange code: lighter orange", L.eval('AetherLedger_TrackerNameCodes("|cffff8020[38] X|r")'), "|cffff9654[38] X|r")
+expect("gold and green codes left alone", L.eval('AetherLedger_TrackerNameCodes("|cff40bf40[31] Y|r |cffffb000Z|r")'), "|cff40bf40[31] Y|r |cffffb000Z|r")
 print("PASS" if ok else "FAIL"); sys.exit(0 if ok else 1)
