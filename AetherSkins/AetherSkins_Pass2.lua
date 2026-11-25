@@ -381,6 +381,9 @@ function Rule(t, a)
     if a:find("^friends%-card") then return P.KeepTint(t, { 0.16, 0.33, 0.6, 0.95 }) end
     if a == "spellbook-item-backplate" then return Tint(t, { 0.12, 0.25, 0.46 }, 0.6) end
     local state = a:match("^talents%-arrow%-head%-(%a+)")
+    -- the ghost head (Blizzard's preview of a pending change) keeps its own
+    -- art: ours came out pointing the wrong way (user, Nov 25 12:57)
+    if state == "ghost" then return end
     if state then
         local col = ARROW[state] or "gray"
         t:SetTexture(MEDIA .. "arrow_head_" .. col); t:SetVertexColor(1, 1, 1, 1)
@@ -451,7 +454,8 @@ local function RoleUpdate(b)
     local off = Shown(T(b, "cover")) or (b.IsEnabled and not b:IsEnabled())
     local c = picked and GOLD or BLUE
     p.ring:SetVertexColor(c[1], c[2], c[3], 1)
-    if off then p.glyph:SetVertexColor(0.47, 0.38, 0.2, 1) else p.glyph:SetVertexColor(GOLD[1], GOLD[2], GOLD[3], 1) end
+    -- can't pick this role: gray like every other unusable control (was brown)
+    if off then p.glyph:SetVertexColor(0.45, 0.47, 0.52, 1) else p.glyph:SetVertexColor(GOLD[1], GOLD[2], GOLD[3], 1) end
 end
 function P.Role(b, kind, icon)
     if not Once(b, "role") then return end

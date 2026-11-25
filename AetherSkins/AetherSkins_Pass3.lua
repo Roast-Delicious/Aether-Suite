@@ -458,6 +458,10 @@ local FADE3 = { ["Profession-Background-Overview"] = true, ["Profession-Backgrou
     ["Legacy-Challenge-Cards-Ribbon-Blue"] = true, ["Legacy-Challenge-Cards-Ribbon-Blue-Disable"] = true }
 function P3.MoreRule(t, a)
     if FADE3[a] or a:find("^Skillbar_Flare_") then t:SetAlpha(0); return true end
+    -- Spellbook pages: page blue, brighter than the frame (user, Nov 25 12:57)
+    if a == "spellbook-Page-Left-C60" or a == "spellbook-Page-Right-C60" then
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true
+    end
     -- boxes: navy with a blue edge
     if a:find("^Profession%-overview%-[Cc]ard") or a == "Legacy-Tree-Frame-Card" then
         Ours(t, nil, NAVYC, nil, nil, WHITE); BoxEdge(t); return true
@@ -533,7 +537,23 @@ local COLL_FADE = { ["collections-background-shadow-large"] = true, ["collection
 function P3.CollRule(t, a)
     if COLL_FADE[a] then t:SetAlpha(0); return true end
     if a == "collections-background-tile" then Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true end
-    if a == "PetList-ButtonBackground" then Ours(t, nil, NAVYC, nil, nil, WHITE); BoxEdge(t); return true end
+    if a == "PetList-ButtonBackground" then
+        -- one box around icon and name: Blizzard's row starts right of the
+        -- icon, so the icon looked outside it (user, Nov 25 12:57)
+        local o = Ours(t, nil, NAVYC, nil, nil, WHITE)
+        local b = t.GetParent and t:GetParent()
+        local ic = b and T(b, "icon")
+        if o and ic then
+            o:ClearAllPoints()
+            o:SetPoint("TOPRIGHT", t, "TOPRIGHT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT"); o:SetPoint("LEFT", ic, "LEFT", -4, 0)
+            if not boxEdge[t] and b then
+                local f = CreateFrame("Frame", nil, b)
+                f:SetPoint("TOPRIGHT", t, "TOPRIGHT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT"); f:SetPoint("LEFT", ic, "LEFT", -4, 0)
+                boxEdge[t] = Edge(f, "BORDER", 3, { 0.24, 0.43, 0.69, 0.9 }, 0)
+            end
+        else BoxEdge(t) end
+        return true
+    end
     if a == "PetList-ButtonSelect" then Tint(t, BLUE, 0.45); return true end
     if a == "PetList-ButtonHighlight" then Tint(t, BLUE, 0.2); return true end
     if a == "collections-itemborder-collected" or a == "transmog-wardrobe-border-collected" then Tint(t, BLUE, 0.9); return true end

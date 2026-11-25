@@ -1165,3 +1165,9 @@ trim), xpbar_render.py (XP bar).
   Junk tooltips only when there's something to do; P3 adds 'Nothing
   needs repair' / 'No junk to sell' (HookScript OnEnter, only when the
   tooltip came up empty).
+  USER 12:57 batch: talent ghost arrowhead keeps Blizzard art (ours
+  pointed the wrong way); LFG role off-glyph gray (was brown); mount/pet
+  rows: box spans icon+name (LEFT anchored to .icon -4); Spellbook pages
+  page blue (were faded to frame-dark). OPEN: map red quest text (mock
+  maplog_red.py), Primary/Secondary text looks centered to me - asked;
+  need dumps: Game Menu, talents (if arrows still wrong).
