@@ -1455,3 +1455,8 @@ trim), xpbar_render.py (XP bar).
     AetherHub_RebuildPage("Map") when the count changes.
   * Quests & Mobs: Ledger's HubReport moved to a last band "Zone details"
     (dynamic text overlapped the Quest tracker band).
+- 16:17 user: Hub 1.15.1 buttons navy now (fix confirmed). DANCER CHANGE
+  READY, NOT SHIPPED (branch dancer2): stage width 85% of the page, square
+  (height = width), centered, edge in the background color (no frame),
+  model fills the stage, camera 15% closer (SetCamDistanceScale 1.65).
+  Waiting for the build go (bump Hub to 1.15.2 + README stamp when built).
