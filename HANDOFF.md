@@ -147,7 +147,7 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   the Character tab); (8) rounded corners suite-wide, style pending the
   mockups RoundedButtons_Hub(_zoom).png / _Talents.png (made by
   /tmp/rb/round.py on the user's screenshots: square / B subtle 3 /
-  C soft 5 / D capsule; recommended C); (9) Hub review: inventory first,
+  C soft 5 / D capsule): CHOSEN C, soft 5-unit radius (user, 05:31); checkboxes ~3; (9) Hub review: inventory first,
   then mockups.
 - SKINS SECOND PASS, INVENTORY (from the user's checklist + screenshots,
   Nov 25 ~04:00-04:10; not queued yet, waiting on 2 decisions: right
