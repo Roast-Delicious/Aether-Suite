@@ -181,6 +181,23 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   (game info), restyle bronze border/dividers blue, decide on the
   yellow node border (Blizzard's "has points" color) vs Aether gold.
   Each node is ~23 lines, so 1.2.2 should fold node insides.
+  REPUTATION FULL (06:29, 1.2.2, tools/dumps/Reputation_full_2026-11-25
+  .txt, 333 lines, complete): ReputationFrame.ScrollBox rows. Headers:
+  Button 343x28, two textures common-button-list-collapseExpand (the
+  brown bar) + .StateIcon common-button-list-minus/plus + .Name ->
+  tracker-style header (navy strip, gold text, white +/-). Faction
+  rows: .Content.Name, .Content.ReputationBar (bg common-stat-bar-BG
+  160x29, .Fill common-stat-bar-white tinted by standing via vertex
+  color, .Mask, .Text) -> capsule bar: our dark track + rounded fill,
+  keep the standing color; .Content.BackgroundHighlight .Left/.Middle/
+  .Right charactercreate-customize-dropdown-linemouseover-* -> blue
+  selected/hover row. ScrollBox has two UI-Character-Info-ScrollLine-
+  Long lines (top/bottom) -> blue line. ScrollBar styled (tint too
+  faint). .ReputationDetailFrame: .Title, .Subtitle, .Divider UI-
+  Character-Info-ScrollLine, .StandingBar (same bar parts, 180x29),
+  checkboxes checkbox-minimal (styled), .ViewRenownButton (styled).
+  .filterDropdown hidden here. Sibling pages SkillsFrame, PVPRankFrame,
+  StatisticsFrame, TokenFrame: need dumps when open (tabs 3-6).
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
