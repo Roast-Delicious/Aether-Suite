@@ -1340,3 +1340,12 @@ trim), xpbar_render.py (XP bar).
   AetherSkins 1.5.7. README stamp 15:30. Untested in game: flat arrows
   across reloads, gold vendor notes on all three buttons, Buyback label,
   Spellbook strip + gold line, black Professions cards.
+- 15:32 user "Proceed" = Action Bar Area approved as is (no split).
+- MOCKUP 4, Map & Waypoints (mock/hub_map.py, out_hub_map(_full).png):
+  Coordinates (minimap readout, map cursor, decimals); Waypoints = NEW
+  list (zone, coords gold, note, red x to remove one = /way remove N) +
+  Clear All...; NPCs on your maps (class dropdown, 15-type grid, Show/
+  Hide All, built-in, other faction, minimap); Learned NPCs count + two
+  Clear...; Restore Defaults... (settings only; keeps waypoints + learned
+  NPCs). Moved: /pfm stats + /pfm flights reports -> Help & Debug.
+  Dropped: Reset Coordinates Position (footer Reset Positions...).

@@ -279,3 +279,37 @@ def render_b(selected, pagefn, out):
 
 def tall_probe():
     return Image.new('RGB', (int(WU * U + 2 * M), int(4000 * U + 2 * M)))
+
+# ---------- extra controls (Map & Waypoints) ----------
+def _dropdown(self, label, value, new=False):
+    if not self.room(30): return
+    T(self.c, PX + 4, self.y + 11, label, 15.5, WHITE, 'Regular', 'lm')
+    lw = self.c.d.textlength(label, font=K.F(15.5)) / SS / U + 12
+    x0, x1 = PX + 4 + lw, PX + 4 + lw + 220
+    rect(self.c, x0, self.y, x1, self.y + 22, fill=NAVY, outline=BLUE, r=5)
+    T(self.c, x0 + 10, self.y + 11, value, 15, WHITE, 'Regular', 'lm')
+    self.c.tri(X(x1 - 12), Y(self.y + 12), 3.5, WHITE, 'down')
+    if new: self.newtag(x1 + 8, self.y + 11)
+    self.y += 30
+def _wplist(self, rows, new=False):
+    h = 24 * len(rows) + 6
+    if not self.room(h + 4): return
+    rect(self.c, PX + 4, self.y, PR - 4, self.y + h, fill=(10, 11, 14), outline=(46, 104, 160), r=5)
+    y = self.y + 3
+    for i, (zone, xy, note) in enumerate(rows):
+        T(self.c, PX + 14, y + 12, f'{i + 1}.', 15, (150, 156, 170), 'Regular', 'lm')
+        T(self.c, PX + 34, y + 12, zone, 15, WHITE, 'SemiBold', 'lm')
+        zw = self.c.d.textlength(zone, font=K.F(15, 'SemiBold')) / SS / U
+        T(self.c, PX + 42 + zw, y + 12, xy, 15, GOLD, 'Regular', 'lm')
+        xw = self.c.d.textlength(xy, font=K.F(15)) / SS / U
+        if note: T(self.c, PX + 52 + zw + xw, y + 12, note, 15, (190, 196, 210), 'Regular', 'lm')
+        bx = PR - 30
+        rect(self.c, bx, y + 3, bx + 18, y + 21, fill=NAVY, outline=(200, 70, 60), r=3)
+        T(self.c, bx + 9, y + 12, '×', 17, WHITE, 'SemiBold', 'mm')
+        y += 24
+    if new: self.newtag(PX + 86, self.y - 17)
+    self.y += h + 8
+def _note(self, s, size=14.5):
+    if not self.room(20): return
+    T(self.c, PX + 4, self.y + 2, s, size, (175, 180, 192)); self.y += 22
+Page.dropdown = _dropdown; Page.wplist = _wplist; Page.note = _note
