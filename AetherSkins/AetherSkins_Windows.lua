@@ -27,7 +27,7 @@ local PANEL = { 0.047, 0.055, 0.075, 1 }   -- windows fully solid (user, Nov 25 
 -- three background layers (user, Nov 25 12:05, mock/bg_tiers.py A):
 -- frame = PANEL (window body), box = NAVY (strips, panels, lists),
 -- page = PAGE (anything you read: quest text, gossip, map quest log)
-local PAGE  = { 35 / 255, 75 / 255, 115 / 255 }
+local PAGE  = { 42 / 255, 90 / 255, 138 / 255 }   -- 20% brighter (user, Nov 25 14:00)
 local TEXT  = { 0.92, 0.93, 0.96 }
 
 local function FontFile(weight)
@@ -432,9 +432,14 @@ end
 local function Inset(f)
     W.done[f] = "inset"
     Fade(T(f, "NineSlice")); Fade(T(f, "Bg"))
-    local fill = Tex(f, "BACKGROUND", -6, WHITE, { 0, 0, 0, 0.25 })
+    -- the content area: page blue (small ones, like the money bar: navy);
+    -- no more near-black (user, Nov 25 14:00: "black areas ... covered")
+    local okh, h = pcall(f.GetHeight, f)
+    local small = okh and type(h) == "number" and h > 0 and h < 60
+    local c = small and { NAVY[1], NAVY[2], NAVY[3], 1 } or { PAGE[1], PAGE[2], PAGE[3], 1 }
+    local fill = Tex(f, "BACKGROUND", -6, WHITE, c)
     fill:SetAllPoints(f)
-    Edge(f, "BORDER", -1, { BLUE[1], BLUE[2], BLUE[3], 0.22 }, 0)
+    Edge(f, "BORDER", -1, { 0.24, 0.43, 0.69, 0.9 }, 0)
 end
 
 -- What a widget is, from Blizzard's template keys.

@@ -1194,3 +1194,10 @@ trim), xpbar_render.py (XP bar).
   navy boxes, inputs, friend cards, tints). HUD (chat, meter, tracker,
   minimap) and AetherPack unchanged (user 13:57: keep the pack as is).
   OPEN: page blue +20% (42,90,138) everywhere - recommended, not yet ok'd.
+  PAGE BLUE +20% (user 14:00): H.PAGE = 42,90,138. SWEEP 'no needless
+  black': styled insets fill page blue (h<60: navy, e.g. money bar), edge
+  .24,.43,.69; page-blue backgrounds: Profession overview + crafting,
+  Legacy tree/challenges/rewards, groupfinder-background, Character
+  stats (UI-Character-Info-Stat-BG); class art behind stats faded; Legacy
+  reward cards navy boxes; LFG roles strip navy. Not changed: talent class
+  art, model backdrops, title/bottom bars (frame tier).

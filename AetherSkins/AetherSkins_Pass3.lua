@@ -24,7 +24,7 @@ if not (P and P.H and W.H) then return end
 local H, PH = W.H, P.H
 local Tex, Fade, T, Edge, NavyBox, Forbidden = H.Tex, H.Fade, H.T, H.Edge, H.NavyBox, H.Forbidden
 local MEDIA, WHITE, GOLD, BLUE, NAVY, TEXT = H.MEDIA, H.WHITE, H.GOLD, H.BLUE, H.NAVY, H.TEXT
-local PAGE = H.PAGE or { 35 / 255, 75 / 255, 115 / 255 }
+local PAGE = H.PAGE or { 42 / 255, 90 / 255, 138 / 255 }
 local Tint, Atlas, FileID, Shown, Once, HookShow = PH.Tint, PH.Atlas, PH.FileID, PH.Shown, PH.Once, PH.HookShow
 local weak = PH.weak
 local P3 = {}
@@ -485,11 +485,23 @@ local function BoxEdge(t, col)
 end
 local NAVYC = { NAVY[1], NAVY[2], NAVY[3], 1 }
 local TRACK = { 0.055, 0.1, 0.18, 1 }
-local FADE3 = { ["Profession-Background-Overview"] = true, ["Profession-Background-Template2"] = true,
-    ["Legacy-Tree-Frame-background"] = true, ["spec-background"] = true, ["Legacy-Challenge-BG"] = true,
+-- whole-page backgrounds: page blue instead of near-black (user, 14:00)
+local PAGEBG = { ["Profession-Background-Overview"] = true, ["Profession-Background-Template2"] = true,
+    ["Legacy-Tree-Frame-background"] = true, ["Legacy-Challenge-BG"] = true, ["Legacy-Rewards-Tracker-background"] = true,
+    ["groupfinder-background"] = true, ["UI-Character-Info-Stat-BG"] = true }
+local FADE3 = { ["spec-background"] = true,
     ["Legacy-Challenge-Cards-Ribbon-Blue"] = true, ["Legacy-Challenge-Cards-Ribbon-Blue-Disable"] = true }
 function P3.MoreRule(t, a)
     if FADE3[a] or a:find("^Skillbar_Flare_") then t:SetAlpha(0); return true end
+    if PAGEBG[a] then Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true end
+    -- the class picture behind the stats list: gone, the stats read on plain page blue
+    local cls = a:match("^UI%-Character%-Info%-(%a+)%-BG$")
+    if cls and cls ~= "General" and cls ~= "Stat" then t:SetAlpha(0); return true end
+    -- Legacy reward cards and the Group Finder roles strip: navy boxes
+    if a:find("^Legacy%-Rewards%-Tracker%-Cards") then
+        Ours(t, nil, a:find("Disable") and { 0.047, 0.055, 0.075, 1 } or NAVYC, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    if a == "groupfinder-roles-background" then Ours(t, nil, NAVYC, nil, nil, WHITE); return true end
     -- Spellbook pages: page blue, brighter than the frame (user, Nov 25 12:57)
     if a == "spellbook-Page-Left-C60" or a == "spellbook-Page-Right-C60" then
         Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true
