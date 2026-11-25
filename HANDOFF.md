@@ -1186,3 +1186,7 @@ trim), xpbar_render.py (XP bar).
   double-headed, heads ran into talents): no more our arrow_head/shaft
   art, SetSize 20 or thickness 6 - Blizzard's own head + Line, Tint only
   (gold / blue / gray .62,.65,.72). Primary/Secondary text OK (user).
+  TABS (user 13:39 Merchant/Buyback): like the Hub - picked tab text
+  GOLD, others light gray (.85); Blizzard's tab text hidden (alpha 0,
+  SetAlpha hook) and our own FontString copies its words (SetText hook),
+  centered in the box, so it no longer jumps up when picked.

@@ -331,12 +331,18 @@ end
 
 -- Bottom tabs (PanelTabButtonTemplate) -> navy, blue edge; gold edge when selected.
 local tabEdges = setmetatable({}, { __mode = "k" })
+local tabText = setmetatable({}, { __mode = "k" })   -- tab -> our own label
 local function TabColor(tab)
     local e = tabEdges[tab]; if not e then return end
     local la = T(tab, "LeftActive")
     local sel = la and la:IsShown()
     local c = sel and GOLD or BLUE
     for _, t in ipairs(e) do t:SetVertexColor(c[1], c[2], c[3], sel and 1 or 0.9) end
+    -- text like the Hub's tabs: gold when picked, light gray otherwise
+    local own = tabText[tab]
+    if own then
+        if sel then own:SetTextColor(GOLD[1], GOLD[2], GOLD[3]) else own:SetTextColor(0.85, 0.85, 0.85) end
+    end
 end
 W.TabColor = TabColor
 local tabOffset = setmetatable({}, { __mode = "k" })   -- row of tabs -> text height
@@ -384,6 +390,25 @@ local function Tab(tab)
         fill:SetPoint("RIGHT", tab, "RIGHT", -4, 0)
         fill:SetPoint("TOP", tab, "CENTER", 0, dy + h / 2 + 7)
         fill:SetPoint("BOTTOM", tab, "CENTER", 0, dy - h / 2 - 7)
+        -- Blizzard lifts the picked tab's text a few pixels; ours stays put in
+        -- the middle of the box, so only the color says which one is open
+        -- (user, Nov 25 13:39). Blizzard's text turns invisible and ours
+        -- copies its words.
+        if not tabText[tab] and tab.CreateFontString then
+            local own = tab:CreateFontString(nil, "OVERLAY")
+            local okf, fo = pcall(text.GetFontObject, text)
+            if okf and fo then own:SetFontObject(fo) else own:SetFontObject(Fonts().button) end
+            own:SetPoint("LEFT", fill, "LEFT", 4, 0); own:SetPoint("RIGHT", fill, "RIGHT", -4, 0)
+            own:SetJustifyH("CENTER")
+            local okt, words = pcall(text.GetText, text)
+            own:SetText(okt and words or "")
+            text:SetAlpha(0)
+            if hooksecurefunc then
+                pcall(hooksecurefunc, text, "SetText", function(_, w) own:SetText(w or "") end)
+                pcall(hooksecurefunc, text, "SetAlpha", function(self, a) if a and a > 0 then self:SetAlpha(0) end end)
+            end
+            tabText[tab] = own
+        end
     end
     tabEdges[tab] = e
     TabColor(tab)
