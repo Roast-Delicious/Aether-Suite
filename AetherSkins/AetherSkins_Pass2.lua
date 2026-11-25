@@ -807,6 +807,7 @@ local function LooseSideTabs(root)
                 local bg = T(k, "Background")
                 if bg and Atlas(bg) == "common-sidetab" and T(k, "SelectedTexture") then
                     P.SideTab(k); found = true
+                    if P.LooseParent then pcall(P.LooseParent, c) end
                 end
             end
         end

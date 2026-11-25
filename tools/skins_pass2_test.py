@@ -330,6 +330,13 @@ LCB.bg = tex(LCB, "Legacy-Challenge-Cards-Disable"); AetherSkins_Windows.Content
 expect("legacy card: one blue edge, none on the hidden tiled pieces", E('(function() local n = 0; for _, k in ipairs(LCB.kids or {}) do if k.shown ~= false then n = n + 1 end end return n end)()'), 1)
 L.execute('''GF = kid(WIN, "Frame"); GF.Inset = kid(GF, "Frame"); GF.bg = tex(GF, "QuestBG-Parchment"); AetherSkins_Windows.Contents(WIN)''')
 expect("gossip page: our blue fills the inset, not just Blizzard's smaller parchment", E('(function() for _, r in ipairs(GF.regs) do if r.vc and math.abs(r.vc[1] - 10/255) < 0.01 then for _, p in ipairs(r.points or {}) do if p[2] == GF.Inset then return true end end end end return false end)()'), True)
+L.execute('''GFP = kid(WIN, "Frame"); GFP.WhoListingTab = kid(GFP, "Frame"); GFP.WhoListingTab.Icon = tex(GFP.WhoListingTab, nil, 8197123)
+GFP.BrowsingTab = kid(GFP, "Frame"); GFP.BrowsingTab.Icon = tex(GFP.BrowsingTab, nil, 8197095)
+GFP.ListingTab = kid(GFP, "Frame"); GFP.ListingTab.Icon = tex(GFP.ListingTab, nil, 8197096)''')
+expect("Group Finder tabs by their real keys: Who people, Browsing magnifier, Listing eye", (E('AetherSkins_Windows.P3.TabGlyph(GFP.WhoListingTab)'), E('AetherSkins_Windows.P3.TabGlyph(GFP.BrowsingTab)'), E('AetherSkins_Windows.P3.TabGlyph(GFP.ListingTab)')), ("gl_people", "gl_search", "gl_eyeball"))
+L.execute('''LN = kid(WIN, "Button"); LN.StateBorder = tex(LN, "Legacy-Tree-Frame-icon-frame-disable"); LN.SpendText = LN:CreateFontString()
+LN.box = tex(LN, "Talents-Square-Box-c60"); AetherSkins_Windows.Contents(WIN)''')
+expect("Legacy Tree rank box: Blizzard's dark square hidden", E('LN.box.alpha'), 0)
 # switch off
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

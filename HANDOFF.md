@@ -1216,3 +1216,24 @@ trim), xpbar_render.py (XP bar).
 - BUILD 7 SHIPPED 14:26 (user 14:25 'like it a lot' black_screens mock):
   H.PAGE = 10,11,14 (near-black pages), H.NAVY back to 19,40,74 boxes.
   AetherSkins 1.5.4.
+- BUILD 8 (branch build8): red quest names tried Blizzard red, user kept the LIGHTER red (14:30).
+  14:28, mock/red_default.py), shadow kept; orange lifted, yellow->gold.
+  RELEASE PLAN (user 14:29-14:32): A = skin polish (Skins: legacy empty
+  rank boxes, Toy Box tip, 1.5.4 feedback; lighter red already on
+  build8). B = Ledger: tracker click -> directions to turn-in NPC (on by
+  default) + tracker quest names lighter red (1,.376,.345) + orange (1,
+  .588,.329) + yellow->gold like the map (user 14:32 'go with ours').
+  C = Hub cleanup (design-first, moves the directions toggle into Hub).
+  GROUP FINDER TABS (user dumps 14:36): keys ListingTab / BrowsingTab /
+  WhoListingTab; icons 8197096 / 8197095 / 8197123. Bug: 'WhoListingTab'
+  matched 'Listing' first, 'Browse' never matched 'Browsing'. Fixed: Who
+  keys first, anchored patterns, icon IDs added. P.LooseParent: the tabs'
+  parent owns the portrait + red close -> our crest (glyph of the shown
+  LFG page) + Close(). Not seen in game yet.
+  LEGACY RANK BOXES (dump 14:42 LegacySystemFrame_Tree_b5): Talents-
+  Square-Box-c60 on nodes whose StateBorder is Legacy-Tree-Frame-icon-
+  frame* -> faded; blue-edged pill (PH.PillOn, ARTWORK) behind SpendText.
+  Toy Box tip: user thought 'toys'; it's the one-time HelpTip - dropped.
+- RELEASE A SHIPPED 14:44 (main, merged build8): AetherSkins 1.5.5 (Group
+  Finder tabs/crest/close, Legacy rank pills). NEXT: Release B (Ledger
+  directions on click + tracker colors) - user may continue Saturday.
