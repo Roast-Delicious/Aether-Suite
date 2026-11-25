@@ -478,6 +478,20 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   in green when N = 0 and no room; warlock "room for N more". Header line
   stops before the hint. Bottom Ammo row STAYS (only warning when you have
   no ammo and the section is gone).
+  TWO BUILDS (09:19, user): Build 1 = BUG FIXES only: lazy ScrollBox rows
+  (acquired/initialized callbacks + fallback timer), rep capsule fit to
+  .FillArea, light text on navy (spellbook names/ranks/headers, gossip,
+  quest), talent visibility (none/lock + DisabledOverlay + can-purchase
+  glow flag + solid gray shafts), spellbook iconframe(-passive) fade + our
+  frame, Group Finder (NPF clamp to 64, red close, side tabs styled as
+  plain navy), map (header gold, zone-bar bronze, dimness), vendor
+  (tab alignment, hide empty tiles, repair icons visible), friends card
+  SetVertexColor hook, bag + character slot quality frames, character
+  bronze GearSlot fade + ammo slot + sidebar tabs + model buttons, rep
+  pills navy, tracker hand-in spacing. Build 2 = DESIGNS: flat side-tab
+  glyphs + B style, flat crests, vendor A cards + flat buttons, NPF
+  sprout, gold beveled slider everywhere, quest page option 3, resize
+  grip, Pack ammo heading. Hub cleanup = pass after that.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
