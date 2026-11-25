@@ -207,11 +207,26 @@ local function Frame(f)
     ul:SetPoint("TOPLEFT", f, "TOPLEFT", S, -TITLE_H); ul:SetPoint("TOPRIGHT", f, "TOPRIGHT", -S, -TITLE_H); ul:SetHeight(1)
     -- well above the window's own panes (+20 wasn't enough for Character's
     -- stats pane, user 16:25), and again whenever the window opens
+    -- just above the highest of the window's own parts: Character's "Level
+    -- 36 Hunter" strip on the left sits higher than a fixed +20 (user 16:29)
+    local function Highest(fr, depth, best)
+        if depth > 4 or not fr.GetChildren then return best end
+        for _, c in ipairs({ fr:GetChildren() }) do
+            if c ~= ul and c.GetFrameLevel and not (c.IsForbidden and c:IsForbidden()) then
+                local ok, lv = pcall(c.GetFrameLevel, c)
+                if ok and type(lv) == "number" and lv > best then best = lv end
+                best = Highest(c, depth + 1, best)
+            end
+        end
+        return best
+    end
     local function Lift()
-        if ul.SetFrameLevel and f.GetFrameLevel then pcall(ul.SetFrameLevel, ul, math.min(9000, (f:GetFrameLevel() or 0) + 200)) end
+        if not (ul.SetFrameLevel and f.GetFrameLevel) then return end
+        local top = Highest(f, 1, f:GetFrameLevel() or 0)
+        pcall(ul.SetFrameLevel, ul, math.min(9000, math.max(top + 1, (f:GetFrameLevel() or 0) + 20)))
     end
     Lift()
-    if f.HookScript then f:HookScript("OnShow", Lift) end
+    if f.HookScript then f:HookScript("OnShow", function() Lift(); if C_Timer then C_Timer.After(0.3, Lift) end end) end
     t = Tex(ul, "OVERLAY", 2, WHITE, { GOLD[1], GOLD[2], GOLD[3], 0.7 })
     t:SetPoint("TOPLEFT", ul, "TOPLEFT"); t:SetPoint("BOTTOMRIGHT", ul, "BOTTOMRIGHT")
     -- the four 3D gold chevrons (gold baked per direction; dark backing turns)

@@ -1485,3 +1485,10 @@ trim), xpbar_render.py (XP bar).
   then its hand-in zone and home zone (AetherLedger_Zones); nothing found
   -> "no exact turn-in spot known; this quest is handed in in <zone>".
   tracker_look_test (+3). Our data has givers, not enders (no NPC coords).
+- 16:29 user: it's the LEFT side that's missing (screenshot refs/character_
+  goldline_2026-11-25.png). Measured: window 946 px = 631 units (1.5 px per
+  unit); gold line visible from x~665 px to the right edge only; the left
+  pane's top strip (PaperDollFrame.TopBackgroundStripHost, "Level 36
+  Hunter") covers it, so that strip's frame level is above window+20.
+  Branch dancer2: underline level = highest child level (4 deep) + 1,
+  re-measured on OnShow and 0.3 s later (replaces the fixed +200).
