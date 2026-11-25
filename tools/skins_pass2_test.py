@@ -19,9 +19,10 @@ local function addmethods(t)
   t.GetVertexColor = function(s) local c = s.vc or {1,1,1,1}; return c[1], c[2], c[3], c[4] end
   t.SetShown = function(s, v) s.shown = v and true or false end
   t.SetThickness = function(s, v) s.thick = v end
+  t.GetThickness = function(s) return s.thick or 4 end
   t.SetGradient = function(s) s.grad = true end
   t.GetTexture = function(s) return s.texture end
-  t.SetColorTexture = function(s, r, g, b, a) s.colortex = {r, g, b, a} end
+  t.SetColorTexture = function(s, r, g, b, a) s.colortex = {r, g, b, a}; s.atlas = nil end
   return t
 end
 CreateColor = function(r, g, b, a) return {r, g, b, a} end
@@ -68,7 +69,7 @@ end
 NMAX = NODE("talents-node-square-yellow", 5, 5); NPART = NODE("talents-node-square-green", 2, 3)
 NCAN = NODE("talents-node-square-gray"); NCAN.SelectableIcon.shown = true
 NNONE = NODE("talents-node-square-gray"); NLOCK = NODE("talents-node-square-locked")
-ARR = kid(WIN, "Frame"); ARR.Line = tex(ARR); ARR.ArrowHead = tex(ARR, "talents-arrow-head-yellow")
+ARR = kid(WIN, "Frame"); ARR.Line = tex(ARR); ARR.ArrowHead = tex(ARR, "talents-arrow-head-yellow"); ARR.Line.SetAtlas = function(s, a) s.atlas = a; s.colortex = nil end
 SPEC = kid(WIN, "Frame"); SPEC.w, SPEC.h = 48, 48
 SPEC.icon = tex(SPEC); SPEC.icon.w, SPEC.icon.h = 36, 36
 SPEC.MainRing = tex(SPEC, "Talents-Main-Ring-c60"); SPEC.TextBackground = tex(SPEC, "Talents-Main-Ring-Box-c60")
@@ -152,9 +153,17 @@ L.execute('NNONE.SelectableIcon:Show()')
 expect("points come back: the empty talent gets the glow and its color", (border('NNONE'), E('NNONE.Icon.desat')), ((0.82, 0.84, 0.87), False))
 L.execute('NPART.StateBorder:SetAtlas("talents-node-square-yellow")')
 expect("Blizzard re-sets the frame (maxed now): restyled gold", border('NPART'), (1, 0.69, 0))
-expect("arrow: Blizzard's own head and shaft, tinted gold, size untouched", (round(E('ARR.ArrowHead.vc[2]'), 2), round(E('ARR.Line.vc[2]'), 2), E('ARR.Line.thick')), (0.69, 0.69, None))
-L.execute('ARR.ArrowHead:SetAtlas("talents-arrow-head-locked")')
-expect("arrow into a locked talent: light gray head and solid light gray line", (E('ARR.ArrowHead.texture:find("arrow_head_gray") ~= nil'), E('ARR.Line.colortex ~= nil and ARR.Line.colortex[1] == 0.78')), (True, True))
+def arrow(): return (E('ARR.ArrowHead.texture'), tuple(round(E('ARR.ArrowHead.vc[%d]' % k), 2) for k in (1, 2, 3)), tuple(round(E('ARR.Line.colortex[%d]' % k), 2) for k in (1, 2, 3)), E('ARR.Line.thick'))
+FLAT = None
+expect("gold arrow: flat head, solid gold shaft, 3.25 thick", arrow()[1:], ((1, 0.69, 0), (1, 0.69, 0), 3.25))
+expect("gold arrow: our flat head art", E('tostring(ARR.ArrowHead.texture):find("arrow_head_flat") ~= nil'), True)
+# Blizzard's pool: one arrow handed between links in any order
+for st, want in (("locked", (0.78, 0.8, 0.86)), ("yellow", (1, 0.69, 0)), ("ghost", (0.3, 0.65, 1)), ("green", (0.3, 0.65, 1)), ("gray", (0.78, 0.8, 0.86)), ("yellow", (1, 0.69, 0))):
+    L.execute('ARR.ArrowHead:SetAtlas("talents-arrow-head-%s")' % st)
+    got = arrow()
+    expect("pool -> %s: head and shaft %s, same width, nothing left over" % (st, want), (got[1], got[2], got[3], E('ARR.Line.vc[1] == 1 and ARR.Line.vc[2] == 1')), (want, want, 3.25, True))
+L.execute('ARR.ArrowHead:SetAtlas("talents-arrow-head-gray"); ARR.Line:SetAtlas("talents-arrow-line-gray")')
+expect("Blizzard re-sets only the shaft: ours comes back (no art, no 2nd head)", (E('ARR.Line.colortex ~= nil and ARR.Line.colortex[1] == 0.78'), E('ARR.Line.thick')), (True, 3.25))
 expect("spec icon: gold on navy (desaturated, gold, added)", E('SPEC.icon.desat == true and SPEC.icon.vc[2] == 0.69 and SPEC.icon.blend == "ADD"'), True)
 expect("spec ring blue, box navy", E('SPEC.MainRing.vc[3] == 1 and SPEC.TextBackground.vc[3] == 0.52'), True)
 # spellbook
@@ -296,6 +305,44 @@ L.execute('VR:Enable(); GetRepairAllCost = function() return 0, true end; Aether
 expect("repair item stays enabled, but costs nothing: gray", round(hammer(), 2), 0.65)
 L.execute('GetRepairAllCost = function() return 1200, true end; AetherSkins_Windows.P3.RefreshUsable()')
 expect("something to repair: gold", hammer(), 0.69)
+# vendor tooltips (user 15:22): a note under Blizzard's tooltip on all
+# three buttons when there's nothing to do, every line Aether gold
+L.execute(r"""
+TT = { lines = {} }
+function TT:SetOwner() self.lines = {}; self.shown = false end
+function TT:SetText(s, r, g, b) self.lines = { { s, r, g, b } } end
+function TT:AddLine(s, r, g, b) self.lines[#self.lines + 1] = { s, r, g, b } end
+function TT:Show() self.shown = true end
+function TT:IsShown() return self.shown end
+function TT:NumLines() return #self.lines end
+GameTooltip = TT
+setmetatable(_G, { __index = function(_, k) local n = type(k) == "string" and k:match("^GameTooltipTextLeft(%d+)$")
+  if n then local l = TT.lines[tonumber(n)]; return l and { GetText = function() return l[1] end, SetTextColor = function(_, r, g, b) l[2], l[3], l[4] = r, g, b end } end end })
+local function hookable(b) b.hooks = {}; b.HookScript = function(s, ev, fn) s.hooks[ev] = s.hooks[ev] or {}; table.insert(s.hooks[ev], fn) end
+  b.SetMotionScriptsWhileDisabled = function() end; return b end
+TR = hookable(kid(WIN, "Button", "MerchantRepairItemButton")); TR.IsEnabled = function() return true end; TR.Icon = tex(TR, "SpellIcon-256x256-Repair")
+TJ = hookable(kid(WIN, "Button", "MerchantSellAllJunkButton")); TJ.on = false; TJ.IsEnabled = function(s) return s.on end; TJ.Icon = tex(TJ, "SpellIcon-256x256-SellJunk")
+TA = hookable(kid(WIN, "Button", "MerchantRepairAllButton")); TA.IsEnabled = function() return false end; TA.Icon = tex(TA, "SpellIcon-256x256-RepairAll")
+AetherSkins_Windows.Contents(WIN)
+function Enter(b, blizTitle)       -- Blizzard's OnEnter (its own tooltip, or none), then ours
+  TT:SetOwner(); if blizTitle then TT:SetText(blizTitle, 1, 1, 1); TT:Show() end
+  for _, fn in ipairs((b.hooks or {}).OnEnter or {}) do fn(b) end
+end
+function Lines() local o = {} for _, l in ipairs(TT.lines) do o[#o + 1] = l[1] .. "@" .. tostring(l[3]) end return table.concat(o, " | ") end
+""")
+L.execute('GetRepairAllCost = function() return 0, true end')
+L.execute('Enter(TR, "Repair an Item")')
+expect("Repair an Item, nothing to repair: gold note under Blizzard's tooltip", E('Lines()'), "Repair an Item@0.69 | Nothing needs repair@0.69")
+L.execute('Enter(TJ, "Sell All Junk Items")')
+expect("Sell All Junk, no junk: gold note under Blizzard's tooltip", E('Lines()'), "Sell All Junk Items@0.69 | No junk to sell@0.69")
+L.execute('Enter(TA, nil)')
+expect("Repair All, nothing to repair: gold title and gold note", E('Lines()'), "Repair All Items@0.69 | Nothing needs repair@0.69")
+L.execute('GetRepairAllCost = function() return 500, true end; TJ.on = true')
+L.execute('Enter(TR, "Repair an Item")')
+expect("something to repair: Blizzard's tooltip only", E('Lines()'), "Repair an Item@1")
+L.execute('Enter(TJ, "Sell All Junk Items")')
+expect("junk to sell: Blizzard's tooltip only", E('Lines()'), "Sell All Junk Items@1")
+L.execute('setmetatable(_G, nil)')
 L.execute('''SBB = kid(WIN, "Button"); SBB.enabled = false; SBB.IsEnabled = function(s) return s.enabled end
 SBB.Enable = function(s) s.enabled = true end; SBA = tex(SBB, "minimal-scrollbar-arrow-top"); AetherSkins_Windows.Contents(WIN)''')
 def up(): return E('(function() for _, r in ipairs(SBB.regs) do if r.texture and tostring(r.texture):find("chev3d_up") then return r.desat and "gray" or "gold" end end end)()')
@@ -322,6 +369,7 @@ AetherSkins_Windows.Contents(WIN)''')
 expect("Legacy Tree picture buttons are not checkboxes: the picture stays", E('BIG.nt.alpha ~= 0 and AetherSkins_Windows.done[BIG] ~= "check"'), True)
 L.execute('''PC = tex(WIN, "Profession-overview-Card-Leatherworking"); PF = tex(WIN, "Skillbar_Fill_Flipbook_Leatherworking"); LC = tex(WIN, "Legacy-Challenge-Cards-Disable"); AetherSkins_Windows.Contents(WIN)''')
 expect("profession card and legacy card: Blizzard art hidden", E('PC.alpha == 0 and LC.alpha == 0'), True)
+expect("profession card: black like the pages (user 15:27, A)", E('(function() for _, r in ipairs(WIN.regs) do if r.points and r.points[1] and r.points[1][2] == PC and r.vc then return math.floor(r.vc[1] * 255 + 0.5) .. "," .. math.floor(r.vc[3] * 255 + 0.5) end end end)()'), "10,14")
 expect("profession skill bar: gold fill", round(E('PF.vc[2]'), 2), 0.69)
 L.execute('''MBG = tex(WIN, nil, 651761); CT = tex(WIN, "collections-background-tile"); CC = tex(WIN, "collections-background-corner"); PL = tex(WIN, "PetList-ButtonBackground"); AetherSkins_Windows.Contents(WIN)''')
 expect("collections: model backdrop, page tile and list rows replaced, corners gone", E('MBG.alpha == 0 and CT.alpha == 0 and CC.alpha == 0 and PL.alpha == 0'), True)
@@ -338,5 +386,21 @@ L.execute('''LN = kid(WIN, "Button"); LN.StateBorder = tex(LN, "Legacy-Tree-Fram
 LN.box = tex(LN, "Talents-Square-Box-c60"); AetherSkins_Windows.Contents(WIN)''')
 expect("Legacy Tree rank box: Blizzard's dark square hidden", E('LN.box.alpha'), 0)
 # switch off
+# Spellbook (user 15:25): page fills stop at the title strip's gold line
+L.execute("""
+local W = AetherSkins_Windows
+SBW = kid(UIParent, "Frame", "SpellbookTestWin"); W.chev[SBW] = {}
+SBW.GetTop = function() return 800 end; SBW.GetEffectiveScale = function() return 1 end
+SBP = kid(SBW, "Frame")
+PGL = tex(SBP, "spellbook-Page-Left-C60"); PGL.GetTop = function() return 795 end; PGL.GetEffectiveScale = function() return 1 end
+PGL.GetDrawLayer = function() return "BACKGROUND", 1 end
+PGR = tex(SBP, "spellbook-Page-Right-C60"); PGR.GetTop = function() return 760 end; PGR.GetEffectiveScale = function() return 1 end
+W.P3.BelowTitleTest = true
+AetherSkins_Windows.Contents(SBW)
+function TopPoint(o) for _, p in ipairs(o.points or {}) do if p[1] == "TOP" then return p[2] == SBW and p[5] end end return nil end
+function FillOf(par) for _, r in ipairs(par.regs) do if r.texture == "Interface\\\\Buttons\\\\WHITE8x8" or (r.texture and tostring(r.texture):find("WHITE")) then return r end end end
+""")
+expect("page starting inside the title strip: our black stops at the gold line", E('(function() for _, r in ipairs(SBP.regs) do if r ~= PGL and r ~= PGR and r.points then local y = TopPoint(r); if y then return y end end end end)()'), -23)
+expect("page already below the strip: left as Blizzard placed it", E('(function() local n = 0 for _, r in ipairs(SBP.regs) do if r ~= PGL and r ~= PGR and r.points and TopPoint(r) then n = n + 1 end end return n end)()'), 1)
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

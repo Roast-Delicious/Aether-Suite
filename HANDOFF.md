@@ -1294,3 +1294,49 @@ trim), xpbar_render.py (XP bar).
   MoreRule Profession-overview-Card* -> NAVYC + BoxEdge. Mock
   mock/prof_black.py (on the screenshot): A black (10,11,14) + blue edges
   (my pick), B black + faint navy edges, C charcoal (24,27,34). Asked.
+- TALENT ARROWS (user 15:16-15:19, screenshot): "every reload the talent
+  page looks different" = Blizzard POOLS arrows (same head+line reused for
+  another link each refresh) and our styling left leftovers (gray line's
+  solid color + thickness 3, gold tints on gray/ghost heads, Blizzard's
+  shaft re-set without its head). Measured on the screenshot: long gold
+  shafts 5 px flat, two BM shafts 1 px (Blizzard's thin art), gray 4-5 px.
+  USER SPEC: all arrows the width of the long gold ones, no 3D, no double
+  heads; KEEP the gray hue (0.78, 0.8, 0.86).
+  READY, NOT SHIPPED (branch fix-talent-arrows, AetherSkins 1.5.7):
+  P.Arrow styles every arrow from scratch for its state: our flat head
+  (Media/arrow_head_flat.tga, tools/gen_arrow_flat.py: white, the gray
+  head's shape) tinted gold / Aether blue / light gray; shaft = solid
+  SetColorTexture in the same color, SetThickness 3.25 (~5 px); ghost =
+  blue at 55%. Hooks the shaft's SetAtlas/SetTexture too. skins_pass2_test
+  (pool order test, ALL OK, 111).
+- VENDOR (user 15:22 video): Repair an Item + Sell All Junk show
+  BLIZZARD'S tooltip, so our 'nothing to do' note (only filled empty
+  tooltips) never showed; Repair All's note was gray. Buyback tab showed
+  Blizzard's gold label above ours (user: 'good catch').
+  READY, NOT SHIPPED (branch fix-vendor-tips, off fix-talent-arrows; same
+  AetherSkins 1.5.7): note added under Blizzard's tooltip when idle
+  (repair: GetRepairAllCost == 0; junk: C_MerchantFrame.GetNumJunkItems
+  == 0, else button disabled), title + note both Aether gold, no double
+  add; TabColor hides every Blizzard FontString on the tab on each
+  pick/unpick (cause not confirmed by dump; if it recurs, /skins tree on
+  the Buyback tab). Tests: skins_pass2 (+5), skins_windows (+1).
+- SPELLBOOK TITLE (user 15:25, refs/spellbook_title_2026-11-25.png):
+  strip looked short, gold line missing. Cause: Blizzard's page art
+  (spellbook-Page-Left/Right-C60) starts inside the title strip; our page
+  fill copies its position and, solid black since Build 7, covers the
+  strip's lower half + the gold line. READY, NOT SHIPPED (branch
+  fix-spellbook-title, off fix-vendor-tips; Skins 1.5.7): Pass3 Ours ->
+  P3.BelowTitle: any flat fill (Ours with no art file) whose texture
+  starts above win top - 23 is re-anchored TOP to the window at -23.
+  skins_pass2_test (+2).
+  DUMP 15:26 (tools/dumps/PlayerSpellsFrame_Spellbook_b157_2026-11-25.txt)
+  confirms: PlayerSpellsFrame 1154x720, SpellBookFrame 1148x702 with
+  BookBGLeft/Right 574x702 (spellbook-Page-*-C60) reaching ~18 units from
+  the top, i.e. into the 22-unit strip; our underline frame is there
+  ('Frame .? 1146x1'), just drawn under the book. Fix stands.
+- 15:27 user: Professions = A ("I like A. Let's roll" = build go).
+- BUILD 9 SHIPPED 15:30 (main, merged build9 = fix-talent-arrows +
+  fix-vendor-tips + fix-spellbook-title + Professions cards black):
+  AetherSkins 1.5.7. README stamp 15:30. Untested in game: flat arrows
+  across reloads, gold vendor notes on all three buttons, Buyback label,
+  Spellbook strip + gold line, black Professions cards.

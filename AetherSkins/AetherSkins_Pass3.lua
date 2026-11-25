@@ -324,9 +324,36 @@ local function Ours(t, file, col, w, h, path)
     o:SetVertexColor(col[1], col[2], col[3], col[4] or 1)
     o:ClearAllPoints()
     if w then o:SetSize(w, h or w); o:SetPoint("CENTER", t, "CENTER")
-    else o:SetPoint("TOPLEFT", t, "TOPLEFT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT") end
+    else
+        o:SetPoint("TOPLEFT", t, "TOPLEFT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
+        -- a flat fill never reaches into the window's title strip: Blizzard's
+        -- page art often starts higher, and since pages went solid black
+        -- (Nov 25 14:25) the Spellbook's covered the strip's lower half and
+        -- its gold line (user, 15:25)
+        if not file then P3.BelowTitle(o, t) end
+    end
     t:SetAlpha(0)
     return o
+end
+local TITLE_LINE = 23          -- title strip (22) + its gold line
+function P3.BelowTitle(o, t)
+    local win, f = nil, t.GetParent and t:GetParent()
+    for _ = 1, 12 do
+        if not f then break end
+        if W.chev and W.chev[f] then win = f; break end
+        f = f.GetParent and f:GetParent()
+    end
+    if not win then return end
+    local ok1, top = pcall(t.GetTop, t)
+    local ok2, wtop = pcall(win.GetTop, win)
+    local ok3, scale = pcall(t.GetEffectiveScale, t)
+    local ok4, wscale = pcall(win.GetEffectiveScale, win)
+    if not (ok1 and ok2 and type(top) == "number" and type(wtop) == "number") then return end
+    local k = (ok3 and ok4 and type(scale) == "number" and type(wscale) == "number" and wscale > 0) and scale / wscale or 1
+    if top * k <= wtop - TITLE_LINE then return end      -- starts below the strip already
+    o:ClearAllPoints()
+    o:SetPoint("LEFT", t, "LEFT"); o:SetPoint("RIGHT", t, "RIGHT"); o:SetPoint("BOTTOM", t, "BOTTOM")
+    o:SetPoint("TOP", win, "TOP", 0, -TITLE_LINE)
 end
 
 -- The Aether page in place of the parchment, with a thin blue edge.
@@ -531,7 +558,12 @@ function P3.MoreRule(t, a)
         Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true
     end
     -- boxes: navy with a blue edge
-    if a:find("^Profession%-overview%-[Cc]ard") or a == "Legacy-Tree-Frame-Card" then
+    -- Professions overview cards: black like the pages, blue edges kept
+    -- (user, Nov 25 15:27, option A of mock/prof_black.py)
+    if a:find("^Profession%-overview%-[Cc]ard") then
+        Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); BoxEdge(t); return true
+    end
+    if a == "Legacy-Tree-Frame-Card" then
         Ours(t, nil, NAVYC, nil, nil, WHITE); BoxEdge(t); return true
     end
     if a == "Professions-background-summarylist" or a == "Legacy-Tree-Frame-Points-Bar" then
@@ -696,22 +728,43 @@ function P.ExtraRule(t, a)
             -- a disabled button gets no mouse-over unless asked (user, 13:43:
             -- the gray buttons still showed nothing)
             if b.SetMotionScriptsWhileDisabled then pcall(b.SetMotionScriptsWhileDisabled, b, true) end
-            -- Blizzard shows these tooltips only when there's something to
-            -- do; a gray button now says why it's gray (user, Nov 25 12:46)
+            -- A gray button says why it's gray, on all three buttons, in Aether
+            -- gold (user, Nov 25 12:46 and 15:22: Repair an Item and Sell All
+            -- Junk show Blizzard's own tooltip, so the note goes under it).
             b:HookScript("OnEnter", function(self)
                 local tt = GameTooltip
-                if not tt or (tt.NumLines and tt:NumLines() > 0 and tt:IsShown()) then return end
-                local title, why
-                if nm == "MerchantSellAllJunkButton" then
-                    title, why = _G.SELL_ALL_JUNK_ITEMS or "Sell All Junk Items", "No junk to sell"
-                elseif nm == "MerchantGuildBankRepairButton" then
-                    title, why = _G.GUILDBANK_REPAIR or "Guild Repair", "Nothing needs repair"
+                if not tt then return end
+                local junk = nm == "MerchantSellAllJunkButton"
+                local idle
+                if junk then
+                    idle = self.IsEnabled and not self:IsEnabled()
+                    if C_MerchantFrame and C_MerchantFrame.GetNumJunkItems then
+                        local ok, n = pcall(C_MerchantFrame.GetNumJunkItems)
+                        if ok and type(n) == "number" then idle = n == 0 end
+                    end
                 else
-                    title, why = _G.REPAIR_ALL_ITEMS or "Repair All Items", "Nothing needs repair"
+                    local ok, cost = pcall(GetRepairAllCost)
+                    idle = not (ok and type(cost) == "number" and cost > 0)
                 end
-                tt:SetOwner(self, "ANCHOR_RIGHT")
-                tt:SetText(title, GOLD[1], GOLD[2], GOLD[3])
-                tt:AddLine(why, 0.62, 0.65, 0.72)
+                if not idle then return end
+                local why = junk and "No junk to sell" or "Nothing needs repair"
+                local has = tt.IsShown and tt:IsShown() and tt.NumLines and tt:NumLines() > 0
+                if not has then
+                    local title
+                    if junk then title = _G.SELL_ALL_JUNK_ITEMS or "Sell All Junk Items"
+                    elseif nm == "MerchantGuildBankRepairButton" then title = _G.GUILDBANK_REPAIR or "Guild Repair"
+                    elseif nm == "MerchantRepairItemButton" then title = _G.REPAIR_AN_ITEM or "Repair an Item"
+                    else title = _G.REPAIR_ALL_ITEMS or "Repair All Items" end
+                    tt:SetOwner(self, "ANCHOR_RIGHT")
+                    tt:SetText(title, GOLD[1], GOLD[2], GOLD[3])
+                else
+                    -- don't add it twice (Blizzard may refresh its tooltip)
+                    local last = _G["GameTooltipTextLeft" .. tt:NumLines()]
+                    if last and last.GetText and last:GetText() == why then return end
+                end
+                tt:AddLine(why, GOLD[1], GOLD[2], GOLD[3])
+                local first = _G.GameTooltipTextLeft1      -- title gold too, every button
+                if first and first.SetTextColor then first:SetTextColor(GOLD[1], GOLD[2], GOLD[3]) end
                 tt:Show()
             end)
         end

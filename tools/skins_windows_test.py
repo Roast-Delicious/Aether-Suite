@@ -141,6 +141,16 @@ L.execute('PanelTemplates_SelectTab(TAB2); PanelTemplates_DeselectTab(TAB1)')
 expect("switching tabs moves the gold edge", (round(tab_edge('TAB2'), 2), round(tab_edge('TAB1'), 2)), (0.69, 0.65))
 def tab_text(t): return E('(function() local r = %s.regs; for i = #r, 1, -1 do local x = r[i]; if x ~= %s.Text and x.SetJustifyH and not x.texture then return x.color and x.color[2] or (x.tc and x.tc[2]) end end end)()' % (t, t))
 expect("tab text: Blizzard's hidden, ours gold on the open tab, light gray on the other", (E('TAB1.Text.alpha'), tab_text('TAB2') and round(tab_text('TAB2'), 2), tab_text('TAB1') and round(tab_text('TAB1'), 2)), (0, 0.69, 0.85))
+# Buyback (user 15:22): Blizzard's label came back on the unpicked tab;
+# any Blizzard text region on a tab is hidden again on every pick/unpick
+L.execute("""
+TAB2.GetRegions = TAB2.GetRegions or function(s) return unpack(s.regs) end
+for _, r in ipairs(TAB2.regs) do if not r.GetObjectType then r.GetObjectType = function(x) return x.texture ~= nil and "Texture" or (x.SetJustifyH and "FontString" or "Texture") end end end
+TAB2.Text.alpha = 1
+EXTRA = TAB2:CreateFontString(nil, "OVERLAY"); EXTRA.alpha = 1; EXTRA.GetObjectType = function() return "FontString" end
+PanelTemplates_DeselectTab(TAB2); PanelTemplates_SelectTab(TAB1)
+""")
+expect("Buyback: Blizzard's label (and any second one) hidden again; ours shows", (E('TAB2.Text.alpha'), E('EXTRA.alpha'), tab_text('TAB2') is not None), (0, 0, True))
 expect("a forbidden widget is left alone", E('SECRET.Left.alpha'), 1)
 n = E('#CHAR.regs')
 L.execute(W + '.Skin(CHAR)')

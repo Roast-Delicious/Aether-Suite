@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (14:55)
+Last updated: November 25, 2026 (15:30)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -32,7 +32,7 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.7    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.5.6     The Aether look for Blizzard's windows
+  AetherSkins        1.5.7     The Aether look for Blizzard's windows
                                and the minimap
 
 
@@ -939,9 +939,10 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
     of points are light navy on a faint navy plate; locked ones are
     light gray (none are darkened any more). With no points left,
     nothing shows as takeable. Each taken talent shows
-    a pill such as "2 of 5" on its bottom edge, and the arrows between
-    talents are thicker and 3D (gold, blue or gray, like their talent;
-    the gray ones solid).
+    a pill such as "2 of 5" on its bottom edge. The arrows between
+    talents are all one flat line of the same width with one flat head:
+    gold from a maxed talent, blue from one with some points, light
+    gray otherwise. They look the same after every reload.
   - Spellbook: the same scheme. Known spells have a thin blue frame in
     place of Blizzard's ornate ones (blue, and brown for passives),
     ones you can learn at a trainer now glow blue with
@@ -962,7 +963,11 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
   - Vendors: navy item tiles (only where there's an item), flat gold
     repair (anvil), repair item (hammer), guild repair (shield) and
     sell junk (coin sack) buttons, and Merchant / Buyback tabs that
-    line up.
+    line up. When there's nothing to repair or sell, all three buttons
+    say so in gold in their tooltip.
+  - Professions: black cards with blue edges, like the pages.
+  - Page backgrounds stop at the gold line under the title, so the
+    title strip is never covered (the Spellbook's was).
 
   The minimap:
   - Blizzard's ring around the minimap is replaced by a navy ring with a
