@@ -440,4 +440,15 @@ f:SetScript("OnEvent", function(_, event, name)
     end
 end)
 
-AetherLedger_TrackerLook = { Install = Install, IsYellow = IsYellow }
+-- Paint again now (the hand-in list was just worked out; without this the
+-- gold line waited for the tracker's next update, a few seconds after a
+-- /reload, user Nov 25).
+local function Repaint()
+    if not installed then return end
+    for _, name in ipairs(MODULES) do
+        local module = _G[name]
+        if module then pcall(PaintModule, module) end
+    end
+end
+
+AetherLedger_TrackerLook = { Install = Install, IsYellow = IsYellow, Repaint = Repaint }

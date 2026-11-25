@@ -565,6 +565,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   Points: 0 -> not "can"; Icon SetVertexColor hook; lock icon .92,
   frame .62/.65/.7), map quest log (hook QuestLogQuests_Update /
   QuestMapFrame_UpdateAll -> Again(WorldMapFrame)). Tests +4.
+  FRIENDS (10:25): A - lighter cards, hover thin blue outline, selected
+  brighter + blue outline + gold notch (mock/friends_sel.py) -> Build 2.
+  TRACKER LINE LATE (10:27): after /reload the line came ~6 s later
+  (first Apply at 6 s; line drawn only on a module Update). Fixed on the
+  branch: first Apply at 1.5 s + again at 6 s; Apply calls
+  AetherLedger_TrackerLook.Repaint() (also on the no-change path).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in

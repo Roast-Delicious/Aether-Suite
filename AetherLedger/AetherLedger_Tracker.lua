@@ -455,7 +455,8 @@ local function Apply()
     for _, q in ipairs(elsewhere) do ids[#ids + 1] = "e" .. tostring(q.id) end
     local wantKey = table.concat(ids, ",")
     local currentKey = table.concat(WatchOrder(byIndex), ",")
-    if wantKey == lastWantKey and currentKey == lastReadKey then return end
+    local function Repaint() if AetherLedger_TrackerLook and AetherLedger_TrackerLook.Repaint then AetherLedger_TrackerLook.Repaint() end end
+    if wantKey == lastWantKey and currentKey == lastReadKey then Repaint(); return end
 
     -- Say which zone the list follows when that changes.
     if focusMap and focusMap ~= lastFocus then
@@ -480,6 +481,7 @@ local function Apply()
     lastWantKey = wantKey
     lastReadKey = table.concat(WatchOrder(byIndex), ",")
     if QuestWatch_Update then pcall(QuestWatch_Update) end
+    if C_Timer and C_Timer.After then C_Timer.After(0, Repaint) else Repaint() end
     if not ok then print(PREFIX .. "couldn't sort the quest tracker: " .. tostring(err)) end
 end
 
@@ -734,7 +736,10 @@ end
 events:SetScript("OnEvent", function(_, event, arg1, arg2)
     if event == "PLAYER_LOGIN" then
         quietUntil = GetTime() + 10
-        ApplySoon(6)
+        -- A first pass soon after a /reload (so the hand-in line shows right
+        -- away), and the usual one at 6 s once the quest data has settled.
+        ApplySoon(1.5)
+        C_Timer.After(6, function() ApplySoon(0) end)
     elseif event == "PLAYER_REGEN_ENABLED" then
         if waitingForCombat then waitingForCombat = false; ApplySoon(1) end
     elseif event == "QUEST_WATCH_LIST_CHANGED" then
