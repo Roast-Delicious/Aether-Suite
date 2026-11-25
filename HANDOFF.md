@@ -571,6 +571,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   (first Apply at 6 s; line drawn only on a module Update). Fixed on the
   branch: first Apply at 1.5 s + again at 6 s; Apply calls
   AetherLedger_TrackerLook.Repaint() (also on the no-change path).
+  ITEM FRAMES (10:30): A - empty slots dim slate (52,64,84), plain items
+  (white/gray quality) silver (200,205,215), uncommon+ quality color.
+  Character slots (QualityUpdate: no IconBorder/common -> silver if an
+  item, slate if empty: check GetItem/Icon texture) and Pack
+  (SlotQuality) -> Build 2 (mock/slot_colors.py).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
