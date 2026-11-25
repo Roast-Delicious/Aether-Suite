@@ -24,7 +24,7 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.4     What an item is for, when you hover it
-  AetherLedger       1.8.2     Where to quest, train and skin next,
+  AetherLedger       1.8.3     Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.1     Your bags sorted into sections
   AetherChat         1.0.8     Chat with the Aether look, fitted beside
@@ -477,8 +477,8 @@ AetherLedger - where to quest, train and skin next             /ledger
     zone where you turn it in, not where you got it). Red quests (too hard
     for now) are left out until a level-up turns them orange; when one
     you just accepted goes, a chat line says why.
-  - Finished quests from the zone you're in that are handed in
-    somewhere else stay at the bottom of the list, under a thin gold
+  - Finished quests from any zone that are handed in somewhere else
+    stay at the bottom of the list, under a thin gold
     line, reading "Ready for turn-in: Orgrimmar" (the zone to go to).
     The zone comes from the game's own turn-in marker first, so quests
     the guide doesn't know about show up there too.

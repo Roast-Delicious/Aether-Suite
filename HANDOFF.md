@@ -359,6 +359,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   page) -> dump with a quest clicked. AetherPathfinderButton (ours) ok.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
+- READY, NOT SHIPPED (branch skins-second-pass): AetherLedger 1.8.3 -
+  hand-in list at the bottom of the tracker now takes finished quests
+  from ANY zone whose turn-in isn't here (user 06:41, screenshot in
+  Desolace: Supply and Demand, a Stranglethorn quest, missing). Answers
+  the open "all finished quests?" question: yes. Test: tracker_handin.
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
   zone from C_QuestLog.GetNextWaypoint first), AetherSkins 1.2.2 (full
   /skins tree dumps: 1500 lines, hidden parts folded, our pieces skipped;
