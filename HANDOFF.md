@@ -269,6 +269,13 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   scroll thumb; detail pane) APPROVED 06:50 "love it". 2 Friends (navy
   cards, offline dimmer, selected blue edge; search box; dropdowns;
   small navy icon buttons; navy Add Friend) APPROVED 06:50.
+  TALENT ICONS (user 07:00, mock/talent_tint.py): spec header icons
+  (Beast Mastery etc.) = C, gold on navy (navy disc + desaturated icon,
+  SetBlendMode ADD, vertex gold). Tree nodes: Blizzard art; MAXED =
+  gold tint (B: SetDesaturated + SetVertexColor gold) + gold border;
+  SOME POINTS = blue border (was green); UNAVAILABLE = gray, as is.
+  Open (asked 07:00): 'can take' (0 points, unlocked) vs locked look;
+  arrows; count text color; green 'can learn' glow -> blue?
   GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
   LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
   (no [styled] marks anywhere): the skinner never caught it -> added
