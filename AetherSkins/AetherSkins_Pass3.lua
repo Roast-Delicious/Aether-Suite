@@ -207,9 +207,41 @@ local function CrestKind(win, name, portrait)
     end
     return CREST[name]
 end
+-- Character window: your own face, live (user, Nov 25 12:59, mock/char_crest.py A)
+local face
+local function FaceCrest(win)
+    local chrome = (not T(win, "NineSlice") and T(win, "BorderFrame")) or win
+    local pc = T(chrome, "PortraitContainer")
+    local portrait = (pc and (T(pc, "portrait") or T(pc, "Portrait"))) or _G.CharacterFramePortrait
+    if not portrait then return end
+    if not face then
+        local owner = pc or chrome
+        face = {}
+        face.disc = Tex(owner, "OVERLAY", 5, MEDIA .. "disc_plain", NAVY)
+        face.disc:SetSize(60, 60); face.disc:SetPoint("CENTER", portrait, "CENTER")
+        face.tex = owner:CreateTexture(nil, "OVERLAY", nil, 6)
+        face.tex:SetSize(56, 56); face.tex:SetPoint("CENTER", portrait, "CENTER")
+        if owner.CreateMaskTexture then
+            local m = owner:CreateMaskTexture()
+            m:SetTexture("Interface\\CharacterFrame\\TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+            m:SetAllPoints(face.tex); face.tex:AddMaskTexture(m)
+        end
+        local ev = CreateFrame("Frame")
+        for _, e in ipairs({ "UNIT_PORTRAIT_UPDATE", "PLAYER_ENTERING_WORLD", "UNIT_MODEL_CHANGED" }) do pcall(ev.RegisterEvent, ev, e) end
+        ev:SetScript("OnEvent", function(_, _, unit)
+            if (unit == nil or unit == "player") and SetPortraitTexture then pcall(SetPortraitTexture, face.tex, "player") end
+        end)
+        if win.HookScript then win:HookScript("OnShow", function() if SetPortraitTexture then pcall(SetPortraitTexture, face.tex, "player") end end) end
+    end
+    portrait:SetAlpha(0)
+    if SetPortraitTexture then pcall(SetPortraitTexture, face.tex, "player") end
+end
+P3.FaceCrest = FaceCrest
+
 function P3.Crest(win)
     local name = win.GetName and win:GetName()
     if not name then return end
+    if name == "CharacterFrame" then return FaceCrest(win) end
     local chrome = (not T(win, "NineSlice") and T(win, "BorderFrame")) or win
     local pc = T(chrome, "PortraitContainer")
     local portrait = (pc and (T(pc, "portrait") or T(pc, "Portrait"))) or (name and _G[name .. "Portrait"])

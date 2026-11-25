@@ -1171,3 +1171,6 @@ trim), xpbar_render.py (XP bar).
   page blue (were faded to frame-dark). OPEN: map red quest text (mock
   maplog_red.py), Primary/Secondary text looks centered to me - asked;
   need dumps: Game Menu, talents (if arrows still wrong).
+  CHARACTER CREST (user 12:59 'A'): P3.FaceCrest - navy disc + live
+  SetPortraitTexture('player') masked round, refreshed on UNIT_PORTRAIT_
+  UPDATE / PLAYER_ENTERING_WORLD / UNIT_MODEL_CHANGED / OnShow.
