@@ -24,7 +24,7 @@ if not (P and P.H and W.H) then return end
 local H, PH = W.H, P.H
 local Tex, Fade, T, Edge, NavyBox, Forbidden = H.Tex, H.Fade, H.T, H.Edge, H.NavyBox, H.Forbidden
 local MEDIA, WHITE, GOLD, BLUE, NAVY, TEXT = H.MEDIA, H.WHITE, H.GOLD, H.BLUE, H.NAVY, H.TEXT
-local PAGE = H.PAGE or { 42 / 255, 90 / 255, 138 / 255 }
+local PAGE = H.PAGE or { 19 / 255, 40 / 255, 74 / 255 }
 local Tint, Atlas, FileID, Shown, Once, HookShow = PH.Tint, PH.Atlas, PH.FileID, PH.Shown, PH.Once, PH.HookShow
 local weak = PH.weak
 local P3 = {}

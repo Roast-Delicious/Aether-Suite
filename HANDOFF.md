@@ -1209,3 +1209,7 @@ trim), xpbar_render.py (XP bar).
   TabKey falls back to GetDebugName, keys checked before icon IDs;
   Browse -> new gl_search (magnifier, gen_skins_art4.py), Who ->
   gl_people (crest too). OPEN: navy vs blue decision.
+  NAVY (user 14:19 yes): H.PAGE = 19,40,74 (pages), H.NAVY = 31,60,100
+  (boxes/strips/rows/tabs/crests). Gray arrows: our arrow_head_gray at
+  Blizzard's size + solid light gray line .78,.8,.86.
+- BUILD 6 SHIPPED 14:21 (main, merged build6): AetherSkins 1.5.3.
