@@ -1,0 +1,516 @@
+== Window dump: WorldMapFrame ==
+Frame WorldMapFrame 1035x534
+  Texture WorldMapFrameBg 1031x511 tex=374155
+  Frame .TitleCanvasSpacerFrame 697x67
+  ScrollFrame .ScrollContainer 697x465
+    Frame .Child 1002x668
+      Texture .TiledBackground 2004x1336
+      Frame .? 1002x668
+        Texture .? 256x242 tex=7963798
+        Texture .? 256x32 tex=7963807
+        Texture .? 256x256 tex=7963818
+        Texture .? 256x256 tex=7963803
+        Texture .? 256x72 tex=7963813
+        Texture .? 32x256 tex=7963800
+        Texture .? 128x128 tex=7963810
+        Texture .? 256x32 tex=7963820
+        Texture .? 256x256 tex=7963805
+        Texture .? 256x256 tex=7963816
+        Texture .? 256x256 tex=7963802
+        Texture .? 104x256 tex=7963812
+        Texture .? 256x256 tex=7963799
+        Texture .? 32x32 tex=7963808
+        Texture .? 256x256 tex=7963819
+        Texture .? 256x32 tex=7963804
+        Texture .? 104x72 tex=7963814
+        Texture .? 256x256 tex=7963801
+        Texture .? 256x256 tex=7963811
+        Texture .? 256x256 tex=7963797
+        Texture .? 32x256 tex=7963806
+      Frame .? 1002x668
+        Texture .HighlightTexture 0x0 hidden
+        Texture .PulseTexture 0x0 hidden
+      FogOfWarFrame .? 1002x668
+      QuestPOIFrame .? 1002x668
+      ScenarioPOIFrame .? 1002x668
+      UnitPositionFrame .? 1002x668
+      Frame .? 1002x668
+        Texture .? 256x256 tex=7963785
+        Texture .? 256x256 tex=7963792
+        Texture .? 256x256 tex=7963796
+        Texture .? 256x256 tex=7963789
+        Texture .? 256x256 tex=7963793
+        Texture .? 256x256 tex=7963786
+        Texture .? 256x256 tex=7963790
+        Texture .? 256x256 tex=7963794
+        Texture .? 256x256 tex=7963787
+        Texture .? 256x256 tex=7963791
+        Texture .? 256x256 tex=7963795
+        Texture .? 256x256 tex=7963788
+      Button .? 20x20
+        Texture .HighlightTexture 32x32 hidden atlas=UI-QuestPoi-InnerGlow
+        Texture .Glow 64x64 hidden atlas=UI-QuestPoi-OuterGlow
+        Texture .NormalTexture 32x32 atlas=UI-QuestPoi-QuestNumber
+        Texture .PushedTexture 32x32 hidden atlas=UI-QuestPoi-QuestNumber-Pressed
+        Texture .LinkGlow 75x75 hidden atlas=UI-QuestPoi-OuterGlow
+        Frame .Display 1x1
+          Texture .Icon 32x32 atlas=Quest-In-Progress-Icon-yellow
+      Button .? 13x13
+        Texture .border 13x13
+        MaskTexture .? 13x13
+        Texture .dot 10x10
+        MaskTexture .? 10x10
+        Texture .icon 10x10 tex=136465
+        MaskTexture .? 10x10
+        Texture .glow 16x16
+        MaskTexture .? 16x16
+      Button .? 13x13
+        Texture .border 13x13
+        MaskTexture .? 13x13
+        Texture .dot 10x10
+        MaskTexture .? 10x10
+        Texture .icon 10x10 tex=133639
+        MaskTexture .? 10x10
+        Texture .glow 16x16
+        MaskTexture .? 16x16
+      Button .? 13x13
+        Texture .border 13x13
+        MaskTexture .? 13x13
+        Texture .dot 10x10
+        MaskTexture .? 10x10
+        Texture .icon 10x10 tex=136456
+        MaskTexture .? 10x10
+        Texture .glow 16x16
+        MaskTexture .? 16x16
+      Button .? 13x13
+        Texture .border 13x13
+        MaskTexture .? 13x13
+        Texture .dot 10x10
+        MaskTexture .? 10x10
+        Texture .icon 10x10 tex=133639
+        MaskTexture .? 10x10
+        Texture .glow 16x16
+        MaskTexture .? 16x16
+      Button .? 13x13
+        Texture .border 13x13
+        MaskTexture .? 13x13
+        Texture .dot 10x10
+        MaskTexture .? 10x10
+        Texture .icon 10x10 tex=136466
+        MaskTexture .? 10x10
+        Texture .glow 16x16
+        MaskTexture .? 16x16
+      Button .? 13x13
+        Texture .border 13x13
+        MaskTexture .? 13x13
+        Texture .dot 10x10
+        MaskTexture .? 10x10
+        Texture .icon 10x10 tex=136465
+        MaskTexture .? 10x10
+        Texture .glow 16x16
+        MaskTexture .? 16x16
+      Button .? 13x13
+        Texture .border 13x13
+        MaskTexture .? 13x13
+        Texture .dot 10x10
+        MaskTexture .? 10x10
+        Texture .icon 10x10 tex=133639
+        MaskTexture .? 10x10
+        Texture .glow 16x16
+        MaskTexture .? 16x16
+      Button .? 13x13
+        Texture .border 13x13
+        MaskTexture .? 13x13
+        Texture .dot 10x10
+        MaskTexture .? 10x10
+        Texture .icon 10x10 tex=136459
+        MaskTexture .? 10x10
+        Texture .glow 16x16
+        MaskTexture .? 16x16
+    Frame .? 400x128
+      FontString .Name 1x1
+      Texture .Texture 0x0 hidden
+      FontString .Description 1x1
+    Frame .? 99x20
+      Texture .edge 101x22
+      Texture .bg 99x20
+      FontString .text 87x12
+  Frame .OverscrollBG 697x465
+    Texture .Texture 697x465 atlas=gamepad-mapquestlog-bgtile-2k
+    Texture .TopLeftVignette 349x233 atlas=gamepad-mapquestlog-bg-vignette
+    Texture .TopRightVignette 349x233 atlas=gamepad-mapquestlog-bg-vignette
+    Texture .BottomLeftVignette 349x233 atlas=gamepad-mapquestlog-bg-vignette
+    Texture .BottomRightVignette 349x233 atlas=gamepad-mapquestlog-bg-vignette
+  Frame .BlackoutFrame 1706x1066 hidden (1 parts inside, skipped)
+  Frame .BorderFrame 1035x534
+    Texture .TopTileStreaks 1027x43 hidden atlas=_UI-Frame-TopTileStreaks
+    Texture .Underlay 1035x534 hidden
+    Texture .InsetBorderTop 697x3 atlas=_UI-Frame-InnerTopTile
+    Frame .NineSlice 1035x534
+      Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+      Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRightDouble
+      Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+      Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+      Texture .TopEdge 860x95 atlas=_UI-Frame-Metal-EdgeTop
+      Texture .BottomEdge 860x100 atlas=_UI-Frame-Metal-EdgeBottom
+      Texture .LeftEdge 95x363 atlas=!UI-Frame-Metal-EdgeLeft
+      Texture .RightEdge 95x363 atlas=!UI-Frame-Metal-EdgeRight
+      Texture .Center 0x0
+    Frame .PortraitContainer 1x1
+      Texture WorldMapFramePortrait 62x62 tex=136797
+      MaskTexture .CircleMask 58x58
+    Frame .FrameGlow 1069x572 hidden (1 parts inside, skipped)
+    Frame .TitleContainer 953x20
+      FontString WorldMapFrameTitleText 953x12
+    Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+    Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+    Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+    Button WorldMapFrameCloseButton 28x28
+      Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+      Texture .? 28x28 atlas=RedButton-Exit
+      Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+      Texture .? 28x28 atlas=RedButton-Highlight
+    Button .Tutorial 64x64 hidden (5 parts inside, skipped)
+    Frame .MaximizeMinimizeFrame 28x28
+      Button .MaximizeButton 28x28
+        Texture .? 28x28 atlas=RedButton-Expand
+        Texture .? 28x28 hidden atlas=RedButton-Expand-Pressed
+        Texture .? 28x28 hidden atlas=RedButton-Expand-Disabled
+        Texture .? 28x28 atlas=RedButton-Highlight
+      Button .MinimizeButton 28x28 hidden (4 parts inside, skipped)
+  Button .? 160x25 hidden (3 parts inside, skipped)
+  Button .WorldMapTrackingOptionsButton 32x32
+    Texture .Icon 27x27 atlas=common-dropdown-a-button
+    Texture .? 27x27 atlas=common-dropdown-a-button
+    Button .ResetButton 23x23 hidden (2 parts inside, skipped)
+    Frame .GamepadFocusIcon 22x22 hidden (11 parts inside, skipped)
+  Button .WorldMapTrackingPinButton 32x32
+    Texture .? 46x53 hidden atlas=MapCornerShadow-Right
+    Texture .Background 25x25 tex=136467
+    Texture .Icon 20x20 atlas=Waypoint-MapPin-Untracked
+    Texture .IconOverlay 20x20 hidden
+    Texture .Border 54x54 tex=136430
+    Texture .ActiveTexture 37x37 hidden tex=3509691
+    Texture .? 32x32 tex=136477
+  Frame .? 244x103 hidden (4 parts inside, skipped)
+  Frame .? 101x86 hidden (2 parts inside, skipped)
+  Frame .? 101x86
+    FontString .TimeLabel 1x1 hidden
+  Frame .? 300x300 hidden (4 parts inside, skipped)
+  Button .? 82x82 hidden (7 parts inside, skipped)
+  Frame .navBar 583x33
+    Texture .? 583x33 tex=516764
+    Texture .InsetBorderBottomLeft 6x6 atlas=UI-Frame-InnerBotLeftCorner
+    Texture .InsetBorderBottomRight 6x6 atlas=UI-Frame-InnerBotRight
+    Texture .InsetBorderBottom 577x3 atlas=_UI-Frame-InnerBotTile
+    Texture .InsetBorderLeft 3x30 atlas=!UI-Frame-InnerLeftTile
+    Texture .InsetBorderRight 3x30 atlas=!UI-Frame-InnerRightTile
+    Frame .overlay 583x33
+      Texture .? 583x33 tex=516764
+    Button WorldMapFrameOverflowButton 44x30 hidden (3 parts inside, skipped)
+    Button WorldMapFrameHomeButton 86x30
+      Texture WorldMapFrameHomeButtonLeft 30x30 tex=423811
+      Texture .? 86x30 tex=516763
+      Texture .? 86x30 hidden tex=516763
+      Texture .? 86x30 tex=516763
+      FontString WorldMapFrameHomeButtonText 46x12
+    Frame .KioskOverlay 583x33 hidden (1 parts inside, skipped)
+    Frame .GamepadPreviousAreaIcon 22x22 hidden (11 parts inside, skipped)
+    Frame .GamepadNextAreaIcon 22x22 hidden (11 parts inside, skipped)
+    Button .? 108x30
+      Texture .arrowUp 21x30 tex=516763
+      Texture .arrowDown 21x30 hidden tex=516763
+      Texture .selected 108x30 hidden tex=516763
+      Texture .? 108x30 tex=516764
+      Texture .? 108x30 hidden tex=516764
+      Texture .? 108x30 tex=516763
+      FontString WorldMapFrameText 55x12
+      Button .MenuArrowButton 27x31
+        Texture .Art 12x12 tex=423808
+        Texture .NormalTexture 32x32 tex=796424
+        Texture .PushedTexture 32x32 hidden tex=796423
+        Texture .? 32x32 tex=130757
+    Button .? 108x30
+      Texture .arrowUp 21x30 tex=516763
+      Texture .arrowDown 21x30 hidden tex=516763
+      Texture .selected 108x30 tex=516763
+      Texture .? 108x30 tex=516764
+      Texture .? 108x30 hidden tex=516764
+      Texture .? 108x30 tex=516763
+      FontString WorldMapFrameText 55x12
+      Button .MenuArrowButton 27x31
+        Texture .Art 12x12 tex=423808
+        Texture .NormalTexture 32x32 tex=796424
+        Texture .PushedTexture 32x32 hidden tex=796423
+        Texture .? 32x32 tex=130757
+  Button .SidePanelToggle 32x32
+    Button .OpenButton 32x32 hidden (4 parts inside, skipped)
+    Button .CloseButton 32x32
+      Texture .? 46x53 atlas=MapCornerShadow-Right
+      Texture .? 32x32 atlas=QuestCollapse-Hide-Up
+      Texture .? 32x32 hidden atlas=QuestCollapse-Hide-Down
+      Texture .? 48x48 tex=130757
+  Frame .? 100x18
+    Frame .CursorCoords 100x15 hidden (1 parts inside, skipped)
+    Frame .CrosshairCoords 100x15 hidden (1 parts inside, skipped)
+    Frame .PlayerCoords 100x15
+      FontString .Label 87x10
+  Frame QuestMapFrame 330x506
+    Texture .VerticalSeparator 3x506 hidden atlas=!UI-Frame-InnerRightTile
+    Frame .QuestsTab 55x55 hidden (6 parts inside, skipped)
+    Frame .EventsTab 55x55 hidden (6 parts inside, skipped)
+    Frame .MapLegendTab 55x55 hidden (6 parts inside, skipped)
+    Frame .ContentsAnchor 330x497
+    Frame .QuestsFrame 308x497
+      ScrollFrame QuestScrollFrame 308x468
+        Texture .Background 307x468 atlas=QuestLog-main-background
+        FontString .NoSearchResultsText 250x14 hidden
+        FontString .EmptyText 250x86 hidden
+        Texture .Edge 27x465 atlas=questlog_line_scrollbar
+        EditBox .SearchBox 200x20
+          FontString .? 164x20
+          Texture .? 2x10 hidden
+          Texture .Left 8x20 atlas=common-search-border-left
+          Texture .Right 8x20 atlas=common-search-border-right
+          Texture .Middle 189x20 atlas=common-search-border-middle
+          FontString .Instructions 164x20
+          Texture QuestScrollFrameSearchIcon 10x10 atlas=common-search-magnifyingglass
+          Button QuestScrollFrameClearButton 17x17 hidden (1 parts inside, skipped)
+        Frame .GamepadSearchFocusIcon 22x22 hidden (11 parts inside, skipped)
+        Button .SettingsDropdown 15x16
+          Texture .Icon 15x16 atlas=QuestLog-icon-setting
+          Texture .? 15x16 atlas=QuestLog-icon-setting
+        Frame .BorderFrame 314x481
+          Texture .Border 314x481 atlas=QuestLog-frame
+          Texture .TopDetail 48x19 atlas=QuestLog-frame-filigree
+          Texture .Shadow 307x66 atlas=QuestLog-Frame-Gradient-bottom
+        Frame QuestLogCount 100x20
+          Texture .Left 8x20 atlas=common-search-border-left
+          Texture .Right 8x20 atlas=common-search-border-right
+          Texture .Middle 89x20 atlas=common-search-border-middle
+          FontString QuestLogQuestCount 73x10
+        Frame .Contents 298x539
+          Frame .Separator 304x15 hidden (1 parts inside, skipped)
+          Frame .StoryHeader 304x69 hidden (5 parts inside, skipped)
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x4 atlas=common-button-list-minus
+              Texture .? 13x4 atlas=common-button-list-minus
+          Button .? 290x41
+            Texture .TagTexture 18x18 hidden tex=894601
+            Texture .StorylineTexture 20x20 hidden atlas=questlog-storylineicon
+            FontString .Text 241x12
+            FontString .TagText 1x1 hidden
+            Texture .TaskIcon 19x19 hidden atlas=TaskPOI-Icon
+            Texture .HighlightTexture 295x20 hidden atlas=QuestLog-quest-glow-yellow
+            FontString .ButtonText 1x10
+            Frame .Checkbox 14x14
+              Texture .? 14x14 atlas=QuestLog-icon-ticksquare
+              Texture .CheckMark 17x14 atlas=QuestLog-icon-checkmark-yellow
+              Texture .? 14x14 atlas=QuestLog-icon-ticksquare
+          Frame .? 220x12
+            FontString .Dash 9x16
+            FontString .Text 205x12
+          Button .? 20x20
+            Texture .HighlightTexture 32x32 hidden atlas=UI-QuestPoi-InnerGlow
+            Texture .Glow 64x64 hidden atlas=UI-QuestPoi-OuterGlow
+            Texture .NormalTexture 32x32 atlas=UI-QuestPoi-QuestNumber
+            Texture .PushedTexture 32x32 hidden atlas=UI-QuestPoi-QuestNumber-Pressed
+            Frame .Display 1x1
+              Texture .Icon 32x32 atlas=UI-QuestIcon-TurnIn-Normal
+          Button .? 290x65
+            Texture .TagTexture 18x18 hidden tex=894601
+            Texture .StorylineTexture 20x20 hidden atlas=questlog-storylineicon
+            FontString .Text 241x12
+            FontString .TagText 1x1 hidden
+            Texture .TaskIcon 19x19 hidden atlas=TaskPOI-Icon
+            Texture .HighlightTexture 295x20 hidden atlas=QuestLog-quest-glow-yellow
+            FontString .ButtonText 1x10
+            Frame .Checkbox 14x14
+              Texture .? 14x14 atlas=QuestLog-icon-ticksquare
+              Texture .CheckMark 17x14 atlas=QuestLog-icon-checkmark-yellow
+              Texture .? 14x14 atlas=QuestLog-icon-ticksquare
+          Frame .? 220x12
+            FontString .Dash 9x16
+            FontString .Text 205x12
+          Button .? 20x20
+            Texture .HighlightTexture 32x32 hidden atlas=UI-QuestPoi-InnerGlow
+            Texture .Glow 64x64 hidden atlas=UI-QuestPoi-OuterGlow
+            Texture .NormalTexture 32x32 atlas=UI-QuestPoi-QuestNumber
+            Texture .PushedTexture 32x32 hidden atlas=UI-QuestPoi-QuestNumber-Pressed
+            Frame .Display 1x1
+              Texture .Icon 32x32 atlas=Quest-In-Progress-Icon-yellow
+          Button .? 290x41
+            Texture .TagTexture 18x18 hidden tex=894601
+            Texture .StorylineTexture 20x20 hidden atlas=questlog-storylineicon
+            FontString .Text 241x12
+            FontString .TagText 1x1 hidden
+            Texture .TaskIcon 19x19 hidden atlas=TaskPOI-Icon
+            Texture .HighlightTexture 295x20 hidden atlas=QuestLog-quest-glow-yellow
+            FontString .ButtonText 1x10
+            Frame .Checkbox 14x14
+              Texture .? 14x14 atlas=QuestLog-icon-ticksquare
+              Texture .CheckMark 17x14 atlas=QuestLog-icon-checkmark-yellow
+              Texture .? 14x14 atlas=QuestLog-icon-ticksquare
+          Frame .? 220x36
+            FontString .Dash 9x16
+            FontString .Text 205x36
+          Button .? 20x20
+            Texture .HighlightTexture 32x32 hidden atlas=UI-QuestPoi-InnerGlow
+            Texture .Glow 64x64 hidden atlas=UI-QuestPoi-OuterGlow
+            Texture .NormalTexture 32x32 atlas=UI-QuestPoi-QuestNumber
+            Texture .PushedTexture 32x32 hidden atlas=UI-QuestPoi-QuestNumber-Pressed
+            Frame .Display 1x1
+              Texture .Icon 32x32 atlas=Quest-In-Progress-Icon-yellow
+          Button .? 290x53
+            Texture .TagTexture 18x18 hidden tex=894601
+            Texture .StorylineTexture 20x20 hidden atlas=questlog-storylineicon
+            FontString .Text 241x12
+            FontString .TagText 1x1 hidden
+            Texture .TaskIcon 19x19 hidden atlas=TaskPOI-Icon
+            Texture .HighlightTexture 295x20 hidden atlas=QuestLog-quest-glow-yellow
+            FontString .ButtonText 1x10
+            Frame .Checkbox 14x14
+              Texture .? 14x14 atlas=QuestLog-icon-ticksquare
+              Texture .CheckMark 17x14 atlas=QuestLog-icon-checkmark-yellow
+              Texture .? 14x14 atlas=QuestLog-icon-ticksquare
+          Frame .? 220x12
+            FontString .Dash 9x16
+            FontString .Text 205x12
+          Button .? 20x20
+            Texture .HighlightTexture 32x32 hidden atlas=UI-QuestPoi-InnerGlow
+            Texture .Glow 64x64 hidden atlas=UI-QuestPoi-OuterGlow
+            Texture .NormalTexture 32x32 atlas=UI-QuestPoi-QuestNumber
+            Texture .PushedTexture 32x32 hidden atlas=UI-QuestPoi-QuestNumber-Pressed
+            Frame .Display 1x1
+              Texture .Icon 32x32 atlas=Quest-In-Progress-Icon-yellow
+          Button .? 290x41
+            Texture .TagTexture 18x18 hidden tex=894601
+            Texture .StorylineTexture 20x20 hidden atlas=questlog-storylineicon
+            FontString .Text 241x12
+            FontString .TagText 1x1 hidden
+            Texture .TaskIcon 19x19 hidden atlas=TaskPOI-Icon
+            Texture .HighlightTexture 295x20 hidden atlas=QuestLog-quest-glow-yellow
+            FontString .ButtonText 1x10
+            Frame .Checkbox 14x14
+              Texture .? 14x14 atlas=QuestLog-icon-ticksquare
+              Texture .CheckMark 17x14 atlas=QuestLog-icon-checkmark-yellow
+              Texture .? 14x14 atlas=QuestLog-icon-ticksquare
+          Frame .? 220x24
+            FontString .Dash 9x16
+            FontString .Text 205x24
+          Button .? 20x20
+            Texture .HighlightTexture 32x32 hidden atlas=UI-QuestPoi-InnerGlow
+            Texture .Glow 64x64 hidden atlas=UI-QuestPoi-OuterGlow
+            Texture .NormalTexture 32x32 atlas=UI-QuestPoi-QuestNumber
+            Texture .PushedTexture 32x32 hidden atlas=UI-QuestPoi-QuestNumber-Pressed
+            Frame .Display 1x1
+              Texture .Icon 32x32 atlas=Quest-In-Progress-Icon-yellow
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+          Button .? 289x22
+            FontString .ButtonText 251x15
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Texture .? 289x22 atlas=common-button-list-collapseExpand
+            Button .CollapseButton 20x20
+              Texture .Icon 13x13 atlas=common-button-list-plus
+              Texture .? 13x13 atlas=common-button-list-plus
+        Frame .ScrollBar 8x474
+          Frame .Track 8x436
+            Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+            Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+            Texture .Middle 8x420 atlas=!minimal-scrollbar-track-middle
+            Button .Thumb 8x379
+              Texture .Begin 8x8 atlas=minimal-scrollbar-small-thumb-top
+              Texture .End 8x8 atlas=minimal-scrollbar-small-thumb-bottom
+              Texture .Middle 8x363 atlas=minimal-scrollbar-small-thumb-middle
+          Button .Back 17x11
+            Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+          Button .Forward 17x11
+            Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+      Frame .DetailsFrame 308x502 hidden (11 parts inside, skipped)
+      Frame .CampaignOverview 308x497 hidden (4 parts inside, skipped)
+    Frame .EventsFrame 308x468 hidden (7 parts inside, skipped)
+    Frame .QuestSessionManagement 330x49 hidden (5 parts inside, skipped)
+    Frame .MapLegend 308x468 hidden (3 parts inside, skipped)
+  Button AetherPathfinderButton 56x20
+    Texture .TopLeftCorner 1x1 tex=130871
+    Texture .TopRightCorner 1x1 tex=130871
+    Texture .BottomLeftCorner 1x1 tex=130871
+    Texture .BottomRightCorner 1x1 tex=130871
+    Texture .TopEdge 54x1 tex=130871
+    Texture .BottomEdge 54x1 tex=130871
+    Texture .LeftEdge 1x18 tex=130871
+    Texture .RightEdge 1x18 tex=130871
+    Texture .Center 54x18
+    Texture .? 54x18
+    Texture .? 54x18 hidden
+    Texture .? 54x18 hidden
+    Texture .? 54x18
+    FontString .? 26x11
+  Frame .? 67x21 hidden (3 parts inside, skipped)
+  Frame .? 0x0

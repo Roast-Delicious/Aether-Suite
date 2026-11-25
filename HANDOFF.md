@@ -327,6 +327,36 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   fade (MoneyInset already styled). Page arrows MerchantPrev/
   NextPageButton (hidden here) -> chevrons. .FilterDropdown hidden.
   Tab 2 = Buyback page (BuybackBG hidden) -> dump with that tab.
+  WORLD MAP = WorldMapFrame (dump 06:37, tools/dumps/WorldMapFrame_
+  2026-11-25.txt, complete). NOT SKINNED in game: no [styled] marks,
+  close button red. Its chrome lives under .BorderFrame (.NineSlice,
+  .PortraitContainer, .TitleContainer, WorldMapFrameCloseButton,
+  .MaximizeMinimizeFrame RedButton-Expand) -> skinner must look in
+  f.BorderFrame when f.NineSlice is missing (map frame). Keep the map
+  art (.ScrollContainer.Child tiles), fog, pins. .OverscrollBG gamepad-
+  mapquestlog-bgtile-2k + vignettes -> navy. .navBar (tex 516764 bar,
+  buttons tex 516763 left/arrow/selected, HomeButton, MenuArrowButton
+  tex 796424/423808) -> navy breadcrumb pills, blue chevrons, gold text
+  on the current zone. .WorldMapTrackingOptionsButton (common-dropdown-
+  a-button) and .WorldMapTrackingPinButton (tex 136467 bg, 136430
+  border, Waypoint-MapPin-Untracked) -> small navy round buttons.
+  .SidePanelToggle (QuestCollapse-Hide-Up + MapCornerShadow-Right) ->
+  navy chevron tab. Player coords label (.PlayerCoords) bottom - leave.
+  QUEST LOG SIDE PANEL QuestMapFrame.QuestsFrame / QuestScrollFrame:
+  .Background QuestLog-main-background (parchment), .BorderFrame .Border
+  QuestLog-frame + .TopDetail QuestLog-frame-filigree + .Shadow ->
+  navy panel; .Edge questlog_line_scrollbar -> blue line; zone headers
+  289x22 common-button-list-collapseExpand + plus/minus (same as rep:
+  navy strip, gold text); quest rows: .HighlightTexture QuestLog-quest-
+  glow-yellow -> blue glow; .Checkbox QuestLog-icon-ticksquare +
+  .CheckMark QuestLog-icon-checkmark-yellow -> our box + gold check;
+  objectives .Dash/.Text; POI buttons UI-QuestPoi-QuestNumber + icons
+  (Quest-In-Progress-Icon-yellow, UI-QuestIcon-TurnIn-Normal) -> same
+  as the tracker icon overlay (AetherLedger_TrackerLook); SearchBox and
+  QuestLogCount bronze common-search-border-* -> fade/our input; gear
+  .SettingsDropdown QuestLog-icon-setting -> white glyph. Hidden: side
+  tabs QuestsTab/EventsTab/MapLegendTab, DetailsFrame (quest detail
+  page) -> dump with a quest clicked. AetherPathfinderButton (ours) ok.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
