@@ -69,7 +69,9 @@ class Canvas:
         if title: self.text(((box[0] + box[2]) / 2, box[1] + strip * U / 2), title, 17, GOLD, 'SemiBold', 'mm')
         if chevrons:
             cx, cy = (x0 + x1) // 2, (y0 + y1) // 2; Pp = u(3)
-            for x, y, rot, sz in ((cx, y0 - Pp, 0, 26), (cx, y1 + Pp, 180, 26), (x1 + Pp, cy, -90, 34), (x0 - Pp, cy, 90, 34)):
+            sides = chevrons if isinstance(chevrons, str) else 'tbrl'
+            for side, x, y, rot, sz in (('t', cx, y0 - Pp, 0, 26), ('b', cx, y1 + Pp, 180, 26), ('r', x1 + Pp, cy, -90, 34), ('l', x0 - Pp, cy, 90, 34)):
+                if side not in sides: continue
                 k = u(sz)
                 c = tga('win_chev_dark', (10, 11, 14), (k, k)).rotate(rot, resample=Image.BICUBIC)
                 self.im.alpha_composite(c, (x - k // 2, y - k // 2))

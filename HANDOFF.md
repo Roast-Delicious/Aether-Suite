@@ -261,6 +261,8 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   USER REQUEST (06:33): when reskinning, role-selection icons (tank,
   healer, damage: Group Finder / role check) become FLAT GOLD (#FFB000)
   ON BLUE. Mockup AFTER all the remaining dumps are in.
+  CHOSEN (06:48): option A, navy disc + blue ring, gold ring when
+  selected, gold check, dim gold when unavailable (mock/roles.py).
   GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
   LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
   (no [styled] marks anywhere): the skinner never caught it -> added
