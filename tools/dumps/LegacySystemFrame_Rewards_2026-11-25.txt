@@ -1,0 +1,106 @@
+== Window dump: LegacySystemFrame ==
+Frame LegacySystemFrame 920x575
+  Texture LegacySystemFrameBg 916x552 tex=374155
+  Texture .TopTileStreaks 912x43 atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 920x575
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 745x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 745x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x404 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x404 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture LegacySystemFramePortrait 45x62 atlas=Legacy-up-c60
+    MaskTexture .CircleMask 41x58
+  Frame .FrameGlow 954x613 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 838x20
+    FontString LegacySystemFrameTitleText 838x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button LegacySystemFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .LegacyRewardTrackTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=2056011
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+  Frame .LegacyChallengeTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=413584
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+  Frame .LegacyTreeTab 55x55
+    Texture .Background 55x60 atlas=common-sidetab
+    Texture .Icon 50x50 tex=442272
+    MaskTexture .Mask 55x60
+    Texture .SelectedTexture 55x60 hidden atlas=common-sidetab-selected
+    Texture .TabGlow 55x60 atlas=common-sidetab-selected
+    Texture .HighlightTexture 55x60 atlas=common-sidetab-hover
+  Frame LegacySystemFrameTabIndicators 0x0 hidden (2 parts inside, skipped)
+  Frame .RewardTrackPage 910x569
+    Texture .Background 910x567 atlas=Legacy-Rewards-Tracker-background
+    Texture .Icon 108x155 atlas=Legacy-Rewards-Tracker-Icon
+    FontString .Points 21x32
+    FontString .PointsLabel 110x16
+    Texture .ProgressBarBackground 850x12 atlas=Legacy-Progressbar-BG
+    StatusBar .LegacyRewardProgressBar 850x9
+      Texture .ProgressBarFrame 866x26 atlas=Legacy-Progressbar-Frame
+      FontString .Text 1x1
+      Texture .? 14x9 atlas=Legacy-Progressbar-Fill
+    Frame .LegacyRewardProgressFrame 849x270
+      Frame .ClipFrame 849x270
+        MaskTexture .Mask 570x570
+        Frame .ParagonLevelFrame 200x50 hidden (7 parts inside, skipped)
+        Frame .? 216x241
+          Texture .RewardCardBG 216x241 atlas=Legacy-Rewards-Tracker-Cards-Disable
+          Texture .Highlight 216x241 hidden atlas=Legacy-Rewards-Tracker-Cards-Disable
+          Texture .Icon 64x64 tex=135614
+          Texture .LevelSquare 56x56 atlas=Legacy-Rewards-Tracker-Diamond-Disable
+          Texture .EarnedCheckmark 40x35 hidden atlas=worldquest-tracker-checkmark
+          Texture .IconBorder 80x80 atlas=Legacy-Rewards-Tracker-Icons-Frame-Disable
+          FontString .Level 16x12
+          FontString .RewardName 120x56
+        Frame .? 216x241
+          Texture .RewardCardBG 216x241 atlas=Legacy-Rewards-Tracker-Cards-Disable
+          Texture .Highlight 216x241 hidden atlas=Legacy-Rewards-Tracker-Cards-Disable
+          Texture .Icon 64x64 tex=294471
+          Texture .LevelSquare 56x56 atlas=Legacy-Rewards-Tracker-Diamond-Disable
+          Texture .EarnedCheckmark 40x35 hidden atlas=worldquest-tracker-checkmark
+          Texture .IconBorder 80x80 atlas=Legacy-Rewards-Tracker-Icons-Frame-Disable
+          FontString .Level 17x12
+          FontString .RewardName 120x28
+        Frame .? 216x241
+          Texture .RewardCardBG 216x241 atlas=Legacy-Rewards-Tracker-Cards-Disable
+          Texture .Highlight 216x241 hidden atlas=Legacy-Rewards-Tracker-Cards-Disable
+          Texture .Icon 64x64 tex=7941423
+          Texture .LevelSquare 56x56 atlas=Legacy-Rewards-Tracker-Diamond-Disable
+          Texture .EarnedCheckmark 40x35 hidden atlas=worldquest-tracker-checkmark
+          Texture .IconBorder 80x80 atlas=Legacy-Rewards-Tracker-Icons-Frame-Disable
+          FontString .Level 17x12
+          FontString .RewardName 120x28
+        Frame .? 216x241
+          Texture .RewardCardBG 216x241 atlas=Legacy-Rewards-Tracker-Cards-Disable
+          Texture .Highlight 216x241 hidden atlas=Legacy-Rewards-Tracker-Cards-Disable
+          Texture .Icon 64x64 tex=3753812
+          Texture .LevelSquare 56x56 atlas=Legacy-Rewards-Tracker-Diamond-Disable
+          Texture .EarnedCheckmark 40x35 hidden atlas=worldquest-tracker-checkmark
+          Texture .IconBorder 80x80 atlas=Legacy-Rewards-Tracker-Icons-Frame-Disable
+          FontString .Level 17x12
+          FontString .RewardName 120x28
+      Button .LeftButton 22x34 hidden (4 parts inside, skipped)
+      Button .JumpLeftButton 22x22 hidden (4 parts inside, skipped)
+      Button .RightButton 22x34 hidden (4 parts inside, skipped)
+      Button .JumpRightButton 22x22 hidden (4 parts inside, skipped)
+  Frame .ChallengesPage 920x575 hidden (5 parts inside, skipped)
+  Frame .TreePage 920x575 hidden (5 parts inside, skipped)

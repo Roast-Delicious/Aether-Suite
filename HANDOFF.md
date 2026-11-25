@@ -239,8 +239,182 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   Talents-divider-left/right/vertical-c60 -> blue. Keep class art and
   cloud/particle animation (decide with user if too busy). SpellBook is
   .SpellBookFrame (hidden here) -> dump #6 with the Spellbook tab open.
+  PROGRESS TRACK = LegacySystemFrame (title "Progress Track"; portrait
+  atlas Legacy-up-c60). Dump 06:32, tools/dumps/LegacySystemFrame_
+  Rewards_2026-11-25.txt, complete. Added to W.KNOWN (branch skins-
+  second-pass). Side tabs .LegacyRewardTrackTab / .LegacyChallengeTab /
+  .LegacyTreeTab (common-sidetab*). .RewardTrackPage: .Background
+  Legacy-Rewards-Tracker-background (big art), .Icon Legacy-Rewards-
+  Tracker-Icon, .Points/.PointsLabel, .ProgressBarBackground Legacy-
+  Progressbar-BG + StatusBar .LegacyRewardProgressBar (.ProgressBarFrame
+  Legacy-Progressbar-Frame, fill Legacy-Progressbar-Fill) -> capsule
+  bar, gold fill. Reward cards (216x241) under .LegacyRewardProgressFrame
+  .ClipFrame: .RewardCardBG Legacy-Rewards-Tracker-Cards-Disable (and
+  presumably -Cards for earned), .LevelSquare Legacy-Rewards-Tracker-
+  Diamond-Disable, .IconBorder Legacy-Rewards-Tracker-Icons-Frame-
+  Disable, .EarnedCheckmark worldquest-tracker-checkmark, .Level,
+  .RewardName -> navy rounded cards, blue icon frame, gold level badge
+  when earned. Arrow buttons .LeftButton/.RightButton/.Jump* hidden
+  (only shown with more cards). Hidden pages: .ChallengesPage, .TreePage
+  -> dump with those side tabs open. How to open: user found it (ask
+  how, for the README/checklist 1.14).
+  USER REQUEST (06:33): when reskinning, role-selection icons (tank,
+  healer, damage: Group Finder / role check) become FLAT GOLD (#FFB000)
+  ON BLUE. Mockup AFTER all the remaining dumps are in.
+  CHOSEN (06:48): option A, navy disc + blue ring, gold ring when
+  selected, gold check, dim gold when unavailable (mock/roles.py).
+  SECOND-PASS MOCKUPS (mock/pass2_*.py, out_p2_*.png): 1 Reputation
+  (side tabs navy, selected = gold edge + gold notch; header strips;
+  capsule bars; blue selected row w/ gold left accent; stronger blue
+  scroll thumb; detail pane) APPROVED 06:50 "love it". 2 Friends (navy
+  cards, offline dimmer, selected blue edge; search box; dropdowns;
+  small navy icon buttons; navy Add Friend) APPROVED 06:50.
+  TALENT ICONS (user 07:00, mock/talent_tint.py): spec header icons
+  (Beast Mastery etc.) = C, gold on navy (navy disc + desaturated icon,
+  SetBlendMode ADD, vertex gold). Tree nodes: Blizzard art; MAXED =
+  gold tint (B: SetDesaturated + SetVertexColor gold) + gold border;
+  SOME POINTS = blue border (was green); UNAVAILABLE = gray, as is.
+  Open (asked 07:00): 'can take' (0 points, unlocked) vs locked look;
+  arrows; count text color; green 'can learn' glow -> blue?
+  07:03-07:07: arrows YES, thicker + 3D bevel like the accents (mock/
+  talent_details.py), gold/blue/gray by source state. Counts: user wants
+  "2 of 5" wording (mock/talent_counts.py: 3b badge, 3c pill on icon,
+  3d line under) - pick pending. 1: user leaning 1C with locked in navy
+  (mock/talent_1c.py, three strengths) - pick pending. Glow: Aether
+  blue #4DA6FF (mock/talent_glow.py, soft/medium/strong) - pick pending;
+  user said "Aether looks good" (07:07).
+  07:08: counts = 3c, pill CENTERED ON THE FRAME'S BOTTOM EDGE ("2 of 5",
+  gold maxed / blue partial). Full-window mockup: mock/talent_full.py
+  (on the user's screenshot; unspent shown as 2).
+  07:10: glow = MEDIUM Aether blue (talent_glow.py strength 1.6, spread
+  .13). User idea 07:10: navy for 'not taken, no points left', locked
+  gray; asked for blue-locked mock (talent_scheme2.py). Recommended:
+  can take = art + blue glow; not taken = navy duotone; locked = gray.
+  CHOSEN 07:16: A (mock/talent_full.py UNSPENT=0 LOCKED=gray): can take
+  = art + medium blue glow; not taken (no points) = navy duotone (deep
+  #081226 -> #3C64A0, border #3C5A8C); locked = gray (lum x 0.55, border
+  #464A54), arrows into locked gray. TALENT DESIGN SETTLED.
+  07:17: user "go ahead with the mockups" = mockups 3-5 OK (not a build
+  go); Spellbook to follow the talent scheme -> new mock (pass2_book.py).
+  07:19: Spellbook talent-scheme mock APPROVED ("love it"). ALL
+  SECOND-PASS MOCKUPS APPROVED. Waiting for the build go.
+  07:26: AetherPack 1.6.2 into the next build (user OK): hide Blizzard's
+  quickslot NormalTexture (130841, the light-gray rounded edge around
+  every bag slot, seen in the 07:22 screenshot) and draw a thin Aether
+  blue icon frame like the Vendor/Spellbook; quality borders stay on top.
+  GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
+  LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
+  (no [styled] marks anywhere): the skinner never caught it -> added
+  to W.KNOWN; check why the ShowUIPanel hook missed it (likely shown
+  with :Show() directly) -> also hook its OnShow. No close button in the
+  dump. Parts: .RolesSection LFGListingFrameRoleBackground groupfinder-
+  roles-background; .Inset .CustomBG groupfinder-background, .Border
+  common-insideframe; .DividerFrame.Divider common-framedivider; Back /
+  Post buttons UIPanelButton tex 130824. Role buttons under
+  LFGListingFrameSoloRoleButtons (and hidden ...GroupRoleButtons):
+  RoleButtonTank/Healer/DPS: *Background UI-LFG-RoleIcon-<role>-
+  Background, icon UI-LFG-RoleIcon-<role> (85x85, unnamed), .cover tex
+  337499 (dim when unavailable), .CheckButton old UI-CheckBox (tex
+  130750-130755). NewPlayerFriendlyButton: UI-LFG-RoleIcon-Leader +
+  newplayerchat-chaticon-newcomer. -> USER REQUEST: flat gold glyphs on
+  a blue disc (our own art, Media/role_tank/healer/dps/leader), gold
+  check. Category buttons (418x67) under LFGListingFrameCategoryView:
+  .Icon groupfinder-button-dungeons/-questing/-battlegrounds/-custom-
+  pve (picture banners, keep), .Cover groupfinder-button-cover (+-down,
+  -hover) -> navy rounded frame, blue hover, .Label. Hidden views:
+  ActivityView, LockedView -> dump after clicking a category.
+  SPELLBOOK = PlayerSpellsFrame.SpellBookFrame (dump 06:35, tools/dumps/
+  PlayerSpellsFrame_Spellbook_2026-11-25.txt, complete). Book art:
+  .BookBGLeft spellbook-Page-Left-C60, .BookBGRight spellbook-Page-
+  Right-C60 (parchment pages) -> dark navy pages (decide: keep a hint of
+  book? default navy panel + thin blue center line). Category tabs on
+  .SpellBookFrame.tabSystem: square icon tabs, .SquareBackground
+  spellbook-Tab-Frame-C60, active spellbook-Tab-Frame-Glow-C60 +
+  -glow-gradient-C60 -> navy square, gold edge when active (our tab
+  styler draws a box on .Text which is 1x10 here: special-case square
+  tabs, style around .Icon instead). Section header: Frame 448x60 with
+  .Text, .Border spellbook-divider, .Backplate spellbook-list-backplate
+  -> gold header text + blue line. Spell entries (216x60, named by
+  spell): .Backplate spellbook-item-backplate -> faint navy row; .Button
+  .Border spellbook-item-iconframe (active) / talents-node-circle-gray
+  (passive, round) -> blue square frame / blue ring; hover
+  spellbook-item-iconframe-hover / -passive-hover -> blue glow; keep
+  .Icon, Cooldown, glows. .SettingsDropdown common-dropdown-a-button,
+  .SearchBox (bronze common-search-border-*: fade, same as Talents).
+  .PagingControls Prev/Next tex 130864-130869 (old round page arrows)
+  -> our chevrons. .MaximizeMinimizeButton (RedButton-Condense) shown
+  here -> navy box (queued).
+  BAGS = AetherPackFrame (our own window, already Aether-styled; dump
+  06:36, tools/dumps/AetherPackFrame_2026-11-25.txt, 1472 lines, near
+  the 1500 cap: item buttons are ~25 lines each). Nothing for AetherSkins
+  to do. Note for AetherPack: item buttons still carry Blizzard's
+  NormalTexture tex 130841 (64x64 quickslot frame) and HighlightTexture
+  130718 (shown in dump as visible) -> check in game whether the gray
+  square frame shows behind our slot look; if so, SetNormalTexture("")
+  / alpha 0. Dump cap: raise to 2500 or fold repeated item buttons
+  ("N more like this") next time.
+  VENDOR = MerchantFrame (dump 06:36, tools/dumps/MerchantFrame_2026-
+  11-25.txt, complete; window chrome, inset, tabs, close all styled).
+  Item tiles MerchantItem1..12: <name>SlotTexture tex 130766 (old
+  square slot) + <name>NameFrame tex 136423 (brown name plaque) ->
+  fade both, draw a navy rounded tile per item with a blue icon frame.
+  ItemButton NormalTexture 130841 (64x64 quickslot) -> fade; keep
+  IconBorder (quality color). Prices: Coin-Gold/Silver/Copper icons
+  (keep; they're money). MerchantFrameBottomLeftBorder atlas UI-
+  Merchant-BotFrame (bronze footer) -> fade, blue divider line.
+  SellAllJunk / RepairAll / RepairItem / GuildBankRepair buttons: slot
+  tex 130766 behind -> navy square icon buttons. Buy-back tile same as
+  items (+ common-icon-undo). MerchantMoneyBg tex 525911 (L/M/R) ->
+  fade (MoneyInset already styled). Page arrows MerchantPrev/
+  NextPageButton (hidden here) -> chevrons. .FilterDropdown hidden.
+  Tab 2 = Buyback page (BuybackBG hidden) -> dump with that tab.
+  WORLD MAP = WorldMapFrame (dump 06:37, tools/dumps/WorldMapFrame_
+  2026-11-25.txt, complete). NOT SKINNED in game: no [styled] marks,
+  close button red. Its chrome lives under .BorderFrame (.NineSlice,
+  .PortraitContainer, .TitleContainer, WorldMapFrameCloseButton,
+  .MaximizeMinimizeFrame RedButton-Expand) -> skinner must look in
+  f.BorderFrame when f.NineSlice is missing (map frame). Keep the map
+  art (.ScrollContainer.Child tiles), fog, pins. .OverscrollBG gamepad-
+  mapquestlog-bgtile-2k + vignettes -> navy. .navBar (tex 516764 bar,
+  buttons tex 516763 left/arrow/selected, HomeButton, MenuArrowButton
+  tex 796424/423808) -> navy breadcrumb pills, blue chevrons, gold text
+  on the current zone. .WorldMapTrackingOptionsButton (common-dropdown-
+  a-button) and .WorldMapTrackingPinButton (tex 136467 bg, 136430
+  border, Waypoint-MapPin-Untracked) -> small navy round buttons.
+  .SidePanelToggle (QuestCollapse-Hide-Up + MapCornerShadow-Right) ->
+  navy chevron tab. Player coords label (.PlayerCoords) bottom - leave.
+  QUEST LOG SIDE PANEL QuestMapFrame.QuestsFrame / QuestScrollFrame:
+  .Background QuestLog-main-background (parchment), .BorderFrame .Border
+  QuestLog-frame + .TopDetail QuestLog-frame-filigree + .Shadow ->
+  navy panel; .Edge questlog_line_scrollbar -> blue line; zone headers
+  289x22 common-button-list-collapseExpand + plus/minus (same as rep:
+  navy strip, gold text); quest rows: .HighlightTexture QuestLog-quest-
+  glow-yellow -> blue glow; .Checkbox QuestLog-icon-ticksquare +
+  .CheckMark QuestLog-icon-checkmark-yellow -> our box + gold check;
+  objectives .Dash/.Text; POI buttons UI-QuestPoi-QuestNumber + icons
+  (Quest-In-Progress-Icon-yellow, UI-QuestIcon-TurnIn-Normal) -> same
+  as the tracker icon overlay (AetherLedger_TrackerLook); SearchBox and
+  QuestLogCount bronze common-search-border-* -> fade/our input; gear
+  .SettingsDropdown QuestLog-icon-setting -> white glyph. Hidden: side
+  tabs QuestsTab/EventsTab/MapLegendTab, DetailsFrame (quest detail
+  page) -> dump with a quest clicked. AetherPathfinderButton (ours) ok.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
+- LAST BUILD (Nov 25, 08:30; user 07:27 "go ahead with the build"):
+  AetherSkins 1.3.0 (second pass, new AetherSkins_Pass2.lua: atlas/file-ID
+  rules + SetAtlas post-hooks; side tabs, headers, capsule bars, talents,
+  spellbook, roles, merchant tiles, world map via BorderFrame, max/min
+  buttons; new media from tools/gen_skins_art2.py; test skins_pass2_test),
+  AetherLedger 1.8.3, AetherPack 1.6.2 (quickslot frame faded, blue slot
+  frame). UNVERIFIED IN GAME: talent 'can take' detection (Glow /
+  SelectableGlow / SelectableIcon shown), GetNodeInfo ranks, Line
+  texture orientation of the 3D shafts, spell item RequiredLevel text.
+  NEXT: Hub cleanup (inventory -> mockups), quest dialog dump.
+- SHIPPED 08:30 (branch skins-second-pass): AetherLedger 1.8.3 -
+  hand-in list at the bottom of the tracker now takes finished quests
+  from ANY zone whose turn-in isn't here (user 06:41, screenshot in
+  Desolace: Supply and Demand, a Stranglethorn quest, missing). Answers
+  the open "all finished quests?" question: yes. Test: tracker_handin.
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
   zone from C_QuestLog.GetNextWaypoint first), AetherSkins 1.2.2 (full
   /skins tree dumps: 1500 lines, hidden parts folded, our pieces skipped;

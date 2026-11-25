@@ -415,17 +415,17 @@ local function Apply()
         if a.level ~= b.level then return a.level < b.level end
         return tostring(a.title) < tostring(b.title)
     end)
-    -- Finished quests from here (or the zone the list follows) that are handed
-    -- in somewhere else: they stay, at the bottom, and the tracker says where
-    -- (user, Nov 25: "hunting through the quest list" for completed quests).
+    -- Finished quests handed in somewhere else, from ANY zone: they stay, at
+    -- the bottom, and the tracker says where (user, Nov 25: "hunting through
+    -- the quest list" for completed quests; 06:41: Supply and Demand, a
+    -- Stranglethorn quest, should show there while in Desolace).
     local inWant, elsewhere = {}, {}
     for _, q in ipairs(want) do inWant[q.id] = true end
     for k in pairs(elsewhereZone) do elsewhereZone[k] = nil end
     for _, q in ipairs(quests) do
         if q.complete and not inWant[q.id] and not manual.hide[q.id] then
-            local home = ZonesOf(q)
             local turnIn = TurnInOf(q)
-            if home and (here[home] or focus[home]) and turnIn and not here[turnIn] then
+            if turnIn and not here[turnIn] then
                 elsewhere[#elsewhere + 1] = q
                 elsewhereZone[q.id] = MapName(turnIn)
             end

@@ -1,0 +1,1472 @@
+== Window dump: AetherPackFrame ==
+Frame AetherPackFrame 408x649
+  Texture .TopLeftCorner 1x1
+  Texture .TopRightCorner 1x1
+  Texture .BottomLeftCorner 1x1
+  Texture .BottomRightCorner 1x1
+  Texture .TopEdge 406x1
+  Texture .BottomEdge 406x1
+  Texture .LeftEdge 1x647
+  Texture .RightEdge 1x647
+  Texture .Center 408x649
+  Texture .? 8x8 tex=-270
+  Texture .? 8x8 tex=-270
+  Texture .? 8x8 tex=-270
+  Texture .? 8x8 tex=-270
+  Texture .? 392x649 tex=130871
+  Texture .? 8x633 tex=130871
+  Texture .? 8x633 tex=130871
+  Texture .? 8x8 tex=-272
+  Texture .? 8x8 tex=-272
+  Texture .? 8x8 tex=-272
+  Texture .? 8x8 tex=-272
+  Texture .? 392x1 tex=130871
+  Texture .? 392x1 tex=130871
+  Texture .? 1x633 tex=130871
+  Texture .? 1x633 tex=130871
+  Texture .? 8x8 tex=-271
+  Texture .? 8x8 tex=-271
+  Texture .? 8x8 tex=-271
+  Texture .? 8x8 tex=-271
+  Texture .? 392x1 tex=130871
+  Texture .? 392x1 tex=130871
+  Texture .? 1x633 tex=130871
+  Texture .? 1x633 tex=130871
+  Texture .? 392x7 tex=-268
+  Texture .? 392x7 tex=-268
+  Texture .? 7x633 tex=-267
+  Texture .? 7x633 tex=-267
+  Texture .? 15x15 tex=-269
+  Texture .? 15x15 tex=-269
+  Texture .? 15x15 tex=-269
+  Texture .? 15x15 tex=-269
+  Texture .? 8x8 tex=-273
+  Texture .? 8x8 tex=-273
+  Texture .? 392x4 tex=130871
+  Texture .? 400x18 tex=130871
+  Texture .? 400x1 tex=130871
+  Texture .? 26x26 tex=-264
+  Texture .? 26x26 tex=-254
+  Texture .? 26x26 tex=-264
+  Texture .? 26x26 tex=-251
+  Texture .? 34x34 tex=-264
+  Texture .? 34x34 tex=-252
+  Texture .? 34x34 tex=-264
+  Texture .? 34x34 tex=-253
+  FontString .? 83x13
+  FontString .reagentLine 1x1 hidden
+  Button .? 18x18
+    Texture .TopLeftCorner 1x1 tex=130871
+    Texture .TopRightCorner 1x1 tex=130871
+    Texture .BottomLeftCorner 1x1 tex=130871
+    Texture .BottomRightCorner 1x1 tex=130871
+    Texture .TopEdge 16x1 tex=130871
+    Texture .BottomEdge 16x1 tex=130871
+    Texture .LeftEdge 1x16 tex=130871
+    Texture .RightEdge 1x16 tex=130871
+    Texture .Center 16x16
+    Texture .? 16x16
+    Texture .? 16x16 hidden
+    Texture .? 16x16 hidden
+    Texture .? 16x16
+    FontString .? 7x11
+  EditBox AetherPackSearch 388x20
+    FontString .? 376x20
+    Texture .? 2x11 hidden
+    Texture .TopLeftCorner 1x1 tex=130871
+    Texture .TopRightCorner 1x1 tex=130871
+    Texture .BottomLeftCorner 1x1 tex=130871
+    Texture .BottomRightCorner 1x1 tex=130871
+    Texture .TopEdge 386x1 tex=130871
+    Texture .BottomEdge 386x1 tex=130871
+    Texture .LeftEdge 1x18 tex=130871
+    Texture .RightEdge 1x18 tex=130871
+    Texture .Center 388x20 tex=130871
+    FontString .? 35x11
+  Frame .coins 135x22
+    Texture .? 11x22 tex=-262
+    Texture .? 11x22 tex=-262
+    Texture .? 113x22 tex=130871
+    Texture .? 11x22 tex=-263
+    Texture .? 11x22 tex=-263
+    Texture .? 113x1 tex=130871
+    Texture .? 113x1 tex=130871
+    FontString .text 113x16
+  Button .sell 76x18 hidden (14 parts inside, skipped)
+  Frame .depositBox 256x46
+    Button AetherPackDeposit 37x37
+      Texture .? 37x37 tex=-261
+      Texture .? 37x37 tex=-256
+      Texture .? 37x37 tex=-255
+      Texture .? 37x37 tex=-260
+      Texture .? 31x31 tex=130871
+      Frame .num 37x37
+        Texture .? 28x18 tex=-259
+        FontString .? 14x11
+    Frame .? 256x46
+      Texture .? 256x64 tex=-257
+  Frame .? 1x1
+    Button AetherPackItem1_1 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_1IconTexture 37x37 tex=134414
+      FontString AetherPackItem1_1Count 1x1 hidden
+      FontString AetherPackItem1_1Stock 1x1 hidden
+      Texture AetherPackItem1_1SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_1NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_1IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_1Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_2 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_2IconTexture 37x37 tex=134327
+      FontString AetherPackItem1_2Count 1x1 hidden
+      FontString AetherPackItem1_2Stock 1x1 hidden
+      Texture AetherPackItem1_2SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_2NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_2IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_2Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_3 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_3IconTexture 37x37 tex=133677
+      FontString AetherPackItem1_3Count 1x1 hidden
+      FontString AetherPackItem1_3Stock 1x1 hidden
+      Texture AetherPackItem1_3SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_3NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_3IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_3Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_4 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_4IconTexture 37x37 tex=133969
+      FontString AetherPackItem1_4Count 16x14
+      FontString AetherPackItem1_4Stock 1x1 hidden
+      Texture AetherPackItem1_4SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_4NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_4IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_4Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_5 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_5IconTexture 37x37 tex=132799
+      FontString AetherPackItem1_5Count 16x14
+      FontString AetherPackItem1_5Stock 1x1 hidden
+      Texture AetherPackItem1_5SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_5NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_5IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_5Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_6 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_6IconTexture 37x37 tex=133677
+      FontString AetherPackItem1_6Count 1x1 hidden
+      FontString AetherPackItem1_6Stock 1x1 hidden
+      Texture AetherPackItem1_6SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_6NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_6IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_6Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_7 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_7IconTexture 37x37 tex=135637
+      FontString AetherPackItem1_7Count 1x1 hidden
+      FontString AetherPackItem1_7Stock 1x1 hidden
+      Texture AetherPackItem1_7SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_7NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_7IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_7Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_8 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem1_9 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_9IconTexture 37x37 tex=132932
+      FontString AetherPackItem1_9Count 1x1 hidden
+      FontString AetherPackItem1_9Stock 1x1 hidden
+      Texture AetherPackItem1_9SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_9NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_9IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_9Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_10 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem1_11 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_11IconTexture 37x37 tex=132905
+      FontString AetherPackItem1_11Count 9x14
+      FontString AetherPackItem1_11Stock 1x1 hidden
+      Texture AetherPackItem1_11SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_11NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_11IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_11Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_12 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem1_13 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_13IconTexture 37x37 tex=132905
+      FontString AetherPackItem1_13Count 16x14
+      FontString AetherPackItem1_13Stock 1x1 hidden
+      Texture AetherPackItem1_13SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_13NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_13IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_13Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_14 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_14IconTexture 37x37 tex=132382
+      FontString AetherPackItem1_14Count 23x14
+      FontString AetherPackItem1_14Stock 1x1 hidden
+      Texture AetherPackItem1_14SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_14NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_14IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_14Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_15 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_15IconTexture 37x37 tex=135128
+      FontString AetherPackItem1_15Count 1x1 hidden
+      FontString AetherPackItem1_15Stock 1x1 hidden
+      Texture AetherPackItem1_15SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_15NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_15IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_15Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_16 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem1_17 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_17IconTexture 37x37 tex=132892
+      FontString AetherPackItem1_17Count 1x1 hidden
+      FontString AetherPackItem1_17Stock 1x1 hidden
+      Texture AetherPackItem1_17SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_17NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_17IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_17Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_18 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem1_19 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_19IconTexture 37x37 tex=134304
+      FontString AetherPackItem1_19Count 9x14
+      FontString AetherPackItem1_19Stock 1x1 hidden
+      Texture AetherPackItem1_19SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_19NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_19IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_19Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem1_20 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem1_20IconTexture 37x37 tex=132766
+      FontString AetherPackItem1_20Count 1x1 hidden
+      FontString AetherPackItem1_20Stock 1x1 hidden
+      Texture AetherPackItem1_20SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem1_20NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem1_20IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem1_20Cooldown 37x37 hidden (1 parts inside, skipped)
+  Frame .? 1x1
+    Button AetherPackItem2_1 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_1IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_1Count 23x14
+      FontString AetherPackItem2_1Stock 1x1 hidden
+      Texture AetherPackItem2_1SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_1NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_1IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_1Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem2_2 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem2_3 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem2_4 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem2_5 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_5IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_5Count 23x14
+      FontString AetherPackItem2_5Stock 1x1 hidden
+      Texture AetherPackItem2_5SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_5NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_5IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_5Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem2_6 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_6IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_6Count 23x14
+      FontString AetherPackItem2_6Stock 1x1 hidden
+      Texture AetherPackItem2_6SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_6NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_6IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_6Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem2_7 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_7IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_7Count 23x14
+      FontString AetherPackItem2_7Stock 1x1 hidden
+      Texture AetherPackItem2_7SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_7NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_7IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_7Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem2_8 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_8IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_8Count 23x14
+      FontString AetherPackItem2_8Stock 1x1 hidden
+      Texture AetherPackItem2_8SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_8NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_8IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_8Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem2_9 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_9IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_9Count 23x14
+      FontString AetherPackItem2_9Stock 1x1 hidden
+      Texture AetherPackItem2_9SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_9NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_9IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_9Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem2_10 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_10IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_10Count 23x14
+      FontString AetherPackItem2_10Stock 1x1 hidden
+      Texture AetherPackItem2_10SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_10NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_10IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_10Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem2_11 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_11IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_11Count 23x14
+      FontString AetherPackItem2_11Stock 1x1 hidden
+      Texture AetherPackItem2_11SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_11NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_11IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_11Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem2_12 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_12IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_12Count 23x14
+      FontString AetherPackItem2_12Stock 1x1 hidden
+      Texture AetherPackItem2_12SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_12NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_12IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_12Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem2_13 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_13IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_13Count 23x14
+      FontString AetherPackItem2_13Stock 1x1 hidden
+      Texture AetherPackItem2_13SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_13NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_13IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_13Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem2_14 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem2_14IconTexture 37x37 tex=132382
+      FontString AetherPackItem2_14Count 23x14
+      FontString AetherPackItem2_14Stock 1x1 hidden
+      Texture AetherPackItem2_14SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem2_14NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem2_14IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem2_14Cooldown 37x37 hidden (1 parts inside, skipped)
+  Frame .? 1x1
+    Button AetherPackItem3_1 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem3_2 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem3_3 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem3_3IconTexture 37x37 tex=134304
+      FontString AetherPackItem3_3Count 1x1 hidden
+      FontString AetherPackItem3_3Stock 1x1 hidden
+      Texture AetherPackItem3_3SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem3_3NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem3_3IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem3_3Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem3_4 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem3_5 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem3_6 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem3_6IconTexture 37x37 tex=134328
+      FontString AetherPackItem3_6Count 1x1 hidden
+      FontString AetherPackItem3_6Stock 1x1 hidden
+      Texture AetherPackItem3_6SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem3_6NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem3_6IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem3_6Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem3_7 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem3_8 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem3_8IconTexture 37x37 tex=134332
+      FontString AetherPackItem3_8Count 9x14
+      FontString AetherPackItem3_8Stock 1x1 hidden
+      Texture AetherPackItem3_8SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem3_8NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem3_8IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem3_8Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem3_9 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem3_10 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem3_10IconTexture 37x37 tex=134252
+      FontString AetherPackItem3_10Count 1x1 hidden
+      FontString AetherPackItem3_10Stock 1x1 hidden
+      Texture AetherPackItem3_10SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem3_10NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem3_10IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem3_10Cooldown 37x37 hidden (1 parts inside, skipped)
+  Frame .? 1x1
+    Button AetherPackItem4_1 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem4_1IconTexture 37x37 tex=133677
+      FontString AetherPackItem4_1Count 1x1 hidden
+      FontString AetherPackItem4_1Stock 1x1 hidden
+      Texture AetherPackItem4_1SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem4_1NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem4_1IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem4_1Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem4_2 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem4_2IconTexture 37x37 tex=134332
+      FontString AetherPackItem4_2Count 9x14
+      FontString AetherPackItem4_2Stock 1x1 hidden
+      Texture AetherPackItem4_2SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem4_2NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem4_2IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem4_2Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem4_3 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem4_3IconTexture 37x37 tex=134332
+      FontString AetherPackItem4_3Count 1x1 hidden
+      FontString AetherPackItem4_3Stock 1x1 hidden
+      Texture AetherPackItem4_3SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem4_3NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem4_3IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem4_3Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem4_4 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem4_4IconTexture 37x37 tex=134332
+      FontString AetherPackItem4_4Count 1x1 hidden
+      FontString AetherPackItem4_4Stock 1x1 hidden
+      Texture AetherPackItem4_4SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem4_4NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem4_4IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem4_4Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem4_5 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem4_5IconTexture 37x37 tex=134332
+      FontString AetherPackItem4_5Count 9x14
+      FontString AetherPackItem4_5Stock 1x1 hidden
+      Texture AetherPackItem4_5SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem4_5NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem4_5IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem4_5Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem4_6 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem4_6IconTexture 37x37 tex=134332
+      FontString AetherPackItem4_6Count 9x14
+      FontString AetherPackItem4_6Stock 1x1 hidden
+      Texture AetherPackItem4_6SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem4_6NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem4_6IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem4_6Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem4_7 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem4_7IconTexture 37x37 tex=134332
+      FontString AetherPackItem4_7Count 9x14
+      FontString AetherPackItem4_7Stock 1x1 hidden
+      Texture AetherPackItem4_7SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem4_7NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem4_7IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem4_7Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem4_8 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem4_8IconTexture 37x37 tex=134332
+      FontString AetherPackItem4_8Count 9x14
+      FontString AetherPackItem4_8Stock 1x1 hidden
+      Texture AetherPackItem4_8SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem4_8NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem4_8IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem4_8Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem4_9 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem4_10 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem4_10IconTexture 37x37 tex=133672
+      FontString AetherPackItem4_10Count 16x14
+      FontString AetherPackItem4_10Stock 1x1 hidden
+      Texture AetherPackItem4_10SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem4_10NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem4_10IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem4_10Cooldown 37x37 hidden (1 parts inside, skipped)
+  Frame .? 1x1
+    Button AetherPackItem5_1 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem5_2 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem5_2IconTexture 37x37 tex=134832
+      FontString AetherPackItem5_2Count 1x1 hidden
+      FontString AetherPackItem5_2Stock 1x1 hidden
+      Texture AetherPackItem5_2SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem5_2NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem5_2IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem5_2Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem5_3 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem5_3IconTexture 37x37 tex=134332
+      FontString AetherPackItem5_3Count 1x1 hidden
+      FontString AetherPackItem5_3Stock 1x1 hidden
+      Texture AetherPackItem5_3SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem5_3NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem5_3IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem5_3Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem5_4 37x37 hidden (24 parts inside, skipped)
+    Button AetherPackItem5_5 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem5_5IconTexture 37x37 tex=134332
+      FontString AetherPackItem5_5Count 9x14
+      FontString AetherPackItem5_5Stock 1x1 hidden
+      Texture AetherPackItem5_5SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem5_5NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem5_5IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem5_5Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem5_6 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem5_6IconTexture 37x37 tex=134832
+      FontString AetherPackItem5_6Count 9x14
+      FontString AetherPackItem5_6Stock 1x1 hidden
+      Texture AetherPackItem5_6SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem5_6NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem5_6IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem5_6Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem5_7 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem5_7IconTexture 37x37 tex=134370
+      FontString AetherPackItem5_7Count 1x1 hidden
+      FontString AetherPackItem5_7Stock 1x1 hidden
+      Texture AetherPackItem5_7SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem5_7NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem5_7IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem5_7Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem5_8 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem5_8IconTexture 37x37 tex=134256
+      FontString AetherPackItem5_8Count 16x14
+      FontString AetherPackItem5_8Stock 1x1 hidden
+      Texture AetherPackItem5_8SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem5_8NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem5_8IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem5_8Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem5_9 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem5_9IconTexture 37x37 tex=134332
+      FontString AetherPackItem5_9Count 1x1 hidden
+      FontString AetherPackItem5_9Stock 1x1 hidden
+      Texture AetherPackItem5_9SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem5_9NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem5_9IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem5_9Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem5_10 37x37 hidden (24 parts inside, skipped)
+  Frame .? 1x1
+    Button AetherPackItem6_1 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem6_1IconTexture 37x37 tex=134256
+      FontString AetherPackItem6_1Count 16x14
+      FontString AetherPackItem6_1Stock 1x1 hidden
+      Texture AetherPackItem6_1SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem6_1NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem6_1IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem6_1Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem6_2 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem6_2IconTexture 37x37 tex=134367
+      FontString AetherPackItem6_2Count 9x14
+      FontString AetherPackItem6_2Stock 1x1 hidden
+      Texture AetherPackItem6_2SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem6_2NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem6_2IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem6_2Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem6_3 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem6_3IconTexture 37x37 tex=134256
+      FontString AetherPackItem6_3Count 16x14
+      FontString AetherPackItem6_3Stock 1x1 hidden
+      Texture AetherPackItem6_3SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem6_3NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem6_3IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem6_3Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem6_4 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem6_4IconTexture 37x37 tex=132905
+      FontString AetherPackItem6_4Count 16x14
+      FontString AetherPackItem6_4Stock 1x1 hidden
+      Texture AetherPackItem6_4SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem6_4NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem6_4IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem6_4Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem6_5 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem6_5IconTexture 37x37 tex=132905
+      FontString AetherPackItem6_5Count 16x14
+      FontString AetherPackItem6_5Stock 1x1 hidden
+      Texture AetherPackItem6_5SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem6_5NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem6_5IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem6_5Cooldown 37x37 hidden (1 parts inside, skipped)
+    Button AetherPackItem6_6 37x37
+      MaskTexture .Mask 37x37
+      Texture AetherPackItem6_6IconTexture 37x37 tex=134257
+      FontString AetherPackItem6_6Count 9x14
+      FontString AetherPackItem6_6Stock 1x1 hidden
+      Texture AetherPackItem6_6SearchOverlay 37x37 hidden
+      Texture .ItemContextOverlay 37x37 hidden
+      Texture .IconBorder 37x37 tex=651080
+      Texture .IconOverlay 37x37 hidden
+      Texture .IconOverlay2 37x37 hidden
+      Texture AetherPackItem6_6NormalTexture 64x64 tex=130841
+      Texture .PushedTexture 37x37 hidden tex=130839
+      Texture .HighlightTexture 37x37 tex=130718
+      Texture .AugmentBorderAnimTexture 37x37 hidden atlas=GearEnchant_IconBorder
+      Texture AetherPackItem6_6IconQuestTexture 37x38
+      Texture .UpgradeIcon 20x22 hidden atlas=bags-greenarrow
+      Texture .flash 90x90 atlas=bags-glow-flash
+      Texture .NewItemTexture 39x39 hidden atlas=bags-glow-green
+      Texture .BattlepayItemTexture 0x0 hidden tex=902180
+      Texture .BagIndicator 0x0 hidden tex=902180
+      Texture .ExtendedSlot 64x64 hidden tex=130841
+      Texture .JunkIcon 20x18 hidden atlas=bags-junkcoin
+      Texture .Highlight 0x0 hidden tex=902180
+      Texture .EmptyBagIcon 37x37 hidden
+      Cooldown AetherPackItem6_6Cooldown 37x37 hidden (1 parts inside, skipped)
+  Button .? 388x18
+    FontString .text 59x13
+    Texture .line 319x1
+    FontString .show 1x1 hidden
+  Button .? 388x18
+    FontString .text 95x13
+    Texture .line 283x1
+    FontString .show 1x1 hidden
+  Button .? 388x18
+    FontString .text 43x13
+    Texture .line 335x1
+    FontString .show 1x1 hidden
+  Button .? 388x18
+    FontString .text 97x13
+    Texture .line 281x1
+    FontString .show 1x1 hidden
+  Button .? 388x18
+    FontString .text 97x13
+    Texture .line 281x1
+    FontString .show 1x1 hidden
+  Button .? 388x18
+    FontString .text 48x13
+    Texture .line 330x1
+    FontString .show 1x1 hidden
+  Button .? 0x18 hidden (3 parts inside, skipped)
+  Button .? 388x18
+    FontString .text 149x13
+    Texture .line 158x1
+    FontString .show 63x11
+  Frame .? 153x15
+    FontString .label 25x11
+    FontString .value 36x11
+    FontString .word 1x1 hidden
+  Frame .? 153x15
+    FontString .label 43x11
+    FontString .value 20x11
+    FontString .word 1x1 hidden
+  Frame .? 153x15
+    FontString .label 33x11
+    FontString .value 26x11
+    FontString .word 1x1 hidden

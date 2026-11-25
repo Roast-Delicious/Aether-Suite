@@ -36,6 +36,7 @@ W.skinned = setmetatable({}, { __mode = "k" })   -- window -> true
 W.done    = setmetatable({}, { __mode = "k" })   -- any styled widget -> kind
 W.names   = {}                                   -- window names, for /skins debug
 W.ours    = setmetatable({}, { __mode = "k" })   -- textures we made (left out of /skins tree)
+W.chev    = setmetatable({}, { __mode = "k" })   -- window -> its chevrons, by direction
 local pending = setmetatable({}, { __mode = "k" })
 
 local function Enabled()
@@ -198,6 +199,7 @@ local function Frame(f)
     t = Tex(f, "BORDER", 2, WHITE, { GOLD[1], GOLD[2], GOLD[3], 0.7 })
     t:SetPoint("TOPLEFT", f, "TOPLEFT", S, -TITLE_H); t:SetPoint("TOPRIGHT", f, "TOPRIGHT", -S, -TITLE_H); t:SetHeight(1)
     -- the four 3D gold chevrons (gold baked per direction; dark backing turns)
+    W.chev[f] = {}
     for _, c in ipairs({ { "up", "TOP", 0, 3, 0, 26 }, { "down", "BOTTOM", 0, -3, math.pi, 26 },
                          { "left", "LEFT", -3, 0, math.pi / 2, 34 }, { "right", "RIGHT", 3, 0, -math.pi / 2, 34 } }) do
         local dark = Tex(f, "OVERLAY", 6, MEDIA .. "win_chev_dark", { 0.04, 0.05, 0.07, 1 })
@@ -205,6 +207,7 @@ local function Frame(f)
         if c[5] ~= 0 and dark.SetRotation then dark:SetRotation(c[5]) end
         local gold = Tex(f, "OVERLAY", 7, MEDIA .. "chev3d_" .. c[1], { 1, 1, 1, 1 })
         gold:SetSize(c[6], c[6]); gold:SetPoint("CENTER", f, c[2], c[3], c[4])
+        W.chev[f][c[1]] = { dark, gold }
     end
 end
 
@@ -327,6 +330,12 @@ end
 W.TabColor = TabColor
 local function Tab(tab)
     W.done[tab] = "tab"
+    local sq, sqa = T(tab, "SquareBackground"), T(tab, "SquareBackgroundActive")
+    if (sq and sq.IsShown and sq:IsShown()) or (sqa and sqa.IsShown and sqa:IsShown()) then
+        W.done[tab] = "sqtab"
+        if W.SquareTab then W.SquareTab(tab) end
+        return
+    end
     for _, k in ipairs({ "Left", "Middle", "Right", "LeftActive", "MiddleActive", "RightActive",
                          "LeftHighlight", "MiddleHighlight", "RightHighlight" }) do
         local t = T(tab, k)
@@ -414,11 +423,14 @@ function W.Contents(root)
                         if ok then count = count + 1 else W.done[k] = "failed" end
                     end
                 end
+                if W.Visit then pcall(W.Visit, k, root) end
                 if W.done[k] ~= "close" then Walk(k, depth + 1) end
             end
         end
     end
+    if W.Visit then pcall(W.Visit, root, root) end
     Walk(root, 0)
+    if W.AfterWalk then pcall(W.AfterWalk, root) end
     return count
 end
 
@@ -428,7 +440,9 @@ end
 function W.IsWindow(f)
     if Forbidden(f) or type(f) ~= "table" or not f.GetObjectType then return false end
     if f.aetherTrim then return false end                    -- one of our own Aether windows
-    return (T(f, "NineSlice") and (T(f, "TitleContainer") or T(f, "PortraitContainer"))) and true or false
+    if T(f, "NineSlice") and (T(f, "TitleContainer") or T(f, "PortraitContainer")) then return true end
+    local bf = T(f, "BorderFrame")       -- WorldMapFrame keeps its window art one level down
+    return (bf and T(bf, "NineSlice") and T(bf, "TitleContainer")) and true or false
 end
 
 function W.Skin(f)
@@ -436,13 +450,16 @@ function W.Skin(f)
     if InCombatLockdown and InCombatLockdown() then pending[f] = true; return false end
     if not W.skinned[f] then
         W.skinned[f] = true
-        Fade(T(f, "NineSlice")); Fade(T(f, "Bg")); Fade(T(f, "TopTileStreaks"))
-        Fade(T(f, "Background"))
+        local chrome = (not T(f, "NineSlice") and T(f, "BorderFrame")) or f
+        Fade(T(chrome, "NineSlice")); Fade(T(f, "Bg")); Fade(T(chrome, "TopTileStreaks"))
+        Fade(T(f, "Background")); Fade(T(chrome, "Underlay"))
+        local nm = f.GetName and f:GetName()
+        if nm and _G[nm .. "Bg"] then Fade(_G[nm .. "Bg"]) end
         Frame(f)
-        Crest(f)
-        local title = (T(f, "TitleContainer") and T(f.TitleContainer, "TitleText")) or T(f, "TitleText")
+        Crest(chrome)
+        local title = (T(chrome, "TitleContainer") and T(chrome.TitleContainer, "TitleText")) or T(f, "TitleText")
         if title and title.SetFontObject then title:SetFontObject(Fonts().title) end
-        Close(T(f, "CloseButton"))
+        Close(T(chrome, "CloseButton") or (nm and _G[nm .. "CloseButton"]))
         if T(f, "Inset") and not W.done[f.Inset] then pcall(Inset, f.Inset) end
         local name = f.GetName and f:GetName() or (f.GetDebugName and f:GetDebugName()) or "?"
         W.names[#W.names + 1] = name
@@ -455,7 +472,7 @@ end
 
 -- Blizzard windows by name (some load later, with their Blizzard_ addon).
 W.KNOWN = {
-    "CharacterFrame", "FriendsFrame", "SocialUIFrame", "PVEFrame", "PlayerSpellsFrame", "SpellBookFrame", "PlayerTalentFrame",
+    "CharacterFrame", "FriendsFrame", "SocialUIFrame", "LegacySystemFrame", "LFGListingFrame", "PVEFrame", "PlayerSpellsFrame", "SpellBookFrame", "PlayerTalentFrame",
     "ProfessionsFrame", "CollectionsJournal", "EncounterJournal", "AchievementFrame", "CommunitiesFrame",
     "GuildFrame", "MerchantFrame", "GossipFrame", "QuestFrame", "MailFrame", "OpenMailFrame", "TradeFrame",
     "BankFrame", "AuctionHouseFrame", "ClassTrainerFrame", "TaxiFrame", "DressUpFrame", "ItemTextFrame",
@@ -485,6 +502,9 @@ function W.Init()
     Fonts()
     pcall(W.GoldText)
     W.ScanKnown()
+    local ev = CreateFrame("Frame")
+    ev:RegisterEvent("ADDON_LOADED"); ev:RegisterEvent("PLAYER_ENTERING_WORLD")
+    ev:SetScript("OnEvent", function() pcall(W.ScanKnown) end)
     -- any other standard window, when Blizzard opens it as a panel
     if hooksecurefunc then
         if ShowUIPanel then hooksecurefunc("ShowUIPanel", function(f) if f then pcall(W.Watch, f) end end) end
@@ -497,6 +517,10 @@ function W.Init()
         end
     end
 end
+
+-- Helpers shared with AetherSkins_Pass2.lua
+W.H = { Tex = Tex, Fade = Fade, T = T, Edge = Edge, NavyBox = NavyBox, Fonts = Fonts, Forbidden = Forbidden,
+        MEDIA = MEDIA, WHITE = WHITE, GOLD = GOLD, BLUE = BLUE, NAVY = NAVY, TEXT = TEXT, FontFile = FontFile }
 
 -- The window under the mouse (or its window), for /skins this.
 function W.SkinUnderMouse()

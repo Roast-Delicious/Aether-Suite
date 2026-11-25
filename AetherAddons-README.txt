@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (06:30)
+Last updated: November 25, 2026 (08:30)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -24,15 +24,15 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.4     What an item is for, when you hover it
-  AetherLedger       1.8.2     Where to quest, train and skin next,
+  AetherLedger       1.8.3     Where to quest, train and skin next,
                                with step-by-step travel directions
-  AetherPack         1.6.1     Your bags sorted into sections
+  AetherPack         1.6.2     Your bags sorted into sections
   AetherChat         1.0.8     Chat with the Aether look, fitted beside
                                your action bars
   AetherFrames       1.14.7    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.2.2     The Aether look for Blizzard's windows
+  AetherSkins        1.3.0     The Aether look for Blizzard's windows
                                and the minimap
 
 
@@ -477,8 +477,8 @@ AetherLedger - where to quest, train and skin next             /ledger
     zone where you turn it in, not where you got it). Red quests (too hard
     for now) are left out until a level-up turns them orange; when one
     you just accepted goes, a chat line says why.
-  - Finished quests from the zone you're in that are handed in
-    somewhere else stay at the bottom of the list, under a thin gold
+  - Finished quests from any zone that are handed in somewhere else
+    stay at the bottom of the list, under a thin gold
     line, reading "Ready for turn-in: Orgrimmar" (the zone to go to).
     The zone comes from the game's own turn-in marker first, so quests
     the guide doesn't know about show up there too.
@@ -567,6 +567,8 @@ AetherPack - your bags, sorted into sections                    /pack
     Other        hearthstone, keys, bags and the rest
     Junk         gray items, with their total vendor value
     Free slots   your empty slots (folded; or use the deposit slot)
+  - Each item sits in a thin Aether-blue frame; the colored quality
+    border (green, blue, purple) still shows on top.
   - What's left, as short colored words beside the deposit slot's
     lettering (under it in a narrow window). Hover a line for the full
     numbers.
@@ -886,6 +888,35 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
     look right after the fight.
   - A window that was missed: point at it and type /skins this, and
     send /skins debug so it can be added for good.
+
+  Forever's own window parts (second pass):
+  - Side tabs (Character, Friends, Progress Track): navy, with a gold
+    edge and a gold notch on the open one. Windows with side tabs drop
+    the right-hand chevron.
+  - List headers (Reputation, Friends, the quest log) are navy strips
+    with gold names; reputation and standing bars are dark capsules
+    (Neutral in Aether gold, Friendly and up in Aether green); the
+    picked row is blue; brown backgrounds are gone, bronze lines blue.
+  - Friends: navy friend cards (offline ones dimmer), the picked one
+    blue.
+  - Talents: spec icons gold on navy. Maxed talents are tinted gold
+    with a gold frame; talents with some points have a blue frame;
+    talents you can take now glow blue; ones you can't take for lack
+    of points are navy; locked ones are gray. Each taken talent shows
+    a pill such as "2 of 5" on its bottom edge, and the arrows between
+    talents are thicker and 3D (gold, blue or gray, like their talent).
+  - Spellbook: the same scheme. Known spells have a blue frame (a ring
+    for passives), ones you can learn at a trainer now glow blue with
+    a "Trainer" pill, ones above your level are navy with their level
+    in a pill, and the category tabs are gold on navy.
+  - Group Finder (I): the tank, healer, damage and leader buttons are
+    gold symbols on a navy disc with a blue ring that turns gold when
+    you pick the role.
+  - World map: the Aether frame and buttons, a navy zone bar, and the
+    quest log beside the map in navy with gold headers.
+  - Progress Track: navy reward cards and a gold progress bar.
+  - Vendors: navy item tiles with blue icon frames, navy repair and
+    junk buttons.
 
   The minimap:
   - Blizzard's ring around the minimap is replaced by a navy ring with a

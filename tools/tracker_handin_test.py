@@ -1,4 +1,4 @@
-# AetherLedger 1.8.2: finished quests from here that are handed in elsewhere
+# AetherLedger 1.8.3: finished quests (from any zone) handed in elsewhere
 # stay on the tracker, at the bottom, with their hand-in zone; and a red
 # quest you just accepted gets a chat line saying why it left. Same mock as
 # tracker_sort_test (newest-on-top tracker), in Desolace (1443).
@@ -75,4 +75,18 @@ AetherLedger_Tracker.Apply()
 shown = [L.eval('WATCH[%d]' % i) for i in range(1, L.eval('#WATCH') + 1)]
 expect("a quest our data doesn't know: the game's turn-in waypoint puts it at the bottom", shown[-2:] == [203, 207] or shown[-2:] == [207, 203], True)
 expect("...with the right zone name", L.eval('AetherLedger_Tracker.ElsewhereZone(207)'), "The Riverglades")
+
+# 1.8.3: a finished quest from ANOTHER zone (Supply and Demand, Stranglethorn
+# 1434) handed in elsewhere shows too, with its zone (user, Nov 25 06:41).
+L.execute('''
+MAPS[1434] = "Stranglethorn Vale"
+table.insert(LOG, {id=208, title="Supply and Demand", level=31, done=true})
+AetherLedger_Zones[208] = {1434, 1434}
+AetherLedger_Tracker.Apply()
+''')
+shown = [L.eval('WATCH[%d]' % i) for i in range(1, L.eval('#WATCH') + 1)]
+expect("a finished quest from another zone sits in the hand-in list", 208 in shown, True)
+expect("...with its hand-in zone", L.eval('AetherLedger_Tracker.ElsewhereZone(208)'), "Stranglethorn Vale")
+expect("...below the quests for here", shown.index(208) > shown.index(202), True)
+expect("an unfinished quest from another zone still stays off", 205 in shown, False)
 print("PASS" if ok else "FAIL"); sys.exit(0 if ok else 1)
