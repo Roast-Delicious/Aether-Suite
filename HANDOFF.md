@@ -103,8 +103,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   Vector2D tables per waypoint. Fix: waypoint world positions cached
   (weak-keyed wpWorld), loop throttled to 30/s. Asked the user to rerun
   the readout after collectgarbage() to split real use from garbage.
-  Pathfinder's 7 MB is likely the daily-refreshed NPC data (Raw) built
-  into tables: not investigated yet.
+  After collectgarbage() (20:08): total 9693 KB; Coords 78 (garbage
+  confirmed), Pathfinder ~1600 (was 7284: same per-frame minimap loop),
+  Bars 1517, ItemID 2064, Ledger 3152, Hub 405, Frames 273, Chat 147,
+  Marks 138, Pack 158, Meter 82, Skins 80. Same branch: AetherPathfinder
+  1.9.6, minimap pin layout throttled to 30/s (RebuildNearby stays 1/s).
 - LAST BUILD (Nov 24, 16:15; go-ahead 16:12): AetherSkins 1.1.1 only
   (others unchanged from 15:44). What's in it:
   * /skins debug fix (user, 15:52): scans skip forbidden frames

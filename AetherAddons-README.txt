@@ -19,7 +19,7 @@ window, so you rarely need to type a command.
   AetherMeter        1.13.9    Damage and healing meter
   AetherBars         1.14.3    Clean action bars with a cooldown glow
   AetherCoords       1.3.15    Coordinates, plus your own map waypoints
-  AetherPathfinder   1.9.5     Trainers, vendors, flight masters and
+  AetherPathfinder   1.9.6     Trainers, vendors, flight masters and
                                mailboxes on the world map and minimap
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight

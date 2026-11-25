@@ -1416,18 +1416,23 @@ local function LayoutMiniPins()
     HideMiniPins(miniUsed + 1)
 end
 
-local miniDriver = CreateFrame("Frame")
+local miniDriver, miniLayoutIn = CreateFrame("Frame"), 0
 miniDriver:SetScript("OnUpdate", function(_, elapsed)
     rebuildIn = rebuildIn - elapsed
     if rebuildIn <= 0 then
         rebuildIn = 1          -- filters, zone and newly learned NPCs show up within a second
         RebuildNearby()
     end
+    -- 30 times a second is smooth on the minimap and far lighter than every frame
+    -- (every frame left megabytes of garbage: user's memory readout, Nov 24).
+    miniLayoutIn = miniLayoutIn - elapsed
+    if miniLayoutIn > 0 then return end
+    miniLayoutIn = 0.033
     LayoutMiniPins()
 end)
 miniDriver:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 miniDriver:RegisterEvent("PLAYER_ENTERING_WORLD")
-miniDriver:SetScript("OnEvent", function() rebuildIn = 0 end)
+miniDriver:SetScript("OnEvent", function() rebuildIn = 0; miniLayoutIn = 0 end)
 
 
 -- ==========================================
