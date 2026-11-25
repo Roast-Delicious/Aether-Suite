@@ -18,7 +18,7 @@ def raster(box, fn):
     X, Y = np.meshgrid(c, c)
     return fn(X, Y).reshape(PX, SS, PX, SS).mean(axis=(1, 3))
 art = {}
-for R in (5, 3):
+for R in (5, 4, 3):   # 4: the inner gold ring of an open side tab (user 16:49)
     d = lambda X, Y, R=R: np.hypot(X - R, Y - R)
     art[f"btn_round{R}_fill"] = raster(R, lambda X, Y, R=R: (d(X, Y) <= R).astype(float))
     art[f"btn_round{R}_line"] = raster(R, lambda X, Y, R=R: ((d(X, Y) >= R - 1) & (d(X, Y) <= R)).astype(float))

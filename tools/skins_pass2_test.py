@@ -278,6 +278,19 @@ expect("side tab: Blizzard icon faded, flat gold glyph (stats)", (E('NT.Icon.alp
 expect("closed tab: no gold glow", has_tex('NT', 'glow_sq'), False)
 L.execute('NT.SelectedTexture:Show()')
 expect("open tab: soft gold glow", has_tex('NT', 'glow_sq'), True)
+# the glow's hollow middle fits the tab's box (52x49 on a 55x55 tab, dump
+# b161), 2 px inside it, so its hard edge hides under the box (user 16:49)
+L.execute(r"""
+local p = AetherSkins_Windows.P2.H.tabParts[NT]
+p.fill.w, p.fill.h = 52, 49
+p.fill.GetHeight = function(s) return s.h end
+AetherSkins_Windows.P2.SideTabExtra(NT)
+for _, r in ipairs(NT.regs) do if r.texture and tostring(r.texture):find("glow_sq") then GLW, GLH = r.w, r.h end end
+RINGR = 0
+for _, k in ipairs(NT.kids or {}) do for _, r in ipairs(k.regs or {}) do if r.texture and tostring(r.texture):find("btn_round4_line") then RINGR = RINGR + 1 end end end
+""")
+expect("open tab glow: hole = box minus 2 px a side", (E('GLW'), E('GLH')), (96, 90))
+expect("open tab: inner gold rings rounded (radius 4 corners)", E('RINGR'), 4)
 L.execute('VB = kid(WIN, "Button", "MerchantRepairAllButton"); VB.Icon = tex(VB, "SpellIcon-256x256-RepairAll"); VG = kid(WIN, "Button", "MerchantGuildBankRepairButton"); VG.Icon = tex(VG, "SpellIcon-256x256-RepairAll"); AetherSkins_Windows.Contents(WIN)')
 L.execute('VB.enabled = false; VB.IsEnabled = function(s) return s.enabled end; VB.Disable = function(s) s.enabled = false end; VB.Enable = function(s) s.enabled = true end')
 expect("vendor: flat anvil on repair all, shield on guild repair", (has_tex('VB', 'btn_repairall'), has_tex('VG', 'btn_guild'), E('VB.Icon.alpha'), E('VB.Icon.atlas')), (True, True, 0, "SpellIcon-256x256-RepairAll"))

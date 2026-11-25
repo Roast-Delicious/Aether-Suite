@@ -667,7 +667,7 @@ function W.Init()
 end
 
 -- Helpers shared with AetherSkins_Pass2.lua
-W.H = { Tex = Tex, Fade = Fade, T = T, Edge = Edge, NavyBox = NavyBox, RoundBox = RoundBox, Fonts = Fonts, Forbidden = Forbidden,
+W.H = { Tex = Tex, Fade = Fade, T = T, Edge = Edge, NavyBox = NavyBox, RoundBox = RoundBox, RoundPieces = RoundPieces, Fonts = Fonts, Forbidden = Forbidden,
         MEDIA = MEDIA, WHITE = WHITE, GOLD = GOLD, BLUE = BLUE, NAVY = NAVY, PAGE = PAGE, PANEL = PANEL, TEXT = TEXT, FontFile = FontFile,
         Close = Close }
 

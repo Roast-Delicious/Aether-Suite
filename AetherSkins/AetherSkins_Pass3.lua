@@ -167,13 +167,36 @@ function P.SideTabExtra(tab)
         -- the thick frame: two more gold rings inside the edge, on a frame over the fill
         local ff = CreateFrame("Frame", nil, tab)
         ff:SetPoint("TOPLEFT", p.fill, "TOPLEFT"); ff:SetPoint("BOTTOMRIGHT", p.fill, "BOTTOMRIGHT")
+        -- rounded like the tab's own edge (radius 5): ring 1 = radius 4,
+        -- ring 2 = radius 3, so the corners stay solid (user 16:49: square
+        -- rings left notches in the rounded corners)
         x.rings = {}
         for i = 1, 2 do
-            for _, e in ipairs(Edge(ff, "BORDER", 2, { GOLD[1], GOLD[2], GOLD[3], 1 }, i)) do x.rings[#x.rings + 1] = e end
+            local box = Tex(ff, "BORDER", 2, WHITE, { 1, 1, 1, 0 })
+            box:SetPoint("TOPLEFT", ff, "TOPLEFT", i, -i); box:SetPoint("BOTTOMRIGHT", ff, "BOTTOMRIGHT", -i, i)
+            local parts = H.RoundPieces and H.RoundPieces(ff, "BORDER", 2, box, "line", { GOLD[1], GOLD[2], GOLD[3], 1 }, 5 - i)
+                or Edge(ff, "BORDER", 2, { GOLD[1], GOLD[2], GOLD[3], 1 }, i)
+            for _, e in ipairs(parts) do x.rings[#x.rings + 1] = e end
         end
+        -- glow_sq is a hollow square: the hole is the middle half of the
+        -- art, with a hard edge. It was sized from the tab's width, so on
+        -- tabs whose box is smaller or not square the hole showed around the
+        -- box as a dark frame (user 16:49, every tabbed window). Now the
+        -- hole matches the box, 2 px inside it, so the edge hides under it.
         x.glow = Tex(tab, "BACKGROUND", -3, MEDIA .. "glow_sq", GOLD)
+        x.glow:SetPoint("CENTER", p.fill, "CENTER")
         local w = (tab.GetWidth and tab:GetWidth()) or 55
-        x.glow:SetSize(w * 2, w * 2); x.glow:SetPoint("CENTER", p.fill, "CENTER")
+        x.glow:SetSize(w * 2, w * 2)
+        local function Fit()
+            local fw = p.fill.GetWidth and p.fill:GetWidth()
+            local fh = p.fill.GetHeight and p.fill:GetHeight()
+            if type(fw) == "number" and type(fh) == "number" and fw > 8 and fh > 8 then
+                x.glow:SetSize((fw - 4) * 2, (fh - 4) * 2)
+                return true
+            end
+        end
+        x.fit = Fit
+        if tab.HookScript then tab:HookScript("OnSizeChanged", Fit) end
         local g = P3.TabGlyph(tab)
         if g then
             local ic = T(tab, "Icon")
@@ -184,6 +207,7 @@ function P.SideTabExtra(tab)
     end
     local sel = Shown(T(tab, "SelectedTexture"))
     for _, e in ipairs(x.rings) do e:SetShown(sel) end
+    if sel and x.fit then x.fit() end
     x.glow:SetShown(sel)
     if p.notch then p.notch:Hide() end   -- the thick gold frame replaces it (user, Nov 25 11:36)
 end
