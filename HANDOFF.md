@@ -140,6 +140,15 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   regrouped layout (mockups) before any change. Also open: rounded
   corners on buttons/tabs/search boxes (suite-wide recommended, 4 px;
   checkboxes 2 px) from 1.13.
+- DECISIONS (user, Nov 25 04:34) for the SKINS SECOND PASS below, now
+  QUEUED as a whole: (6) right chevron: HIDE it on windows with side tabs;
+  (7) crest: the player's FACE (SetPortraitTexture(tex, "player"), cheap)
+  on windows whose crest shows a portrait (Forever puts the class icon on
+  the Character tab); (8) rounded corners suite-wide, style pending the
+  mockups RoundedButtons_Hub(_zoom).png / _Talents.png (made by
+  /tmp/rb/round.py on the user's screenshots: square / B subtle 3 /
+  C soft 5 / D capsule; recommended C); (9) Hub review: inventory first,
+  then mockups.
 - SKINS SECOND PASS, INVENTORY (from the user's checklist + screenshots,
   Nov 25 ~04:00-04:10; not queued yet, waiting on 2 decisions: right
   chevron (c) move past Forever's side tabs?; crest = player portrait on
