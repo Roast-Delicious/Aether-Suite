@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (14:44)
+Last updated: November 25, 2026 (14:55)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -24,7 +24,7 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.4     What an item is for, when you hover it
-  AetherLedger       1.8.6     Where to quest, train and skin next,
+  AetherLedger       1.8.7     Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.4     Your bags sorted into sections
   AetherChat         1.0.8     Chat with the Aether look, fitted beside
@@ -32,7 +32,7 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.7    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.5.5     The Aether look for Blizzard's windows
+  AetherSkins        1.5.6     The Aether look for Blizzard's windows
                                and the minimap
 
 
@@ -505,13 +505,17 @@ AetherLedger - where to quest, train and skin next             /ledger
     icons become a navy disc with a gold ring: gold dots while you're
     working on it, a gold ? when it's ready (a soft gold glow marks
     the quest you're following). Yellow quest names turn Aether gold
-    (other difficulty colors stay), "Ready for turn-in" is Aether blue,
+    (red and orange are lightened to the map log's colors, with a dark
+    shadow), "Ready for turn-in" is Aether blue,
     the text uses the Aether font, and a soft blue band shows behind the
     quest you point at. A quest you accept zooms onto the list (its
     icon starts about a third of the screen across and shrinks into
     place), and one you hand in swells and fades off, half a second
     each. Turn it off on AetherHub's AetherLedger tab (takes effect
     after a reload).
+  - Click a finished quest's icon on the tracker (the gold ?) and
+    AetherLedger points you to the turn-in NPC: a waypoint plus
+    directions, like a zone suggestion.
   - /ledger tracker lists every quest in your log with its color, zone
     and why it is or isn't on the tracker.
   - Tooltips: ones the game puts in its usual corner (bottom right,

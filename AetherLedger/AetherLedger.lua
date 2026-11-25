@@ -926,6 +926,34 @@ GoToQuest = function(id)
     if AetherLedger_Travel and AetherLedger_Travel.Start then AetherLedger_Travel.Start(dest) end
 end
 
+-- Directions to where a finished quest is handed in (user, Nov 25: click a
+-- ready quest's icon in the tracker). The game knows the turn-in spot (its
+-- next waypoint); Ledger's travel window plans the trip there. On unless
+-- turned off (AetherLedgerDB.turnInDirections = false; Hub switch later).
+function AetherLedger_GoToTurnIn(qid)
+    qid = tonumber(qid)
+    if not qid then return false end
+    local db = Settings()
+    if db.turnInDirections == false then return false end
+    local Q = C_QuestLog
+    if not (Q and Q.GetNextWaypoint) then return false end
+    local ok, map, x, y = pcall(Q.GetNextWaypoint, qid)
+    if not ok or type(map) ~= "number" or map <= 0 or type(x) ~= "number" or type(y) ~= "number" then
+        print(PREFIX .. "no turn-in location known for this quest.")
+        return false
+    end
+    local title = Q.GetTitleForQuestID and Q.GetTitleForQuestID(qid)
+    local where = Q.GetNextWaypointText and select(2, pcall(Q.GetNextWaypointText, qid))
+    if type(where) ~= "string" or where == "" or (issecretvalue and issecretvalue(where)) then where = nil end
+    local dest = { name = where or ("Turn in: " .. (title or "quest")), map = map, x = x, y = y, qid = qid }
+    if AetherCoords_API then
+        if db.waypoint then AetherCoords_API.RemoveWaypoint(db.waypoint) end
+        db.waypoint = AetherCoords_API.AddWaypoint(map, x, y, "Turn in: " .. (title or "quest"))
+    end
+    if AetherLedger_Travel and AetherLedger_Travel.Start then AetherLedger_Travel.Start(dest) end
+    return true
+end
+
 -- Ledger's windows remember where you drag them (top-left corner, per window).
 function AetherLedger_SavePos(frame, key)
     local db = Settings()

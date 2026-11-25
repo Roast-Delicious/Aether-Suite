@@ -397,7 +397,12 @@ function Rule(t, a)
             -- art, Blizzard's size) and a solid light gray line (user 14:19)
             t:SetTexture(MEDIA .. "arrow_head_gray"); t:SetVertexColor(1, 1, 1, 1)
             if t.SetDesaturated then t:SetDesaturated(false) end
-            if line and line.SetColorTexture then line:SetColorTexture(0.78, 0.8, 0.86, 1)
+            -- thin like the gold ones: a solid color fills the whole line
+            -- width, Blizzard's art only its middle (user 14:48: gray shafts
+            -- came out fat)
+            if line and line.SetColorTexture then
+                line:SetColorTexture(0.78, 0.8, 0.86, 1)
+                if line.SetThickness then line:SetThickness(3) end
             elseif line then Tint(line, { 1, 1, 1 }, 1) end
             return
         end
