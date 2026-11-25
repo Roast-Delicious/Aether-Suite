@@ -421,7 +421,109 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   title+headers, light body text, navy tiles) - my pick B; B needs the
   quest font objects (QuestFont, QuestTitleFont, QuestFontNormalSmall...)
   recolored light, which also changes the map quest log detail page
-  (fade its parchment too). Awaiting pick.
+  (fade its parchment too). CHOSEN 08:36: option 3, new Aether page
+  (mock/pass2_parch.py build(3)) for quest, gossip and map quest details.
+  SLIDER (08:45): every skinned window's scroll bar -> BEVELED gold thumb
+  (sharp center ridge, dark left facet, lit right facet, thin dark rim;
+  mock/slider3d.py thumb 'bev'), thickness as in the quest mock (~6 UI
+  units), dark navy track, arrows = our 3D gold chevrons (chev3d_up/down
+  + win_chev_dark backing).
+  SIDE TABS (08:48): flat gold glyphs on navy for non-character tabs
+  (banner=Reputation, hammer+pick=Skills, shield+blades=PvP, coin stack=
+  Currency, bar chart=Statistics; Character tab keeps the portrait); open
+  tab = B: thick gold frame (3px) + gold notch + soft gold glow (mock/
+  sidetabs_flat.py).
+  CRESTS + OTHER TABS (08:55): "Both". Flat gold-on-navy crests (map,
+  book, talent tree, magnifier, friends, progress track; character windows
+  keep the portrait) and flat side tabs on Friends, Group Finder and
+  Progress Track in the same B style (mock/crests_flat.py).
+  VENDOR (09:05): A, cards. Keep Blizzard's 2x5 grid; navy cards with
+  edge, quality frame (>=2) else blue, light names/prices, gold page
+  chevrons, empty tiles hidden, Merchant/Buyback as aligned pills under
+  the window. Flat buttons: anvil+hammer=repair all, hammer=repair item,
+  shield+hammer=guild repair, coin sack=sell junk (mock/vendor.py,
+  glyph_img -> gen art at 4x then reduce).
+  TALENT VISIBILITY (09:12): Proposed. none = icon ramp (24,48,92)->
+  (120,160,220), frame (110,150,210), navy backing plate (30,58,104,a150)
+  4px around; lock = gray*0.85+25, frame (125,129,140), arrows
+  (150,154,164); hide DisabledOverlay (mock/talent_full.py VIS=1).
+  NEW PLAYER FRIENDLY (09:18): B, sprout glyph (role_newcomer) on the
+  4th Group Finder button; clamp it to the 64 size (mock/npf.py).
+  BAG FRAMES (09:22): B, frame colour = item quality when >=2 (uncommon
+  and up), Aether blue otherwise (mock/bagq.py).
+  RESIZE (09:24): corner grip. Small gold grip bottom-right on every
+  skinned window except quest windows; drag = SetScale (clamp 0.7-1.5),
+  saved per window name in AetherSkinsDB.scale; right-click = reset.
+  Character right-panel section pills -> navy (user, checklist).
+  CHARACTER SLOTS DUMP (08:59, tools/dumps/CharacterFrame_Slots_2026-11-
+  25.txt): each Character<X>Slot has NormalTexture 130841 (64x64, ours
+  already), .BorderFrame child texture atlas UI-Character-Info-GearSlot
+  55x55 = the BRONZE frame with corner studs -> fade; .IconBorder tex
+  651080 = Blizzard quality edge (green etc.) -> fade, colour our frame by
+  GetInventoryItemQuality("player", slot:GetID()) >=2 else blue (same as
+  bags; refresh via hooksecurefunc PaperDollItemSlotButton_Update).
+  Ammo: UI-Character-Info-GearSlotSmall (fade -> our frame) and
+  UI-Character-Info-GearSlot-Arrow (orange arrow -> tint gold).
+  PaperDollSidebarTab1-4 (top of right panel): UI-Character-Info-StatTab
+  (+ -Selected) -> W.SquareTab style (navy box, gold frame when selected).
+  Model buttons: common-button-square-gray-up/-down -> NavyBox, icon gold.
+  SPELLBOOK BROWN = spellbook-item-iconframe-passive (blue = iconframe);
+  fade both (+ -hover, -shadow) and draw our blue frame.
+  PACK AMMO HEADING (09:20, user idea; mock/pack_full.py V=3): the Ammo
+  section header reads "<Name>: <count>" (name + colon in gold, count
+  dim): Arrows (bow/crossbow or quiver), Bullets (gun or ammo pouch), Soul
+  shards (warlock / soul bag). Right side of the header line: buy hint,
+  "buy N stacks to fill" (light text; red at AMMO_LOW), N = floor(room /
+  stack), room = quiver capacity - ammo in it; "quiver full"/"pouch full"
+  in green when N = 0 and no room; warlock "room for N more". Header line
+  stops before the hint. Bottom Ammo row STAYS (only warning when you have
+  no ammo and the section is gone).
+  TWO BUILDS (09:19, user): Build 1 = BUG FIXES only: lazy ScrollBox rows
+  (acquired/initialized callbacks + fallback timer), rep capsule fit to
+  .FillArea, light text on navy (spellbook names/ranks/headers, gossip,
+  quest), talent visibility (none/lock + DisabledOverlay + can-purchase
+  glow flag + solid gray shafts), spellbook iconframe(-passive) fade + our
+  frame, Group Finder (NPF clamp to 64, red close, side tabs styled as
+  plain navy), map (header gold, zone-bar bronze, dimness), vendor
+  (tab alignment, hide empty tiles, repair icons visible), friends card
+  SetVertexColor hook, bag + character slot quality frames, character
+  bronze GearSlot fade + ammo slot + sidebar tabs + model buttons, rep
+  pills navy, tracker hand-in spacing. Build 2 = DESIGNS: flat side-tab
+  glyphs + B style, flat crests, vendor A cards + flat buttons, NPF
+  sprout, gold beveled slider everywhere, quest page option 3, resize
+  grip, Pack ammo heading. Hub cleanup = pass after that.
+  BUILD 1 CODED (09:55, branch fixes-pass2b, NOT BUILT): Skins 1.3.1,
+  Pack 1.6.3, Ledger 1.8.4. Windows: tab box tied to tab CENTER at a
+  per-row text offset (tabOffset); W.H.Close exported. Pass2: P.KeepTint
+  / P.KeepColor (post-hook SetVertexColor / SetTextColor+SetFontObject),
+  P.LightText on every FontString (lum < .35 -> TEXT), WatchList on any
+  frame with .ScrollTarget (ScrollUtil acquired + initialized callbacks,
+  OnShow +0.2 s fallback) -> W.Again(root) = one Contents per frame;
+  capsule fitted to .FillArea +-2 / fill height + 4; quality mirror from
+  IconBorder 651080 (QualityBorder) onto IconFrame edges; SpellFrame
+  around Icon when iconframe(-passive) fades; RedButton-Exit -> Close;
+  GearSlot(+Small) fade; StatTab/model buttons/arrow tints; Character
+  stat titles (UI-Character-Info-Title) -> HeaderStrip; talents per
+  decision + canPurchaseRank + DisabledOverlay always 0 + plate; gray
+  arrow SetColorTexture; Role w clamp 64; MerchantTile hides with its
+  ItemButton. Pack: SlotQuality (ITEM_QUALITY_COLORS >=2, IconBorder
+  alpha 0). Ledger: divider +5 above block. Tests: skins_pass2 (+20),
+  skins_windows (tab rule), pack_test (quality). Suite: only baseline
+  failures remain (same list as before the change).
+  NOT IN BUILD 1 (need info): Group Finder side tabs + its window's red
+  close (tabs aren't in LFGListingFrame dump: dump the parent window with
+  the tabs showing); map "dim" (need a skins on/off screenshot pair);
+  talents brown background (unknown art). Vendor repair icons -> Build 2
+  flat buttons.
+  GROUP FINDER DUMPS (09:35): the three side tabs are three WINDOWS:
+  LFGListingFrame (I, skinned), LFGBrowseFrame (magnifier) and
+  LFGWhoListFrame (people) - the last two were never in W.KNOWN, hence
+  Blizzard look + red close. Added to KNOWN; new art: groupfinder-Stat-
+  StoneBG (fade), groupfinder-ScrollLine (blue line), common-dropdown-a-
+  button-disabled / OptionsIcon-Brown / common-icon-search (light). The
+  side tabs themselves are in none of the three dumps (a separate frame):
+  need /skins tree pointing at a tab. NPF button also has atlas
+  newplayerchat-chaticon-newcomer (20x20, the little sprout) - Build 2.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in

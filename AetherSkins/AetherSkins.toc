@@ -2,7 +2,7 @@
 ## Title: AetherSkins
 ## Notes: The Aether look for Blizzard's windows and the minimap.
 ## Author: Aether
-## Version: 1.3.0
+## Version: 1.3.1
 ## OptionalDeps: AetherHub
 ## SavedVariables: AetherSkinsDB
 

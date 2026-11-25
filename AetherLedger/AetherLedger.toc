@@ -2,7 +2,7 @@
 ## Title: AetherLedger
 ## Notes: Suggests the best zones, class and profession quests for your level, reminds you to train professions, shows where to skin, gives travel directions, and exports your quest log.
 ## Author: Aether
-## Version: 1.8.3
+## Version: 1.8.4
 ## OptionalDeps: AetherHub
 ## SavedVariables: AetherLedgerDB
 

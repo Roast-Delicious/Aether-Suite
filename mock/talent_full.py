@@ -11,6 +11,7 @@ from PIL import Image, ImageDraw, ImageFilter
 from skins_lib import Canvas, U, SS, GOLD, BLUE, NAVY, PANEL, WHITE, DIM, F as LF, label
 from talent_details import arrow, F
 import talent_states as TS, os
+VIS = os.environ.get('VIS') == '1'
 UNSPENT = int(os.environ.get('UNSPENT', '2')); LOCKED = os.environ.get('LOCKED', 'gray'); OUTN = os.environ.get('OUTN', 'out_talent_full.png')
 
 SHOT = Image.open('/mnt/user-data/uploads/330e1911-image.png').convert('RGB')
@@ -107,7 +108,7 @@ for (cx, cy), pts in SPEC:
     bd.text((cx + 24, cy + 26), pts, font=f, fill=WHITE + (255,), anchor='mm')
 
 # ---- 4. arrows, then nodes, then pills -------------------------------------
-ACOL = {'max': GOLD, 'part': BLUE, 'lock': (BLUE if LOCKED == 'blue' else (110, 114, 124))}
+ACOL = {'max': GOLD, 'part': BLUE, 'lock': (BLUE if LOCKED == 'blue' else ((150, 154, 164) if VIS else (110, 114, 124)))}
 S = 78; half = S // 2
 for (a, b, kind) in ARROWS:
     (x0, y0), (x1, y1) = H(*a), H(*b)
@@ -137,16 +138,21 @@ for (cx, cy), st, n, m in nodes:
         gl, pad = glow_layer(S); base.alpha_composite(gl, (cx - half - pad, cy - half - pad))
     elif st == 'none':     # open, but no points left: navy
         g = lum(ic); g = g / max(g.max(), 1e-3)
-        a = DEEP + g[..., None] * (MID - DEEP) * 1.15
-        im = TS.tile(a, border=(60, 90, 140), S=S)
+        if VIS:            # lighter navy icon, lighter frame, faint navy backing
+            bk = ImageDraw.Draw(base); bk.rounded_rectangle([cx - half - 4, cy - half - 4, cx + half + 4, cy + half + 4], 8, fill=(30, 58, 104, 150))
+            a = np.array([24, 48, 92.]) + g[..., None] * (np.array([120, 160, 220.]) - np.array([24, 48, 92.]))
+            im = TS.tile(a, border=(110, 150, 210), S=S)
+        else:
+            a = DEEP + g[..., None] * (MID - DEEP) * 1.15
+            im = TS.tile(a, border=(60, 90, 140), S=S)
     elif LOCKED == 'blue':
         g = lum(ic); g = g / max(g.max(), 1e-3)
         a = np.array([14, 40, 80.]) + g[..., None] * (np.array([77, 166, 255.]) - np.array([14, 40, 80.])) * 0.9
         im = TS.tile(a, border=BLUE, S=S)
     else:                  # locked: gray
         g = lum(ic); g = g / max(g.max(), 1e-3)
-        a = g[..., None] * np.array([150, 152, 160.]) * 0.55
-        im = TS.tile(a, border=(70, 74, 84), S=S)
+        a = g[..., None] * np.array([150, 152, 160.]) * (0.85 if VIS else 0.55) + (25 if VIS else 0)
+        im = TS.tile(a, border=((125, 129, 140) if VIS else (70, 74, 84)), S=S)
     base.alpha_composite(im, (cx - half, cy - half))
     if st in ('max', 'part'): pills.append((cx, cy + half - 8, f"{n} of {m}", GOLD if st == 'max' else BLUE))
 d = ImageDraw.Draw(base)
@@ -155,6 +161,7 @@ for cx, y, txt, col in pills:
     d.rounded_rectangle([cx - w / 2, y - h / 2, cx + w / 2, y + h / 2], 11, fill=(8, 12, 22, 255), outline=col + (255,), width=2)
     d.text((cx, y), txt, font=f, fill=col + (255,), anchor='mm')
 
+VIS0 = 0
 TITLE = os.environ.get('TITLE', 'Talents, full window')
 out = label(base.convert('RGB'), TITLE)
 out.save('/home/claude/aether-repo/mock/' + OUTN); print(out.size)
