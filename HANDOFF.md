@@ -115,6 +115,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     (approved capsule bars, Neutral gold / Friendly+ #22e650), rows and
     section headers (tracker-style), world map specifics: phase 2, from
     the user's screenshots + /skins debug.
+- READY, NOT SHIPPED (branch fix-handin-unknown-zone) also has AetherSkins
+  1.2.2: /skins tree hit its 400-line cap before the open page (65 lines of
+  our own pieces, 99 hidden gamepad hints etc.): now skips our textures
+  (W.ours), folds hidden parts into one line, cap 1500, depth 7. Reputation
+  is a page of CharacterFrame, so its dump is named CharacterFrame.
 - READY, NOT SHIPPED (branch fix-handin-unknown-zone): AetherLedger 1.8.2.
   Checklist 5.9/5.10 fail (06:08): "Lost Shipping Crate" [38] (Forever-only
   quest, hand-in Powderfuse Port, the Riverglades: NOT in our data) was
