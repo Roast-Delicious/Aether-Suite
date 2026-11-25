@@ -205,7 +205,13 @@ local function Frame(f)
     -- its right half (user, Nov 25 12:40)
     local ul = CreateFrame("Frame", nil, f)
     ul:SetPoint("TOPLEFT", f, "TOPLEFT", S, -TITLE_H); ul:SetPoint("TOPRIGHT", f, "TOPRIGHT", -S, -TITLE_H); ul:SetHeight(1)
-    if ul.SetFrameLevel and f.GetFrameLevel then ul:SetFrameLevel((f:GetFrameLevel() or 0) + 20) end
+    -- well above the window's own panes (+20 wasn't enough for Character's
+    -- stats pane, user 16:25), and again whenever the window opens
+    local function Lift()
+        if ul.SetFrameLevel and f.GetFrameLevel then pcall(ul.SetFrameLevel, ul, math.min(9000, (f:GetFrameLevel() or 0) + 200)) end
+    end
+    Lift()
+    if f.HookScript then f:HookScript("OnShow", Lift) end
     t = Tex(ul, "OVERLAY", 2, WHITE, { GOLD[1], GOLD[2], GOLD[3], 0.7 })
     t:SetPoint("TOPLEFT", ul, "TOPLEFT"); t:SetPoint("BOTTOMRIGHT", ul, "BOTTOMRIGHT")
     -- the four 3D gold chevrons (gold baked per direction; dark backing turns)

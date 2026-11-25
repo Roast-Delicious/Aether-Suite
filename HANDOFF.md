@@ -1469,3 +1469,11 @@ trim), xpbar_render.py (XP bar).
   returns for the ghost head (or any texture not the frame's .ArrowHead);
   line hooks also on SetColorTexture / SetVertexColor / SetThickness.
   skins_pass2_test (+2). Build go -> Skins 1.6.1, Hub 1.15.2.
+- 16:25 CHARACTER GOLD LINE (user + dump tools/dumps/CharacterFrame_b160_
+  2026-11-25.txt): underline frame is there (623x1) but covered on part
+  of the window. Likely the right stats pane: CharacterFrameRightPaneHost
+  233x464 starts ~20 units down (window 484) = inside the 22-unit strip;
+  P3.BelowTitle measured at styling time when the window wasn't laid out
+  (GetTop nil) -> skipped. READY, NOT SHIPPED (branch dancer2): BelowTitle
+  retries on the window's OnShow; underline frame level +200 (was +20),
+  re-lifted on every OnShow. Asked the user for a screenshot to confirm.
