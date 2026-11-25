@@ -433,6 +433,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   Currency, bar chart=Statistics; Character tab keeps the portrait); open
   tab = B: thick gold frame (3px) + gold notch + soft gold glow (mock/
   sidetabs_flat.py).
+  CRESTS + OTHER TABS (08:55): "Both". Flat gold-on-navy crests (map,
+  book, talent tree, magnifier, friends, progress track; character windows
+  keep the portrait) and flat side tabs on Friends, Group Finder and
+  Progress Track in the same B style (mock/crests_flat.py).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
