@@ -35,6 +35,7 @@ AetherSkins_Windows = W
 W.skinned = setmetatable({}, { __mode = "k" })   -- window -> true
 W.done    = setmetatable({}, { __mode = "k" })   -- any styled widget -> kind
 W.names   = {}                                   -- window names, for /skins debug
+W.ours    = setmetatable({}, { __mode = "k" })   -- textures we made (left out of /skins tree)
 local pending = setmetatable({}, { __mode = "k" })
 
 local function Enabled()
@@ -58,6 +59,7 @@ end
 
 local function Tex(owner, layer, sub, file, c)
     local t = owner:CreateTexture(nil, layer, nil, sub)
+    if W.ours then W.ours[t] = true end
     t:SetTexture(file)
     t:SetVertexColor(c[1], c[2], c[3], c[4] or 1)
     if t.SetSnapToPixelGrid then t:SetSnapToPixelGrid(false); t:SetTexelSnappingBias(0) end
@@ -453,7 +455,7 @@ end
 
 -- Blizzard windows by name (some load later, with their Blizzard_ addon).
 W.KNOWN = {
-    "CharacterFrame", "FriendsFrame", "PVEFrame", "PlayerSpellsFrame", "SpellBookFrame", "PlayerTalentFrame",
+    "CharacterFrame", "FriendsFrame", "SocialUIFrame", "PVEFrame", "PlayerSpellsFrame", "SpellBookFrame", "PlayerTalentFrame",
     "ProfessionsFrame", "CollectionsJournal", "EncounterJournal", "AchievementFrame", "CommunitiesFrame",
     "GuildFrame", "MerchantFrame", "GossipFrame", "QuestFrame", "MailFrame", "OpenMailFrame", "TradeFrame",
     "BankFrame", "AuctionHouseFrame", "ClassTrainerFrame", "TaxiFrame", "DressUpFrame", "ItemTextFrame",
@@ -537,17 +539,26 @@ local function Describe(o, parent)
     if W.done[o] then bits[#bits + 1] = "[styled " .. W.done[o] .. "]" end
     return table.concat(bits, " ")
 end
+local MAX_LINES = 1500
 function W.Tree(root)
     local lines, count = {}, 0
     local function Walk(f, parent, depth)
-        if count >= 400 or Forbidden(f) then return end
+        if count >= MAX_LINES or Forbidden(f) then return end
         count = count + 1
-        lines[#lines + 1] = string.rep("  ", depth) .. Describe(f, parent)
-        if depth >= 5 then return end
+        local line = string.rep("  ", depth) .. Describe(f, parent)
+        -- A hidden part (another tab's page, gamepad hints): one line, not its insides.
+        if f.IsShown and not f:IsShown() and depth > 0 then
+            local n = f.GetNumChildren and f:GetNumChildren() or 0
+            local r = f.GetNumRegions and f:GetNumRegions() or 0
+            lines[#lines + 1] = line .. string.format(" (%d parts inside, skipped)", n + r)
+            return
+        end
+        lines[#lines + 1] = line
+        if depth >= 7 then return end
         if f.GetRegions then
             for _, r in ipairs({ f:GetRegions() }) do
-                if count >= 400 then break end
-                if not Forbidden(r) then
+                if count >= MAX_LINES then break end
+                if not Forbidden(r) and not W.ours[r] then
                     count = count + 1
                     lines[#lines + 1] = string.rep("  ", depth + 1) .. Describe(r, f)
                 end
@@ -558,7 +569,7 @@ function W.Tree(root)
         end
     end
     Walk(root, root.GetParent and root:GetParent(), 0)
-    if count >= 400 then lines[#lines + 1] = "(stopped at 400 lines)" end
+    if count >= MAX_LINES then lines[#lines + 1] = "(stopped at " .. MAX_LINES .. " lines)" end
     return lines
 end
 function W.TreeUnderMouse()

@@ -115,6 +115,80 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
     (approved capsule bars, Neutral gold / Friendly+ #22e650), rows and
     section headers (tracker-style), world map specifics: phase 2, from
     the user's screenshots + /skins debug.
+- READY, NOT SHIPPED (branch fix-handin-unknown-zone) also has AetherSkins
+  1.2.2: /skins tree hit its 400-line cap before the open page (65 lines of
+  our own pieces, 99 hidden gamepad hints etc.): now skips our textures
+  (W.ours), folds hidden parts into one line, cap 1500, depth 7. Reputation
+  is a page of CharacterFrame, so its dump is named CharacterFrame.
+- READY, NOT SHIPPED (branch fix-handin-unknown-zone): AetherLedger 1.8.2.
+  Checklist 5.9/5.10 fail (06:08): "Lost Shipping Crate" [38] (Forever-only
+  quest, hand-in Powderfuse Port, the Riverglades: NOT in our data) was
+  treated as handed in where it came from (ZonesOf falls back to the log
+  header), so no bottom spot, no zone, no divider. Fix: TurnInOf(q) asks
+  C_QuestLog.GetNextWaypoint(questID) for finished quests first, our data
+  second; used in Fits, the hand-in list and /ledger tracker.
+  tracker_handin_test (+2). Delivery quests show Blizzard's description
+  (it names the place) instead of "Ready for turn-in", so no zone suffix
+  there; the divider still marks them.
+- CHECKLIST RESULTS (Nov 25 06:13): 5.1-5.7 pass (errors fixed, Check
+  Zones), 5.8 not tested, 5.9/5.10 fail (above), 5.11/5.12 can't test (no
+  finished-here or red quests; "Can't test now" option added to the doc's
+  Result list), 5.13 pass, 5.14 partial (only CharacterFrame dumped:
+  saved tools/dumps/CharacterFrame_2026-11-25.txt; need Reputation,
+  Friends, Talents, Progress Track), 5.15 pass (tools/dumps/FullReport_
+  2026-11-25.txt; memory 10.2 MB, Coords 81 KB, Pathfinder 1.58 MB).
+  Character dump: stat headers atlas UI-Character-Info-Title, rows
+  UI-Character-Info-Line-Bounce2, CharacterFrameRightPaneHost StoneBg
+  UI-Character-Info-Stat-StoneBG3, CharacterStatsPaneScrollBox .Border
+  common-insideframe + .ClassBackground UI-Character-Info-Hunter-BG, side
+  tabs CharacterFrameModeTab1-6 (.TabGlow common-sidetab-selected), scroll
+  bar IS MinimalScrollBar (styled; tint just too faint).
+  Second dump (Reputation open, 06:21, tools/dumps/CharacterFrame_
+  ReputationOpen_2026-11-25.txt) also cut at 400 before ReputationFrame,
+  but adds: CharacterFrameLeftPaneHost bg atlas UI-Character-Info-General-
+  BG, CharacterFrameRightPaneHost bg UI-Character-Info-Stat-BG + divider
+  common-framedivider, side tabs CharacterFrameModeTab1-6 = .Background
+  common-sidetab, .SelectedTexture/.TabGlow common-sidetab-selected,
+  .HighlightTexture common-sidetab-hover, .Icon (Tab1 = RTPortrait1);
+  CharacterFrameRightPaneToggleButton (tex 130869/130868/130757);
+  CharacterStatsPane categories .ItemLevelCategory/.AttributesCategory/
+  .EnhancementsCategory (UI-Character-Info-Title), .ItemLevelFrame
+  UI-Character-Info-ItemLevel-Bounce. Need the 1.2.2 dump for the
+  Reputation page itself.
+  Friends dump (06:22, tools/dumps/SocialUIFrame_2026-11-25.txt, cut at
+  400): Forever's Friends window is SocialUIFrame (added to W.KNOWN on
+  branch). Parts: .TopFade friends-frame-topTexBG, .BottomFade friends-
+  frame-bottomTexBG, BattleNetBar .Background friends-frame-infoBG,
+  status dropdown common-dropdown-textholder + common-dropdown-a-button,
+  menu button common-button-tertiary-square-normal/pressed + friends-
+  icon-menu, filter dropdown common-dropdown-b-button, search box
+  common-searchbar-a + common-searchbar-icon-a + common-search-
+  clearbutton, list dividers perks-divider-short, broadcast and notice
+  popups use UI-Frame-DiamondMetal-* borders. Nested IgnoreListFrame is
+  its own PortraitFrame: its close button was NOT styled -> skin nested
+  portrait frames too. Tabs, the friends list rows: still need 1.2.2.
+  Talents dump (06:24, tools/dumps/PlayerSpellsFrame_Talents_2026-11-25
+  .txt, cut at 400 inside the nodes): PlayerSpellsFrame 1218x708, tabs
+  at .tabSystem (uiframe-tab-*/uiframe-activetab-*, already styled).
+  NOT styled: .MaximizeMinimizeButton (RedButton-Expand/-Condense) ->
+  needs our navy box like the close button. TalentsFrame art:
+  .Background Talents-Background-c60, class art talent-background-
+  hunter (+BackgroundFlash, Overlay*), .BackgroundBorder Talents-inner-
+  frame-c60 (bronze), dividers Talents-divider-left/right/vertical-c60,
+  clouds/particles animations. Nodes: StateBorder atlases talents-node-
+  square-gray/-yellow/-locked, green glow talents-node-square-
+  greenglow, sheen talents-sheen-node. Plan: keep class art + nodes
+  (game info), restyle bronze border/dividers blue, decide on the
+  yellow node border (Blizzard's "has points" color) vs Aether gold.
+  Each node is ~23 lines, so 1.2.2 should fold node insides.
+  OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
+  only ones from here? (5.9 note: "there may be more").
+- LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
+  zone from C_QuestLog.GetNextWaypoint first), AetherSkins 1.2.2 (full
+  /skins tree dumps: 1500 lines, hidden parts folded, our pieces skipped;
+  SocialUIFrame in W.KNOWN). NEXT: user dumps Reputation, Friends list,
+  Talents, Progress Track, Group Finder, Spellbook, Bags, a vendor, quest
+  dialog, world map; then the skins second pass.
 - LAST BUILD (Nov 25, 05:50; user 05:33 "go ahead with all the fixes and
   recommendations"): AetherLedger 1.8.1, AetherSkins 1.2.1, AetherHub 1.14.8.
   * Errors fixed: Ledger GiverText order (Hub Ledger tab / moving givers),
@@ -476,7 +550,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   12.0/12.1 addons (MidnightMap, ClassyMap, BasicMinimap): allowed.
 - Stale tests (fail on the Nov 24 morning code too): bars_glow_test,
   bars_sidefix_test, ledger_suggest_test, lens_test, meter_login_test,
-  meter_test, meter_test2, names_test*, radar_test, tracker_test.
+  meter_test, meter_test2, names_test*, radar_test, tracker_test,
+  hub_general_test, itemid_test, ledger_full_test, marks_namekey_test,
+  marks_plates_test, pack_class_test (all fail on shipped main too).
 - AetherMarks far names (decided, leave as is): beyond 41 yards (WoW
   Forever's nameplate cap, Rare Radar sets it) there's no nameplate; the
   tiny names are the game's, in reaction colors, and addons can't color,

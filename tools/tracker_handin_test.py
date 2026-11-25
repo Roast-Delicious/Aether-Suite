@@ -63,4 +63,16 @@ expect("chat says why, once", out.count("Horde Trauma is red for you right now (
 L.execute('AetherLedger_Tracker.Apply()')
 out = "\n".join(L.eval('OUT').values())
 expect("...and not again on later refreshes", out.count("Horde Trauma is red"), 1)
+# A Forever-only quest our data doesn't know (no AetherLedger_Zones entry):
+# the game's turn-in waypoint says where it goes (Riverglades, map 2001).
+L.execute('''
+MAPS[2001] = "The Riverglades"
+table.insert(LOG, {id=207, title="Lost Shipping Crate", level=38, done=true})
+C_QuestLog.GetNextWaypoint = function(id) if id == 207 then return 2001, 0.5, 0.5 end end
+WATCH = {}
+AetherLedger_Tracker.Apply()
+''')
+shown = [L.eval('WATCH[%d]' % i) for i in range(1, L.eval('#WATCH') + 1)]
+expect("a quest our data doesn't know: the game's turn-in waypoint puts it at the bottom", shown[-2:] == [203, 207] or shown[-2:] == [207, 203], True)
+expect("...with the right zone name", L.eval('AetherLedger_Tracker.ElsewhereZone(207)'), "The Riverglades")
 print("PASS" if ok else "FAIL"); sys.exit(0 if ok else 1)

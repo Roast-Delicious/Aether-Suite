@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (05:50)
+Last updated: November 25, 2026 (06:30)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves
@@ -24,7 +24,7 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.4     What an item is for, when you hover it
-  AetherLedger       1.8.1     Where to quest, train and skin next,
+  AetherLedger       1.8.2     Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.1     Your bags sorted into sections
   AetherChat         1.0.8     Chat with the Aether look, fitted beside
@@ -32,7 +32,7 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.7    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.2.1     The Aether look for Blizzard's windows
+  AetherSkins        1.2.2     The Aether look for Blizzard's windows
                                and the minimap
 
 
@@ -480,6 +480,8 @@ AetherLedger - where to quest, train and skin next             /ledger
   - Finished quests from the zone you're in that are handed in
     somewhere else stay at the bottom of the list, under a thin gold
     line, reading "Ready for turn-in: Orgrimmar" (the zone to go to).
+    The zone comes from the game's own turn-in marker first, so quests
+    the guide doesn't know about show up there too.
   - Somewhere with nothing for you (a city, a road), it shows the
     quests of the zone you're heading to with Go, or else the zone
     holding most of your quests. A line in chat says which zone the
@@ -913,7 +915,8 @@ AetherSkins - the Aether look for Blizzard's windows           /skins
     sun or moon (/skins auto follows the game again), /skins debug
     (what it found and changed: send this if something looks off),
     /skins tree (point at a window: saves its structure for AetherHub's
-    Debug page). Both switches are also on the AetherSkins tab in
+    Debug page; up to 1,500 lines, with hidden parts folded into one
+    line each). Both switches are also on the AetherSkins tab in
     AetherHub (/hub skins), and Debug Skins on its Debug tab.
 
 
