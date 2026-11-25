@@ -575,6 +575,22 @@ function P3.CollRule(t, a)
         local o = Ours(t, nil, NAVYC, nil, nil, WHITE)
         local b = t.GetParent and t:GetParent()
         local ic = b and T(b, "icon")
+        -- a mount you can't use yet: Blizzard paints its icon dark red; ours
+        -- is a light gray instead, easy to see (user, Nov 25 13:43)
+        if ic and ic.SetVertexColor and Once(ic, "mounticon") then
+            local busy
+            local function Lift(self, r, g, bb)
+                if busy or type(r) ~= "number" or type(g) ~= "number" then return end
+                if r > 0.6 and g < 0.45 then
+                    busy = true; self:SetVertexColor(0.78, 0.8, 0.84, 1)
+                    if self.SetDesaturated then self:SetDesaturated(true) end
+                    busy = false
+                elseif r > 0.9 and g > 0.9 and self.SetDesaturated then self:SetDesaturated(false) end
+            end
+            if hooksecurefunc then pcall(hooksecurefunc, ic, "SetVertexColor", Lift) end
+            local okc, r, g, bb = pcall(ic.GetVertexColor, ic)
+            if okc then Lift(ic, r, g, bb) end
+        end
         if o and ic then
             o:ClearAllPoints()
             o:SetPoint("TOPRIGHT", t, "TOPRIGHT"); o:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT"); o:SetPoint("LEFT", ic, "LEFT", -4, 0)
@@ -610,6 +626,9 @@ function P.ExtraRule(t, a)
         -- Repair item is never disabled by Blizzard, and repair all may
         -- not be refreshed after repairing, so the repair cost decides too.
         if o and b and b.HookScript and Once(b, "vendortip") then
+            -- a disabled button gets no mouse-over unless asked (user, 13:43:
+            -- the gray buttons still showed nothing)
+            if b.SetMotionScriptsWhileDisabled then pcall(b.SetMotionScriptsWhileDisabled, b, true) end
             -- Blizzard shows these tooltips only when there's something to
             -- do; a gray button now says why it's gray (user, Nov 25 12:46)
             b:HookScript("OnEnter", function(self)
@@ -784,8 +803,20 @@ end
 -- Wiring: after the second pass's walk of each window
 -- ------------------------------------------
 local afterWalk = W.AfterWalk
+-- Mounts and Pets: the list side on page blue like the model side (user,
+-- Nov 25 13:43: "navy or blue on the left"; rows stay navy on it)
+local function ListSides(root)
+    if root ~= _G.CollectionsJournal then return end
+    for _, inset in ipairs({ _G.MountJournal and T(_G.MountJournal, "LeftInset"), _G.PetJournalLeftInset }) do
+        if inset and inset.CreateTexture and Once(inset, "listside") then
+            local f = Tex(inset, "BACKGROUND", -5, WHITE, { PAGE[1], PAGE[2], PAGE[3], 1 })
+            f:SetPoint("TOPLEFT", inset, "TOPLEFT", 3, -3); f:SetPoint("BOTTOMRIGHT", inset, "BOTTOMRIGHT", -3, 3)
+        end
+    end
+end
 function W.AfterWalk(root)
     if afterWalk then pcall(afterWalk, root) end
+    pcall(ListSides, root)
     pcall(P3.Crest, root)
     pcall(P3.Grip, root)
     pcall(P3.MapPages, root)
