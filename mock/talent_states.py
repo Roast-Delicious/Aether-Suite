@@ -34,7 +34,7 @@ def tile(ic, border, fx=None, glow=None, dim=0.0, count=None, ccol=None, S=64):
     im = Image.new('RGBA', (S, S), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
     if glow:
         for k in range(8, 0, -1):
-            d.rounded_rectangle([8 - k - 4, 8 - k - 4, S - 9 + k + 4, S - 9 + k + 4], 10, outline=glow + (int(26 * (9 - k) / 8),), width=2)
+            d.rounded_rectangle([8 - k - 4, 8 - k - 4, S - 9 + k + 4, S - 9 + k + 4], 10, outline=glow + (int(70 * (9 - k) / 8),), width=2)
     icn = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8)).resize((S - 18, S - 18), Image.LANCZOS)
     im.paste(icn, (9, 9))
     d.rounded_rectangle([7, 7, S - 8, S - 8], 5, outline=border + (255,), width=3)
