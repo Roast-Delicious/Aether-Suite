@@ -581,6 +581,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   on paged frames -> Again(root); every window also looks again 0.3 s
   and 1 s after it opens (LookAgainLater). No dump needed unless it
   recurs.
+  PET PAGE DUMP (10:27, tools/dumps/PlayerSpellsFrame_Pet_2026-11-25.txt):
+  Growl uses the same spellbook-item-iconframe; its entry frame differs
+  (no hidden 37x10 FontString = made later) -> same timing cause, fixed
+  by LookAgainLater/SetCurrentPage. Autocast spells (Growl, Bite) have
+  .AutoCastOverlay with atlas spellbook-item-petautocast-corners (brown
+  corners) -> now tinted gold (GOLDT).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in

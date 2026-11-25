@@ -244,7 +244,8 @@ for _, a in ipairs({ "charactercreate-customize-dropdown-linemouseover-side", "c
 for _, a in ipairs({ "Legacy-Progressbar-Fill", "Legacy-Rewards-Tracker-Diamond", "spellbook-Tab-Frame-Glow-C60",
     "QuestLog-icon-checkmark-yellow", "common-button-list-minus", "common-button-list-plus",
     "UI-Character-Info-GearSlot-Arrow", "UI-Character-Info-StatTab-Selected", "common-icon-zoomin", "common-icon-zoomout",
-    "common-icon-rotateleft", "common-icon-rotateright", "common-icon-undo" }) do GOLDT[a] = true end
+    "common-icon-rotateleft", "common-icon-rotateright", "common-icon-undo",
+    "spellbook-item-petautocast-corners" }) do GOLDT[a] = true end
 for _, a in ipairs({ "common-dropdown-a-button", "QuestLog-icon-setting", "QuestCollapse-Hide-Up", "QuestCollapse-Hide-Down",
     "QuestCollapse-Show-Up", "QuestCollapse-Show-Down", "friends-icon-menu", "common-search-clearbutton",
     "common-dropdown-a-button-disabled", "OptionsIcon-Brown", "common-icon-search" }) do LIGHTT[a] = true end
