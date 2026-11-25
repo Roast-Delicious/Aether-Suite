@@ -1158,3 +1158,6 @@ trim), xpbar_render.py (XP bar).
   -> extra lines across each card; now one edge per card (not on tiled)
   and every BoxEdge follows its texture's shown state. OPEN: character
   crest A face / B helmet (mock/char_crest.py), asked 12:40.
+  GOSSIP/QUEST PAGE (user 12:44): Page() overlay now fills the window's
+  Inset (3px in), scroll bar included, edge follows; gossip options GOLD
+  (was blue).

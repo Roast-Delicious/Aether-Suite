@@ -290,14 +290,23 @@ end
 -- The Aether page in place of the parchment, with a thin blue edge.
 local pageEdge = weak()
 local function Page(t)
-    Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE)   -- flat page (bg_tiers A)
-    if not pageEdge[t] then
-        local par = t.GetParent and t:GetParent()
-        if par then
-            local f = CreateFrame("Frame", nil, par)
-            f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
-            pageEdge[t] = Edge(f, "BORDER", 3, { 0.24, 0.43, 0.69, 0.9 }, 0)
-        end
+    local o = Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE)   -- flat page (bg_tiers A)
+    -- fill the whole inset, scroll bar included: Blizzard's parchment is
+    -- smaller and left dark bands around it (user, Nov 25 12:44)
+    local par = t.GetParent and t:GetParent()
+    local nm = par and par.GetName and par:GetName()
+    local inset = par and (T(par, "Inset") or (nm and _G[nm .. "Inset"]))
+    local area = t
+    if o and inset and inset.GetObjectType then
+        area = inset
+        o:ClearAllPoints()
+        o:SetPoint("TOPLEFT", inset, "TOPLEFT", 3, -3); o:SetPoint("BOTTOMRIGHT", inset, "BOTTOMRIGHT", -3, 3)
+    end
+    if not pageEdge[t] and par then
+        local f = CreateFrame("Frame", nil, par)
+        local d = (area == t) and 0 or 3
+        f:SetPoint("TOPLEFT", area, "TOPLEFT", d, -d); f:SetPoint("BOTTOMRIGHT", area, "BOTTOMRIGHT", -d, d)
+        pageEdge[t] = Edge(f, "BORDER", 3, { 0.24, 0.43, 0.69, 0.9 }, 0)
     end
 end
 
@@ -638,7 +647,7 @@ local function GossipChoice(f, root)
     if not (root and root.GetName and root:GetName() == "GossipFrame") then return end
     if not (T(f, "Icon") and f.GetFontString) then return end
     local ok, fs = pcall(f.GetFontString, f)
-    if ok and fs and fs.SetTextColor then P.KeepColor(fs, BLUE) end
+    if ok and fs and fs.SetTextColor then P.KeepColor(fs, GOLD) end   -- gold (user, Nov 25 12:44)
 end
 
 -- ------------------------------------------

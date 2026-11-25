@@ -329,6 +329,8 @@ expect("collections: model backdrop, page tile and list rows replaced, corners g
 L.execute('''LCB = kid(WIN, "Button"); LCB.mid = tex(LCB, "Legacy-Challenge-Cards-tiled-vertical-Disable"); LCB.mid.shown = false
 LCB.bg = tex(LCB, "Legacy-Challenge-Cards-Disable"); AetherSkins_Windows.Contents(WIN)''')
 expect("legacy card: one blue edge, none on the hidden tiled pieces", E('(function() local n = 0; for _, k in ipairs(LCB.kids or {}) do if k.shown ~= false then n = n + 1 end end return n end)()'), 1)
+L.execute('''GF = kid(WIN, "Frame"); GF.Inset = kid(GF, "Frame"); GF.bg = tex(GF, "QuestBG-Parchment"); AetherSkins_Windows.Contents(WIN)''')
+expect("gossip page: our blue fills the inset, not just Blizzard's smaller parchment", E('(function() for _, r in ipairs(GF.regs) do if r.vc and math.abs(r.vc[1] - 35/255) < 0.01 then for _, p in ipairs(r.points or {}) do if p[2] == GF.Inset then return true end end end end return false end)()'), True)
 # switch off
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)
