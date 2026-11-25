@@ -606,7 +606,38 @@ local function SpellUpdate(item)
         busy[item] = nil
     end
 end
+-- A spell entry styled again, parts and text: Blizzard redraws an entry
+-- when you point at it (Nov 25: the entry under the mouse went back to the
+-- brown frame and dark name).
+function P.SpellRestyle(item)
+    if not W.Enabled() or not item then return end
+    for _, f in ipairs({ item, T(item, "Button"), T(item, "TextContainer"), T(T(item, "Button") or {}, "AutoCastOverlay") }) do
+        if f then pcall(W.Visit, f, item) end
+    end
+    SpellUpdate(item)
+end
+function P.HookSpellMixin()
+    if P.spellMixinHooked or not hooksecurefunc then return end
+    local mix = _G.SpellBookItemMixin
+    if type(mix) ~= "table" then return end
+    P.spellMixinHooked = true
+    for _, m in ipairs({ "UpdateVisuals", "OnEnter", "OnLeave", "Init" }) do
+        if type(mix[m]) == "function" then pcall(hooksecurefunc, mix, m, function(self) pcall(P.SpellRestyle, self) end) end
+    end
+end
+
 function P.SpellItem(item)
+    pcall(P.HookSpellMixin)
+    if Once(item, "spellhooks") and hooksecurefunc then
+        for _, m in ipairs({ "UpdateVisuals", "OnEnter", "OnLeave" }) do
+            if type(item[m]) == "function" then pcall(hooksecurefunc, item, m, function(self) pcall(P.SpellRestyle, self) end) end
+        end
+        local b = T(item, "Button")
+        if b and b.HookScript then
+            b:HookScript("OnEnter", function() pcall(P.SpellRestyle, item) end)
+            b:HookScript("OnLeave", function() pcall(P.SpellRestyle, item) end)
+        end
+    end
     if not Once(item, "spell") then return end
     local b = T(item, "Button")
     local w = b and b:GetWidth() or 40

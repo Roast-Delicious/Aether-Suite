@@ -244,6 +244,12 @@ PGB.GetDisabledTexture = function(s) return s.dis end; AetherSkins_Windows.Conte
 expect("page arrow: bright when clickable, dim when not", (E('PGB.up.vc[1] > 0.8'), E('PGB.dis.vc[1] < 0.4')), (True, True))
 L.execute('WALKS = 0; local c = AetherSkins_Windows.Contents; QuestLogQuests_Update = function() end; WorldMapFrame = MAP; AetherSkins_Windows.P2.questLogHooked = nil; AetherSkins_Windows.Contents(WIN); AetherSkins_Windows.Contents = function(r) if r == MAP then WALKS = WALKS + 1 end; return c(r) end; QuestLogQuests_Update(); AetherSkins_Windows.Contents = c')
 expect("map quest log update: the map is walked again", E('WALKS') >= 1, True)
+L.execute('''SP2 = kid(WIN, "Frame"); SP2.Backplate = tex(SP2, "spellbook-item-backplate")
+SP2.Button = kid(SP2, "Button"); SP2.Button.w = 40; SP2.Button.Border = tex(SP2.Button, "spellbook-item-iconframe"); SP2.Button.Icon = tex(SP2.Button)
+SP2.TextContainer = kid(SP2, "Frame"); SP2.TextContainer.Name = SP2.TextContainer:CreateFontString()
+SP2.UpdateVisuals = function(self) self.Button.Border.alpha = 1 end
+AetherSkins_Windows.Contents(WIN); SP2:UpdateVisuals()''')
+expect("Blizzard redraws a spell entry (mouse over): our look comes back", E('SP2.Button.Border.alpha'), 0)
 # switch off
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

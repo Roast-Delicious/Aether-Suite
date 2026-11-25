@@ -587,6 +587,14 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   by LookAgainLater/SetCurrentPage. Autocast spells (Growl, Bite) have
   .AutoCastOverlay with atlas spellbook-item-petautocast-corners (brown
   corners) -> now tinted gold (GOLDT).
+  HOVER DUMP (10:29, tools/dumps/PlayerSpellsFrame_Hover_2026-11-25.txt):
+  the brown entry is the one under the MOUSE (Arcane Shot; Growl before):
+  IconHighlight shown, Arrow ...Flyout-Mouseover, and that entry lacks
+  the hidden 37x10 FontString (Blizzard redraws it). Fix: P.SpellRestyle
+  (Visit item, Button, TextContainer, AutoCastOverlay + SpellUpdate) on
+  each entry's UpdateVisuals/OnEnter/OnLeave and Button OnEnter/OnLeave,
+  plus hooks on SpellBookItemMixin (UpdateVisuals/OnEnter/OnLeave/Init)
+  for entries made later. Test +1.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
