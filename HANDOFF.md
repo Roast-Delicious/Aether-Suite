@@ -595,6 +595,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   each entry's UpdateVisuals/OnEnter/OnLeave and Button OnEnter/OnLeave,
   plus hooks on SpellBookItemMixin (UpdateVisuals/OnEnter/OnLeave/Init)
   for entries made later. Test +1.
+  TRACKER HAND-IN MARK (10:35): no text label (gap too small, would
+  overlap). Chosen B: quests below the gold line get a BLUE ring and a
+  blue check mark in place of the gold "?" (mock/trk_check.py); gold line
+  kept. Code: AetherLedger_TrackerLook ghost icon (trk_ring + "?" font
+  string, ~line 200) -> when ElsewhereZone(id): ring BLUE, mark = check
+  (draw a check glyph texture, not a font "?") -> Build 2.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
