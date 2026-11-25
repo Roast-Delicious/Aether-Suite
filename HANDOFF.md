@@ -545,6 +545,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   GOSSIP TEXT STILL DARK (09:51 screenshot, Doras): if Build 1 was
   installed, LightText missed gossip text; asked user to confirm and
   /skins tree pointing at the gossip text.
+  Resolved: user hadn't installed Build 1; with it the text is light.
+  GOSSIP OPTIONS (09:56): option text (e.g. "I need a ride.") in Aether
+  blue (B, mock/gossip_opt.py) -> BUILD 2. Gossip option buttons: Button
+  in GreetingPanel.ScrollBox rows with .Icon + a FontString (tex 136810
+  highlight); P.KeepColor(fs, BLUE) on those. Dark background confirmed
+  intended until Build 2's Aether page (option 3).
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
