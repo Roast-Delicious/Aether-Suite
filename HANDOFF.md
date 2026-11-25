@@ -312,6 +312,21 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   square frame shows behind our slot look; if so, SetNormalTexture("")
   / alpha 0. Dump cap: raise to 2500 or fold repeated item buttons
   ("N more like this") next time.
+  VENDOR = MerchantFrame (dump 06:36, tools/dumps/MerchantFrame_2026-
+  11-25.txt, complete; window chrome, inset, tabs, close all styled).
+  Item tiles MerchantItem1..12: <name>SlotTexture tex 130766 (old
+  square slot) + <name>NameFrame tex 136423 (brown name plaque) ->
+  fade both, draw a navy rounded tile per item with a blue icon frame.
+  ItemButton NormalTexture 130841 (64x64 quickslot) -> fade; keep
+  IconBorder (quality color). Prices: Coin-Gold/Silver/Copper icons
+  (keep; they're money). MerchantFrameBottomLeftBorder atlas UI-
+  Merchant-BotFrame (bronze footer) -> fade, blue divider line.
+  SellAllJunk / RepairAll / RepairItem / GuildBankRepair buttons: slot
+  tex 130766 behind -> navy square icon buttons. Buy-back tile same as
+  items (+ common-icon-undo). MerchantMoneyBg tex 525911 (L/M/R) ->
+  fade (MoneyInset already styled). Page arrows MerchantPrev/
+  NextPageButton (hidden here) -> chevrons. .FilterDropdown hidden.
+  Tab 2 = Buyback page (BuybackBG hidden) -> dump with that tab.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
