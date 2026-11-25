@@ -425,7 +425,8 @@ end
 -- bags: regular slots; ammo: count and quiver capacity; shards: count and
 -- soul bag space; reagents: your class reagents you carry.
 local function Stats()
-    local st = { bagUsed = 0, bagTotal = 0, ammo = 0, quiverSlots = 0, quiverFree = 0, ammoStack = 200,
+    local st = { bagUsed = 0, bagTotal = 0, ammo = 0, quiverSlots = 0, quiverFree = 0, quiverAmmo = 0, ammoStack = 200,
+                 pouch = false,
                  shards = 0, soulSlots = 0, soulFree = 0, reagents = {}, rbSlots = 0, rbUsed = 0 }
     for _, bag in ipairs(BAGS) do
         local ammoBag, soulBag, reagentBag = IsAmmoBag(bag), IsSoulBag(bag), IsReagentBag(bag)
@@ -437,6 +438,8 @@ local function Stats()
             elseif ammoBag then
                 st.quiverSlots = st.quiverSlots + 1
                 if not icon then st.quiverFree = st.quiverFree + 1 end
+                if icon and ItemClass(itemID) == 6 then st.quiverAmmo = st.quiverAmmo + (count or 1) end
+                if BagType(bag) % 4 == 2 then st.pouch = true end
             elseif soulBag then
                 st.soulSlots = st.soulSlots + 1
                 if not icon then st.soulFree = st.soulFree + 1 end
@@ -638,10 +641,12 @@ end
 -- The frame takes the item's quality color for uncommon and up, Aether blue
 -- otherwise; Blizzard's own quality border (under ours) is hidden (user,
 -- Nov 25: "All frames are blue").
-local function SlotQuality(b, quality)
+local function SlotQuality(b, quality, hasItem)
     local parts = type(b.aetherFrame) == "table" and b.aetherFrame
     if not parts then return end
-    local r, g, bl = 0.3, 0.65, 1
+    -- plain items silver, empty slots dim (Nov 25: plain blue looked like rare)
+    local r, g, bl = 0.78, 0.8, 0.84
+    if not hasItem then r, g, bl = 0.2, 0.25, 0.33 end
     if type(quality) == "number" and quality >= 2 then
         local c = (ITEM_QUALITY_COLORS and ITEM_QUALITY_COLORS[quality])
         if c and c.r then r, g, bl = c.r, c.g, c.b
@@ -683,7 +688,7 @@ local function UpdateButton(b, bag, slot, noSearch)
     pcall(SetItemButtonCount, b, count or 0)
     pcall(SetItemButtonDesaturated, b, locked and true or false)
     if SetItemButtonQuality then pcall(SetItemButtonQuality, b, quality, itemID) end
-    SlotQuality(b, icon and quality or nil)
+    SlotQuality(b, icon and quality or nil, icon ~= nil)
     if b.UpdateCooldown then pcall(b.UpdateCooldown, b, icon)
     elseif ContainerFrame_UpdateCooldown then pcall(ContainerFrame_UpdateCooldown, bag, b) end
     -- "New item" glow: only for items the game says are new (it clears
@@ -783,6 +788,9 @@ local function Header(key, title)
         h.line:SetHeight(1)
         h.line:SetPoint("LEFT", h.text, "RIGHT", 8, 0)
         h.line:SetPoint("RIGHT", h, "RIGHT", 0, 0)
+        h.hint = h:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")   -- what to buy (ammo heading)
+        h.hint:SetPoint("RIGHT", h, "RIGHT", 0, 0)
+        h.hint:Hide()
         h.show = h:CreateFontString(nil, "OVERLAY", "AetherFontHighlightSmall")   -- "Show" when folded
         h.show:SetPoint("RIGHT", h, "RIGHT", 0, 0)
         h.show:SetTextColor(0.43, 0.67, 1)
@@ -799,6 +807,48 @@ local function Header(key, title)
         headers[key] = h
     end
     return h
+end
+
+-- The Ammo heading (user idea, Nov 25): what you shoot, how many you carry,
+-- and what to buy, e.g. "Arrows: 1,240" ... "buy 9 stacks to fill".
+-- Arrows with a bow or crossbow (or a quiver), bullets with a gun (or an
+-- ammo pouch); warlocks see their soul shards and the room left for them.
+-- Returns name, count text, hint, hint color (or nil for other classes).
+local function AmmoHeading(st)
+    local function Num(n) return FormatLargeNumber and FormatLargeNumber(n) or tostring(n) end
+    if UsesAmmo() then
+        local word = "Arrows"
+        local id = GetInventoryItemID and GetInventoryItemID("player", 18)
+        local instant = (C_Item and C_Item.GetItemInfoInstant) or GetItemInfoInstant
+        if id and instant then
+            local _, _, _, _, _, classID, subClassID = instant(id)
+            if classID == 2 and subClassID == 3 then word = "Bullets" end
+        elseif st.pouch then word = "Bullets" end
+        if not id and st.pouch then word = "Bullets" end
+        local hint, col
+        local cap = st.quiverSlots * (st.ammoStack or 200)
+        if cap > 0 then
+            local room = math.max(0, cap - (st.quiverAmmo or 0))
+            local stacks = math.floor(room / (st.ammoStack or 200))
+            if stacks >= 1 then
+                hint = "buy " .. stacks .. (stacks == 1 and " stack" or " stacks") .. " to fill"
+                col = (st.ammo <= AMMO_LOW) and SPACE_RED or { 0.92, 0.93, 0.96 }
+            else
+                hint = (st.pouch and "pouch" or "quiver") .. " full"
+                col = SPACE_GREEN
+            end
+        end
+        return word, Num(st.ammo), hint, col
+    end
+    if MyClass() == "WARLOCK" then
+        local hint, col
+        if st.soulSlots > 0 then
+            if st.soulFree > 0 then hint, col = "room for " .. st.soulFree .. " more", { 0.92, 0.93, 0.96 }
+            else hint, col = "soul bag full", SPACE_GREEN end
+        end
+        return "Soul shards", Num(st.shards), hint, col
+    end
+    return nil
 end
 
 -- Sorts the bags into sections and lays the window out.
@@ -838,6 +888,7 @@ function AetherPack_Layout()
     local cols = db.columns
     local width = PAD * 2 + cols * BUTTON + (cols - 1) * GAP
     local y = -62     -- below the title and search box
+    local st0 = Stats()
     for _, s in ipairs(SECTIONS) do
         local list = groups[s.key]
         local title = s.key == "ammo" and FirstSectionTitle() or s.title
@@ -861,10 +912,22 @@ function AetherPack_Layout()
                     .. (ammoFree > 0 and (" (+" .. ammoFree .. " ammo)") or "")
                     .. (soulFree > 0 and (" (+" .. soulFree .. " soul bag)") or "") .. "|r"
             end
+            local hint
+            if s.key == "ammo" then
+                local name, count, hintText, hintColor = AmmoHeading(st0)
+                if name then
+                    label = name .. ":  |cff9d9d9d" .. count .. "|r"
+                    hint, hintColor = hintText, hintColor
+                    if hint then h.hint:SetText(hint); h.hint:SetTextColor(hintColor[1], hintColor[2], hintColor[3]) end
+                end
+            end
+            h.hint:SetShown(hint ~= nil and not db.collapsed[s.key])
             h.text:SetText(label)
             h.line:ClearAllPoints()
             h.line:SetPoint("LEFT", h.text, "RIGHT", 8, 0)
-            if db.collapsed[s.key] then
+            if hint and not db.collapsed[s.key] then
+                h.line:SetPoint("RIGHT", h.hint, "LEFT", -8, 0)
+            elseif db.collapsed[s.key] then
                 h.show:SetText(s.key == "empty" and "Show empty" or "Show")
                 h.show:Show()
                 h.line:SetPoint("RIGHT", h.show, "LEFT", -8, 0)

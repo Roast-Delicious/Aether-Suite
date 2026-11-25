@@ -1,0 +1,517 @@
+== Window dump: PlayerSpellsFrame ==
+Frame PlayerSpellsFrame 577x720
+  Texture PlayerSpellsFrameBg 573x697 tex=374155
+  Texture .TopTileStreaks 569x43 atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 577x720
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 402x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 402x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x549 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x549 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture PlayerSpellsFramePortrait 62x62 tex=136830
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 611x758 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 495x20
+    FontString PlayerSpellsFrameTitleText 495x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button PlayerSpellsFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame .MaximizeMinimizeButton 28x28
+    Button .MaximizeButton 28x28
+      Texture .? 28x28 atlas=RedButton-Expand
+      Texture .? 28x28 hidden atlas=RedButton-Expand-Pressed
+      Texture .? 28x28 hidden atlas=RedButton-Expand-Disabled
+      Texture .? 28x28 atlas=RedButton-Highlight
+    Button .MinimizeButton 28x28 hidden (11 parts inside, skipped)
+  Frame .tabSystem 302x32 hidden (3 parts inside, skipped)
+  Frame .SpecFrame 1612x856 hidden (0 parts inside, skipped)
+  Frame .TalentsFrame 1212x681 hidden (47 parts inside, skipped)
+  Frame .SpellBookFrame 574x702
+    Texture .TopBar 574x0
+    Texture .BookBGHalved 574x702 atlas=spellbook-Page-Right-C60
+    Texture .BookBGLeft 287x702 hidden atlas=spellbook-Page-Left-C60
+    Texture .BookBGRight 287x702 hidden atlas=spellbook-Page-Right-C60
+    Texture .BookCornerFlipbook 150x155 hidden atlas=spellbook-corner-flipbook-evergreen
+    Texture .Bookmark 574x702 hidden
+    Button .HelpPlateButton 64x64 hidden (5 parts inside, skipped)
+    Frame .tabSystem 224x32
+      Button .? 44x32 [styled sqtab]
+        Texture .LeftActive 35x32 hidden atlas=uiframe-activetab-left
+        Texture .RightActive 37x32 hidden atlas=uiframe-activetab-right
+        Texture .MiddleActive 0x32 hidden atlas=_uiframe-activetab-center
+        Texture .Left 35x32 hidden atlas=uiframe-tab-left
+        Texture .Right 37x32 hidden atlas=uiframe-tab-right
+        Texture .Middle 0x32 hidden atlas=_uiframe-tab-center
+        Texture .Icon 36x35 tex=132222
+        MaskTexture .IconMask 34x33
+        Texture .SquareBackground 43x38 hidden atlas=spellbook-Tab-Frame-C60
+        Texture .SquareBackgroundActive 43x38 atlas=spellbook-Tab-Frame-Glow-C60
+        Texture .SquareBackgroundActiveGlow 43x38 atlas=spellbook-Tab-Frame-glow-gradient-C60
+        Texture .LeftHighlight 35x32 hidden atlas=uiframe-tab-left
+        Texture .MiddleHighlight 0x32 hidden atlas=_uiframe-tab-center
+        Texture .RightHighlight 37x32 hidden atlas=uiframe-tab-right
+        FontString .Text 1x10
+      Button .? 44x32 [styled sqtab]
+        Texture .LeftActive 35x32 hidden atlas=uiframe-activetab-left
+        Texture .RightActive 37x32 hidden atlas=uiframe-activetab-right
+        Texture .MiddleActive 0x32 hidden atlas=_uiframe-activetab-center
+        Texture .Left 35x32 hidden atlas=uiframe-tab-left
+        Texture .Right 37x32 hidden atlas=uiframe-tab-right
+        Texture .Middle 0x32 hidden atlas=_uiframe-tab-center
+        Texture .Icon 36x35 tex=132203
+        MaskTexture .IconMask 34x33
+        Texture .SquareBackground 43x38 atlas=spellbook-Tab-Frame-C60
+        Texture .SquareBackgroundActive 43x38 hidden atlas=spellbook-Tab-Frame-Glow-C60
+        Texture .SquareBackgroundActiveGlow 43x38 hidden atlas=spellbook-Tab-Frame-glow-gradient-C60
+        Texture .LeftHighlight 35x32 hidden atlas=uiframe-tab-left
+        Texture .MiddleHighlight 0x32 hidden atlas=_uiframe-tab-center
+        Texture .RightHighlight 37x32 hidden atlas=uiframe-tab-right
+        FontString .Text 1x10
+      Button .? 44x32 [styled sqtab]
+        Texture .LeftActive 35x32 hidden atlas=uiframe-activetab-left
+        Texture .RightActive 37x32 hidden atlas=uiframe-activetab-right
+        Texture .MiddleActive 0x32 hidden atlas=_uiframe-activetab-center
+        Texture .Left 35x32 hidden atlas=uiframe-tab-left
+        Texture .Right 37x32 hidden atlas=uiframe-tab-right
+        Texture .Middle 0x32 hidden atlas=_uiframe-tab-center
+        Texture .Icon 36x35 tex=132164
+        MaskTexture .IconMask 34x33
+        Texture .SquareBackground 43x38 atlas=spellbook-Tab-Frame-C60
+        Texture .SquareBackgroundActive 43x38 hidden atlas=spellbook-Tab-Frame-Glow-C60
+        Texture .SquareBackgroundActiveGlow 43x38 hidden atlas=spellbook-Tab-Frame-glow-gradient-C60
+        Texture .LeftHighlight 35x32 hidden atlas=uiframe-tab-left
+        Texture .MiddleHighlight 0x32 hidden atlas=_uiframe-tab-center
+        Texture .RightHighlight 37x32 hidden atlas=uiframe-tab-right
+        FontString .Text 1x10
+      Button .? 44x32 [styled sqtab]
+        Texture .LeftActive 35x32 hidden atlas=uiframe-activetab-left
+        Texture .RightActive 37x32 hidden atlas=uiframe-activetab-right
+        Texture .MiddleActive 0x32 hidden atlas=_uiframe-activetab-center
+        Texture .Left 35x32 hidden atlas=uiframe-tab-left
+        Texture .Right 37x32 hidden atlas=uiframe-tab-right
+        Texture .Middle 0x32 hidden atlas=_uiframe-tab-center
+        Texture .Icon 36x35 tex=626000
+        MaskTexture .IconMask 34x33
+        Texture .SquareBackground 43x38 atlas=spellbook-Tab-Frame-C60
+        Texture .SquareBackgroundActive 43x38 hidden atlas=spellbook-Tab-Frame-Glow-C60
+        Texture .SquareBackgroundActiveGlow 43x38 hidden atlas=spellbook-Tab-Frame-glow-gradient-C60
+        Texture .LeftHighlight 35x32 hidden atlas=uiframe-tab-left
+        Texture .MiddleHighlight 0x32 hidden atlas=_uiframe-tab-center
+        Texture .RightHighlight 37x32 hidden atlas=uiframe-tab-right
+        FontString .Text 1x10
+      Button .? 44x32 [styled sqtab]
+        Texture .LeftActive 35x32 hidden atlas=uiframe-activetab-left
+        Texture .RightActive 37x32 hidden atlas=uiframe-activetab-right
+        Texture .MiddleActive 0x32 hidden atlas=_uiframe-activetab-center
+        Texture .Left 35x32 hidden atlas=uiframe-tab-left
+        Texture .Right 37x32 hidden atlas=uiframe-tab-right
+        Texture .Middle 0x32 hidden atlas=_uiframe-tab-center
+        Texture .Icon 36x35 tex=132215
+        MaskTexture .IconMask 34x33
+        Texture .SquareBackground 43x38 atlas=spellbook-Tab-Frame-C60
+        Texture .SquareBackgroundActive 43x38 hidden atlas=spellbook-Tab-Frame-Glow-C60
+        Texture .SquareBackgroundActiveGlow 43x38 hidden atlas=spellbook-Tab-Frame-glow-gradient-C60
+        Texture .LeftHighlight 35x32 hidden atlas=uiframe-tab-left
+        Texture .MiddleHighlight 0x32 hidden atlas=_uiframe-tab-center
+        Texture .RightHighlight 37x32 hidden atlas=uiframe-tab-right
+        FontString .Text 1x10
+      Button .? 44x32 hidden [styled sqtab] (15 parts inside, skipped)
+    Frame .PreviousCategoryIcon 30x30 hidden (11 parts inside, skipped)
+    Frame .NextCategoryIcon 30x30 hidden (11 parts inside, skipped)
+    Button .SettingsDropdown 15x16
+      Texture .Icon 27x27 atlas=common-dropdown-a-button
+      Texture .? 27x27 atlas=common-dropdown-a-button
+    Frame .SettingsTopFaceIcon 22x22 hidden (11 parts inside, skipped)
+    Frame .AssistedCombatRotationSpellFrame 135x33 hidden (3 parts inside, skipped)
+    EditBox .SearchBox 170x30 [styled input]
+      FontString .? 134x30
+      Texture .? 2x10 hidden
+      Texture .Left 8x20 atlas=common-search-border-left
+      Texture .Right 8x20 atlas=common-search-border-right
+      Texture .Middle 159x20 atlas=common-search-border-middle
+      FontString .Instructions 134x30
+      Texture PlayerSpellsFrameSearchIcon 10x10 atlas=common-search-magnifyingglass
+      Button PlayerSpellsFrameClearButton 17x17 hidden (1 parts inside, skipped)
+    Frame .SearchBoxIcon 22x22 hidden (11 parts inside, skipped)
+    Frame .SearchPreviewContainer 176x0 hidden (8 parts inside, skipped)
+    Frame .PagedSpellsFrame 574x652
+      Frame .View1 448x520
+        Frame .? 448x60
+          FontString .Text 396x24
+          Texture .Border 420x11 atlas=spellbook-divider
+          Texture .Backplate 416x106 atlas=spellbook-list-backplate
+        Frame Aimed Shot 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          FontString .? 37x10 hidden
+          Frame .TextContainer 166x30
+            FontString .Name 166x16
+            FontString .SubName 166x12
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=135130
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 hidden atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 34x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+        Frame Auto Shot 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          FontString .? 37x10 hidden
+          Frame .TextContainer 166x16
+            FontString .Name 166x16
+            FontString .SubName 166x1 hidden
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=135499
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 hidden atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 34x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+        Frame Serpent Sting 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          FontString .? 37x10 hidden
+          Frame .TextContainer 166x30
+            FontString .Name 166x16
+            FontString .SubName 166x12
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=132204
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 hidden atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 35x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+        Frame Scorpid Sting 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          FontString .? 37x10 hidden
+          Frame .TextContainer 166x16
+            FontString .Name 166x16
+            FontString .SubName 166x1 hidden
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=132169
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 hidden atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 35x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+        Frame Distracting Shot 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          FontString .? 37x10 hidden
+          Frame .TextContainer 166x30
+            FontString .Name 166x16
+            FontString .SubName 166x12
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=135736
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 hidden atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 34x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+        Frame Viper Sting 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          FontString .? 37x10 hidden
+          Frame .TextContainer 166x30
+            FontString .Name 166x16
+            FontString .SubName 166x12
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=132157
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 hidden atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 35x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+        Frame Rapid Fire 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          FontString .? 37x10 hidden
+          Frame .TextContainer 166x16
+            FontString .Name 166x16
+            FontString .SubName 166x1 hidden
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=132208
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 hidden atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 35x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+        Frame Multi-Shot 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          FontString .? 37x10 hidden
+          Frame .TextContainer 166x16
+            FontString .Name 166x16
+            FontString .SubName 166x1 hidden
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=132330
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 hidden atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 35x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+        Frame Concussive Shot 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          FontString .? 37x10 hidden
+          Frame .TextContainer 166x16
+            FontString .Name 166x16
+            FontString .SubName 166x1 hidden
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=135860
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 hidden atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 34x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+        Frame .? 216x60 hidden (18 parts inside, skipped)
+        Frame Hunter's Mark 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          FontString .? 37x10 hidden
+          Frame .TextContainer 166x30
+            FontString .Name 166x16
+            FontString .SubName 166x12
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=132212
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 hidden atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 34x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+        Frame Arcane Shot 216x60
+          Texture .Backplate 256x64 atlas=spellbook-item-backplate
+          Frame .TextContainer 166x30
+            FontString .Name 166x16
+            FontString .SubName 166x12
+            FontString .RequiredLevel 166x1 hidden
+          Button .Button 40x40
+            Texture .? 48x48 hidden atlas=UI-HUD-ActionBar-IconFrame-FlyoutBorderShadow
+            Texture .Arrow 6x15 hidden atlas=UI-HUD-ActionBar-Flyout-Mouseover
+            Texture .TrainableShadow 56x56 hidden atlas=spellbook-item-needtrainer-shadow
+            Texture .BorderShadow 54x51 hidden atlas=spellbook-item-iconframe-shadow
+            Texture .Icon 36x36 tex=132218
+            Texture .Border 52x48 atlas=spellbook-item-iconframe
+            Texture .TrainableBackplate 52x48 hidden
+            Texture .IconHighlight 40x40 atlas=spellbook-item-iconframe-hover
+            Texture .BorderSheen 87x138 atlas=talents-sheen-node
+            MaskTexture .BorderSheenMask 52x48
+            Texture .LevelLinkIconCover 40x40 hidden
+            Texture .ClickBindingIconCover 40x40 hidden
+            Texture .AssistedCombatIconCover 36x36 hidden atlas=UI-HUD-RotationHelper-SpellbookGlow
+            Texture .GlyphIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .GlyphHighlight 0x0 hidden tex=1267402
+            Texture .GlyphActivateHighlight 0x0 hidden tex=1267402
+            MaskTexture .IconMask 36x36
+            Texture .LevelLinkLock 24x29 hidden atlas=QuestSharing-Padlock
+            Texture .GlyphActiveIcon 21x22 hidden atlas=GlyphIcon-Spellbook
+            Texture .ActionBarHighlight 47x46 hidden atlas=spellbook-item-unassigned-glow
+            Texture .ClickBindingHighlight 72x72 hidden atlas=ClickCast-Highlight-Spellbook
+            Frame .AutoCastOverlay 34x33 hidden (3 parts inside, skipped)
+            Cooldown .Cooldown 32x32 hidden (1 parts inside, skipped)
+            ModelScene .FxModelScene 80x80
+      Frame .View2 448x520 hidden (0 parts inside, skipped)
+      Frame .PagingControls 141x32
+        FontString .PageText 61x32
+        Button .PrevPageButton 32x32
+          Texture .? 32x32 hidden tex=130869
+          Texture .? 32x32 hidden tex=130868
+          Texture .? 32x32 tex=130867
+          Texture .? 32x32 tex=130757
+        Button .NextPageButton 32x32
+          Texture .? 32x32 hidden tex=130866
+          Texture .? 32x32 hidden tex=130865
+          Texture .? 32x32 tex=130864
+          Texture .? 32x32 tex=130757

@@ -268,6 +268,10 @@ local function StyleIcon(block)
         o.mark:SetPoint("CENTER", 0.5, 0)
         o.mark:SetText("?")
         o.mark:SetTextColor(GOLD[1], GOLD[2], GOLD[3])
+        -- finished and handed in elsewhere: a blue ring and a blue check
+        -- in place of the "?" (approved Nov 25, mock/trk_check.py)
+        o.check = Tex("trk_check", "OVERLAY", 1, BLUE)
+        o.check:ClearAllPoints(); o.check:SetPoint("TOPLEFT", 4, -4); o.check:SetPoint("BOTTOMRIGHT", -4, 4)
         overlays[button] = o
         -- hide with the button (it's no longer our parent)
         if button.HookScript then button:HookScript("OnHide", function(b) local x = overlays[b]; if x then x:Hide() end end) end
@@ -292,8 +296,13 @@ local function StyleIcon(block)
         end
     end
     local done = block.poiIsComplete and true or false
+    local away = done and qid and AetherLedger_Tracker and AetherLedger_Tracker.ElsewhereZone
+                 and AetherLedger_Tracker.ElsewhereZone(qid) and true or false
+    local rc = away and BLUE or GOLD
+    o.ring:SetVertexColor(rc[1], rc[2], rc[3], 1)
     o.dots:SetShown(not done)
-    o.mark:SetShown(done)
+    o.mark:SetShown(done and not away)
+    o.check:SetShown(away)
     o.glow:SetShown(block.poiIsSuperTracked and true or false)   -- the quest you're following
     o:Show()
 end
@@ -440,4 +449,15 @@ f:SetScript("OnEvent", function(_, event, name)
     end
 end)
 
-AetherLedger_TrackerLook = { Install = Install, IsYellow = IsYellow }
+-- Paint again now (the hand-in list was just worked out; without this the
+-- gold line waited for the tracker's next update, a few seconds after a
+-- /reload, user Nov 25).
+local function Repaint()
+    if not installed then return end
+    for _, name in ipairs(MODULES) do
+        local module = _G[name]
+        if module then pcall(PaintModule, module) end
+    end
+end
+
+AetherLedger_TrackerLook = { Install = Install, IsYellow = IsYellow, Repaint = Repaint }

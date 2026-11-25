@@ -122,7 +122,7 @@ local LIGHT = { 0.82, 0.84, 0.87 }
 local NAVYB = { 0.43, 0.59, 0.82 }        -- frame of a talent not taken (lighter, Nov 25)
 local NAVYI = { 0.36, 0.52, 0.85 }        -- navy tint for icons (multiplies the gray)
 local NAVYT = { 0.47, 0.63, 0.86 }        -- icon of a talent not taken (lighter, Nov 25)
-local LOCKB = { 0.49, 0.51, 0.55 }        -- frame of a locked talent (lighter, Nov 25)
+local LOCKB = { 0.62, 0.65, 0.7 }         -- frame of a locked talent (lighter again, Nov 25 test)
 
 -- A capsule pill around a font string: dark fill, colored edge.
 local function PillOn(owner, fs, c, layer)
@@ -222,7 +222,8 @@ for _, a in ipairs({ "UI-Character-Info-General-BG", "UI-Character-Info-Stat-BG"
     "RedButton-Condense", "RedButton-Condense-Pressed", "RedButton-Condense-disabled", "RedButton-Highlight",
     "spellbook-item-iconframe", "spellbook-item-iconframe-passive", "spellbook-item-iconframe-shadow",
     "UI-Character-Info-GearSlot", "UI-Character-Info-GearSlotSmall", "RedButton-Exit", "RedButton-Exit-Disabled",
-    "RedButton-exit-pressed", "UI-Character-Info-Title", "groupfinder-Stat-StoneBG" }) do FADE[a] = true end
+    "RedButton-exit-pressed", "UI-Character-Info-Title", "groupfinder-Stat-StoneBG",
+    "newplayerchat-chaticon-newcomer" }) do FADE[a] = true end
 local BLUEL, NAVYF, BLUEH, GOLDT, LIGHTT = {}, {}, {}, {}, {}
 for _, a in ipairs({ "common-framedivider", "UI-Character-Info-ScrollLine-Long", "UI-Character-Info-ScrollLine",
     "perks-divider-short", "Talents-divider-left-c60", "Talents-divider-right-c60", "Talents-divider-vertical-c60",
@@ -244,18 +245,21 @@ for _, a in ipairs({ "charactercreate-customize-dropdown-linemouseover-side", "c
 for _, a in ipairs({ "Legacy-Progressbar-Fill", "Legacy-Rewards-Tracker-Diamond", "spellbook-Tab-Frame-Glow-C60",
     "QuestLog-icon-checkmark-yellow", "common-button-list-minus", "common-button-list-plus",
     "UI-Character-Info-GearSlot-Arrow", "UI-Character-Info-StatTab-Selected", "common-icon-zoomin", "common-icon-zoomout",
-    "common-icon-rotateleft", "common-icon-rotateright", "common-icon-undo" }) do GOLDT[a] = true end
+    "common-icon-rotateleft", "common-icon-rotateright", "common-icon-undo",
+    "spellbook-item-petautocast-corners" }) do GOLDT[a] = true end
 for _, a in ipairs({ "common-dropdown-a-button", "QuestLog-icon-setting", "QuestCollapse-Hide-Up", "QuestCollapse-Hide-Down",
     "QuestCollapse-Show-Up", "QuestCollapse-Show-Down", "friends-icon-menu", "common-search-clearbutton",
     "common-dropdown-a-button-disabled", "OptionsIcon-Brown", "common-icon-search" }) do LIGHTT[a] = true end
 -- old art by file ID
 local FADEID = { ["130766"] = "slot", ["136423"] = true, ["525911"] = true, ["130841"] = "itemframe",
                  ["651080"] = "quality" }
-local NAVYID = { ["516764"] = true, ["516763"] = true, ["423811"] = true, ["136430"] = true, ["136467"] = true }
+local NAVYID = { ["136796"] = true, ["516764"] = true, ["516763"] = true, ["423811"] = true, ["136430"] = true, ["136467"] = true }
 local LIGHTID = { ["130864"] = true, ["130865"] = true, ["130866"] = true, ["130867"] = true, ["130868"] = true,
                   ["130869"] = true, ["796424"] = true, ["796423"] = true, ["423808"] = true }
 
 local frameEdges = weak()        -- item button -> { inner edges, outer edges }
+P.SILVER = { 0.78, 0.8, 0.84 }   -- plain (white / gray) items
+P.SLATE  = { 0.2, 0.25, 0.33 }   -- empty slots
 local function IconFrame(b)     -- a blue frame around an item button (vendor tiles, gear slots)
     if not b or not Once(b, "iconframe") then return end
     frameEdges[b] = { Edge(b, "OVERLAY", 6, { BLUE[1], BLUE[2], BLUE[3], 1 }, 0),
@@ -276,7 +280,15 @@ local function QualityUpdate(border)
     local b = border.GetParent and border:GetParent()
     IconFrame(b)
     local e = b and frameEdges[b]; if not e then return end
-    local c = QualityColor(border) or BLUE
+    local c = QualityColor(border)
+    if not c then
+        -- plain items silver, empty slots dim (Nov 25: they looked like rare blue)
+        local nm = b.GetName and b:GetName()
+        local ic = T(b, "icon") or T(b, "Icon") or (nm and _G[nm .. "IconTexture"])
+        local ok, tx = pcall(function() return ic and ic.GetTexture and ic:GetTexture() end)
+        local has = ok and tx ~= nil and tx ~= "" and Shown(ic)
+        c = has and P.SILVER or P.SLATE
+    end
     for i, set in ipairs(e) do
         for _, t in ipairs(set) do t:SetVertexColor(c[1], c[2], c[3], i == 1 and 1 or 0.55) end
     end
@@ -332,11 +344,18 @@ function P.Texture(t)
             if ok and kind == "Button" and Once(par, "slotbox") then NavyBox(par, -1, -1, -1, -1) end
         end
     elseif NAVYID[id] then Tint(t, { 0.2, 0.36, 0.62 }, 0.95)
-    elseif LIGHTID[id] then Tint(t, { 0.6, 0.78, 1 }) end
+    elseif LIGHTID[id] then
+        -- page arrows: bright when you can click them, dim when you can't
+        -- (user, Nov 25: both looked alike, and too dark)
+        local par = t.GetParent and t:GetParent()
+        local dis = par and par.GetDisabledTexture and par:GetDisabledTexture()
+        if dis == t then Tint(t, { 0.3, 0.33, 0.4 }) else Tint(t, { 0.86, 0.93, 1 }) end
+    end
 end
 
 local ARROW = { yellow = "gold", gold = "gold", green = "blue" }
 function Rule(t, a)
+    if P.ExtraRule and P.ExtraRule(t, a) then return end   -- Build 2 rules (AetherSkins_Pass3.lua)
     if FADE[a] then
         t:SetAlpha(0)
         local par = t.GetParent and t:GetParent()
@@ -401,8 +420,9 @@ function P.SideTab(tab)
     notch:SetPoint("TOPLEFT", fill, "TOPLEFT", 0, -8); notch:SetPoint("BOTTOMLEFT", fill, "BOTTOMLEFT", 0, 8); notch:SetWidth(4)
     local hl = Tex(tab, "HIGHLIGHT", 0, WHITE, { BLUE[1], BLUE[2], BLUE[3], 0.22 }); hl:SetAllPoints(fill); hl:SetBlendMode("ADD")
     tabParts[tab] = { fill = fill, edge = edge, notch = notch }
-    HookShow(sel, function() SideTabColor(tab) end)
+    HookShow(sel, function() SideTabColor(tab); if P.SideTabExtra then P.SideTabExtra(tab) end end)
     SideTabColor(tab)
+    if P.SideTabExtra then P.SideTabExtra(tab) end
 end
 
 -- Spellbook's square category tabs: navy square, gold when active, icon
@@ -453,6 +473,17 @@ end
 -- Talent nodes: see the header. State comes from the frame atlas Blizzard
 -- sets (yellow = maxed, green = some points, gray = no points, locked).
 local nodeParts = weak()
+-- Talent points left to spend, or nil when the game doesn't say.
+function P.UnspentPoints()
+    for _, fn in ipairs({ "UnitCharacterPoints", "GetUnspentTalentPoints" }) do
+        local f = _G[fn]
+        if type(f) == "function" then
+            local ok, n = pcall(f, "player")
+            if ok and type(n) == "number" and not (issecretvalue and issecretvalue(n)) then return n end
+        end
+    end
+    return nil
+end
 local function NodeInfo(node)
     if not node.GetNodeInfo then return nil end
     local ok, info = pcall(node.GetNodeInfo, node)
@@ -496,7 +527,11 @@ function P.Node(node)
             for _, k in ipairs({ "Glow", "SelectableGlow", "SelectableIcon" }) do
                 local r = T(node, k); if r then r:SetAlpha(0); HookShow(r, function() P.Node(node) end) end
             end
-            if ic and hooksecurefunc then pcall(hooksecurefunc, ic, "SetDesaturated", function() P.Node(node) end) end
+            if ic and hooksecurefunc then
+                pcall(hooksecurefunc, ic, "SetDesaturated", function() P.Node(node) end)
+                -- Blizzard darkens locked icons with a vertex color after us
+                pcall(hooksecurefunc, ic, "SetVertexColor", function() P.Node(node) end)
+            end
         end
         local a = Atlas(sb) or ""
         local state = a:find("yellow") and "max" or a:find("green") and "part" or a:find("locked") and "lock"
@@ -506,9 +541,12 @@ function P.Node(node)
             -- glow parts alone never showed it in game, Nov 25).
             local info = NodeInfo(node)
             local can = info and (info.canPurchaseRank == true)
-            if can == nil or can == false then
+            if not can then
                 can = Shown(T(node, "SelectableIcon")) or Shown(T(node, "Glow")) or Shown(T(node, "SelectableGlow"))
             end
+            -- Forever says a talent can be bought even with no points left
+            -- (Nov 25: every tree's first row looked takeable at 0 points)
+            if can and P.UnspentPoints() == 0 then can = false end
             state = can and "can" or "none"
         end
         p.glow:SetShown(state == "can")
@@ -519,7 +557,7 @@ function P.Node(node)
             if state == "max" then ic:SetDesaturated(true); ic:SetVertexColor(GOLD[1], GOLD[2], GOLD[3], 1)
             elseif state == "part" or state == "can" then ic:SetDesaturated(false); ic:SetVertexColor(1, 1, 1, 1)
             elseif state == "none" then ic:SetDesaturated(true); ic:SetVertexColor(NAVYT[1], NAVYT[2], NAVYT[3], 1)
-            elseif state == "lock" then ic:SetDesaturated(true); ic:SetVertexColor(0.78, 0.78, 0.8, 1) end
+            elseif state == "lock" then ic:SetDesaturated(true); ic:SetVertexColor(0.92, 0.92, 0.94, 1) end
         end
         -- Blizzard's dark overlay made locked and empty talents nearly black
         -- in the other trees (Nov 25): hidden in every state; ours carry it.
@@ -581,7 +619,38 @@ local function SpellUpdate(item)
         busy[item] = nil
     end
 end
+-- A spell entry styled again, parts and text: Blizzard redraws an entry
+-- when you point at it (Nov 25: the entry under the mouse went back to the
+-- brown frame and dark name).
+function P.SpellRestyle(item)
+    if not W.Enabled() or not item then return end
+    for _, f in ipairs({ item, T(item, "Button"), T(item, "TextContainer"), T(T(item, "Button") or {}, "AutoCastOverlay") }) do
+        if f then pcall(W.Visit, f, item) end
+    end
+    SpellUpdate(item)
+end
+function P.HookSpellMixin()
+    if P.spellMixinHooked or not hooksecurefunc then return end
+    local mix = _G.SpellBookItemMixin
+    if type(mix) ~= "table" then return end
+    P.spellMixinHooked = true
+    for _, m in ipairs({ "UpdateVisuals", "OnEnter", "OnLeave", "Init" }) do
+        if type(mix[m]) == "function" then pcall(hooksecurefunc, mix, m, function(self) pcall(P.SpellRestyle, self) end) end
+    end
+end
+
 function P.SpellItem(item)
+    pcall(P.HookSpellMixin)
+    if Once(item, "spellhooks") and hooksecurefunc then
+        for _, m in ipairs({ "UpdateVisuals", "OnEnter", "OnLeave" }) do
+            if type(item[m]) == "function" then pcall(hooksecurefunc, item, m, function(self) pcall(P.SpellRestyle, self) end) end
+        end
+        local b = T(item, "Button")
+        if b and b.HookScript then
+            b:HookScript("OnEnter", function() pcall(P.SpellRestyle, item) end)
+            b:HookScript("OnLeave", function() pcall(P.SpellRestyle, item) end)
+        end
+    end
     if not Once(item, "spell") then return end
     local b = T(item, "Button")
     local w = b and b:GetWidth() or 40
@@ -638,6 +707,18 @@ local function Again(root)
     if C_Timer and C_Timer.After then C_Timer.After(0, run) else run() end
 end
 W.Again = Again
+-- The map's quest log is an old-style scroll frame (no new-row callbacks):
+-- its headers and rows are made each time the log updates (Nov 25: they
+-- kept Blizzard's brown bars). Walk the map again after each update.
+function P.HookQuestLog()
+    if P.questLogHooked or not hooksecurefunc then return end
+    for _, fn in ipairs({ "QuestLogQuests_Update", "QuestMapFrame_UpdateAll" }) do
+        if type(_G[fn]) == "function" then
+            P.questLogHooked = true
+            pcall(hooksecurefunc, fn, function() if W.Enabled() and WorldMapFrame then Again(WorldMapFrame) end end)
+        end
+    end
+end
 local function WatchList(sb, root)
     if listOf[sb] then return end
     listOf[sb] = root
@@ -667,6 +748,11 @@ function W.Visit(f, root)
         end
     end
     if T(f, "ScrollTarget") then WatchList(f, root) end
+    -- paged lists (the Spellbook): new entries on every page turn (Nov 25:
+    -- the first entry of a page sometimes kept Blizzard's brown frame)
+    if f.SetCurrentPage and hooksecurefunc and Once(f, "pages") then
+        pcall(hooksecurefunc, f, "SetCurrentPage", function() Again(root) end)
+    end
     -- map quest log zone headers: gold, also when Blizzard recolors them
     if T(f, "CollapseButton") and T(f, "ButtonText") then P.KeepColor(f.ButtonText, GOLD) end
     -- frames with their own treatment
@@ -683,7 +769,11 @@ function W.Visit(f, root)
         for _, r in ipairs({ f:GetRegions() }) do
             local a = Atlas(r)
             local role = a and a:match("^UI%-LFG%-RoleIcon%-(%a+)$")
-            if role and ROLE[role] then P.Role(f, ROLE[role], r); break end
+            if role and ROLE[role] then
+                local kind = ROLE[role]
+                if nm and nm:find("NewPlayerFriendly") then kind = "newcomer" end   -- sprout, approved Nov 25
+                P.Role(f, kind, r); break
+            end
         end
     end
 end
@@ -713,9 +803,24 @@ local function LooseSideTabs(root)
 end
 
 -- After a window's walk: windows with side tabs drop the right chevron.
+-- A second and third look after a window opens: entries Blizzard fills in
+-- a moment later (no list callback) still get the look.
+local function LookAgainLater(root)
+    if not (root and root.HookScript and C_Timer and C_Timer.After) or not Once(root, "later") then return end
+    local function Later() C_Timer.After(0.3, function() Again(root) end); C_Timer.After(1, function() Again(root) end) end
+    root:HookScript("OnShow", Later)
+    Later()
+end
+
 function W.AfterWalk(root)
+    pcall(LookAgainLater, root)
     pcall(LooseSideTabs, root)
+    pcall(P.HookQuestLog)
     if sidetabsIn[root] and W.chev[root] and W.chev[root].right then
         for _, t in ipairs(W.chev[root].right) do t:Hide() end
     end
 end
+
+-- Helpers for AetherSkins_Pass3.lua (Build 2 designs).
+P.H = { Tint = Tint, Atlas = Atlas, FileID = FileID, Shown = Shown, Once = Once, HookShow = HookShow,
+        PillOn = PillOn, tabParts = tabParts, Again = Again, weak = weak, busy = busy }

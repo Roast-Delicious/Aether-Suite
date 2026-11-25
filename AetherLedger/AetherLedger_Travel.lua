@@ -108,10 +108,25 @@ local function Nearest(list, spot)
     return best, bestDist
 end
 
--- Steps to get from spot "from" to spot "to" on the same continent.
-local function OverLand(steps, from, to, toLabel, flights)
-    local fs, toFs = Nearest(flights, from)
+-- Where to land: the known flight master nearest the destination, but one in
+-- the destination's own zone wins unless another is less than half as far.
+-- Distances are straight lines, and a closer one across a zone border can
+-- be behind mountains (user, Nov 25: Desolace, it picked Thunder Bluff).
+local LANDING_SAME_ZONE = 0.5
+local function Landing(flights, to, toMap)
     local ft, fromFt = Nearest(flights, to)
+    if not (ft and toMap) or ft.map == toMap then return ft, fromFt end
+    local same = {}
+    for _, f in ipairs(flights) do if f.map == toMap then same[#same + 1] = f end end
+    local zt, fromZt = Nearest(same, to)
+    if zt and fromFt >= fromZt * LANDING_SAME_ZONE then return zt, fromZt end
+    return ft, fromFt
+end
+
+-- Steps to get from spot "from" to spot "to" on the same continent.
+local function OverLand(steps, from, to, toLabel, flights, toMap)
+    local fs, toFs = Nearest(flights, from)
+    local ft, fromFt = Landing(flights, to, toMap)
     local direct = Dist(from, to)
     if fs and ft and fs ~= ft and toFs + fromFt < direct * FLY_RATIO then
         if toFs > REACHED_YARDS then
@@ -137,7 +152,7 @@ local function Plan(dest)
             dest.name, MapName(dest.map), dest.x * 100, dest.y * 100)
     end
     if here.inst == target.inst then
-        OverLand(steps, here, target, label, flights)
+        OverLand(steps, here, target, label, flights, dest.map)
         return steps, nil, target
     end
     -- Another continent: pick the zeppelin or boat that makes the trip shortest.
@@ -162,7 +177,7 @@ local function Plan(dest)
     last.text = "Go to " .. best.from[4] .. " (" .. MapName(best.from[1]) .. string.format(" %.0f, %.0f)", best.from[2], best.from[3])
     steps[#steps + 1] = { kind = "ride", inst = target.inst, w = best.toW,
                           text = "Take the " .. best.t.kind .. " to " .. best.to[5] }
-    OverLand(steps, best.toW, target, label, flights)
+    OverLand(steps, best.toW, target, label, flights, dest.map)
     return steps, nil, target
 end
 

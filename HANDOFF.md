@@ -524,6 +524,103 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   side tabs themselves are in none of the three dumps (a separate frame):
   need /skins tree pointing at a tab. NPF button also has atlas
   newplayerchat-chaticon-newcomer (20x20, the little sprout) - Build 2.
+  GF SIDE TAB DUMP (09:43): ".ListingTab" 55x55, Background common-sidetab,
+  Icon tex 8197096, SelectedTexture/TabGlow common-sidetab-selected,
+  HighlightTexture common-sidetab-hover: same as Character side tabs but
+  parented outside the windows. Fix: LooseSideTabs() in W.AfterWalk scans
+  UIParent's children (non-windows) for kids with a common-sidetab
+  Background + SelectedTexture -> P.SideTab; throttled 2 s; LFG* windows
+  then drop the right chevron.
+  BUILD 1 SHIPPED 09:45 (main, zip sent): Skins 1.3.1, Pack 1.6.3,
+  Ledger 1.8.4. Still open: map dimness (screenshot pair), talents brown
+  background (Talents /skins tree).
+  BUG (09:48, branch fix-ledger-landing, READY, NOT SHIPPED): "To Cork
+  Gizelton (Desolace)" said fly Orgrimmar -> Thunder Bluff (Tal), then
+  walk to Desolace 67,58. Landing FM picked by straight-line distance;
+  Thunder Bluff about as close as Shadowprey (Thalon) but behind
+  mountains. Fix: Landing() in AetherLedger_Travel.lua prefers a known
+  FM on the destination's map unless another is < 50% as far.
+  tools/ledger_landing_test.py (4). User has Shadowprey. Goes into BUILD
+  2 (merge with the design branch; Ledger 1.8.5).
+  GOSSIP TEXT STILL DARK (09:51 screenshot, Doras): if Build 1 was
+  installed, LightText missed gossip text; asked user to confirm and
+  /skins tree pointing at the gossip text.
+  Resolved: user hadn't installed Build 1; with it the text is light.
+  GOSSIP OPTIONS (09:56): option text (e.g. "I need a ride.") in Aether
+  blue (B, mock/gossip_opt.py) -> BUILD 2. Gossip option buttons: Button
+  in GreetingPanel.ScrollBox rows with .Icon + a FontString (tex 136810
+  highlight); P.KeepColor(fs, BLUE) on those. Dark background confirmed
+  intended until Build 2's Aether page (option 3).
+  BUILD 1 TEST (10:18, user): 1 pass (gold slider = Build 2). 2 Friends
+  too dark, hover = selection (mock/friends_sel.py, asking). 3 pass, but
+  rare blue vs empty/plain blue alike (asking). 4 pass, locked still
+  dark. 5 page arrows enabled ~ disabled; brown frames remain on
+  unlearned spells (Multi-Shot) with dark names (need /skins tree on
+  one). 6 pass. 7 map quest log headers still brown/white (rows made on
+  log update, old ScrollFrame). 8 pass; gossip text -> Build 2 blue;
+  vendor page arrows too dark/alike. 9 pass. 10 divider barely better.
+  FIXED on branch fixes-build1-feedback (from main + fix-ledger-landing):
+  page arrows (LIGHTID: GetDisabledTexture -> dim .3, else .86/.93/1),
+  talents (P.UnspentPoints via UnitCharacterPoints/GetUnspentTalent
+  Points: 0 -> not "can"; Icon SetVertexColor hook; lock icon .92,
+  frame .62/.65/.7), map quest log (hook QuestLogQuests_Update /
+  QuestMapFrame_UpdateAll -> Again(WorldMapFrame)). Tests +4.
+  FRIENDS (10:25): A - lighter cards, hover thin blue outline, selected
+  brighter + blue outline + gold notch (mock/friends_sel.py) -> Build 2.
+  TRACKER LINE LATE (10:27): after /reload the line came ~6 s later
+  (first Apply at 6 s; line drawn only on a module Update). Fixed on the
+  branch: first Apply at 1.5 s + again at 6 s; Apply calls
+  AetherLedger_TrackerLook.Repaint() (also on the no-change path).
+  ITEM FRAMES (10:30): A - empty slots dim slate (52,64,84), plain items
+  (white/gray quality) silver (200,205,215), uncommon+ quality color.
+  Character slots (QualityUpdate: no IconBorder/common -> silver if an
+  item, slate if empty: check GetItem/Icon texture) and Pack
+  (SlotQuality) -> Build 2 (mock/slot_colors.py).
+  SPELLBOOK BROWN (10:25): Multi-Shot fine after a reload, so it was
+  timing (an entry filled in after our walk). Branch: hook SetCurrentPage
+  on paged frames -> Again(root); every window also looks again 0.3 s
+  and 1 s after it opens (LookAgainLater). No dump needed unless it
+  recurs.
+  PET PAGE DUMP (10:27, tools/dumps/PlayerSpellsFrame_Pet_2026-11-25.txt):
+  Growl uses the same spellbook-item-iconframe; its entry frame differs
+  (no hidden 37x10 FontString = made later) -> same timing cause, fixed
+  by LookAgainLater/SetCurrentPage. Autocast spells (Growl, Bite) have
+  .AutoCastOverlay with atlas spellbook-item-petautocast-corners (brown
+  corners) -> now tinted gold (GOLDT).
+  HOVER DUMP (10:29, tools/dumps/PlayerSpellsFrame_Hover_2026-11-25.txt):
+  the brown entry is the one under the MOUSE (Arcane Shot; Growl before):
+  IconHighlight shown, Arrow ...Flyout-Mouseover, and that entry lacks
+  the hidden 37x10 FontString (Blizzard redraws it). Fix: P.SpellRestyle
+  (Visit item, Button, TextContainer, AutoCastOverlay + SpellUpdate) on
+  each entry's UpdateVisuals/OnEnter/OnLeave and Button OnEnter/OnLeave,
+  plus hooks on SpellBookItemMixin (UpdateVisuals/OnEnter/OnLeave/Init)
+  for entries made later. Test +1.
+  TRACKER HAND-IN MARK (10:35): no text label (gap too small, would
+  overlap). Chosen B: quests below the gold line get a BLUE ring and a
+  blue check mark in place of the gold "?" (mock/trk_check.py); gold line
+  kept. Code: AetherLedger_TrackerLook ghost icon (trk_ring + "?" font
+  string, ~line 200) -> when ElsewhereZone(id): ring BLUE, mark = check
+  (draw a check glyph texture, not a font "?") -> Build 2.
+  BUILD 2 CODED (10:55, branch build2 = fixes-build1-feedback + designs,
+  NOT BUILT): Skins 1.4.0, Pack 1.6.4, Ledger 1.8.5. New file
+  AetherSkins_Pass3.lua (toc after Pass2): P.SideTabExtra (glyph by
+  icon file ID / friends atlas / parent key; 2 extra gold rings + gold
+  glow_sq when open), P3.Crest (portrait faded, disc_plain navy + gl_*
+  gold; PlayerSpellsFrame switches book/talents), P.ExtraRule (vendor
+  SpellIcon-256x256-* -> btn_*; minimal-scrollbar thumb -> sb_thumb_*,
+  track navy, arrows chev3d_up/down 14px; QuestBG-Parchment ->
+  page_aether + blue edge; friends-card-selected -> notch + edge, hover
+  edge in HIGHLIGHT), P3.Headings (gold QuestInfo headers), gossip
+  choices blue (GossipFrame buttons with .Icon), P3.Grip (not Quest/
+  Gossip/QuestLogPopupDetail; SetScale 0.7-1.5, AetherSkinsDB.scale[name],
+  right-click reset). Pass2: P.ExtraRule hook, P.SideTabExtra hook, P.H
+  helpers, silver/slate item frames, NPF -> role_newcomer, chat sprout
+  icon faded, 136796 reward plaques navy. Art: tools/gen_skins_art3.py
+  (run from mock/). Pack: AmmoHeading (Arrows/Bullets/Soul shards, buy N
+  stacks / quiver full / room for N), silver/slate frames; test
+  pack_ammo_heading_test.py. Ledger: trk_check.tga, blue ring + check on
+  hand-ins (tracker_look_test +2). NOT DONE: map quest DETAILS page
+  (no dump yet), map dimness, talents brown background.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
