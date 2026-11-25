@@ -1181,3 +1181,4 @@ trim), xpbar_render.py (XP bar).
   GAME MENU (user 13:04 dump): IsWindow true for GameMenuFrame; Border
   regions + Header art faded, Header.Text hidden, our title FontString
   (same words) at TOP -5; buttons get the panel-button style.
+- BUILD 4 SHIPPED 13:33 (main, merged build4): AetherSkins 1.5.1.
