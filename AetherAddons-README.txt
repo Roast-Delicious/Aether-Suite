@@ -24,7 +24,7 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.13    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.4     What an item is for, when you hover it
-  AetherLedger       1.8.5     Where to quest, train and skin next,
+  AetherLedger       1.8.6     Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.4     Your bags sorted into sections
   AetherChat         1.0.8     Chat with the Aether look, fitted beside
@@ -32,7 +32,7 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.7    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.4.0     The Aether look for Blizzard's windows
+  AetherSkins        1.4.1     The Aether look for Blizzard's windows
                                and the minimap
 
 
@@ -481,8 +481,8 @@ AetherLedger - where to quest, train and skin next             /ledger
     you just accepted goes, a chat line says why.
   - Finished quests from any zone that are handed in somewhere else
     stay at the bottom of the list, under a thin gold line (it shows
-    right after a /reload), with a blue check in a blue ring for their
-    icon, reading "Ready for turn-in: Orgrimmar" (the zone to go to).
+    right after a /reload), with a gold check in place of the ? for
+    their icon, reading "Ready for turn-in: Orgrimmar" (the zone to go to).
     The zone comes from the game's own turn-in marker first, so quests
     the guide doesn't know about show up there too.
   - Somewhere with nothing for you (a city, a road), it shows the

@@ -268,9 +268,9 @@ local function StyleIcon(block)
         o.mark:SetPoint("CENTER", 0.5, 0)
         o.mark:SetText("?")
         o.mark:SetTextColor(GOLD[1], GOLD[2], GOLD[3])
-        -- finished and handed in elsewhere: a blue ring and a blue check
-        -- in place of the "?" (approved Nov 25, mock/trk_check.py)
-        o.check = Tex("trk_check", "OVERLAY", 1, BLUE)
+        -- finished and handed in elsewhere: a gold check in place of the
+        -- "?" (approved Nov 25, mock/trk_check.py A)
+        o.check = Tex("trk_check", "OVERLAY", 1, GOLD)
         o.check:ClearAllPoints(); o.check:SetPoint("TOPLEFT", 4, -4); o.check:SetPoint("BOTTOMRIGHT", -4, 4)
         overlays[button] = o
         -- hide with the button (it's no longer our parent)
@@ -298,8 +298,7 @@ local function StyleIcon(block)
     local done = block.poiIsComplete and true or false
     local away = done and qid and AetherLedger_Tracker and AetherLedger_Tracker.ElsewhereZone
                  and AetherLedger_Tracker.ElsewhereZone(qid) and true or false
-    local rc = away and BLUE or GOLD
-    o.ring:SetVertexColor(rc[1], rc[2], rc[3], 1)
+    o.ring:SetVertexColor(GOLD[1], GOLD[2], GOLD[3], 1)   -- gold like the others (user, Nov 25 10:55)
     o.dots:SetShown(not done)
     o.mark:SetShown(done and not away)
     o.check:SetShown(away)
