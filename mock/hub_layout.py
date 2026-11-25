@@ -355,3 +355,31 @@ def _box(self, text_lines, h=120):
         T(self.c, PX + 12, self.y + 12 + i * 18, l, 14, (200, 205, 215), 'Regular', 'lm')
     self.y += h + 8
 Page.rowbuttons = _rowbuttons; Page.lines = _lines; Page.box = _box
+def _stage(self, h, caption):
+    import numpy as np
+    from PIL import Image
+    if not self.room(h + 8): return
+    x0, y0, x1, y1 = X(PX + 4), Y(self.y), X(PR - 4), Y(self.y + h)
+    rect(self.c, PX + 4, self.y, PR - 4, self.y + h, fill=(10, 11, 14), outline=(46, 104, 160), r=6)
+    # soft blue floor glow where the model stands
+    W, H = int((x1 - x0) * SS), int((y1 - y0) * SS)
+    yy, xx = np.mgrid[0:H, 0:W]
+    cx, cy = W / 2, H * 0.86
+    d = np.hypot((xx - cx) / (W * 0.22), (yy - cy) / (H * 0.07))
+    a = np.clip(1 - d, 0, 1) ** 1.6 * 0.55
+    g = np.zeros((H, W, 4), np.uint8); g[..., :3] = BLUE; g[..., 3] = (a * 255).astype(np.uint8)
+    self.c.over(Image.fromarray(g), (x0, y0))
+    # stand-in figure (the real one is your live 3D character)
+    mx = (PX + PR) / 2; fy = self.y + h * 0.86
+    L_, d_ = self.c.layer()
+    col = (120, 140, 175, 160)
+    d_.ellipse(self.c.P(X(mx - 9), Y(fy - 118), X(mx + 9), Y(fy - 100)), fill=col)
+    d_.rounded_rectangle(self.c.P(X(mx - 15), Y(fy - 98), X(mx + 15), Y(fy - 50)), int(6 * U * SS), fill=col)
+    d_.line(self.c.P(X(mx - 14), Y(fy - 92), X(mx - 34), Y(fy - 122)), fill=col, width=int(7 * U * SS))
+    d_.line(self.c.P(X(mx + 14), Y(fy - 92), X(mx + 30), Y(fy - 66)), fill=col, width=int(7 * U * SS))
+    d_.line(self.c.P(X(mx - 8), Y(fy - 52), X(mx - 18), Y(fy - 2)), fill=col, width=int(8 * U * SS))
+    d_.line(self.c.P(X(mx + 8), Y(fy - 52), X(mx + 22), Y(fy - 6)), fill=col, width=int(8 * U * SS))
+    self.c.over(L_)
+    T(self.c, mx, self.y + 14, caption, 14, (175, 180, 192), 'Regular', 'mm')
+    self.y += h + 8
+Page.stage = _stage

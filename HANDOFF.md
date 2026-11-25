@@ -1390,3 +1390,12 @@ trim), xpbar_render.py (XP bar).
   Check Memory, Show Window Dump, NEW ItemID hover-explain switch
   (/itemid debug), tree note, Output box, Copy Full Report, Clear.
   Preview Meter left Debug (on Action Bar Area). ALL 9 PAGES MOCKED.
+- 15:46 USER IDEA: their live 3D character DANCING in the empty space at
+  the bottom of Your Character. Mock (hub_last.py stage, out_hub_me):
+  black stage with blue edge + soft blue floor glow, model centered.
+  Plan: CreateFrame("PlayerModel"), SetUnit("player"), SetAnimation(69)
+  (EmoteDance per the animation ID list; fall back to idle 0 if not
+  HasAnimation(69)), refresh on UNIT_MODEL_CHANGED / PLAYER_EQUIPMENT_
+  CHANGED / OnShow; paused (hidden) when the Hub closes. Asked: dance
+  nonstop vs click for other emotes; drag to turn; switch to turn it off.
+  Check in Forever: model animations under the 12.1 rules.

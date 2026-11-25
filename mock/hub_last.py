@@ -9,6 +9,7 @@ def me(p):
              ('First Aid  225 / 225 (Expert)', 'train Artisan now'), ('Cooking  99 / 150 (Journeyman)', ''),
              ('Fishing  20 / 75 (Apprentice)', '')])
     p.note('Quests & Mobs uses this for its suggestions; Map & Waypoints\' class trainers follow your class.')
+    p.stage(170, 'Your character, live 3D, dancing  (stand-in figure)')
 VERS = [('AetherHub', '1.14.8'), ('AetherBars', '1.14.3'), ('AetherChat', '1.0.8'), ('AetherCoords', '1.3.15'),
         ('AetherFrames', '1.14.7'), ('AetherItemID', '1.1.4'), ('AetherLedger', '1.8.7'), ('AetherMarks', '1.6.13'),
         ('AetherMeter', '1.13.9'), ('AetherPack', '1.6.4'), ('AetherPathfinder', '1.9.6'), ('AetherSkins', '1.5.7')]
