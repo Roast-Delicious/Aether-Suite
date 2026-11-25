@@ -1161,3 +1161,7 @@ trim), xpbar_render.py (XP bar).
   GOSSIP/QUEST PAGE (user 12:44): Page() overlay now fills the window's
   Inset (3px in), scroll bar included, edge follows; gossip options GOLD
   (was blue).
+  VENDOR TOOLTIPS (user 12:46 video): Blizzard shows Repair All / Sell
+  Junk tooltips only when there's something to do; P3 adds 'Nothing
+  needs repair' / 'No junk to sell' (HookScript OnEnter, only when the
+  tooltip came up empty).

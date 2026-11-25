@@ -557,6 +557,26 @@ function P.ExtraRule(t, a)
         -- gray when there's nothing to repair or sell (user, Nov 25).
         -- Repair item is never disabled by Blizzard, and repair all may
         -- not be refreshed after repairing, so the repair cost decides too.
+        if o and b and b.HookScript and Once(b, "vendortip") then
+            -- Blizzard shows these tooltips only when there's something to
+            -- do; a gray button now says why it's gray (user, Nov 25 12:46)
+            b:HookScript("OnEnter", function(self)
+                local tt = GameTooltip
+                if not tt or (tt.NumLines and tt:NumLines() > 0 and tt:IsShown()) then return end
+                local title, why
+                if nm == "MerchantSellAllJunkButton" then
+                    title, why = _G.SELL_ALL_JUNK_ITEMS or "Sell All Junk Items", "No junk to sell"
+                elseif nm == "MerchantGuildBankRepairButton" then
+                    title, why = _G.GUILDBANK_REPAIR or "Guild Repair", "Nothing needs repair"
+                else
+                    title, why = _G.REPAIR_ALL_ITEMS or "Repair All Items", "Nothing needs repair"
+                end
+                tt:SetOwner(self, "ANCHOR_RIGHT")
+                tt:SetText(title, GOLD[1], GOLD[2], GOLD[3])
+                tt:AddLine(why, 0.62, 0.65, 0.72)
+                tt:Show()
+            end)
+        end
         if o and b then
             local repair = nm and nm:find("Repair")
             Usable(b, o, function()
