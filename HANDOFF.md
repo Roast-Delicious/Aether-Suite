@@ -1234,3 +1234,6 @@ trim), xpbar_render.py (XP bar).
   Square-Box-c60 on nodes whose StateBorder is Legacy-Tree-Frame-icon-
   frame* -> faded; blue-edged pill (PH.PillOn, ARTWORK) behind SpendText.
   Toy Box tip: user thought 'toys'; it's the one-time HelpTip - dropped.
+- RELEASE A SHIPPED 14:44 (main, merged build8): AetherSkins 1.5.5 (Group
+  Finder tabs/crest/close, Legacy rank pills). NEXT: Release B (Ledger
+  directions on click + tracker colors) - user may continue Saturday.
