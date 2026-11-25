@@ -290,7 +290,10 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   .13). User idea 07:10: navy for 'not taken, no points left', locked
   gray; asked for blue-locked mock (talent_scheme2.py). Recommended:
   can take = art + blue glow; not taken = navy duotone; locked = gray.
-  Awaiting confirm.
+  CHOSEN 07:16: A (mock/talent_full.py UNSPENT=0 LOCKED=gray): can take
+  = art + medium blue glow; not taken (no points) = navy duotone (deep
+  #081226 -> #3C64A0, border #3C5A8C); locked = gray (lum x 0.55, border
+  #464A54), arrows into locked gray. TALENT DESIGN SETTLED.
   GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
   LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
   (no [styled] marks anywhere): the skinner never caught it -> added
