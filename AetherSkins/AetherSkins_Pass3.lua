@@ -504,6 +504,20 @@ local FADE3 = { ["spec-background"] = true,
 function P3.MoreRule(t, a)
     if FADE3[a] or a:find("^Skillbar_Flare_") then t:SetAlpha(0); return true end
     if PAGEBG[a] then Ours(t, nil, { PAGE[1], PAGE[2], PAGE[3], 1 }, nil, nil, WHITE); return true end
+    -- Legacy Tree rank box (dump 14:42): Blizzard's box drew as an empty dark
+    -- square over the node's corner; ours is a small blue-edged pill behind
+    -- the rank text, like the talent ranks
+    if a == "Talents-Square-Box-c60" then
+        local b = t.GetParent and t:GetParent()
+        local sb = b and T(b, "StateBorder")
+        local sa = sb and Atlas(sb)
+        if sa and sa:find("^Legacy%-Tree%-Frame%-icon%-frame") then
+            t:SetAlpha(0)
+            local fs = T(b, "SpendText")
+            if fs and PH.PillOn and Once(b, "legacyrank") then pcall(PH.PillOn, b, fs, BLUE, "ARTWORK") end
+            return true
+        end
+    end
     -- the class picture behind the stats list: gone, the stats read on plain page blue
     local cls = a:match("^UI%-Character%-Info%-(%a+)%-BG$")
     if cls and cls ~= "General" and cls ~= "Stat" then t:SetAlpha(0); return true end

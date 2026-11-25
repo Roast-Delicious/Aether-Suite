@@ -334,6 +334,9 @@ L.execute('''GFP = kid(WIN, "Frame"); GFP.WhoListingTab = kid(GFP, "Frame"); GFP
 GFP.BrowsingTab = kid(GFP, "Frame"); GFP.BrowsingTab.Icon = tex(GFP.BrowsingTab, nil, 8197095)
 GFP.ListingTab = kid(GFP, "Frame"); GFP.ListingTab.Icon = tex(GFP.ListingTab, nil, 8197096)''')
 expect("Group Finder tabs by their real keys: Who people, Browsing magnifier, Listing eye", (E('AetherSkins_Windows.P3.TabGlyph(GFP.WhoListingTab)'), E('AetherSkins_Windows.P3.TabGlyph(GFP.BrowsingTab)'), E('AetherSkins_Windows.P3.TabGlyph(GFP.ListingTab)')), ("gl_people", "gl_search", "gl_eyeball"))
+L.execute('''LN = kid(WIN, "Button"); LN.StateBorder = tex(LN, "Legacy-Tree-Frame-icon-frame-disable"); LN.SpendText = LN:CreateFontString()
+LN.box = tex(LN, "Talents-Square-Box-c60"); AetherSkins_Windows.Contents(WIN)''')
+expect("Legacy Tree rank box: Blizzard's dark square hidden", E('LN.box.alpha'), 0)
 # switch off
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)
