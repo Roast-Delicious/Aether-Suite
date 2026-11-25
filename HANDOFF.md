@@ -183,6 +183,12 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   Each node is ~23 lines, so 1.2.2 should fold node insides.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
+- LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
+  zone from C_QuestLog.GetNextWaypoint first), AetherSkins 1.2.2 (full
+  /skins tree dumps: 1500 lines, hidden parts folded, our pieces skipped;
+  SocialUIFrame in W.KNOWN). NEXT: user dumps Reputation, Friends list,
+  Talents, Progress Track, Group Finder, Spellbook, Bags, a vendor, quest
+  dialog, world map; then the skins second pass.
 - LAST BUILD (Nov 25, 05:50; user 05:33 "go ahead with all the fixes and
   recommendations"): AetherLedger 1.8.1, AetherSkins 1.2.1, AetherHub 1.14.8.
   * Errors fixed: Ledger GiverText order (Hub Ledger tab / moving givers),
@@ -544,7 +550,9 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   12.0/12.1 addons (MidnightMap, ClassyMap, BasicMinimap): allowed.
 - Stale tests (fail on the Nov 24 morning code too): bars_glow_test,
   bars_sidefix_test, ledger_suggest_test, lens_test, meter_login_test,
-  meter_test, meter_test2, names_test*, radar_test, tracker_test.
+  meter_test, meter_test2, names_test*, radar_test, tracker_test,
+  hub_general_test, itemid_test, ledger_full_test, marks_namekey_test,
+  marks_plates_test, pack_class_test (all fail on shipped main too).
 - AetherMarks far names (decided, leave as is): beyond 41 yards (WoW
   Forever's nameplate cap, Rare Radar sets it) there's no nameplate; the
   tiny names are the game's, in reaction colors, and addons can't color,
