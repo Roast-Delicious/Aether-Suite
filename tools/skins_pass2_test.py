@@ -305,6 +305,44 @@ L.execute('VR:Enable(); GetRepairAllCost = function() return 0, true end; Aether
 expect("repair item stays enabled, but costs nothing: gray", round(hammer(), 2), 0.65)
 L.execute('GetRepairAllCost = function() return 1200, true end; AetherSkins_Windows.P3.RefreshUsable()')
 expect("something to repair: gold", hammer(), 0.69)
+# vendor tooltips (user 15:22): a note under Blizzard's tooltip on all
+# three buttons when there's nothing to do, every line Aether gold
+L.execute(r"""
+TT = { lines = {} }
+function TT:SetOwner() self.lines = {}; self.shown = false end
+function TT:SetText(s, r, g, b) self.lines = { { s, r, g, b } } end
+function TT:AddLine(s, r, g, b) self.lines[#self.lines + 1] = { s, r, g, b } end
+function TT:Show() self.shown = true end
+function TT:IsShown() return self.shown end
+function TT:NumLines() return #self.lines end
+GameTooltip = TT
+setmetatable(_G, { __index = function(_, k) local n = type(k) == "string" and k:match("^GameTooltipTextLeft(%d+)$")
+  if n then local l = TT.lines[tonumber(n)]; return l and { GetText = function() return l[1] end, SetTextColor = function(_, r, g, b) l[2], l[3], l[4] = r, g, b end } end end })
+local function hookable(b) b.hooks = {}; b.HookScript = function(s, ev, fn) s.hooks[ev] = s.hooks[ev] or {}; table.insert(s.hooks[ev], fn) end
+  b.SetMotionScriptsWhileDisabled = function() end; return b end
+TR = hookable(kid(WIN, "Button", "MerchantRepairItemButton")); TR.IsEnabled = function() return true end; TR.Icon = tex(TR, "SpellIcon-256x256-Repair")
+TJ = hookable(kid(WIN, "Button", "MerchantSellAllJunkButton")); TJ.on = false; TJ.IsEnabled = function(s) return s.on end; TJ.Icon = tex(TJ, "SpellIcon-256x256-SellJunk")
+TA = hookable(kid(WIN, "Button", "MerchantRepairAllButton")); TA.IsEnabled = function() return false end; TA.Icon = tex(TA, "SpellIcon-256x256-RepairAll")
+AetherSkins_Windows.Contents(WIN)
+function Enter(b, blizTitle)       -- Blizzard's OnEnter (its own tooltip, or none), then ours
+  TT:SetOwner(); if blizTitle then TT:SetText(blizTitle, 1, 1, 1); TT:Show() end
+  for _, fn in ipairs((b.hooks or {}).OnEnter or {}) do fn(b) end
+end
+function Lines() local o = {} for _, l in ipairs(TT.lines) do o[#o + 1] = l[1] .. "@" .. tostring(l[3]) end return table.concat(o, " | ") end
+""")
+L.execute('GetRepairAllCost = function() return 0, true end')
+L.execute('Enter(TR, "Repair an Item")')
+expect("Repair an Item, nothing to repair: gold note under Blizzard's tooltip", E('Lines()'), "Repair an Item@0.69 | Nothing needs repair@0.69")
+L.execute('Enter(TJ, "Sell All Junk Items")')
+expect("Sell All Junk, no junk: gold note under Blizzard's tooltip", E('Lines()'), "Sell All Junk Items@0.69 | No junk to sell@0.69")
+L.execute('Enter(TA, nil)')
+expect("Repair All, nothing to repair: gold title and gold note", E('Lines()'), "Repair All Items@0.69 | Nothing needs repair@0.69")
+L.execute('GetRepairAllCost = function() return 500, true end; TJ.on = true')
+L.execute('Enter(TR, "Repair an Item")')
+expect("something to repair: Blizzard's tooltip only", E('Lines()'), "Repair an Item@1")
+L.execute('Enter(TJ, "Sell All Junk Items")')
+expect("junk to sell: Blizzard's tooltip only", E('Lines()'), "Sell All Junk Items@1")
+L.execute('setmetatable(_G, nil)')
 L.execute('''SBB = kid(WIN, "Button"); SBB.enabled = false; SBB.IsEnabled = function(s) return s.enabled end
 SBB.Enable = function(s) s.enabled = true end; SBA = tex(SBB, "minimal-scrollbar-arrow-top"); AetherSkins_Windows.Contents(WIN)''')
 def up(): return E('(function() for _, r in ipairs(SBB.regs) do if r.texture and tostring(r.texture):find("chev3d_up") then return r.desat and "gray" or "gold" end end end)()')

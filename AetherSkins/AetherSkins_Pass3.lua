@@ -696,22 +696,43 @@ function P.ExtraRule(t, a)
             -- a disabled button gets no mouse-over unless asked (user, 13:43:
             -- the gray buttons still showed nothing)
             if b.SetMotionScriptsWhileDisabled then pcall(b.SetMotionScriptsWhileDisabled, b, true) end
-            -- Blizzard shows these tooltips only when there's something to
-            -- do; a gray button now says why it's gray (user, Nov 25 12:46)
+            -- A gray button says why it's gray, on all three buttons, in Aether
+            -- gold (user, Nov 25 12:46 and 15:22: Repair an Item and Sell All
+            -- Junk show Blizzard's own tooltip, so the note goes under it).
             b:HookScript("OnEnter", function(self)
                 local tt = GameTooltip
-                if not tt or (tt.NumLines and tt:NumLines() > 0 and tt:IsShown()) then return end
-                local title, why
-                if nm == "MerchantSellAllJunkButton" then
-                    title, why = _G.SELL_ALL_JUNK_ITEMS or "Sell All Junk Items", "No junk to sell"
-                elseif nm == "MerchantGuildBankRepairButton" then
-                    title, why = _G.GUILDBANK_REPAIR or "Guild Repair", "Nothing needs repair"
+                if not tt then return end
+                local junk = nm == "MerchantSellAllJunkButton"
+                local idle
+                if junk then
+                    idle = self.IsEnabled and not self:IsEnabled()
+                    if C_MerchantFrame and C_MerchantFrame.GetNumJunkItems then
+                        local ok, n = pcall(C_MerchantFrame.GetNumJunkItems)
+                        if ok and type(n) == "number" then idle = n == 0 end
+                    end
                 else
-                    title, why = _G.REPAIR_ALL_ITEMS or "Repair All Items", "Nothing needs repair"
+                    local ok, cost = pcall(GetRepairAllCost)
+                    idle = not (ok and type(cost) == "number" and cost > 0)
                 end
-                tt:SetOwner(self, "ANCHOR_RIGHT")
-                tt:SetText(title, GOLD[1], GOLD[2], GOLD[3])
-                tt:AddLine(why, 0.62, 0.65, 0.72)
+                if not idle then return end
+                local why = junk and "No junk to sell" or "Nothing needs repair"
+                local has = tt.IsShown and tt:IsShown() and tt.NumLines and tt:NumLines() > 0
+                if not has then
+                    local title
+                    if junk then title = _G.SELL_ALL_JUNK_ITEMS or "Sell All Junk Items"
+                    elseif nm == "MerchantGuildBankRepairButton" then title = _G.GUILDBANK_REPAIR or "Guild Repair"
+                    elseif nm == "MerchantRepairItemButton" then title = _G.REPAIR_AN_ITEM or "Repair an Item"
+                    else title = _G.REPAIR_ALL_ITEMS or "Repair All Items" end
+                    tt:SetOwner(self, "ANCHOR_RIGHT")
+                    tt:SetText(title, GOLD[1], GOLD[2], GOLD[3])
+                else
+                    -- don't add it twice (Blizzard may refresh its tooltip)
+                    local last = _G["GameTooltipTextLeft" .. tt:NumLines()]
+                    if last and last.GetText and last:GetText() == why then return end
+                end
+                tt:AddLine(why, GOLD[1], GOLD[2], GOLD[3])
+                local first = _G.GameTooltipTextLeft1      -- title gold too, every button
+                if first and first.SetTextColor then first:SetTextColor(GOLD[1], GOLD[2], GOLD[3]) end
                 tt:Show()
             end)
         end

@@ -342,6 +342,14 @@ local function TabColor(tab)
     local own = tabText[tab]
     if own then
         if sel then own:SetTextColor(GOLD[1], GOLD[2], GOLD[3]) else own:SetTextColor(0.85, 0.85, 0.85) end
+        -- Blizzard's own label stays hidden: every one of its text regions,
+        -- each time a tab is picked or unpicked (user, Nov 25 15:22: Buyback
+        -- showed Blizzard's gold label above ours)
+        if tab.GetRegions then
+            for _, r in ipairs({ tab:GetRegions() }) do
+                if r ~= own and r.GetObjectType and r:GetObjectType() == "FontString" and r.SetAlpha then r:SetAlpha(0) end
+            end
+        end
     end
 end
 W.TabColor = TabColor

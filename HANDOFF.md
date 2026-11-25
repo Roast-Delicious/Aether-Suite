@@ -1304,3 +1304,14 @@ trim), xpbar_render.py (XP bar).
   SetColorTexture in the same color, SetThickness 3.25 (~5 px); ghost =
   blue at 55%. Hooks the shaft's SetAtlas/SetTexture too. skins_pass2_test
   (pool order test, ALL OK, 111).
+- VENDOR (user 15:22 video): Repair an Item + Sell All Junk show
+  BLIZZARD'S tooltip, so our 'nothing to do' note (only filled empty
+  tooltips) never showed; Repair All's note was gray. Buyback tab showed
+  Blizzard's gold label above ours (user: 'good catch').
+  READY, NOT SHIPPED (branch fix-vendor-tips, off fix-talent-arrows; same
+  AetherSkins 1.5.7): note added under Blizzard's tooltip when idle
+  (repair: GetRepairAllCost == 0; junk: C_MerchantFrame.GetNumJunkItems
+  == 0, else button disabled), title + note both Aether gold, no double
+  add; TabColor hides every Blizzard FontString on the tab on each
+  pick/unpick (cause not confirmed by dump; if it recurs, /skins tree on
+  the Buyback tab). Tests: skins_pass2 (+5), skins_windows (+1).
