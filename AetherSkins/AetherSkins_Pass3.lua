@@ -432,6 +432,15 @@ local function BoxEdge(t, col)
     local f = CreateFrame("Frame", nil, par)
     f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
     boxEdge[t] = Edge(f, "BORDER", 3, col or { 0.24, 0.43, 0.69, 0.9 }, 0)
+    -- the edge shows only while its texture does (Legacy cards keep hidden
+    -- tiled pieces: their edges drew extra lines across the card, Nov 25)
+    local function Sync() f:SetShown(Shown(t)) end
+    if hooksecurefunc then
+        for _, m in ipairs({ "Show", "Hide", "SetShown" }) do
+            if t[m] then pcall(hooksecurefunc, t, m, Sync) end
+        end
+    end
+    Sync()
 end
 local NAVYC = { NAVY[1], NAVY[2], NAVY[3], 1 }
 local TRACK = { 0.055, 0.1, 0.18, 1 }
@@ -475,7 +484,9 @@ function P3.MoreRule(t, a)
     if a == "Legacy-Challenge-Cards-Date-BG" then Tint(t, NAVY, 1); return true end
     if a:find("^Legacy%-Challenge%-Cards") then
         local off = a:lower():find("disable")
-        Ours(t, nil, off and { 0.047, 0.055, 0.075, 1 } or NAVYC, nil, nil, WHITE); BoxEdge(t); return true
+        Ours(t, nil, off and { 0.047, 0.055, 0.075, 1 } or NAVYC, nil, nil, WHITE)
+        if not a:find("tiled") then BoxEdge(t) end          -- one edge per card
+        return true
     end
     if a == "Legacy-Challenge-Left-Sub-Tab" then Tint(t, { 0.2, 0.36, 0.62 }, 0.95); return true end
     if a == "Legacy-Challenge-Left-Sub-Tab-selected" then Tint(t, BLUE, 0.45); return true end

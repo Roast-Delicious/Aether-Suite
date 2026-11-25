@@ -1152,3 +1152,9 @@ trim), xpbar_render.py (XP bar).
 - BUILD 3 SHIPPED 12:35 (main, merged build3): AetherSkins 1.5.0. README
   stamp 12:35. Next: user testing -> fix build; tint sweep (screenshots);
   Hub cleanup pass (+ Ledger click-to-turn-in directions).
+- BUILD 4 (branch build4): title underline on its own frame (level +20)
+  so side panels don't cover it (user 12:40). Legacy Challenges (user
+  12:42 'broken'): BoxEdge was added to the hidden tiled card pieces too
+  -> extra lines across each card; now one edge per card (not on tiled)
+  and every BoxEdge follows its texture's shown state. OPEN: character
+  crest A face / B helmet (mock/char_crest.py), asked 12:40.
