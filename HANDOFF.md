@@ -576,6 +576,11 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   Character slots (QualityUpdate: no IconBorder/common -> silver if an
   item, slate if empty: check GetItem/Icon texture) and Pack
   (SlotQuality) -> Build 2 (mock/slot_colors.py).
+  SPELLBOOK BROWN (10:25): Multi-Shot fine after a reload, so it was
+  timing (an entry filled in after our walk). Branch: hook SetCurrentPage
+  on paged frames -> Again(root); every window also looks again 0.3 s
+  and 1 s after it opens (LookAgainLater). No dump needed unless it
+  recurs.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in

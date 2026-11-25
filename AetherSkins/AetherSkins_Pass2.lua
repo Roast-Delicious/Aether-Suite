@@ -703,6 +703,11 @@ function W.Visit(f, root)
         end
     end
     if T(f, "ScrollTarget") then WatchList(f, root) end
+    -- paged lists (the Spellbook): new entries on every page turn (Nov 25:
+    -- the first entry of a page sometimes kept Blizzard's brown frame)
+    if f.SetCurrentPage and hooksecurefunc and Once(f, "pages") then
+        pcall(hooksecurefunc, f, "SetCurrentPage", function() Again(root) end)
+    end
     -- map quest log zone headers: gold, also when Blizzard recolors them
     if T(f, "CollapseButton") and T(f, "ButtonText") then P.KeepColor(f.ButtonText, GOLD) end
     -- frames with their own treatment
@@ -749,7 +754,17 @@ local function LooseSideTabs(root)
 end
 
 -- After a window's walk: windows with side tabs drop the right chevron.
+-- A second and third look after a window opens: entries Blizzard fills in
+-- a moment later (no list callback) still get the look.
+local function LookAgainLater(root)
+    if not (root and root.HookScript and C_Timer and C_Timer.After) or not Once(root, "later") then return end
+    local function Later() C_Timer.After(0.3, function() Again(root) end); C_Timer.After(1, function() Again(root) end) end
+    root:HookScript("OnShow", Later)
+    Later()
+end
+
 function W.AfterWalk(root)
+    pcall(LookAgainLater, root)
     pcall(LooseSideTabs, root)
     pcall(P.HookQuestLog)
     if sidetabsIn[root] and W.chev[root] and W.chev[root].right then
