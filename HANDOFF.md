@@ -524,6 +524,27 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   side tabs themselves are in none of the three dumps (a separate frame):
   need /skins tree pointing at a tab. NPF button also has atlas
   newplayerchat-chaticon-newcomer (20x20, the little sprout) - Build 2.
+  GF SIDE TAB DUMP (09:43): ".ListingTab" 55x55, Background common-sidetab,
+  Icon tex 8197096, SelectedTexture/TabGlow common-sidetab-selected,
+  HighlightTexture common-sidetab-hover: same as Character side tabs but
+  parented outside the windows. Fix: LooseSideTabs() in W.AfterWalk scans
+  UIParent's children (non-windows) for kids with a common-sidetab
+  Background + SelectedTexture -> P.SideTab; throttled 2 s; LFG* windows
+  then drop the right chevron.
+  BUILD 1 SHIPPED 09:45 (main, zip sent): Skins 1.3.1, Pack 1.6.3,
+  Ledger 1.8.4. Still open: map dimness (screenshot pair), talents brown
+  background (Talents /skins tree).
+  BUG (09:48, branch fix-ledger-landing, READY, NOT SHIPPED): "To Cork
+  Gizelton (Desolace)" said fly Orgrimmar -> Thunder Bluff (Tal), then
+  walk to Desolace 67,58. Landing FM picked by straight-line distance;
+  Thunder Bluff about as close as Shadowprey (Thalon) but behind
+  mountains. Fix: Landing() in AetherLedger_Travel.lua prefers a known
+  FM on the destination's map unless another is < 50% as far.
+  tools/ledger_landing_test.py (4). User has Shadowprey. Goes into BUILD
+  2 (merge with the design branch; Ledger 1.8.5).
+  GOSSIP TEXT STILL DARK (09:51 screenshot, Doras): if Build 1 was
+  installed, LightText missed gossip text; asked user to confirm and
+  /skins tree pointing at the gossip text.
 - SHIPPED 07:35 (branch skins-second-pass): AetherLedger 1.8.3 -
   hand-in list at the bottom of the tracker now takes finished quests
   from ANY zone whose turn-in isn't here (user 06:41, screenshot in
