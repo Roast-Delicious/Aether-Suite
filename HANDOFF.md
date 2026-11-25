@@ -88,6 +88,27 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
+- QUEUED for the next build (user, Nov 25 03:46, "queue both"):
+  * MOVING QUEST GIVERS (user was sent to Desolace 66.8,58.6 for Cork /
+    Rigger Gizelton, quests 5821 / 5943: they walk the road with their
+    caravan, nobody at the single QuestieDB spot). (1) Regenerate
+    AetherLedger_Data keeping QuestieDB's NPC WAYPOINTS for quest givers
+    that have them (check how many; caravans, patrols, escorts); travel
+    window + waypoint show the route ("travels this road with his
+    caravan") instead of one spot; arrival = near the route, not the
+    point. (2) "on the move" tag next to those givers in suggestions and
+    the travel window. Keep the data file size in mind (memory readout:
+    Ledger 3.2 MB).
+  * HUB DEBUG PAGE (as described 03:31): last tab under GENERAL; default
+    Hub height +25 (WIN_H 500 -> 525; sidebar was full with ~6 px spare;
+    saved larger sizes unchanged). One "Run" button per addon debug
+    (/bars /chat /itemid /marks /pf /skins debug, /ledger status; Skins'
+    Run Debug moves here), Check Memory (collectgarbage + per-addon KB,
+    replaces the /run line), tests (Preview Meter, Frames portrait test,
+    /ledger why if added), and a COPYABLE OUTPUT BOX (capture the debug
+    lines while running, e.g. hook DEFAULT_CHAT_FRAME:AddMessage for that
+    moment; Ctrl+A/C) + "Copy Full Report" running all of them. Button
+    names per Hub rules (verb first, Title Case).
 - QUEUED for the next build (user, Nov 25 03:27, "I like the middle one"):
   quest icon ZOOM, option b, built on the icon fix (branch
   fix-tracker-icon-pop, AetherLedger 1.7.2: merge it first). Our own
