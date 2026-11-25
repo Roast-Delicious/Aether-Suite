@@ -88,6 +88,17 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
 
 ## Open items / waiting on the user
 
+- QUEUED for the next build (user, Nov 25 03:27, "I like the middle one"):
+  quest icon ZOOM, option b, built on the icon fix (branch
+  fix-tracker-icon-pop, AetherLedger 1.7.2: merge it first). Our own
+  animation on the fixed overlay, not Blizzard's AddAnim:
+  ACCEPTED = icon starts 25x (about a third of the screen), faint, and
+  shrinks into its spot while turning solid, 0.6 s, ease-out (cubic);
+  alpha 0->1 over the first 35%. HANDED IN = a copy of the icon (on
+  UIParent at the icon's spot, since Blizzard drops the row at once)
+  swells 1 -> 25x and fades 1 -> 0, 0.6 s, ease-in. Play only on a real
+  add / turn-in (QUEST_ACCEPTED / QUEST_TURNED_IN for that quest), not
+  on every tracker rebuild. It takes no clicks.
 - LAST BUILD (Nov 25, 03:45; user 03:11: "go ahead with the entire
   interface", with screenshots of Reputation, Progress Track, Talents,
   Friends): AetherSkins 1.2.0 + Hub 1.14.6.
