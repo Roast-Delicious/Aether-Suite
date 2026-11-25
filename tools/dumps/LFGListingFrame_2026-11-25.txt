@@ -1,0 +1,114 @@
+== Window dump: LFGListingFrame ==
+Frame LFGListingFrame 458x535
+  Texture LFGListingFrameBg 454x512 tex=374155
+  Texture .TopTileStreaks 450x43 atlas=_UI-Frame-TopTileStreaks
+  Frame .NineSlice 458x535
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 283x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 283x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x364 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x364 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture LFGListingFramePortrait 62x62
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 492x573 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 376x20
+    FontString LFGListingFrameTitleText 376x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RolesSection 454x102
+    Texture LFGListingFrameRoleBackground 454x102 atlas=groupfinder-roles-background
+  Frame .Inset 450x414
+    Texture .CustomBG 447x408 atlas=groupfinder-background
+    Texture .Border 450x413 atlas=common-insideframe
+  Frame .DividerFrame 11x454
+    Texture .Divider 11x454 atlas=common-framedivider
+  Button LFGListingFrameBackButton 111x28
+    Texture .Left 12x28 tex=130824
+    Texture .Right 12x28 tex=130824
+    Texture .Middle 87x28 tex=130824
+    FontString LFGListingFrameBackButtonText 29x12
+    Texture .? 111x28 tex=130826
+  Button LFGListingFramePostButton 109x28
+    Texture .Left 12x28 tex=130824
+    Texture .Right 12x28 tex=130824
+    Texture .Middle 85x28 tex=130824
+    FontString LFGListingFramePostButtonText 48x12
+    Texture .? 109x28 tex=130826
+  Frame LFGListingFrameSoloRoleButtons 230x48
+    Button LFGListingFrameSoloRoleButtonsRoleButtonTank 64x64
+      Texture LFGListingFrameSoloRoleButtonsRoleButtonTankBackground 93x93 atlas=UI-LFG-RoleIcon-Tank-Background
+      Texture .cover 64x64 tex=337499
+      Texture .? 64x64 hidden tex=337499
+      Texture .? 85x85 atlas=UI-LFG-RoleIcon-Tank
+      CheckButton .CheckButton 24x24
+        Texture .? 24x24 tex=130755
+        Texture .? 24x24 hidden tex=130752
+        Texture .? 24x24 tex=130753
+        Texture .? 24x24 hidden tex=130751
+        Texture .? 24x24 hidden tex=130750
+    Button LFGListingFrameSoloRoleButtonsRoleButtonHealer 64x64
+      Texture LFGListingFrameSoloRoleButtonsRoleButtonHealerBackground 93x93 atlas=UI-LFG-RoleIcon-Healer-Background
+      Texture .cover 64x64 tex=337499
+      Texture .? 64x64 hidden tex=337499
+      Texture .? 85x85 atlas=UI-LFG-RoleIcon-Healer
+      CheckButton .CheckButton 24x24
+        Texture .? 24x24 tex=130755
+        Texture .? 24x24 hidden tex=130752
+        Texture .? 24x24 tex=130753
+        Texture .? 24x24 hidden tex=130751
+        Texture .? 24x24 hidden tex=130750
+    Button LFGListingFrameSoloRoleButtonsRoleButtonDPS 64x64
+      Texture LFGListingFrameSoloRoleButtonsRoleButtonDPSBackground 93x93 atlas=UI-LFG-RoleIcon-DPS-Background
+      Texture .cover 64x64 hidden tex=337499
+      Texture .? 64x64 hidden tex=337499
+      Texture .? 85x85 atlas=UI-LFG-RoleIcon-DPS
+      CheckButton .CheckButton 24x24
+        Texture .? 24x24 tex=130755
+        Texture .? 24x24 hidden tex=130752
+        Texture .? 24x24 tex=130753
+        Texture .? 24x24 hidden tex=130751
+        Texture .? 24x24 hidden tex=130750
+  Frame LFGListingFrameGroupRoleButtons 192x48 hidden (3 parts inside, skipped)
+  Button LFGListingFrameNewPlayerFriendlyButton 84x84
+    Texture .? 20x20 atlas=newplayerchat-chaticon-newcomer
+    Texture .? 84x84 atlas=UI-LFG-RoleIcon-Leader
+    CheckButton .CheckButton 24x24
+      Texture .? 24x24 tex=130755
+      Texture .? 24x24 hidden tex=130752
+      Texture .? 24x24 tex=130753
+      Texture .? 24x24 hidden tex=130751
+      Texture .? 24x24 hidden tex=130750
+  Frame LFGListingFrameCategoryView 442x371
+    Frame .CategorySelection 442x371 hidden (0 parts inside, skipped)
+    Button .? 418x67
+      Texture .Icon 408x54 atlas=groupfinder-button-dungeons
+      Texture .Cover 418x67 atlas=groupfinder-button-cover
+      Texture .? 418x67 hidden atlas=groupfinder-button-cover-down
+      Texture .HighlightTexture 418x67 atlas=groupfinder-button-cover-hover
+      FontString .Label 81x16
+    Button .? 418x67
+      Texture .Icon 408x54 atlas=groupfinder-button-questing
+      Texture .Cover 418x67 atlas=groupfinder-button-cover
+      Texture .? 418x67 hidden atlas=groupfinder-button-cover-down
+      Texture .HighlightTexture 418x67 atlas=groupfinder-button-cover-hover
+      FontString .Label 128x16
+    Button .? 418x67
+      Texture .Icon 408x54 atlas=groupfinder-button-battlegrounds
+      Texture .Cover 418x67 atlas=groupfinder-button-cover
+      Texture .? 418x67 hidden atlas=groupfinder-button-cover-down
+      Texture .HighlightTexture 418x67 atlas=groupfinder-button-cover-hover
+      FontString .Label 111x16
+    Button .? 418x67
+      Texture .Icon 408x54 atlas=groupfinder-button-custom-pve
+      Texture .Cover 418x67 atlas=groupfinder-button-cover
+      Texture .? 418x67 hidden atlas=groupfinder-button-cover-down
+      Texture .HighlightTexture 418x67 atlas=groupfinder-button-cover-hover
+      FontString .Label 62x16
+  Frame LFGListingFrameActivityView 444x370 hidden (9 parts inside, skipped)
+  Frame LFGListingFrameLockedView 324x282 hidden (2 parts inside, skipped)

@@ -261,6 +261,27 @@ Push with `git -c push.negotiate=true push origin main`. The addons live at the 
   USER REQUEST (06:33): when reskinning, role-selection icons (tank,
   healer, damage: Group Finder / role check) become FLAT GOLD (#FFB000)
   ON BLUE. Mockup AFTER all the remaining dumps are in.
+  GROUP FINDER = LFGListingFrame (I). Dump 06:35, tools/dumps/
+  LFGListingFrame_2026-11-25.txt, complete. NOT SKINNED AT ALL in game
+  (no [styled] marks anywhere): the skinner never caught it -> added
+  to W.KNOWN; check why the ShowUIPanel hook missed it (likely shown
+  with :Show() directly) -> also hook its OnShow. No close button in the
+  dump. Parts: .RolesSection LFGListingFrameRoleBackground groupfinder-
+  roles-background; .Inset .CustomBG groupfinder-background, .Border
+  common-insideframe; .DividerFrame.Divider common-framedivider; Back /
+  Post buttons UIPanelButton tex 130824. Role buttons under
+  LFGListingFrameSoloRoleButtons (and hidden ...GroupRoleButtons):
+  RoleButtonTank/Healer/DPS: *Background UI-LFG-RoleIcon-<role>-
+  Background, icon UI-LFG-RoleIcon-<role> (85x85, unnamed), .cover tex
+  337499 (dim when unavailable), .CheckButton old UI-CheckBox (tex
+  130750-130755). NewPlayerFriendlyButton: UI-LFG-RoleIcon-Leader +
+  newplayerchat-chaticon-newcomer. -> USER REQUEST: flat gold glyphs on
+  a blue disc (our own art, Media/role_tank/healer/dps/leader), gold
+  check. Category buttons (418x67) under LFGListingFrameCategoryView:
+  .Icon groupfinder-button-dungeons/-questing/-battlegrounds/-custom-
+  pve (picture banners, keep), .Cover groupfinder-button-cover (+-down,
+  -hover) -> navy rounded frame, blue hover, .Label. Hidden views:
+  ActivityView, LockedView -> dump after clicking a category.
   OPEN Q to user: show ALL finished quests (any zone) at the bottom, not
   only ones from here? (5.9 note: "there may be more").
 - LAST BUILD (Nov 25, 06:30; user 06:24 "go"): AetherLedger 1.8.2 (hand-in
