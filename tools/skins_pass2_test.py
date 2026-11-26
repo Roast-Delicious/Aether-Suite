@@ -278,6 +278,19 @@ expect("side tab: Blizzard icon faded, flat gold glyph (stats)", (E('NT.Icon.alp
 expect("closed tab: no gold glow", has_tex('NT', 'glow_sq'), False)
 L.execute('NT.SelectedTexture:Show()')
 expect("open tab: soft gold glow", has_tex('NT', 'glow_sq'), True)
+# the glow's hollow middle fits the tab's box (52x49 on a 55x55 tab, dump
+# b161), 2 px inside it, so its hard edge hides under the box (user 16:49)
+L.execute(r"""
+local p = AetherSkins_Windows.P2.H.tabParts[NT]
+p.fill.w, p.fill.h = 52, 49
+p.fill.GetHeight = function(s) return s.h end
+AetherSkins_Windows.P2.SideTabExtra(NT)
+for _, r in ipairs(NT.regs) do if r.texture and tostring(r.texture):find("glow_sq") then GLW, GLH = r.w, r.h end end
+RINGR = 0
+for _, k in ipairs(NT.kids or {}) do for _, r in ipairs(k.regs or {}) do if r.texture and tostring(r.texture):find("btn_round4_line") then RINGR = RINGR + 1 end end end
+""")
+expect("open tab glow: hole = box minus 2 px a side", (E('GLW'), E('GLH')), (96, 90))
+expect("open tab: inner gold rings rounded (radius 4 corners)", E('RINGR'), 4)
 L.execute('VB = kid(WIN, "Button", "MerchantRepairAllButton"); VB.Icon = tex(VB, "SpellIcon-256x256-RepairAll"); VG = kid(WIN, "Button", "MerchantGuildBankRepairButton"); VG.Icon = tex(VG, "SpellIcon-256x256-RepairAll"); AetherSkins_Windows.Contents(WIN)')
 L.execute('VB.enabled = false; VB.IsEnabled = function(s) return s.enabled end; VB.Disable = function(s) s.enabled = false end; VB.Enable = function(s) s.enabled = true end')
 expect("vendor: flat anvil on repair all, shield on guild repair", (has_tex('VB', 'btn_repairall'), has_tex('VG', 'btn_guild'), E('VB.Icon.alpha'), E('VB.Icon.atlas')), (True, True, 0, "SpellIcon-256x256-RepairAll"))
@@ -299,6 +312,9 @@ L.execute('AetherSkinsDB = {}; GetCursorPosition = function() return 0, 0 end; W
 expect("corner grip made (not on quest windows)", E('(function() for _, k in ipairs({WIN:GetChildren()}) do if k.scripts and k.scripts.OnMouseDown then return true end end return false end)()'), True)
 L.execute('AetherSkins_Windows.Contents(MAP)')
 expect("world map crest: portrait faded, flat gold map", (E('MAP.BorderFrame.PortraitContainer.portrait.alpha'), has_tex('MAP.BorderFrame.PortraitContainer', 'gl_map')), (0, True))
+L.execute('GUILDW = kid(UIParent, "Frame", "CommunitiesFrame"); GUILDW.NineSlice = kid(GUILDW, "Frame"); GUILDW.PortraitContainer = kid(GUILDW, "Frame"); GUILDW.PortraitContainer.portrait = tex(GUILDW.PortraitContainer); GUILDW.PortraitOverlay = kid(GUILDW, "Frame"); GUILDW.PortraitOverlay.alpha = 1; GUILDW.PortraitOverlay.SetAlpha = function(s, a) s.alpha = a end; AetherSkins_Windows.P3.Crest(GUILDW)')
+expect("guild tabard over the portrait faded: our banner stays (user 17:03)", E('GUILDW.PortraitOverlay.alpha'), 0)
+expect("guild window crest: the gold banner (user 17:01, A)", (E('GUILDW.PortraitContainer.portrait.alpha'), has_tex('GUILDW.PortraitContainer', 'gl_banner')), (0, True))
 expect("character window keeps its portrait", has_tex('WIN', 'gl_'), False)
 L.execute('VR = kid(WIN, "Button", "MerchantRepairItemButton"); VR.enabled = true; VR.IsEnabled = function(s) return s.enabled end; VR.Disable = function(s) s.enabled = false end; VR.Enable = function(s) s.enabled = true end; VR.Icon = tex(VR, "SpellIcon-256x256-Repair"); AetherSkins_Windows.Contents(WIN)')
 def hammer(): return E('(function() for _, r in ipairs(VR.regs) do if r.texture and tostring(r.texture):find("btn_repair") then return r.vc[2] end end end)()')
@@ -407,4 +423,21 @@ function FillOf(par) for _, r in ipairs(par.regs) do if r.texture == "Interface\
 expect("page starting inside the title strip: our black stops at the gold line", E('(function() for _, r in ipairs(SBP.regs) do if r ~= PGL and r ~= PGR and r.points then local y = TopPoint(r); if y then return y end end end end)()'), -23)
 expect("page already below the strip: left as Blizzard placed it", E('(function() local n = 0 for _, r in ipairs(SBP.regs) do if r ~= PGL and r ~= PGR and r.points and TopPoint(r) then n = n + 1 end end return n end)()'), 1)
 expect("everything wrapped: no errors marked", E('(function() for k, v in pairs(AetherSkins_Windows.done) do if v == "failed" then return false end end return true end)()'), True)
+# Forever gives BM row 5 -> 7 an extra edge back UP over the real arrow
+# (dump b160: 9 arrows, 8 on the tree; user 16:46): up arrows are hidden
+L.execute(r"""
+local function btn(y) local b = kid(WIN, "Button"); b.GetCenter = function() return 100, y end; return b end
+local function arrow(sy, ey)
+  local a = kid(WIN, "Frame"); a.Line = tex(a); a.ArrowHead = tex(a, "talents-arrow-head-gray")
+  a.alpha = 1; a.SetAlpha = function(s, v) s.alpha = v end
+  a.startButton, a.endButton = btn(sy), btn(ey)
+  return a
+end
+DOWN = arrow(500, 400); UP = arrow(400, 500)
+""")
+L.execute('AetherSkins_Windows.P2.Arrow(DOWN.ArrowHead, "gray"); AetherSkins_Windows.P2.Arrow(UP.ArrowHead, "gray")')
+expect("talent arrow pointing down the tree: shown", E('DOWN.alpha'), 1)
+expect("talent arrow pointing back up (Forever's extra edge): hidden", E('UP.alpha'), 0)
+L.execute('UP.startButton, UP.endButton = DOWN.startButton, DOWN.endButton; AetherSkins_Windows.P2.Arrow(UP.ArrowHead, "gray")')
+expect("pooled arrow reused for a downward link: shown again", E('UP.alpha'), 1)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

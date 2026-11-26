@@ -209,10 +209,13 @@ local function Frame(f)
     -- stats pane, user 16:25), and again whenever the window opens
     -- just above the highest of the window's own parts: Character's "Level
     -- 36 Hunter" strip on the left sits higher than a fixed +20 (user 16:29)
+    -- the crest (portrait disc) stays ON TOP of the line: lifting the line
+    -- over everything put it across the crest (user 16:46, Talents)
+    local crest = T(f, "PortraitContainer") or (T(f, "BorderFrame") and T(T(f, "BorderFrame"), "PortraitContainer"))
     local function Highest(fr, depth, best)
         if depth > 4 or not fr.GetChildren then return best end
         for _, c in ipairs({ fr:GetChildren() }) do
-            if c ~= ul and c.GetFrameLevel and not (c.IsForbidden and c:IsForbidden()) then
+            if c ~= ul and c ~= crest and c.GetFrameLevel and not (c.IsForbidden and c:IsForbidden()) then
                 local ok, lv = pcall(c.GetFrameLevel, c)
                 if ok and type(lv) == "number" and lv > best then best = lv end
                 best = Highest(c, depth + 1, best)
@@ -223,7 +226,11 @@ local function Frame(f)
     local function Lift()
         if not (ul.SetFrameLevel and f.GetFrameLevel) then return end
         local top = Highest(f, 1, f:GetFrameLevel() or 0)
-        pcall(ul.SetFrameLevel, ul, math.min(9000, math.max(top + 1, (f:GetFrameLevel() or 0) + 20)))
+        local lv = math.min(9000, math.max(top + 1, (f:GetFrameLevel() or 0) + 20))
+        pcall(ul.SetFrameLevel, ul, lv)
+        if crest and crest.SetFrameLevel and not (crest.IsForbidden and crest:IsForbidden()) then
+            pcall(crest.SetFrameLevel, crest, lv + 1)
+        end
     end
     Lift()
     if f.HookScript then f:HookScript("OnShow", function() Lift(); if C_Timer then C_Timer.After(0.3, Lift) end end) end
@@ -660,7 +667,7 @@ function W.Init()
 end
 
 -- Helpers shared with AetherSkins_Pass2.lua
-W.H = { Tex = Tex, Fade = Fade, T = T, Edge = Edge, NavyBox = NavyBox, RoundBox = RoundBox, Fonts = Fonts, Forbidden = Forbidden,
+W.H = { Tex = Tex, Fade = Fade, T = T, Edge = Edge, NavyBox = NavyBox, RoundBox = RoundBox, RoundPieces = RoundPieces, Fonts = Fonts, Forbidden = Forbidden,
         MEDIA = MEDIA, WHITE = WHITE, GOLD = GOLD, BLUE = BLUE, NAVY = NAVY, PAGE = PAGE, PANEL = PANEL, TEXT = TEXT, FontFile = FontFile,
         Close = Close }
 

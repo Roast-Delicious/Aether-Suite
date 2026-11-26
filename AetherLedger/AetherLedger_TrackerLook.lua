@@ -53,6 +53,18 @@ end
 -- Quest names: the map log's colors (user, Nov 25 14:32): a lighter red and
 -- orange that read on the busy world, and a dark shadow under them.
 local nameHooked, nameBusy = setmetatable({}, { __mode = "k" }), setmetatable({}, { __mode = "k" })
+-- Forever writes the level and its difficulty color INTO the title
+-- ("|cffff1a1a[60] Craftsman's Writ|r"), so the color setter never sees
+-- the red (user 16:53, screenshot red = 255,26,26): codes get the same
+-- swap as the text color.
+local function NameCodes(text)
+    return (text:gsub("|c(%x%x)(%x%x)(%x%x)(%x%x)", function(a, r, g, b)
+        local R, G, B = tonumber(r, 16) / 255, tonumber(g, 16) / 255, tonumber(b, 16) / 255
+        if R > 0.9 and G < 0.2 and B < 0.3 then return "|c" .. a .. "ff6058" end
+        if R > 0.9 and G > 0.4 and G < 0.6 and B < 0.4 then return "|c" .. a .. "ff9654" end
+    end))
+end
+AetherLedger_TrackerNameCodes = NameCodes   -- for tests
 local function NameColor(fs)
     if not fs or not fs.GetTextColor then return end
     if fs.SetShadowColor then fs:SetShadowColor(0, 0, 0, 0.9); fs:SetShadowOffset(1, -1) end
@@ -61,14 +73,21 @@ local function NameColor(fs)
     nameBusy[fs] = true
     if r > 0.9 and g < 0.2 then fs:SetTextColor(1, 0.376, 0.345)
     elseif r > 0.9 and g > 0.4 and g < 0.6 and b < 0.4 then fs:SetTextColor(1, 0.588, 0.329) end
+    local text = fs.GetText and fs:GetText()
+    if type(text) == "string" and not (issecretvalue and issecretvalue(text)) and text:find("|c", 1, true) then
+        local soft = NameCodes(text)
+        if soft ~= text then fs:SetText(soft) end
+    end
     nameBusy[fs] = nil
     -- Blizzard sets the title's color again on every tracker update and on
     -- hover; ours goes back on right after (user 16:33: red unchanged)
     if hooksecurefunc and not nameHooked[fs] then
         nameHooked[fs] = true
-        hooksecurefunc(fs, "SetTextColor", function(self)
-            if not nameBusy[self] and Wants() then NameColor(self) end
-        end)
+        for _, m in ipairs({ "SetTextColor", "SetText", "SetFormattedText" }) do
+            if fs[m] then hooksecurefunc(fs, m, function(self)
+                if not nameBusy[self] and Wants() then NameColor(self) end
+            end) end
+        end
     end
 end
 AetherLedger_TrackerNameColor = NameColor   -- for tests

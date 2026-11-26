@@ -198,5 +198,23 @@ hp = [x for x in lines if "HiddenPage" in x]
 expect("a hidden page is one line, with a count of what it skipped", len(hp) == 1 and "parts inside, skipped" in hp[0], True)
 L.execute('GetMouseFoci = function() return { UIParent } end; OUT = ""; SlashCmdList.AETHERSKINS("tree")')
 expect("nothing under the mouse: says so", "point at a Blizzard window" in E('OUT'), True)
+# the gold title line sits above the window's parts but UNDER the crest
+# (user 16:46-16:47: the line ran across the crest on Talents and Character)
+L.execute(r"""
+local M = getmetatable(UIParent).__index
+if type(M) == "table" then
+  M.SetFrameLevel = function(s, l) s.level = l end
+  M.GetFrameLevel = function(s) return s.level or 1 end
+end
+LV = WINDOW("LevelTestFrame", false); LV.level = 5
+LV.pane = CreateFrame("Frame", nil, LV); LV.pane.level = 30
+AetherSkins_Windows.Skin(LV)
+LVline = 0
+for _, c in ipairs({ LV:GetChildren() }) do
+  if c ~= LV.PortraitContainer and c ~= LV.pane and (c.level or 0) > LVline then LVline = c.level end
+end
+""")
+expect("gold line above the window's highest pane", E('LVline > 30'), True)
+expect("crest above the gold line", E('(LV.PortraitContainer.level or 0) > LVline'), True)
 print("ALL OK" if ok else "SOME FAILED")
 sys.exit(0 if ok else 1)
