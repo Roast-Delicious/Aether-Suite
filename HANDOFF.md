@@ -1546,3 +1546,4 @@ trim), xpbar_render.py (XP bar).
     (tools/gen_guild_crest.py) on CommunitiesFrame and GuildFrame. If
     the user joins a guild, Blizzard's tabard emblem overlay may sit on
     top: NOW faded (PortraitOverlay alpha 0 + hook; user 17:03 "our icon forever").
+- RELEASE SHIPPED 17:04 (main, merged crestline; user 17:03 "GOOOOOO"): Skins 1.6.2, Ledger 1.8.10.
