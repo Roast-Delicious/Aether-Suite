@@ -1551,3 +1551,4 @@ trim), xpbar_render.py (XP bar).
   text colors look great on 1.8.10; "the lines arrive late" (tracker
   lines draw after the text). OK for now - DISCUSS SATURDAY, don't fix
   before then.
+- 17:08 user: turn-in click on the tracker's ? icon WORKS in game (1.8.10).
