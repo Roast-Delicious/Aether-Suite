@@ -1547,3 +1547,7 @@ trim), xpbar_render.py (XP bar).
     the user joins a guild, Blizzard's tabard emblem overlay may sit on
     top: NOW faded (PortraitOverlay alpha 0 + hook; user 17:03 "our icon forever").
 - RELEASE SHIPPED 17:04 (main, merged crestline; user 17:03 "GOOOOOO"): Skins 1.6.2, Ledger 1.8.10.
+- 17:07 user (video World_of_Warcraft_2026-11-25_17-06-43.mp4): tracker
+  text colors look great on 1.8.10; "the lines arrive late" (tracker
+  lines draw after the text). OK for now - DISCUSS SATURDAY, don't fix
+  before then.
