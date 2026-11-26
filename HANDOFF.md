@@ -1552,3 +1552,23 @@ trim), xpbar_render.py (XP bar).
   lines draw after the text). OK for now - DISCUSS SATURDAY, don't fix
   before then.
 - 17:08 user: turn-in click on the tracker's ? icon WORKS in game (1.8.10).
+- BRANCH legacyfix (pushed, NOT built; user 17:53 "save the fix for
+  Saturday"): Skins 1.6.3. Legacy Tree looked right on first open, but
+  after Challenges -> Tree the talent styling landed (empty rank pills,
+  bright icons, thick white arrows; video 17:48). P.Node/P.Arrow now skip
+  anything under LegacySystemFrame. Tests pass; suite = 27 (baseline).
+  Build it Saturday after the user's go (merge --no-ff, stamp, zip, push).
+
+## Nov 25, 2026 (17:55): session closed; AetherDev.zip made.
+SATURDAY, new session:
+1. legacyfix -> build Skins 1.6.3 on the user's go.
+2. Discuss: quest tracker lines arrive late (video 17:06; don't fix
+   before talking). Go through it frame by frame.
+3. In game, not yet confirmed: dancer camera, guild banner crest, side
+   tab glow/rings, crest above gold line, up-arrow gone under "1 of 1".
+4. Parked (not queued): key stats in item tooltips; AetherChat copy
+   button; directions from an in-progress quest's tracker icon.
+Confirmed working Nov 25: arrows stable across reloads, tracker title
+colors (1.8.10), turn-in click on the ? icon.
+Tests: sh setup.sh, then run from tools/; strict FAIL/Traceback check
+gives 27 failing scripts on main (baseline, unchanged all session).
