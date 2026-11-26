@@ -1542,3 +1542,7 @@ trim), xpbar_render.py (XP bar).
     codes; NameColor also re-runs on SetText/SetFormattedText.
   Open: guild window has no crest (Communities not in CREST; empty
   without a guild) - offered mockups (banner/tabard/shield).
+  * Guild crest (user 17:01 picked A, mock/guild_crest.py): gl_banner.tga
+    (tools/gen_guild_crest.py) on CommunitiesFrame and GuildFrame. If
+    the user joins a guild, Blizzard's tabard emblem overlay may sit on
+    top: watch.

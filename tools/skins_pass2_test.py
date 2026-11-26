@@ -312,6 +312,8 @@ L.execute('AetherSkinsDB = {}; GetCursorPosition = function() return 0, 0 end; W
 expect("corner grip made (not on quest windows)", E('(function() for _, k in ipairs({WIN:GetChildren()}) do if k.scripts and k.scripts.OnMouseDown then return true end end return false end)()'), True)
 L.execute('AetherSkins_Windows.Contents(MAP)')
 expect("world map crest: portrait faded, flat gold map", (E('MAP.BorderFrame.PortraitContainer.portrait.alpha'), has_tex('MAP.BorderFrame.PortraitContainer', 'gl_map')), (0, True))
+L.execute('GUILDW = kid(UIParent, "Frame", "CommunitiesFrame"); GUILDW.NineSlice = kid(GUILDW, "Frame"); GUILDW.PortraitContainer = kid(GUILDW, "Frame"); GUILDW.PortraitContainer.portrait = tex(GUILDW.PortraitContainer); AetherSkins_Windows.P3.Crest(GUILDW)')
+expect("guild window crest: the gold banner (user 17:01, A)", (E('GUILDW.PortraitContainer.portrait.alpha'), has_tex('GUILDW.PortraitContainer', 'gl_banner')), (0, True))
 expect("character window keeps its portrait", has_tex('WIN', 'gl_'), False)
 L.execute('VR = kid(WIN, "Button", "MerchantRepairItemButton"); VR.enabled = true; VR.IsEnabled = function(s) return s.enabled end; VR.Disable = function(s) s.enabled = false end; VR.Enable = function(s) s.enabled = true end; VR.Icon = tex(VR, "SpellIcon-256x256-Repair"); AetherSkins_Windows.Contents(WIN)')
 def hammer(): return E('(function() for _, r in ipairs(VR.regs) do if r.texture and tostring(r.texture):find("btn_repair") then return r.vc[2] end end end)()')
