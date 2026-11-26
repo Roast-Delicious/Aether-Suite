@@ -1545,4 +1545,4 @@ trim), xpbar_render.py (XP bar).
   * Guild crest (user 17:01 picked A, mock/guild_crest.py): gl_banner.tga
     (tools/gen_guild_crest.py) on CommunitiesFrame and GuildFrame. If
     the user joins a guild, Blizzard's tabard emblem overlay may sit on
-    top: watch.
+    top: NOW faded (PortraitOverlay alpha 0 + hook; user 17:03 "our icon forever").

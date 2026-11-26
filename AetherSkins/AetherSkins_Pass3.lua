@@ -310,6 +310,18 @@ function P3.Crest(win)
     end
     portrait:SetAlpha(0)
     c.glyph:SetTexture(MEDIA .. kind)
+    -- Guild & Communities: our banner always (user 17:03, "our icon
+    -- forever"): Blizzard's guild tabard over the portrait is faded too
+    if kind == "gl_banner" then
+        local ov = T(win, "PortraitOverlay") or T(chrome, "PortraitOverlay")
+        if ov and ov.SetAlpha and not Forbidden(ov) then
+            ov:SetAlpha(0)
+            if hooksecurefunc and not c.ovHooked then
+                c.ovHooked = true
+                pcall(hooksecurefunc, ov, "SetAlpha", function(self, a) if a ~= 0 then self:SetAlpha(0) end end)
+            end
+        end
+    end
 end
 
 -- ------------------------------------------
