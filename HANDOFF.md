@@ -1552,3 +1552,9 @@ trim), xpbar_render.py (XP bar).
   lines draw after the text). OK for now - DISCUSS SATURDAY, don't fix
   before then.
 - 17:08 user: turn-in click on the tracker's ? icon WORKS in game (1.8.10).
+- BRANCH legacyfix (staged 17:55, waiting for go): Skins 1.6.3. Video
+  17:48: Legacy Tree looked right on first open (Pass3: faded boxes,
+  "0/5" in blue pills, Blizzard thin arrows), but after Challenges -> Tree
+  the Pass2 talent styling landed: SpendText hidden (empty pills), icons
+  brightened, thick white arrows. P.Node and P.Arrow now skip anything
+  under LegacySystemFrame (InLegacy) or with a Legacy-Tree StateBorder.

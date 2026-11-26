@@ -345,6 +345,21 @@ local ARROW_COLOR = {
 }
 local arrowState, lineHead = weak(), weak()
 local arrowRetry = weak()
+-- The Legacy Tree keeps its own look (faded boxes, rank in a blue pill,
+-- Blizzard's thin arrows; Pass3). The talent styling used to land on it
+-- the second time the tree was shown (user 17:48 video): rank text hidden
+-- (empty pills), icons brightened, thick white arrows.
+local function InLegacy(f)
+    for _ = 1, 12 do
+        if not f then return false end
+        local ok, nm = pcall(function() return f.GetName and f:GetName() end)
+        if ok and nm == "LegacySystemFrame" then return true end
+        local ok2, par = pcall(function() return f.GetParent and f:GetParent() end)
+        f = ok2 and par or nil
+    end
+    return false
+end
+P.InLegacy = InLegacy
 -- true = this arrow points up the tree, false = down/sideways, nil = not laid out yet
 function P.ArrowUp(par, head)
     local function Btn(key, getter)
@@ -380,6 +395,7 @@ function P.Arrow(head, state)
     -- Blizzard: styling it as a head painted the REAL .Line in the preview
     -- blue at 55%, so every shaft came out see-through blue (user 16:19).
     if par and T(par, "GhostArrowHead") == head then return end
+    if InLegacy(par) then return end
     if par and T(par, "ArrowHead") and T(par, "ArrowHead") ~= head then return end
     arrowState[head] = state
     local line = par and T(par, "Line")
@@ -591,6 +607,9 @@ local function NodeRanks(node)
 end
 function P.Node(node)
     if busy[node] then return end
+    local sbl = T(node, "StateBorder")
+    local sba = sbl and Atlas(sbl)
+    if (sba and sba:find("^Legacy%-Tree")) or InLegacy(node) then return end
     busy[node] = true
     local ok, err = pcall(function()
         local sb, ic = T(node, "StateBorder"), T(node, "Icon")

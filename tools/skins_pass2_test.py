@@ -440,4 +440,16 @@ expect("talent arrow pointing down the tree: shown", E('DOWN.alpha'), 1)
 expect("talent arrow pointing back up (Forever's extra edge): hidden", E('UP.alpha'), 0)
 L.execute('UP.startButton, UP.endButton = DOWN.startButton, DOWN.endButton; AetherSkins_Windows.P2.Arrow(UP.ArrowHead, "gray")')
 expect("pooled arrow reused for a downward link: shown again", E('UP.alpha'), 1)
+# Legacy Tree keeps its own look on every visit (user 17:48 video: the
+# talent styling landed the second time - empty pills, bright icons)
+L.execute(r"""
+LEGW = kid(UIParent, "Frame", "LegacySystemFrame")
+LN = kid(LEGW, "Button"); LN.StateBorder = tex(LN, "Legacy-Tree-Frame-icon-frame-locked"); LN.Icon = tex(LN)
+LN.SpendText = LN:CreateFontString(); LN.SpendText.alpha = 1; LN.SpendText.SetAlpha = function(s, a) s.alpha = a end
+AetherSkins_Windows.P2.Node(LN)
+LA = kid(LEGW, "Frame"); LA.Line = tex(LA); LA.ArrowHead = tex(LA, "talents-arrow-head-gray")
+AetherSkins_Windows.P2.Arrow(LA.ArrowHead, "gray")
+""")
+expect("Legacy talent: rank text left showing (not hidden by the talent styling)", E('LN.SpendText.alpha'), 1)
+expect("Legacy arrow: Blizzard's own, not our thick shaft", E('LA.Line.thick == nil and LA.Line.colortex == nil'), True)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)
