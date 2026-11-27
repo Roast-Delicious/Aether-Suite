@@ -466,4 +466,15 @@ AetherSkins_Windows.Visit(GB, GOS)
 expect("gossip quest name: black code dropped", E('GBT.text'), "Khan Hratha|r")
 L.execute('GBT:SetText("|cff000000Gossip again|r")')
 expect("gossip quest name set again: black code dropped again", E('GBT.text'), "Gossip again|r")
+# Legacy reward card: the top edge leaves a gap for the level badge
+# (user Nov 27, Progress Track: the edge ran through 15/25/40/55)
+L.execute(r"""
+RC = kid(WIN, "Frame"); RC.RewardCardBG = tex(RC, "Legacy-Rewards-Tracker-Cards-Disable"); RC.LevelSquare = tex(RC, "Legacy-Rewards-Tracker-Diamond-Disable")
+AetherSkins_Windows.Contents(WIN)
+RCTOP = 0
+for _, k in ipairs(RC.kids or {}) do for _, r in ipairs(k.regs or {}) do
+  for _, p in ipairs(r.points or {}) do if p[3] == "TOP" then RCTOP = RCTOP + 1 end end
+end end
+""")
+expect("legacy card: top edge in two pieces, gap at the badge", E('RCTOP'), 2)
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

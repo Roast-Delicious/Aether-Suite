@@ -556,6 +556,20 @@ local function BoxEdge(t, col)
     local f = CreateFrame("Frame", nil, par)
     f:SetPoint("TOPLEFT", t, "TOPLEFT"); f:SetPoint("BOTTOMRIGHT", t, "BOTTOMRIGHT")
     boxEdge[t] = Edge(f, "BORDER", 3, col or { 0.24, 0.43, 0.69, 0.9 }, 0)
+    -- Legacy reward cards: the level badge sits on the card's top edge, and
+    -- our edge (on a frame above the card) ran straight through it (user
+    -- Nov 27, Progress Track). The top edge stops short of the badge on
+    -- both sides; the badge is centered on the card.
+    if T(par, "LevelSquare") then
+        local G = 24
+        local top = boxEdge[t][1]
+        top:ClearAllPoints()
+        top:SetPoint("TOPLEFT", f, "TOPLEFT", 0, 0); top:SetPoint("TOPRIGHT", f, "TOP", -G, 0)
+        local top2 = Tex(f, "BORDER", 3, WHITE, col or { 0.24, 0.43, 0.69, 0.9 })
+        top2:SetHeight(1)
+        top2:SetPoint("TOPLEFT", f, "TOP", G, 0); top2:SetPoint("TOPRIGHT", f, "TOPRIGHT", 0, 0)
+        boxEdge[t][#boxEdge[t] + 1] = top2
+    end
     -- the edge shows only while its texture does (Legacy cards keep hidden
     -- tiled pieces: their edges drew extra lines across the card, Nov 25)
     local function Sync() f:SetShown(Shown(t)) end
