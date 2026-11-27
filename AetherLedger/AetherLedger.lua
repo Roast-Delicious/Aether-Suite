@@ -559,7 +559,9 @@ end
 
 -- hub: leave out the zone list (AetherHub shows it as buttons).
 local function Report(hub)
-    if not lastReport then pcall(Check) end
+    if not lastReport or lastReport.level ~= UnitLevel("player") or lastReport.current ~= CurrentZone() then
+        pcall(Check)
+    end
     local r = lastReport
     if not r then return "Not checked yet." end
     local lines = {}
@@ -1091,15 +1093,22 @@ end
 -- a better zone (once per zone and level), a profession ready for its next
 -- rank, or class/profession quests you haven't been told about.
 -- force: say it even if it was already said.
+local checkErrorSaid = false
 local function Suggest(force, level)
     local db = Settings()
-    if not force and db.suggest == false then return end
     if not force and IsInInstance and IsInInstance() then return end
+    -- The zone list is worked out every time, popup or not: it used to run
+    -- only for the popup, so with suggestions off the Hub kept showing the
+    -- same three zones (user Nov 27).
     local ok, report = pcall(Check, level)
     if not ok then
-        if force then print(PREFIX .. "couldn't check zones: " .. tostring(report)) end
+        if force or not checkErrorSaid then
+            checkErrorSaid = true
+            print(PREFIX .. "couldn't check zones: " .. tostring(report))
+        end
         return
     end
+    if not force and db.suggest == false then return end
     local key = CharKey()
     db.told = db.told or {}
     local firstTime = db.told[key] == nil
@@ -1331,7 +1340,10 @@ AetherLedger_API = {
     Check = function() Suggest(true) end,
     Refresh = function() pcall(Check) end,
     Options = function()
-        if not lastReport then pcall(Check) end
+        -- fresh when the Hub opens after a level-up or a new zone
+        if not lastReport or lastReport.level ~= UnitLevel("player") or lastReport.current ~= CurrentZone() then
+            pcall(Check)
+        end
         local list = {}
         for i, z in ipairs(Options()) do
             list[i] = { label = ZoneShort(z), here = (lastReport and z.map == lastReport.current) }

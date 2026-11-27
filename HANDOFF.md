@@ -1567,3 +1567,12 @@ trim), xpbar_render.py (XP bar).
   action bars": size is Blizzard's Edit Mode; our "Match button size to
   Action Bar 1" (bar2/all) overrides other bars' size. (4) clicking an
   unfinished quest's icon does nothing: by design (parked idea).
+- Nov 27 14:46 user: "quest suggestions don't update, same 3 zones".
+  Cause: Check() (the zone list) ran only inside Suggest(), after the
+  "suggestions off" return; the Hub's zone buttons and Zone details read
+  that stale lastReport. FIX on legacyfix (Ledger 1.8.11): Check runs
+  every time; the popup alone obeys the switch; Hub Options/Report
+  recheck when level or zone changed. One-time chat line if Check fails
+  (first Alliance run: user started an Alliance hunter Nov 27).
+  Test: tools/ledger_zones_refresh_test.py (fails 3/5 on the old code).
+  legacyfix now = Skins 1.6.3 + Ledger 1.8.11, waiting for go.

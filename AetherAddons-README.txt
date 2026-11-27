@@ -24,7 +24,7 @@ window, so you rarely need to type a command.
   AetherMarks        1.6.14    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
   AetherItemID       1.1.5     What an item is for, when you hover it
-  AetherLedger       1.8.10    Where to quest, train and skin next,
+  AetherLedger       1.8.11    Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.5     Your bags sorted into sections
   AetherChat         1.0.9     Chat with the Aether look, fitted beside
