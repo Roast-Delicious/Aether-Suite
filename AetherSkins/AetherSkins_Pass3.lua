@@ -219,7 +219,10 @@ local CREST = { WorldMapFrame = "gl_map", SocialUIFrame = "gl_friends", FriendsF
     LegacySystemFrame = "gl_track", LFGListingFrame = "gl_eyeball", LFGBrowseFrame = "gl_search",
     LFGWhoListFrame = "gl_people", PlayerSpellsFrame = "gl_book",
     -- Guild & Communities: the banner (user 17:01, mock/guild_crest.py A)
-    CommunitiesFrame = "gl_banner", GuildFrame = "gl_banner" }
+    CommunitiesFrame = "gl_banner", GuildFrame = "gl_banner",
+    -- Bank: vault door; Auction House: scales (user Nov 27 15:12, A and B
+    -- of mock/bank_ah_crest.py)
+    BankFrame = "gl_vault", AuctionHouseFrame = "gl_scales", AuctionFrame = "gl_scales" }
 local crestParts = weak()
 local COLL_PAGES = { { "MountJournal", "cl_mount" }, { "PetJournal", "cl_pet" }, { "ToyBox", "cl_toy" },
     { "HeirloomsJournal", "cl_heirloom" }, { "WardrobeCollectionFrame", "cl_appearance" } }

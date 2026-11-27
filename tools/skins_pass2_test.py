@@ -477,4 +477,7 @@ for _, k in ipairs(RC.kids or {}) do for _, r in ipairs(k.regs or {}) do
 end end
 """)
 expect("legacy card: top edge in two pieces, gap at the badge", E('RCTOP'), 2)
+for nm, art in (("BankFrame", "gl_vault"), ("AuctionHouseFrame", "gl_scales")):
+    L.execute('XW = kid(UIParent, "Frame", "%s"); XW.NineSlice = kid(XW, "Frame"); XW.PortraitContainer = kid(XW, "Frame"); XW.PortraitContainer.portrait = tex(XW.PortraitContainer); AetherSkins_Windows.P3.Crest(XW)' % nm)
+    expect("%s crest: %s (user Nov 27 15:12)" % (nm, art), (E('XW.PortraitContainer.portrait.alpha'), has_tex('XW.PortraitContainer', art)), (0, True))
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)
