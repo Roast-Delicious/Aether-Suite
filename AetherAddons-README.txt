@@ -1,6 +1,6 @@
 AETHER ADDONS FOR WOW FOREVER
 =============================
-Last updated: November 25, 2026 (17:04)
+Last updated: November 25, 2026 (Nov 27, 15:03)
 
 A set of twelve addons for World of Warcraft: Forever that make everyday
 play smoother: a damage meter, cleaner action bars that line themselves

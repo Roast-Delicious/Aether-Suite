@@ -1587,3 +1587,4 @@ trim), xpbar_render.py (XP bar).
   character, in the Hub (Help & Debug). Open: does Forever load
   account-wide SavedVariables? Asked the user whether the new hunter
   started with the main's Aether settings.
+- RELEASE SHIPPED Nov 27 15:03 (main, merged legacyfix; user 15:02 "go ahead with the build"): Skins 1.6.3, Ledger 1.8.11. Next: start the next release tonight (user 15:02).
