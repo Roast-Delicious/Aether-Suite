@@ -90,4 +90,7 @@ expect("...and stays after the next sort", "[8] Westfall Stew" in shown(), True)
 # a red quest you just took still goes
 L.execute('table.insert(LOG, {title="Too Hard", level=16, id=37}); AetherLedger_Zones[37]={1429,1429}; NOW=NOW+10; EV.OnEvent(EV,"QUEST_ACCEPTED",37); C_QuestLog.AddQuestWatch(37); NOW=NOW+10; Fire()')
 expect("a red quest you just took still leaves", "[16] Too Hard" in shown(), False)
+# reload: the tracker is sorted while the loading screen is up, not 1.5 s later
+L.execute('WATCH={}; TIMERS={}; NOW=100; EV.OnEvent(EV,"PLAYER_LOGIN"); EV.OnEvent(EV,"PLAYER_ENTERING_WORLD")')
+expect("reload: sorted at PLAYER_ENTERING_WORLD, before any timer runs", "[6] Wolves Across the Border" in shown(), True)
 print("ALL OK" if ok else "FAILED")

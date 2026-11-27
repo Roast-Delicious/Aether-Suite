@@ -751,7 +751,7 @@ if not MODERN and hooksecurefunc and AddQuestWatch and RemoveQuestWatch then
 end
 
 local events = CreateFrame("Frame")
-for _, event in ipairs({ "PLAYER_LOGIN", "QUEST_ACCEPTED", "QUEST_TURNED_IN", "QUEST_REMOVED", "PLAYER_LEVEL_UP",
+for _, event in ipairs({ "PLAYER_LOGIN", "PLAYER_ENTERING_WORLD", "QUEST_ACCEPTED", "QUEST_TURNED_IN", "QUEST_REMOVED", "PLAYER_LEVEL_UP",
     "PLAYER_REGEN_ENABLED", "QUEST_WATCH_LIST_CHANGED", "ZONE_CHANGED_NEW_AREA", "PLAYER_CONTROL_GAINED" }) do
     pcall(events.RegisterEvent, events, event)
 end
@@ -762,6 +762,12 @@ events:SetScript("OnEvent", function(_, event, arg1, arg2)
         -- away), and the usual one at 6 s once the quest data has settled.
         ApplySoon(1.5)
         C_Timer.After(6, function() ApplySoon(0) end)
+    elseif event == "PLAYER_ENTERING_WORLD" then
+        -- While the loading screen is still up: the gold divider, the check
+        -- marks and the turn-in zones are in place when it lifts (they came
+        -- ~0.5 s after it, video Nov 25 17:06). The 1.5 s and 6 s passes stay
+        -- for quest data that arrives late.
+        pcall(Apply)
     elseif event == "PLAYER_REGEN_ENABLED" then
         if waitingForCombat then waitingForCombat = false; ApplySoon(1) end
     elseif event == "QUEST_WATCH_LIST_CHANGED" then
