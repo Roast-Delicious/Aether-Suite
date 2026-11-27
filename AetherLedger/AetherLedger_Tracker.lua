@@ -377,10 +377,19 @@ local function Apply()
     -- Which zone to show: the one you're in, or (if it has nothing for you)
     -- the zone you're traveling to, or else the one with most of your quests.
     local here, hereZone = Here()
+    -- A quest we can't place (no zone in our data, and its quest log header
+    -- isn't a zone we can name) is SHOWN, not hidden: new quests vanished
+    -- from the tracker on a new Alliance character (user, Nov 27).
     local function Fits(q, set)
         local home = ZonesOf(q)
-        if q.complete then local turnIn = TurnInOf(q); return turnIn and set[turnIn] end   -- ready: shown where you hand it in
-        return home and set[home] and Difficulty(q.level) ~= "red"
+        if q.complete then
+            local turnIn = TurnInOf(q)
+            if not turnIn then return true end
+            return set[turnIn]                       -- ready: shown where you hand it in
+        end
+        if Difficulty(q.level) == "red" then return false end
+        if not home then return true end
+        return set[home]
     end
     local count = 0
     for _, q in ipairs(quests) do if Fits(q, here) then count = count + 1 end end
@@ -408,6 +417,16 @@ local function Apply()
         if dest then focus, focusMap = { [dest] = true }, dest end
     end
 
+    -- A quest you just took stays on the tracker even when it belongs to
+    -- another zone (user, Nov 27: "new quests disappear from the tracker and
+    -- have to be clicked on in the journal"). Red ones still go.
+    if lastAccepted then
+        for _, q in ipairs(quests) do
+            if q.id == lastAccepted and not manual.hide[q.id] and Difficulty(q.level) ~= "red" then
+                manual.keep[q.id] = true
+            end
+        end
+    end
     local want = {}
     for _, q in ipairs(quests) do
         if not manual.hide[q.id] and (manual.keep[q.id] or Fits(q, focus) or (q.complete and Fits(q, here))) then

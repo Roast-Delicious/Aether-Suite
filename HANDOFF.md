@@ -1576,3 +1576,14 @@ trim), xpbar_render.py (XP bar).
   (first Alliance run: user started an Alliance hunter Nov 27).
   Test: tools/ledger_zones_refresh_test.py (fails 3/5 on the old code).
   legacyfix now = Skins 1.6.3 + Ledger 1.8.11, waiting for go.
+- Nov 27 14:55 user: new quests vanish from the tracker, have to be
+  clicked in the journal. FIX on legacyfix (Ledger 1.8.11): Fits() now
+  SHOWS a quest it can't place (no AetherLedger_Zones entry, header not a
+  nameable zone; also finished quests with no known turn-in) instead of
+  hiding it; a just-accepted non-red quest goes into manual.keep, so it
+  stays even if it belongs to another zone. Test tools/tracker_newquest_
+  test.py (fails 3/6 on the old code). Likely also the "no split" report.
+- Design idea for Saturday (not queued): "Copy settings from..." a
+  character, in the Hub (Help & Debug). Open: does Forever load
+  account-wide SavedVariables? Asked the user whether the new hunter
+  started with the main's Aether settings.
