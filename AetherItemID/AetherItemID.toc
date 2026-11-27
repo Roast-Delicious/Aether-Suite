@@ -9,3 +9,4 @@
 
 AetherItemID_Data.lua
 AetherItemID.lua
+AetherItemID_Stats.lua

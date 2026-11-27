@@ -421,6 +421,12 @@ AetherItemID - item details                                    /itemid
     and bank, and what a vendor pays for it.
   - Tip: open each of your profession windows once so it learns your
     recipes, and open your bank once per session for exact bank counts.
+  - Key stats: in every item tooltip, the stats that matter to you
+    (like +8 Agility) show in gold with two small gold chevrons after
+    them. Equip lines keep their green and get the chevrons. Each
+    class starts with its usual stats (a hunter: Agility, Stamina,
+    Attack Power, critical strike and hit); tick stats on or off for
+    each character on AetherHub's Bags & Items page.
   - Commands: /itemid on|off, /itemid delay 1 (seconds to hover),
     /itemid reset, /itemid debug.
 

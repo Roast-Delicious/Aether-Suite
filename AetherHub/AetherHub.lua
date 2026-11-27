@@ -1924,6 +1924,27 @@ BUILDERS.Bags = function(p)
             function(v) Run("AETHERITEMID", "delay " .. v) end, "s",
             "How long to hover an item before its window opens.")
         AddNote(p, "Open each of your profession windows once so it learns your recipes.")
+        -- Key stats in item tooltips (user Nov 27: B, tooltips only, class
+        -- list + ticks per character)
+        local ks = AetherItemID_Stats
+        if ks then
+            AddCheck(p, "Mark your key stats in item tooltips",
+                function() return ks.Enabled() end,
+                function(v) ks.SetEnabled(v); if p:IsShown() then p:GetScript("OnShow")(p) end end, nil, nil, nil,
+                "The stats you tick below show in gold with two small chevrons after them. Equip lines keep their green and get the chevrons.")
+            local items = {}
+            for _, st in ipairs(ks.List()) do
+                items[#items + 1] = { label = st.label, get = function() return ks.IsOn(st.key) end,
+                    set = function(v) ks.Set(st.key, v) end, enabled = ks.Enabled,
+                    tip = "Mark " .. st.label .. " in item tooltips (this character)." }
+            end
+            AddCheckGrid(p, items)
+            AddButtons(p, {
+                { "Use My Class's Stats", function()
+                    ks.ClassDefaults(); if p:IsShown() then p:GetScript("OnShow")(p) end
+                end, "Back to the usual stats for your class (this character)." },
+            })
+        end
         AddButtons(p, {
             { "Clear Learned Recipes...", function()
                 Confirm("Forget the recipes AetherItemID learned from your profession windows?", function() Run("AETHERITEMID", "reset recipes") end)
