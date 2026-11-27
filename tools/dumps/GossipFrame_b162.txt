@@ -1,0 +1,97 @@
+== Window dump: GossipFrame ==
+Frame GossipFrame 338x496
+  Texture GossipFrameBg 334x473 tex=374155
+  Texture .TopTileStreaks 330x43 atlas=_UI-Frame-TopTileStreaks
+  Texture .Background 299x407 atlas=QuestBG-Parchment
+  Frame .NineSlice 338x496
+    Texture .TopLeftCorner 95x95 atlas=UI-Frame-PortraitMetal-CornerTopLeft
+    Texture .TopRightCorner 95x95 atlas=UI-Frame-Metal-CornerTopRight
+    Texture .BottomLeftCorner 95x100 atlas=UI-Frame-Metal-CornerBottomLeft
+    Texture .BottomRightCorner 95x100 atlas=UI-Frame-Metal-CornerBottomRight
+    Texture .TopEdge 163x95 atlas=_UI-Frame-Metal-EdgeTop
+    Texture .BottomEdge 163x100 atlas=_UI-Frame-Metal-EdgeBottom
+    Texture .LeftEdge 95x325 atlas=!UI-Frame-Metal-EdgeLeft
+    Texture .RightEdge 95x325 atlas=!UI-Frame-Metal-EdgeRight
+    Texture .Center 0x0
+  Frame .PortraitContainer 1x1
+    Texture GossipFramePortrait 62x62 tex=RTPortrait1
+    MaskTexture .CircleMask 58x58
+  Frame .FrameGlow 372x534 hidden (1 parts inside, skipped)
+  Frame .TitleContainer 256x20
+    FontString GossipFrameTitleText 256x12
+  Frame .LeftJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .RightJumpHint 32x32 hidden (11 parts inside, skipped)
+  Frame .FocusJumpHint 32x32 hidden (11 parts inside, skipped)
+  Button GossipFrameCloseButton 28x28 [styled close]
+    Texture .? 28x28 hidden atlas=RedButton-Exit-Disabled
+    Texture .? 28x28 atlas=RedButton-Exit
+    Texture .? 28x28 hidden atlas=RedButton-exit-pressed
+    Texture .? 28x28 atlas=RedButton-Highlight
+  Frame GossipFrameInset 328x410 [styled inset]
+    Texture .Bg 328x410 tex=374154
+    Frame .NineSlice 328x410
+      Texture .TopLeftCorner 6x6 atlas=UI-Frame-InnerTopLeft
+      Texture .TopRightCorner 6x6 atlas=UI-Frame-InnerTopRight
+      Texture .BottomLeftCorner 6x6 atlas=UI-Frame-InnerBotLeftCorner
+      Texture .BottomRightCorner 6x6 atlas=UI-Frame-InnerBotRight
+      Texture .TopEdge 316x3 atlas=_UI-Frame-InnerTopTile
+      Texture .BottomEdge 316x3 atlas=_UI-Frame-InnerBotTile
+      Texture .LeftEdge 3x399 atlas=!UI-Frame-InnerLeftTile
+      Texture .RightEdge 3x399 atlas=!UI-Frame-InnerRightTile
+  Frame .GreetingPanel 384x512
+    Texture .MaterialTopLeft 239x241
+    Texture GossipFrameMaterialTopRight 64x241
+    Texture GossipFrameMaterialBotLeft 239x128
+    Texture GossipFrameMaterialBotRight 64x128
+    Button .GoodbyeButton 78x22 [styled button]
+      Texture .Left 12x22 tex=130828
+      Texture .Right 12x22 tex=130828
+      Texture .Middle 54x22 tex=130828
+      FontString GossipFrameText 52x12
+      Texture .? 78x22 tex=130826
+    Frame .ScrollBox 300x403
+      Frame .DragDelegate 0x0
+      Frame .ScrollTarget 300x1
+        Frame .? 300x53
+          FontString .GreetingText 270x53
+        Frame .? 300x16
+        Frame .? 300x16
+        Button .? 300x16 hidden (3 parts inside, skipped)
+        Button .? 300x16
+          Texture .Icon 16x16 tex=132049
+          Texture .? 300x16 tex=136810
+          FontString .? 275x13
+        Frame .? 300x16
+        Button .? 300x16 hidden (3 parts inside, skipped)
+        Button .? 300x18 hidden (3 parts inside, skipped)
+        Frame .? 5x16 hidden (0 parts inside, skipped)
+      Frame .Shadows 300x403
+        Texture .Lower 0x0 hidden
+        Texture .Upper 0x0 hidden
+    Frame .ScrollBar 8x397 [styled scroll]
+      Frame .Track 8x359
+        Texture .Begin 8x8 atlas=minimal-scrollbar-track-top
+        Texture .End 8x8 atlas=minimal-scrollbar-track-bottom
+        Texture .Middle 8x343 atlas=!minimal-scrollbar-track-middle
+        Button .Thumb 8x359 hidden (6 parts inside, skipped)
+      Button .Back 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-top
+      Button .Forward 17x11
+        Texture .Texture 17x11 atlas=minimal-scrollbar-arrow-bottom
+  StatusBar .FriendshipStatusBar 230x14 hidden (11 parts inside, skipped)
+  Frame .? 330x1
+  Frame .? 270x10
+    FontString .GreetingText 270x53
+  Button .? 300x16
+    Texture .Icon 16x16 tex=132060
+    Texture .? 128x16 tex=136810
+    FontString .? 275x13
+  Button .? 300x18
+    Texture .Icon 16x18 atlas=SideInProgressquesticon
+    Texture .? 128x16 tex=136810
+    FontString .? 275x13
+  Button .? 300x16
+    Texture .Icon 16x16 tex=132049
+    Texture .? 128x16 tex=136810
+    FontString .? 275x13
+  Frame .? 322x404

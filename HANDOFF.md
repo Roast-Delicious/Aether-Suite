@@ -1572,3 +1572,39 @@ Confirmed working Nov 25: arrows stable across reloads, tracker title
 colors (1.8.10), turn-in click on the ? icon.
 Tests: sh setup.sh, then run from tools/; strict FAIL/Traceback check
 gives 27 failing scripts on main (baseline, unchanged all session).
+- BRANCH legacyfix (staged 17:55, waiting for go): Skins 1.6.3. Video
+  17:48: Legacy Tree looked right on first open (Pass3: faded boxes,
+  "0/5" in blue pills, Blizzard thin arrows), but after Challenges -> Tree
+  the Pass2 talent styling landed: SpendText hidden (empty pills), icons
+  brightened, thick white arrows. P.Node and P.Arrow now skip anything
+  under LegacySystemFrame (InLegacy) or with a Legacy-Tree StateBorder.
+- Nov 27 14:44 user: (1) gossip quest names black on our page (Umarak,
+  Desolace; dump tools/dumps/GossipFrame_b162.txt). Cause: Blizzard's
+  NORMAL_QUEST_DISPLAY "|cff000000%s|r" inside the text. FIX on legacyfix:
+  GossipChoice drops the black code (hooks SetText/SetFormattedText).
+  (2) tracker "no longer splits ready quests" - asked for a screenshot and
+  the Hub switch (Quests > keep tracker on my zone). (3) "can't resize
+  action bars": size is Blizzard's Edit Mode; our "Match button size to
+  Action Bar 1" (bar2/all) overrides other bars' size. (4) clicking an
+  unfinished quest's icon does nothing: by design (parked idea).
+- Nov 27 14:46 user: "quest suggestions don't update, same 3 zones".
+  Cause: Check() (the zone list) ran only inside Suggest(), after the
+  "suggestions off" return; the Hub's zone buttons and Zone details read
+  that stale lastReport. FIX on legacyfix (Ledger 1.8.11): Check runs
+  every time; the popup alone obeys the switch; Hub Options/Report
+  recheck when level or zone changed. One-time chat line if Check fails
+  (first Alliance run: user started an Alliance hunter Nov 27).
+  Test: tools/ledger_zones_refresh_test.py (fails 3/5 on the old code).
+  legacyfix now = Skins 1.6.3 + Ledger 1.8.11, waiting for go.
+- Nov 27 14:55 user: new quests vanish from the tracker, have to be
+  clicked in the journal. FIX on legacyfix (Ledger 1.8.11): Fits() now
+  SHOWS a quest it can't place (no AetherLedger_Zones entry, header not a
+  nameable zone; also finished quests with no known turn-in) instead of
+  hiding it; a just-accepted non-red quest goes into manual.keep, so it
+  stays even if it belongs to another zone. Test tools/tracker_newquest_
+  test.py (fails 3/6 on the old code). Likely also the "no split" report.
+- Design idea for Saturday (not queued): "Copy settings from..." a
+  character, in the Hub (Help & Debug). Open: does Forever load
+  account-wide SavedVariables? Asked the user whether the new hunter
+  started with the main's Aether settings.
+- RELEASE SHIPPED Nov 27 15:03 (main, merged legacyfix; user 15:02 "go ahead with the build"): Skins 1.6.3, Ledger 1.8.11. Next: start the next release tonight (user 15:02).

@@ -900,11 +900,31 @@ function P3.MapPages(root)
     end
 end
 
+-- Blizzard writes quest names in the gossip list as black text INSIDE the
+-- string (NORMAL_QUEST_DISPLAY "|cff000000%s|r"), meant for parchment; on
+-- our dark page they were unreadable (user Nov 27, Umarak "Khan Hratha").
+-- The code is dropped so the gold color shows.
+local gossipBusy = setmetatable({}, { __mode = "k" })
+local function NoBlack(fs)
+    if gossipBusy[fs] then return end
+    local ok, txt = pcall(fs.GetText, fs)
+    if not ok or type(txt) ~= "string" or (issecretvalue and issecretvalue(txt)) then return end
+    local clean = txt:gsub("|[cC][fF][fF]000000", "")
+    if clean ~= txt then gossipBusy[fs] = true; fs:SetText(clean); gossipBusy[fs] = nil end
+end
+P3.GossipNoBlack = NoBlack
 local function GossipChoice(f, root)
     if not (root and root.GetName and root:GetName() == "GossipFrame") then return end
     if not (T(f, "Icon") and f.GetFontString) then return end
     local ok, fs = pcall(f.GetFontString, f)
-    if ok and fs and fs.SetTextColor then P.KeepColor(fs, GOLD) end   -- gold (user, Nov 25 12:44)
+    if not (ok and fs and fs.SetTextColor) then return end
+    P.KeepColor(fs, GOLD)   -- gold (user, Nov 25 12:44)
+    if Once(fs, "gossipcode") and hooksecurefunc then
+        for _, m in ipairs({ "SetText", "SetFormattedText" }) do
+            if fs[m] then pcall(hooksecurefunc, fs, m, NoBlack) end
+        end
+    end
+    NoBlack(fs)
 end
 
 -- ------------------------------------------
