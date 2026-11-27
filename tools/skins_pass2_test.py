@@ -452,4 +452,18 @@ AetherSkins_Windows.P2.Arrow(LA.ArrowHead, "gray")
 """)
 expect("Legacy talent: rank text left showing (not hidden by the talent styling)", E('LN.SpendText.alpha'), 1)
 expect("Legacy arrow: Blizzard's own, not our thick shaft", E('LA.Line.thick == nil and LA.Line.colortex == nil'), True)
+# gossip quest names come with Blizzard's black code inside the text
+# (user Nov 27, Umarak): the code is dropped, the gold shows
+L.execute(r"""
+GOS = kid(UIParent, "Frame", "GossipFrame")
+GB = kid(GOS, "Button"); GB.Icon = tex(GB)
+GBT = GB:CreateFontString(); GBT.text = "|cff000000Khan Hratha|r"
+GBT.GetText = function(s) return s.text end; GBT.SetText = function(s, t) s.text = t end
+GBT.SetTextColor = function(s, r, g, b) s.color = { r, g, b } end
+GB.GetFontString = function() return GBT end
+AetherSkins_Windows.Visit(GB, GOS)
+""")
+expect("gossip quest name: black code dropped", E('GBT.text'), "Khan Hratha|r")
+L.execute('GBT:SetText("|cff000000Gossip again|r")')
+expect("gossip quest name set again: black code dropped again", E('GBT.text'), "Gossip again|r")
 print("ALL OK" if ok else "FAILED"); sys.exit(0 if ok else 1)

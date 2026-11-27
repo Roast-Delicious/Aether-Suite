@@ -1558,3 +1558,12 @@ trim), xpbar_render.py (XP bar).
   the Pass2 talent styling landed: SpendText hidden (empty pills), icons
   brightened, thick white arrows. P.Node and P.Arrow now skip anything
   under LegacySystemFrame (InLegacy) or with a Legacy-Tree StateBorder.
+- Nov 27 14:44 user: (1) gossip quest names black on our page (Umarak,
+  Desolace; dump tools/dumps/GossipFrame_b162.txt). Cause: Blizzard's
+  NORMAL_QUEST_DISPLAY "|cff000000%s|r" inside the text. FIX on legacyfix:
+  GossipChoice drops the black code (hooks SetText/SetFormattedText).
+  (2) tracker "no longer splits ready quests" - asked for a screenshot and
+  the Hub switch (Quests > keep tracker on my zone). (3) "can't resize
+  action bars": size is Blizzard's Edit Mode; our "Match button size to
+  Action Bar 1" (bar2/all) overrides other bars' size. (4) clicking an
+  unfinished quest's icon does nothing: by design (parked idea).
