@@ -1819,10 +1819,10 @@ BUILDERS.Quests = function(p)
         AddBand(p, "Quest tracker", "AetherLedger")
         InterestCheck(p, "manageTracker")
         InterestCheck(p, "trackerLook")
-        AddCheck(p, "Click a finished quest's icon for directions to turn in",
+        AddCheck(p, "Click a quest's icon in the tracker for directions",
             function() return (AetherLedgerDB or {}).turnInDirections ~= false end,
             function(v) Run("AETHERLEDGER", "turnin " .. (v and "on" or "off")) end, nil, nil, nil,
-            "Click the round icon of a quest that's ready to hand in: a waypoint and directions to the NPC who takes it.")
+            "Click a quest's round icon: a finished quest gets a waypoint and directions to the NPC who takes it; one still in progress gets a waypoint to its area on your map.")
         AddCheck(p, "Tooltips beside the quest tracker",
             function() return (AetherLedgerDB or {}).tooltipSpot ~= false end,
             function(v)

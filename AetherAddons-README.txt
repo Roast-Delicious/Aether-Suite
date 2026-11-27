@@ -513,7 +513,9 @@ AetherLedger - where to quest, train and skin next             /ledger
     after a reload).
   - Click a finished quest's icon on the tracker (the gold ?) and
     AetherLedger points you to the turn-in NPC: a waypoint plus
-    directions, like a zone suggestion.
+    directions, like a zone suggestion. Click a quest still in
+    progress and you get a waypoint to its area on your map (or the
+    zone it's in, when no area is marked).
   - /ledger tracker lists every quest in your log with its color, zone
     and why it is or isn't on the tracker.
   - Tooltips: ones the game puts in its usual corner (bottom right,

@@ -75,7 +75,7 @@ for label, want in [("Target of target under the target frame", "AETHERFRAMES to
                     ("Red flash when hit", "AETHERFRAMES hits off"),
                     ("Damage numbers", "AETHERFRAMES hitnumbers on"),
                     ("In combat, only your target and whoever has aggro stay solid", "AETHERFRAMES aggro off"),
-                    ("Click a finished quest's icon for directions to turn in", "AETHERLEDGER turnin off"),
+                    ("Click a quest's icon in the tracker for directions", "AETHERLEDGER turnin off"),
                     ("Tooltips beside the quest tracker", "AETHERLEDGER tooltip"),
                     ("\"No swaps. Just drops.\" slot", "AETHERPACK deposit off")]:
     L.execute('AetherHub_Toggle(%r)' % PAGE_OF[want.split()[0]])

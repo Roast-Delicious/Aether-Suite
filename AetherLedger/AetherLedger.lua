@@ -956,7 +956,7 @@ local function OnMap(qid, map)
         end
     end
 end
-local function TurnInSpot(qid)
+local function TurnInSpot(qid, homeFirst)
     local Q = C_QuestLog
     if Q.GetNextWaypoint then
         local ok, map, x, y = pcall(Q.GetNextWaypoint, qid)
@@ -978,11 +978,48 @@ local function TurnInSpot(qid)
     end
     local z = AetherLedger_Zones and AetherLedger_Zones[qid]
     if z then
-        local m, x, y = Try(z[2] ~= 0 and z[2] or nil)
+        -- unfinished quests look in their home zone first, finished ones
+        -- where they're handed in
+        local a, b = z[2], z[1]
+        if homeFirst then a, b = z[1], z[2] end
+        local m, x, y = Try(a ~= 0 and a or nil)
         if m then return m, x, y end
-        m, x, y = Try(z[1] ~= 0 and z[1] or nil)
+        m, x, y = Try(b ~= 0 and b or nil)
         if m then return m, x, y end
     end
+end
+
+-- Click an unfinished quest's tracker icon: a waypoint to the quest's area
+-- on the map (the game's quest marker) and directions there; if no area is
+-- known, which zone it's in (user Nov 27, approved as described).
+function AetherLedger_GoToQuest(qid)
+    qid = tonumber(qid)
+    if not qid then return false end
+    local db = Settings()
+    if db.turnInDirections == false then return false end
+    local Q = C_QuestLog
+    if not Q then return false end
+    local map, x, y = TurnInSpot(qid, true)
+    local title = Q.GetTitleForQuestID and Q.GetTitleForQuestID(qid)
+    if not map then
+        local z = AetherLedger_Zones and AetherLedger_Zones[qid]
+        local zone = z and z[1] ~= 0 and z[1]
+        local info = zone and C_Map and C_Map.GetMapInfo and C_Map.GetMapInfo(zone)
+        if info and info.name then
+            print(PREFIX .. "no exact spot known for " .. (title or "this quest") .. "; it's in " .. info.name .. ".")
+        else
+            print(PREFIX .. "no location known for " .. (title or "this quest") .. ".")
+        end
+        return false
+    end
+    local label = "Quest: " .. (title or "quest")
+    local dest = { name = label, map = map, x = x, y = y, qid = qid }
+    if AetherCoords_API then
+        if db.waypoint then AetherCoords_API.RemoveWaypoint(db.waypoint) end
+        db.waypoint = AetherCoords_API.AddWaypoint(map, x, y, label)
+    end
+    if AetherLedger_Travel and AetherLedger_Travel.Start then AetherLedger_Travel.Start(dest) end
+    return true
 end
 
 function AetherLedger_GoToTurnIn(qid)

@@ -213,6 +213,16 @@ if L.eval('AetherLedger_GoToTurnIn ~= nil'):
       local p = print; print = function(...) LASTPRINT = table.concat({...}, " ") end
       AetherLedger_GoToTurnIn(777); print = p""")
     expect("nothing known: says which zone it's handed in", (L.eval('STARTED'), "handed in in The Barrens" in (L.eval('LASTPRINT') or "")), (None, True))
+    # unfinished quest (user Nov 27): its area on the map, home zone first
+    L.execute("""C_QuestLog.GetQuestsOnMap = function(m) if m == 1454 then return { { questID = 778, x = 0.2, y = 0.7 } } end return {} end
+      AetherLedger_Zones[778] = { 1454, 1413 }; STARTED = nil
+      C_Map.GetBestMapForUnit = function() return 1413 end
+      AetherLedger_GoToQuest(778)""")
+    expect("unfinished quest: travel to its area (home zone's map)", L.eval('STARTED and STARTED.map == 1454 and STARTED.x == 0.2 and STARTED.name == "Quest: Lost Crate"'), True)
+    L.execute("""C_QuestLog.GetQuestsOnMap = function() return {} end; STARTED = nil; LASTPRINT = nil
+      local p = print; print = function(...) LASTPRINT = table.concat({...}, " ") end
+      AetherLedger_GoToQuest(778); print = p""")
+    expect("unfinished, nothing marked: says which zone it's in", (L.eval('STARTED'), "it's in Orgrimmar" in (L.eval('LASTPRINT') or "")), (None, True))
 # Forever writes the difficulty color into the title as a code (user 16:53)
 L.execute('B10 = { HeaderText = { color = {1, 1, 1}, text = "|cffff1a1a[60] Craftsman\'s Writ|r" } }; local h = B10.HeaderText; h.GetTextColor = function(s) return unpack(s.color) end; h.SetTextColor = function(s, r, g, b) s.color = {r, g, b} end; h.GetText = function(s) return s.text end; h.SetText = function(s, t) s.text = t end; AetherLedger_TrackerNameColor(h)')
 expect("red written into the title: lighter red code", L.eval('B10.HeaderText.text'), "|cffff6058[60] Craftsman's Writ|r")

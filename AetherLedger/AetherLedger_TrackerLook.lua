@@ -292,7 +292,11 @@ local function StyleIcon(block)
             local qid = self.questID or (self.GetQuestID and self:GetQuestID())
             local Q = C_QuestLog
             local ready = qid and Q and ((Q.ReadyForTurnIn and Q.ReadyForTurnIn(qid)) or (Q.IsComplete and Q.IsComplete(qid)))
-            if ready and AetherLedger_GoToTurnIn then pcall(AetherLedger_GoToTurnIn, qid) end
+            if ready then
+                if AetherLedger_GoToTurnIn then pcall(AetherLedger_GoToTurnIn, qid) end
+            elseif qid and AetherLedger_GoToQuest then
+                pcall(AetherLedger_GoToQuest, qid)          -- unfinished: to the quest's area (Nov 27)
+            end
         end)
     end
     if not o then
