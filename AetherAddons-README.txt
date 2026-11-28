@@ -15,7 +15,7 @@ window, so you rarely need to type a command.
 
   Addon              Version   What it does
   -----------------  --------  -----------------------------------------
-  AetherHub          1.15.2    One window with every addon's settings
+  AetherHub          1.15.3    One window with every addon's settings
   AetherMeter        1.13.10   Damage and healing meter
   AetherBars         1.14.4    Clean action bars with a cooldown glow
   AetherCoords       1.3.16    Coordinates, plus your own map waypoints
@@ -23,8 +23,8 @@ window, so you rarely need to type a command.
                                mailboxes on the world map and minimap
   AetherMarks        1.6.14    Quest and rare mob colors, plus Rare
                                Radar to spot rares on sight
-  AetherItemID       1.1.5     What an item is for, when you hover it
-  AetherLedger       1.8.11    Where to quest, train and skin next,
+  AetherItemID       1.2.0     What an item is for, when you hover it
+  AetherLedger       1.8.12    Where to quest, train and skin next,
                                with step-by-step travel directions
   AetherPack         1.6.5     Your bags sorted into sections
   AetherChat         1.0.9     Chat with the Aether look, fitted beside
@@ -32,7 +32,7 @@ window, so you rarely need to type a command.
   AetherFrames       1.14.8    Your, your pet's, your target's, its
                                target's, and your party's frames with
                                round portrait crests
-  AetherSkins        1.6.3     The Aether look for Blizzard's windows
+  AetherSkins        1.6.4     The Aether look for Blizzard's windows
                                and the minimap
 
 

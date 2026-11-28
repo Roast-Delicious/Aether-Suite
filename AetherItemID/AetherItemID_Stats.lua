@@ -84,7 +84,9 @@ local function Chevrons(tip, i)
             local dark = tip:CreateTexture(nil, "ARTWORK", nil, 6)
             dark:SetTexture(MEDIA .. "chev58_left_dark"); dark:SetVertexColor(0, 0, 0, 1)
             local gold = tip:CreateTexture(nil, "ARTWORK", nil, 7)
-            gold:SetTexture(MEDIA .. "chev58_left_gold"); gold:SetVertexColor(GOLD[1], GOLD[2], GOLD[3], 1)
+            -- the 3D bevel art, already gold, untinted (the suite's chevrons
+            -- are all the 3D kind; tools/chev3d_test.py)
+            gold:SetTexture(MEDIA .. "chev58_left_gold3d"); gold:SetVertexColor(1, 1, 1, 1)
             c[#c + 1] = dark; c[#c + 1] = gold
         end
         pool[i] = c

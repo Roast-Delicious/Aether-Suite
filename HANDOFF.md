@@ -1608,3 +1608,39 @@ gives 27 failing scripts on main (baseline, unchanged all session).
   account-wide SavedVariables? Asked the user whether the new hunter
   started with the main's Aether settings.
 - RELEASE SHIPPED Nov 27 15:03 (main, merged legacyfix; user 15:02 "go ahead with the build"): Skins 1.6.3, Ledger 1.8.11. Next: start the next release tonight (user 15:02).
+
+## Nov 27, 2026 (17:25): session closed; AetherDev.zip made.
+RELEASE STAGED on branch nextrel (pushed, NOT built, NOT merged; user
+17:21 "prep the next release"). Build in the new session on the user's go
+(README stamp = real time via current_time, merge --no-ff into main, zip
+AetherAddons.zip, push). Versions already bumped (toc + README table):
+Skins 1.6.4, Ledger 1.8.12, ItemID 1.2.0, Hub 1.15.3. Suite = 27 (baseline).
+In it (each approved by the user tonight):
+  * Ledger: tracker sorted at PLAYER_ENTERING_WORLD (gold divider, check
+    marks, "Ready for turn-in: <zone>" were ~0.5 s late; video 17:06).
+  * Ledger: click an UNFINISHED quest's tracker icon = waypoint to its
+    area (TurnInSpot(qid, homeFirst)); no area -> chat names the zone.
+    Hub switch relabeled "Click a quest's icon in the tracker for
+    directions". README updated.
+  * Skins: Legacy reward cards (Progress Track): top edge leaves a 24 px
+    gap each side of the centered level badge (edge ran through 15/25..).
+  * Skins: crests Bank = gl_vault (vault door), Auction House =
+    gl_scales (user picks: Bank A, AH B; mock/bank_ah_crest.py,
+    tools/gen_bank_ah_crest.py).
+  * ItemID 1.2.0: AetherItemID_Stats.lua - key stats in item tooltips:
+    stat lines ("+8 Agility") gold + two 3D chevrons (chev58_left_
+    gold3d, untinted) after; Equip/Use lines keep their color + chevrons
+    (user B); flavor text ignored; class defaults, ticks per character
+    (AetherItemIDDB.statPicks[char]); Hub Bags & Items: switch, stat grid,
+    "Use My Class's Stats". Tooltips only (user). Test itemid_stats_test.
+NOT STARTED, waiting on the user's OK: "Copy settings from..." (design in
+the 15:1x message: Hub Help & Debug band, character list + Copy + reload;
+snapshot per character at logout into the account file; optional "New
+characters start with: [Jay]"). WTF check (read-only, user OK'd): Forever
+DOES save AND load account-wide SavedVariables (Soup got Jay's Marks
+data); a new char starts from whichever char logged out LAST; Hub
+per-char choices start empty. Characters: Jay-Iscariot (main, Horde
+hunter 39), Soup-Delicious (new Alliance hunter), Roast-Delicious; realm
+folder "91". Possible add-on: copy Jay's Edit Mode layout too (design).
+Solved without code tonight: bar sizes/chat on Soup = per-character Edit
+Mode layout; user copied Jay's layout as an Account layout (fixed).
